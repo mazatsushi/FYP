@@ -1,0 +1,62 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" 
+           CodeFile="patient.master.cs" Inherits="patient" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+
+<body>
+<center>
+    <form id="form1" runat="server">
+    <div>
+    <table id="patOuterTable" runat="server" style="text-align:left; width:780px">
+        <tr>
+            <td style="background-color:#FFB6C1">
+                <div style="float:left; vertical-align:middle; text-align:center; width:700px">
+                    <h2 style="text-align:center">Patient Portal</h2>                    
+                </div>
+                <div style="text-align:right; float:right; vertical-align:middle; width:*">
+                    <asp:LinkButton ID="logoutButton" runat="server" onclick="logoutButton_Click">Log Out</asp:LinkButton>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table id="patInnerTable" runat="server" width="100%">
+                    <tr>
+                        <td align="left" style="width:200px; background-color:#FFB6C1">
+                            <table id="patNavTable" width="200px" cellpadding="10">
+                                <tr>
+                                    <td style="background-color:#FFFFF0"><div><a href="patient_info.aspx">Patient Information</a></div></td>
+                                </tr>
+                                <tr>
+                                    <td style="background-color:#FFFFF0"><div><a href="add_medical_record.aspx">Add New Record</a></div></td>
+                                </tr>            
+                                <tr>
+                                    <td style="background-color:#FFFFF0"><div><a href="pat_view_record.aspx">View Record</a></div></td>
+                                </tr>                                
+                            </table>
+                        </td>
+                        <td align="left">
+                            <asp:ContentPlaceHolder id="patientContentPlaceHolder" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+    </table>
+        
+    </div>
+    </form>
+</center>
+</body>
+</html>

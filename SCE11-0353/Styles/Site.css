@@ -1,0 +1,283 @@
+﻿/* COLLAPSIBLE PANEL   
+----------------------------------------------------------*/
+.collapsePanel
+{
+    width: 60%;
+    padding: 5px 5px 5px 5px;
+}
+
+.collapsePanelHeader
+{
+    width: 60%;
+    height: 20px;
+    color: white;
+    background-color: #5c87b2;
+    font-weight: bold;
+    padding: 5px 5px 5px 5px;
+    vertical-align: middle;
+}
+
+/* FORM ELEMENTS   
+----------------------------------------------------------*/
+
+.formDivs
+{
+    padding: 10px 0px 10px 0px;
+}
+
+div.accountInfo
+{
+    width: 50%;
+}
+
+fieldset
+{
+    margin: 1em 0px;
+    padding: 1em;
+    border: 1px solid #ccc;
+}
+
+fieldset p
+{
+    margin: 2px 12px 10px 10px;
+}
+
+fieldset.login label, fieldset.register label, fieldset.changePassword label
+{
+    display: block;
+}
+
+fieldset label.inline
+{
+    display: inline;
+}
+
+legend
+{
+    font-size: 1.1em;
+    font-weight: 600;
+    padding: 2px 4px 8px 4px;
+}
+
+input.textEntry
+{
+    width: 320px;
+    border: 1px solid #ccc;
+}
+
+input.passwordEntry
+{
+    width: 320px;
+    border: 1px solid #ccc;
+}
+
+/* Header
+----------------------------------------------------------*/
+#header
+{
+    background: #4b6c9e;
+    position: relative;
+    margin-bottom: 0px;
+    color: #000;
+}
+
+#title
+{
+    display: block;
+    float: left;
+    text-align: left;
+}
+
+#header h1
+{
+    font-weight: bold;
+    padding: 0px 0px 0px 10px;
+    margin: 0;
+    color: #fff;
+    border: none;
+    line-height: 2em;
+    font-size: 32px !important;
+}
+
+#logindisplay
+{
+    font-size: 1.1em;
+    display: block;
+    text-align: right;
+    margin: 0px 0px 10px 0px;
+    color: White;
+    padding: 10px;
+}
+
+#logindisplay a:link
+{
+    color: white;
+    text-decoration: underline;
+}
+
+#logindisplay a:visited
+{
+    color: white;
+    text-decoration: underline;
+}
+
+#logindisplay a:hover
+{
+    color: white;
+    text-decoration: none;
+}
+
+/* Headings
+----------------------------------------------------------*/
+
+h1, h2, h3, h4, h5, h6
+{
+    font-size: 1.5em;
+    color: #000;
+}
+
+h1
+{
+    font-size: 2em;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+h2
+{
+    padding: 0 0 10px 0;
+}
+
+h3
+{
+    font-size: 1.2em;
+}
+
+h4
+{
+    font-size: 1.1em;
+}
+
+h5, h6
+{
+    font-size: 1em;
+}
+
+/* Hyperlinks
+----------------------------------------------------------*/
+a:link
+{
+    color: #034af3;
+    text-decoration: underline;
+}
+
+a:visited
+{
+    color: #505abc;
+}
+
+a:hover
+{
+    color: #1d60ff;
+    text-decoration: none;
+}
+
+a:active
+{
+    color: #12eb87;
+}
+
+/* Main content area
+----------------------------------------------------------*/
+body
+{
+    background-color: #5c87b2;
+    font-size: .85em;
+    font-family: "Trebuchet MS" , Verdana, Helvetica, Sans-Serif;
+    margin: 0;
+    color: #696969;
+}
+
+#main
+{
+    background-color: #F5F5F5;
+    border-radius: 4px 0 0 0;
+    min-height: 720px;
+    padding: 1px 10px 1px 10px;
+    -webkit-border-radius: 4px 0 0 0;
+    -moz-border-radius: 4px 0 0 0;
+}
+
+/* Miscellaneous
+----------------------------------------------------------*/
+.clear
+{
+    clear: both;
+}
+
+.error
+{
+    color: Red;
+}
+
+#errorMsg
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+}
+
+#errorImg
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+}
+
+footer, nav, section
+{
+    display: block;
+}
+
+#footer
+{
+    background-color: #F5FFFA;
+    color: #999;
+    padding: 10px 0;
+    text-align: center;
+    line-height: normal;
+    margin: 0 0 30px 0;
+    font-size: .9em;
+    border-radius: 0 0 4px 4px;
+    -webkit-border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+}
+
+/* Navigation menu
+----------------------------------------------------------*/
+nav, #menucontainer
+{
+    background: #465c71;
+    margin-top: 5px;
+    padding: 0px 0px 15px 0px;
+}
+
+/* Validation helpers
+-----------------------------------------------------------*/
+.BarBorder
+{
+    border-style: solid;
+    border-width: 1px;
+    width: 180px;
+}
+
+.BarIndicator
+{
+    background-color: green;
+}
+
+.failureNotification
+{
+    font-size: 1.2em;
+    color: Red;
+}

@@ -1,0 +1,49 @@
+﻿Here are some tips to write for the report
+
+1) State and elaborate what you have done so far in the project.
+
+- Instead of just describing what you did like "In this project, we did a web-based 
+plugin using xml bla bla", Try to give in more inputs on how it is beneficial, unique 
+and the stuff you have learnt about the project
+
+- If your doing a research based project or a project that involves performance 
+analysis, add adequate amount of profiling tests(benchmarking of speed etc) in 
+the form of graphs/charts
+
+2) Describe the uniqueness of the project if there are other variants of it elsewhere 
+in the net.
+
+- Some projects have similar implementations in the web done by other 
+universities or external parties. List at least one or two implementations and
+describe how your project improves/differs compared to these implementations.
+
+- If possible, you can add do a performance analysis of your project and these
+implementations and highlight the differences with a short description.
+
+- If it is a very new project, you can describe how it improves the scenario it is 
+based upon. 
+
+3) State what you are going to achieve/do from now onwards for this project
+
+- Basically describe your future plans for this project such as improving your code,
+using a different tool to test your application etc. 
+
+- Add in some explanations on why you think this is useful in the future for your 
+project and how it improves your current work on the project if possible.
+
+IMPORTANT NOTES :
+
+- Remember to state your progress according to your project schedule/plan. Do not 
+deviate from your original schedule.
+
+- If you haven't achieved what you intended to do according to your project 
+schedule, please state the constraints that prevented you and how you intend to 
+rectify them in the future.
+
+FINAL REMINDER :
+
+The quality of your work isnt determined about how much stuff you can input inside 
+the report nor is it about how it is presented graphically to the reader; It is 
+determined by your ability to describe the points you wish to relay without going 
+overboard. Remember that the point of this report is to evaluate your progress and 
+understanding of your project.
