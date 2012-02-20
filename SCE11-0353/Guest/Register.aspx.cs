@@ -12,8 +12,6 @@ public partial class Account_Register : System.Web.UI.Page
         {
             Server.Transfer("~/Error/Error.aspx");
         }
-
-        Page.Title = "Register Account";
     }
 
     /*

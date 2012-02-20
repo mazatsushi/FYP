@@ -1,4 +1,5 @@
 using System;
+using System.Web;
 using System.Web.Security;
 
 public partial class Account_Login : System.Web.UI.Page
@@ -7,13 +8,11 @@ public partial class Account_Login : System.Web.UI.Page
 
 	protected void Page_Load(object sender, EventArgs e)
 	{
-		// If the user is already logged on, reject
+		// Reject if the user is already authenticated
 		if (User.Identity.IsAuthenticated)
 		{
 			Server.Transfer("~/Error/Error.aspx");
 		}
-
-	    Page.Title = "Login";
 	}
 
 	/*

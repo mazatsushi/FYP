@@ -6,7 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
     <div id="errorMsg">
         <h1>
-            Oops! The page you just tried to access cannot be found.
+            Oops! An error just occured. Please contact the system administrator for troubleshooting.
         </h1>
     </div>
     <br />
