@@ -4,10 +4,9 @@
 <html>
 <head runat="server">
     <link rel="Stylesheet" type="text/css" href="~/Styles/Site.css" />
-    <script type="text/javascript" src="Scripts/jquery-1.4.4.min.js"></script>
     <title></title>
-    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
-    </asp:ContentPlaceHolder>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
+    
 </head>
 <body>
     <form runat="server">
@@ -37,7 +36,7 @@
             <%--The data source of the navigation menu.--%>
             <asp:SiteMapDataSource ID="siteMap" runat="server" ShowStartingNode="False" />
             <%--The navigation menu of the application.--%>
-            <asp:Menu ID="menu_guest" runat="server" ItemWrap="True" Orientation="Horizontal"
+            <asp:Menu runat="server" ItemWrap="True" Orientation="Horizontal"
                 RenderingMode="List" DynamicHoverStyle-BackColor="#465c71" DynamicHorizontalOffset="2"
                 Font-Names="Verdana" Font-Size="1em" ForeColor="#ffffff" StaticSubMenuIndent="10px"
                 BackColor="#465c71" DataSourceID="siteMap" StaticDisplayLevels="1" MaximumDynamicDisplayLevels="3">

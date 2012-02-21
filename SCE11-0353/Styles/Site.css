@@ -2,13 +2,11 @@
 ----------------------------------------------------------*/
 .collapsePanel
 {
-    width: 60%;
     padding: 5px 5px 5px 5px;
 }
 
 .collapsePanelHeader
 {
-    width: 60%;
     height: 20px;
     color: white;
     background-color: #5c87b2;
@@ -32,6 +30,7 @@ div.accountInfo
 
 fieldset
 {
+    display: block;
     margin: 1em 0px;
     padding: 1em;
     border: 1px solid #ccc;

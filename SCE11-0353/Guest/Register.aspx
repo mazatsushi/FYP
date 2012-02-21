@@ -1,22 +1,19 @@
-﻿<%@ Page Title="Register" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
-    CodeFile="Register.aspx.cs" Inherits="Account_Register" %>
+﻿<%@ Page AutoEventWireup="true" CodeFile="Register.aspx.cs" Inherits="Account_Register"
+    Language="C#" MasterPageFile="~/Site.master" Title="Register" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
-    <asp:CreateUserWizard ID="RegisterUser" runat="server" BackColor="#F7F6F3" BorderColor="#E6E2D8"
-        BorderStyle="Solid" BorderWidth="1px" Font-Names="Verdana" Font-Size="0.8em">
-        <%--<LayoutTemplate>
-            <asp:PlaceHolder ID="navigationPlaceholder" runat="server" />
-            <asp:PlaceHolder ID="wizardStepPlaceholder" runat="server" />
-        </LayoutTemplate>--%>
-        <ContinueButtonStyle BackColor="#FFFBFF" BorderColor="#CCCCCC" BorderStyle="Solid"
-            BorderWidth="1px" Font-Names="Verdana" ForeColor="#284775" />
-        <CreateUserButtonStyle BackColor="#FFFBFF" BorderColor="#CCCCCC" BorderStyle="Solid"
-            BorderWidth="1px" Font-Names="Verdana" ForeColor="#284775" />
-        <TitleTextStyle BackColor="#5D7B9D" Font-Bold="True" ForeColor="White" />
+    <asp:CreateUserWizard BackColor="#F7F6F3" CancelDestinationPageUrl="~/Default.aspx"
+        DisplayCancelButton="True" Font-Names="Verdana" Font-Size="1em" ID="RegisterUser"
+        runat="server">
+        <%--Start of wizard button styles--%>
+        <CancelButtonStyle BackColor="#FFFBFF" Font-Names="Verdana" ForeColor="#284775" />
+        <ContinueButtonStyle BackColor="#FFFBFF" Font-Names="Verdana" ForeColor="#284775" />
+        <CreateUserButtonStyle BackColor="#FFFBFF" Font-Names="Verdana" ForeColor="#284775" />
+        <%--End of wizard button styles--%>
         <WizardSteps>
-            <asp:WizardStep ID="CreateUserWizardStep1" runat="server">
+            <asp:WizardStep ID="CreateUserWizardStep1" runat="server" StepType="Start">
                 <%--Prompt user for information and save it in SQL database--%>
                 <div>
                     <h2>
@@ -39,8 +36,8 @@
                         <asp:Literal ID="ErrorMessage" runat="server" />
                     </span>
                     <asp:ValidationSummary CssClass="failureNotification" runat="server" ValidationGroup="PersonalInfoValidationGroup" />
+                    <%--End of error notifications--%>
                 </div>
-                <%--End of error notifications--%>
                 <%--Start of personal information entry--%>
                 <div class="formDivs">
                     <asp:Panel CssClass="collapsePanelHeader" ID="PersonalInfoHeader" runat="server"
@@ -55,18 +52,14 @@
                                 <asp:Label AssociatedControlID="NRIC" runat="server" Text="* NRIC: " />
                                 <asp:TextBox CssClass="textEntry" ID="NRIC" runat="server" />
                                 <asp:RequiredFieldValidator ControlToValidate="NRIC" CssClass="failureNotification"
-                                    Display="Dynamic" ErrorMessage="Please enter your NRIC." runat="server" ToolTip="Please enter your NRIC."
-                                    ValidationGroup="PersonalInfoValidationGroup">
-                                        <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> 
-
- Please enter your NRIC.
+                                    Display="Dynamic" ErrorMessage="Please enter your NRIC." runat="server" Text="Please enter your NRIC."
+                                    ToolTip="Please enter your NRIC." ValidationGroup="PersonalInfoValidationGroup">
+                                        <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                                 </asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator ControlToValidate="NRIC" CssClass="failureNotification"
                                     Display="Dynamic" ErrorMessage="Please enter a valid NRIC." runat="server" ToolTip="Please enter a valid NRIC."
                                     ValidationExpression="^[SFTG]\d{7}[A-Z]$" ValidationGroup="PersonalInfoValidationGroup">
-                                        <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> 
-
- Please enter a valid NRIC.
+                                        <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                                 </asp:RegularExpressionValidator>
                                 <%--TODO: Make sure that the NRIC is unique--%>
                                 <%--<asp:CustomValidator ControlToValidate="UserName" CssClass="failureNotification"
@@ -87,17 +80,15 @@
                                     runat="server" TargetControlID="FirstName" />
                                 <asp:RequiredFieldValidator ControlToValidate="FirstName" CssClass="failureNotification"
                                     Display="Dynamic" ErrorMessage="Please enter your first name." runat="server"
-                                    ToolTip="Please enter your first name." ValidationGroup="PersonalInfoValidationGroup">
-                                        <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> 
-
- Please enter your first name.
+                                    Text="Please enter your first name." ToolTip="Please enter your first name."
+                                    ValidationGroup="PersonalInfoValidationGroup">
+                                        <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                                 </asp:RequiredFieldValidator>
                                 <asp:CustomValidator ControlToValidate="FirstName" CssClass="failureNotification"
                                     Display="Dynamic" ErrorMessage="Please enter a valid first name." OnServerValidate="FirstName_Validate"
-                                    runat="server" ToolTip="Please enter a valid first name." ValidationGroup="PersonalInfoValidationGroup">
-                                        <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> 
-
- Please enter a valid first name.
+                                    runat="server" Text="Please enter a valid first name." ToolTip="Please enter a valid first name."
+                                    ValidationGroup="PersonalInfoValidationGroup">
+                                        <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                                 </asp:CustomValidator>
                             </div>
                             <%--End of FirstName--%>
@@ -109,10 +100,9 @@
                                     runat="server" TargetControlID="MiddleName" />
                                 <asp:CustomValidator ControlToValidate="MiddleName" CssClass="failureNotification"
                                     Display="Dynamic" ErrorMessage="Please enter a valid middle name." OnServerValidate="MiddleName_Validate"
-                                    runat="server" ToolTip="Please enter a valid middle name." ValidationGroup="PersonalInfoValidationGroup">
-                                        <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> 
-
- User name is not unique.
+                                    runat="server" Text="Plesae enter a valid middle name." ToolTip="Please enter a valid middle name."
+                                    ValidationGroup="PersonalInfoValidationGroup">
+                                        <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                                 </asp:CustomValidator>
                             </div>
                             <%--End of MiddleName--%>
@@ -124,10 +114,8 @@
                                     runat="server" TargetControlID="LastName" />
                                 <asp:RequiredFieldValidator ControlToValidate="LastName" CssClass="failureNotification"
                                     Display="Dynamic" ErrorMessage="Please enter your last name." runat="server"
-                                    ToolTip="Please enter your last name." ValidationGroup="PersonalInfoValidationGroup">
-                                        <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> 
-
- Please enter your last name.
+                                    Text="Please enter your last name." ToolTip="Please enter your last name." ValidationGroup="PersonalInfoValidationGroup">
+                                        <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                                 </asp:RequiredFieldValidator>
                             </div>
                             <%--End of LastName--%>
@@ -139,11 +127,9 @@
                                     <asp:ListItem Text="Female" Value="female" />
                                 </asp:RadioButtonList>
                                 <asp:RequiredFieldValidator ControlToValidate="Gender" CssClass="failureNotification"
-                                    Display="Dynamic" ErrorMessage="Please specify your gender." runat="server" ToolTip="Please specify your gender."
-                                    ValidationGroup="PersonalInfoValidationGroup">
-                                        <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> 
-
- Please specify your gender.
+                                    Display="Dynamic" ErrorMessage="Please specify your gender." runat="server" Text="."
+                                    ToolTip="Please specify your gender." ValidationGroup="PersonalInfoValidationGroup">
+                                        <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                                 </asp:RequiredFieldValidator>
                             </div>
                             <%--End of Gender--%>
@@ -160,10 +146,8 @@
                                 </ajaxToolkit:ComboBox>
                                 <asp:RequiredFieldValidator ControlToValidate="Prefix" CssClass="failureNotification"
                                     Display="Dynamic" ErrorMessage="Please specify a salutation." runat="server"
-                                    ToolTip="Please specify a salutation." ValidationGroup="PersonalInfoValidationGroup">
-                                        <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> 
-
- Please specify a salutation.
+                                    Text="Please specify a salutation." ToolTip="Please specify a salutation." ValidationGroup="PersonalInfoValidationGroup">
+                                        <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                                 </asp:RequiredFieldValidator>
                             </div>
                             <%--End of Prefix--%>
@@ -207,14 +191,39 @@
                     </ajaxToolkit:CollapsiblePanelExtender>
                 </div>
                 <%--End of personal information entry--%>
-                <div>
-                    <asp:Button CommandName="MoveNext" ID="Step1Button" runat="server" Text="Continue"
-                        ValidationGroup="PersonalInfoValidationGroup" />
-                </div>
             </asp:WizardStep>
             <%--Start of account information entry--%>
             <asp:CreateUserWizardStep runat="server" ID="CreateUserWizardStep2" Title="">
                 <ContentTemplate>
+                    <div>
+                        <h2>
+                            Create a New Account (Patient)
+                        </h2>
+                        <p>
+                            Please enter your desired account information.
+                        </p>
+                        <p>
+                            If you are not a patient, please approach the system administrator to have your
+                            account created.
+                        </p>
+                        <p>
+                            Passwords should have a minimum of
+                            <%= Membership.MinRequiredPasswordLength %>
+                            characters.
+                        </p>
+                        <p>
+                            Elements marked with * are required.
+                        </p>
+                    </div>
+                    <div>
+                        <%--Start of error notifications--%>
+                        <span class="failureNotification">
+                            <asp:Literal ID="ErrorMessage" runat="server" />
+                        </span>
+                        <asp:ValidationSummary ID="ValidationSummary1" CssClass="failureNotification" runat="server"
+                            ValidationGroup="PersonalInfoValidationGroup" />
+                        <%--End of error notifications--%>
+                    </div>
                     <div class="formDivs">
                         <asp:Panel CssClass="collapsePanelHeader" ID="AccountInfoHeader" runat="server">
                             <asp:Image ID="AccountInfoPanelArrow" runat="server" />
@@ -339,11 +348,6 @@
                     <%--End of account information entry--%>
                 </ContentTemplate>
             </asp:CreateUserWizardStep>
-            <%--<div class="formDivs">
-                <asp:Button CommandName="MoveNext" ID="RegisterButton" runat="server" Text="Continue"
-                    ValidationGroup="RegisterUserValidationGroup" />
-                <asp:Button ID="CancelButton" PostBackUrl="~/Default.aspx" runat="server" Text="Cancel" />
-            </div>--%>
             <asp:CompleteWizardStep runat="server" Title="">
                 <ContentTemplate>
                     <div>
@@ -359,20 +363,15 @@
                             Please proceed to update your personal information.
                         </p>
                     </div>
-                    <div>
-                        <asp:Button ID="FinishButton" PostBackUrl="~/Account/UpdateParticulars.aspx" runat="server"
-                            Text="Finish" />
-                        <asp:Button ID="CancelButton2" runat="server" Text="Cancel" />
-                    </div>
                 </ContentTemplate>
             </asp:CompleteWizardStep>
         </WizardSteps>
-        <HeaderStyle BackColor="#5D7B9D" BorderStyle="Solid" Font-Bold="True" Font-Size="0.9em"
-            ForeColor="White" HorizontalAlign="Center" />
-        <NavigationButtonStyle BackColor="#FFFBFF" BorderColor="#CCCCCC" BorderStyle="Solid"
-            BorderWidth="1px" Font-Names="Verdana" ForeColor="#284775" />
-        <SideBarButtonStyle BorderWidth="0px" Font-Names="Verdana" ForeColor="White" />
-        <SideBarStyle BackColor="#5D7B9D" BorderWidth="0px" Font-Size="0.9em" VerticalAlign="Top" />
-        <StepStyle BorderWidth="0px" />
+        <%--Start of registration side bar style--%>
+        <HeaderStyle BackColor="#5D7B9D" Font-Bold="True" Font-Size="1em" ForeColor="White"
+            HorizontalAlign="Center" />
+        <NavigationButtonStyle BackColor="#FFFBFF" Font-Names="Verdana" ForeColor="#284775" />
+        <SideBarButtonStyle Font-Names="Verdana" ForeColor="White" />
+        <SideBarStyle BackColor="#5D7B9D" Font-Size="1em" VerticalAlign="Top" />
+        <%--End of registration side bar style--%>
     </asp:CreateUserWizard>
 </asp:Content>
