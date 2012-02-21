@@ -55,4 +55,13 @@ public partial class Account_Register : System.Web.UI.Page
     protected void MiddleName_Validate(object source, ServerValidateEventArgs args)
     {
     }
+
+    protected void Test(object sender, WizardNavigationEventArgs e)
+    {
+        Page.Validate();
+        if (!Page.IsValid)
+        {
+            e.Cancel = true;
+        }
+    }
 }
