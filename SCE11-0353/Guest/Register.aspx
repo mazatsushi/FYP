@@ -46,21 +46,32 @@
                     Display="Dynamic" ErrorMessage="Please enter your NRIC." runat="server" ToolTip="Please enter your NRIC."
                     ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please enter your NRIC.
                 </asp:RequiredFieldValidator>
+                <asp:CustomValidator runat="server" OnServerValidate="NRIC_Required" ControlToValidate="NRIC"
+                    ErrorMessage="Please enter your NRIC." ToolTip="Please enter your NRIC." ValidationGroup="RegisterUserValidationGroup">
+                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please enter your NRIC.
+                </asp:CustomValidator>
                 <asp:RegularExpressionValidator ControlToValidate="NRIC" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please enter a valid NRIC." runat="server" ToolTip="Please enter a valid NRIC."
                     ValidationExpression="^[SFTG]\d{7}[A-Z]$" ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please enter a valid NRIC.
                 </asp:RegularExpressionValidator>
+                <asp:CustomValidator OnServerValidate="NRIC_Regex" runat="server" ErrorMessage="Please enter a valid NRIC">
+                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please enter a valid NRIC.
+                </asp:CustomValidator>
                 <%--TODO: Make sure that the NRIC is unique--%>
-                <%--<asp:CustomValidator ControlToValidate="UserName" CssClass="failureNotification"
-                                        Display="Dynamic" ErrorMessage="User name is already taken." ID="CustomValidator1"
-                                        OnServerValidate="UniqueUserName_Validate" runat="server" ToolTip="User name is not unique."
-                                        ValidationGroup="RegisterUserValidationGroup">
-                                        <asp:Image ID="Image2" ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png"
-                                            runat="server" />
-                                        User name is not unique.
-                                    </asp:CustomValidator>--%>
+                <%--<asp:SqlDataSource ConnectionString="<%$ ConnectionStrings:ApplicationServices %>"
+                    EnableCaching="True" ID="SqlDataSource1" ProviderName="<%$ ConnectionStrings:ApplicationServices.ProviderName %>"
+                    runat="server" SelectCommand="SELECT UserId FROM UserParticulars">
+                    <SelectParameters>
+                        <asp:ControlParameter ControlID="NRIC" DbType="String" Name="NRIC" PropertyName="Text"
+                            Type="String" />
+                    </SelectParameters>
+                </asp:SqlDataSource>--%>
             </div>
             <%--End of NRIC--%>
             <%--Start of FirstName--%>
@@ -73,11 +84,13 @@
                     Display="Dynamic" ErrorMessage="Please enter your first name." runat="server"
                     ToolTip="Please enter your first name." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please enter your first name.
                 </asp:RequiredFieldValidator>
                 <asp:CustomValidator ControlToValidate="FirstName" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please enter a valid first name." OnServerValidate="FirstName_Validate"
                     runat="server" ToolTip="Please enter a valid first name." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please enter a valid first name.
                 </asp:CustomValidator>
             </div>
             <%--End of FirstName--%>
@@ -91,6 +104,7 @@
                     Display="Dynamic" ErrorMessage="Please enter a valid middle name." OnServerValidate="MiddleName_Validate"
                     runat="server" ToolTip="Please enter a valid middle name." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please enter a valid middle name.
                 </asp:CustomValidator>
             </div>
             <%--End of MiddleName--%>
@@ -104,7 +118,9 @@
                     Display="Dynamic" ErrorMessage="Please enter your last name." runat="server"
                     ToolTip="Please enter your last name." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please enter your last name.
                 </asp:RequiredFieldValidator>
+                <%--TODO: Add in a custom validator--%>
             </div>
             <%--End of LastName--%>
             <%--Start of Gender--%>
@@ -118,6 +134,7 @@
                     Display="Dynamic" ErrorMessage="Please specify your gender." runat="server" ToolTip="Please specify your gender."
                     ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please specify your gender.
                 </asp:RequiredFieldValidator>
             </div>
             <%--End of Gender--%>
@@ -136,6 +153,7 @@
                     Display="Dynamic" ErrorMessage="Please specify a salutation." runat="server"
                     ToolTip="Please specify a salutation." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please specify a salutation.
                 </asp:RequiredFieldValidator>
             </div>
             <%--End of Prefix--%>
@@ -192,13 +210,15 @@
                 <asp:TextBox CssClass="textEntry" ID="UserName" runat="server" />
                 <asp:RequiredFieldValidator ControlToValidate="UserName" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please enter your user name." runat="server"
-                    ToolTip="Please enter your desired user name." ValidationGroup="RegisterUserValidationGroup">
+                    ToolTip="Please enter your user name." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please enter your user name.
                 </asp:RequiredFieldValidator>
                 <asp:CustomValidator ControlToValidate="UserName" CssClass="failureNotification"
-                    Display="Dynamic" ErrorMessage="User name is already taken." OnServerValidate="UniqueUserName_Validate"
-                    runat="server" ToolTip="User name is not unique." ValidationGroup="RegisterUserValidationGroup">
+                    Display="Dynamic" ErrorMessage="User name is already in use." OnServerValidate="UniqueUserName_Validate"
+                    runat="server" ToolTip="User name is already in use." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    User name is already in use.
                 </asp:CustomValidator>
             </div>
             <%--End of username--%>
@@ -210,20 +230,23 @@
                     Display="Dynamic" ErrorMessage="Please enter your e-mail address." runat="server"
                     ToolTip="Please enter your e-mail address." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please enter your e-mail address.
                 </asp:RequiredFieldValidator>
                 <%--Matches a valid email address including ip's which are rarely used. Allows for a-z0-9_.- in the username,
                                 but not ending in a full stop i.e user.@domain.com is invalid and a-z0-9- as the optional sub domain(s)
                                 with domain name and a 2-7 char (a-z) tld allowing for short tld's like ca and new ones like museum.--%>
                 <asp:RegularExpressionValidator ControlToValidate="Email" CssClass="failureNotification"
-                    Display="Dynamic" ErrorMessage="Please enter a valid email address." runat="server"
-                    ToolTip="Please enter a valid email address." ValidationExpression="^[\w-]+(\.[\w-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\`d{1,3}\.){3}\d{1,3})(:\d{4})?$"
+                    Display="Dynamic" ErrorMessage="Please enter a valid e-mail address." runat="server"
+                    ToolTip="Please enter a valid e-mail address." ValidationExpression="^[\w-]+(\.[\w-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\`d{1,3}\.){3}\d{1,3})(:\d{4})?$"
                     ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please enter a valid e-mail address.
                 </asp:RegularExpressionValidator>
                 <asp:CustomValidator ControlToValidate="Email" CssClass="failureNotification" Display="Dynamic"
-                    ErrorMessage="Email address is not unique." OnServerValidate="UniqueEmail_Validate"
-                    runat="server" ToolTip="Email address is already in use." ValidationGroup="RegisterUserValidationGroup">
+                    ErrorMessage="E-mail address is already in use." OnServerValidate="UniqueEmail_Validate"
+                    runat="server" ToolTip="Em-ail address is already in use." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    E-mail address is already in use.
                 </asp:CustomValidator>
             </div>
             <%--End of email--%>
@@ -235,6 +258,7 @@
                     Display="Dynamic" ErrorMessage="Please enter your password." runat="server" ToolTip="Please enter your password."
                     ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please enter your password.
                 </asp:RequiredFieldValidator>
                 <ajaxToolkit:PasswordStrength BarBorderCssClass="BarBorder" BarIndicatorCssClass="BarIndicator"
                     DisplayPosition="RightSide" Enabled="True" HelpStatusLabelID="PasswordStrengthLabel"
@@ -252,11 +276,13 @@
                     Display="Dynamic" ErrorMessage="Please re-enter password." runat="server" ToolTip="Please enter re-password."
                     ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please re-enter password.
                 </asp:RequiredFieldValidator>
                 <asp:CompareValidator ControlToCompare="Password" ControlToValidate="ConfirmPassword"
                     CssClass="failureNotification" Display="Dynamic" ErrorMessage="Both passwords must match."
-                    runat="server" ValidationGroup="RegisterUserValidationGroup">
+                    runat="server" ToolTip="Both passwords must match." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Both passwords must match.
                 </asp:CompareValidator>
             </div>
             <%--End of confirm password--%>
@@ -266,8 +292,9 @@
                 <asp:TextBox CssClass="textEntry" ID="Question" runat="server" />
                 <asp:RequiredFieldValidator ControlToValidate="Question" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Security question is required." runat="server"
-                    ToolTip="Please provide a secret question." ValidationGroup="RegisterUserValidationGroup">
+                    ToolTip="Security question is required." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Security question is required.
                 </asp:RequiredFieldValidator>
             </div>
             <%--End of security question--%>
@@ -277,9 +304,9 @@
                 <asp:TextBox CssClass="textEntry" ID="Answer" runat="server" />
                 <asp:RequiredFieldValidator ControlToValidate="Answer" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Security answer is required." runat="server"
-                    ToolTip="Please enter the answer to your secret question." ValidationGroup="RegisterUserValidationGroup">
-                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png"
-                               runat="server" />
+                    ToolTip="Security answer is required." ValidationGroup="RegisterUserValidationGroup">
+                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Security answer is required.
                 </asp:RequiredFieldValidator>
             </div>
             <%--End of security answer--%>
@@ -291,7 +318,11 @@
         runat="server" TargetControlID="AccountInfoContent" TextLabelID="AccountInfoPanelLabel" />
     <%--End of account information entry--%>
     <div>
-        <asp:Button runat="server" Text="Cancel" PostBackUrl="~/Default.aspx" />
-        <asp:Button runat="server" Text="Register" ValidationGroup="RegisterUserValidationGroup" />
+        <asp:Button BackColor="#F7F6F3" BorderColor="#E6E2D8" BorderStyle="Solid" BorderWidth="1px"
+            Font-Names="Verdana" Font-Size="1em" PostBackUrl="~/Default.aspx" runat="server"
+            Text="Cancel" />
+        <asp:Button BackColor="#F7F6F3" BorderColor="#E6E2D8" BorderStyle="Solid" BorderWidth="1px"
+            Font-Names="Verdana" Font-Size="1em" runat="server" Text="Create User" ValidationGroup="RegisterUserValidationGroup"
+            ID="RegisterButton" />
     </div>
 </asp:Content>

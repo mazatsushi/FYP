@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web.Security;
 using System.Web.UI.WebControls;
 
@@ -56,12 +57,23 @@ public partial class Account_Register : System.Web.UI.Page
     {
     }
 
-    protected void Test(object sender, WizardNavigationEventArgs e)
+    // Method to check whether NRIC provided is a null value
+    protected void NRIC_Required(object source, ServerValidateEventArgs args)
     {
-        Page.Validate();
-        if (!Page.IsValid)
+        var nric = NRIC.Text;
+        if (nric == null || nric.Trim().Length == 0)
         {
-            e.Cancel = true;
+            args.IsValid = false;
+        }
+    }
+
+    // Method to check whether NRIC provided is valid
+    protected void NRIC_Regex(object source, ServerValidateEventArgs args)
+    {
+        var match = new Regex(@"^[SFTG]\d{7}[A-Z]$").Match(NRIC.Text.Trim().ToUpper());
+        if (!match.Success)
+        {
+            args.IsValid = false;
         }
     }
 }
