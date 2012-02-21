@@ -30,13 +30,13 @@ public partial class Account_Register : System.Web.UI.Page
     // Method to check whether user email is unique
     protected void UniqueEmail_Validate(object sender, ServerValidateEventArgs e)
     {
-        e.IsValid = (Membership.GetUserNameByEmail(RegisterUser.Email) == null);
+        e.IsValid = (Membership.GetUserNameByEmail(Email.Text.Trim()) == null);
     }
 
     // Method to check whether user account alredy exists
     protected void UniqueUserName_Validate(object sender, ServerValidateEventArgs e)
     {
-        e.IsValid = (Membership.GetUser(RegisterUser.UserName) == null);
+        e.IsValid = (Membership.GetUser(UserName.Text.Trim()) == null);
     }
 
     // Method to check whether user first name has numbers
