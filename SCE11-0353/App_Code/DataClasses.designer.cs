@@ -22,7 +22,7 @@ using System.Reflection;
 
 
 [global::System.Data.Linq.Mapping.DatabaseAttribute(Name="RIS_DB")]
-public partial class DataClassesDataContext : System.Data.Linq.DataContext
+public partial class RISDB_Context : System.Data.Linq.DataContext
 {
 	
 	private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -73,31 +73,31 @@ public partial class DataClassesDataContext : System.Data.Linq.DataContext
   partial void DeleteUserParticular(UserParticular instance);
   #endregion
 	
-	public DataClassesDataContext() : 
+	public RISDB_Context() : 
 			base(global::System.Configuration.ConfigurationManager.ConnectionStrings["RIS_DBConnectionString"].ConnectionString, mappingSource)
 	{
 		OnCreated();
 	}
 	
-	public DataClassesDataContext(string connection) : 
+	public RISDB_Context(string connection) : 
 			base(connection, mappingSource)
 	{
 		OnCreated();
 	}
 	
-	public DataClassesDataContext(System.Data.IDbConnection connection) : 
+	public RISDB_Context(System.Data.IDbConnection connection) : 
 			base(connection, mappingSource)
 	{
 		OnCreated();
 	}
 	
-	public DataClassesDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+	public RISDB_Context(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 			base(connection, mappingSource)
 	{
 		OnCreated();
 	}
 	
-	public DataClassesDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+	public RISDB_Context(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 			base(connection, mappingSource)
 	{
 		OnCreated();
