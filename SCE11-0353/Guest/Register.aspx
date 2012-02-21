@@ -87,7 +87,7 @@
                     Please enter your first name.
                 </asp:RequiredFieldValidator>
                 <asp:CustomValidator ControlToValidate="FirstName" CssClass="failureNotification"
-                    Display="Dynamic" ErrorMessage="Please enter a valid first name." OnServerValidate="FirstName_Validate"
+                    Display="Dynamic" ErrorMessage="Please enter a valid first name." OnServerValidate="FirstName_Regex"
                     runat="server" ToolTip="Please enter a valid first name." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please enter a valid first name.
@@ -323,6 +323,6 @@
             Text="Cancel" />
         <asp:Button BackColor="#F7F6F3" BorderColor="#E6E2D8" BorderStyle="Solid" BorderWidth="1px"
             Font-Names="Verdana" Font-Size="1em" runat="server" Text="Create User" ValidationGroup="RegisterUserValidationGroup"
-            ID="RegisterButton" />
+            ID="RegisterButton" onclick="RegisterButton_Click" />
     </div>
 </asp:Content>

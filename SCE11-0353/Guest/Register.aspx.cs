@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Linq;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web.Security;
@@ -29,27 +30,15 @@ public partial class Account_Register : System.Web.UI.Page
     }
 
     // Method to check whether user email is unique
-    protected void UniqueEmail_Validate(object sender, ServerValidateEventArgs e)
+    protected void UniqueEmail_Validate(object sender, ServerValidateEventArgs args)
     {
-        e.IsValid = (Membership.GetUserNameByEmail(Email.Text.Trim()) == null);
+        args.IsValid = (Membership.GetUserNameByEmail(Email.Text.Trim()) == null);
     }
 
     // Method to check whether user account alredy exists
-    protected void UniqueUserName_Validate(object sender, ServerValidateEventArgs e)
+    protected void UniqueUserName_Validate(object sender, ServerValidateEventArgs args)
     {
-        e.IsValid = (Membership.GetUser(UserName.Text.Trim()) == null);
-    }
-
-    // Method to check whether user first name has numbers
-    protected void FirstName_Validate(object source, ServerValidateEventArgs args)
-    {
-        var firstName = ((TextBox)FindControl("FirstName")).Text.Trim().ToLowerInvariant().ToCharArray();
-        if (firstName.Any(c => Char.IsDigit(c)))
-        {
-            args.IsValid = false;
-            return;
-        }
-        args.IsValid = true;
+        args.IsValid = (Membership.GetUser(UserName.Text.Trim()) == null);
     }
 
     // Method to check whether user middle name has numbers
@@ -64,7 +53,9 @@ public partial class Account_Register : System.Web.UI.Page
         if (nric == null || nric.Trim().Length == 0)
         {
             args.IsValid = false;
+            return;
         }
+        args.IsValid = true;
     }
 
     // Method to check whether NRIC provided is valid
@@ -74,6 +65,33 @@ public partial class Account_Register : System.Web.UI.Page
         if (!match.Success)
         {
             args.IsValid = false;
+            return;
         }
+        args.IsValid = true;
+    }
+
+    // Method to check whether user first name has numbers
+    protected void FirstName_Regex(object source, ServerValidateEventArgs args)
+    {
+        var firstName = (FirstName.Text.Trim().ToLowerInvariant().ToCharArray());
+        if (firstName.Any(c => Char.IsDigit(c)))
+        {
+            args.IsValid = false;
+            return;
+        }
+        args.IsValid = true;
+    }
+
+    protected void RegisterButton_Click(object sender, EventArgs e)
+    {
+        var context = new DataClassesDataContext();
+        Table<Country> countries = context.GetTable<Country>();
+        IQueryable<Country> query = from cust in countries
+                                    select cust;
+        foreach (var country in query)
+        {
+            Console.WriteLine("Country Name: {0}", country.CountryName);
+        }
+        Console.ReadLine();
     }
 }
