@@ -48,25 +48,13 @@
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please enter your NRIC.
                 </asp:RequiredFieldValidator>
-                <asp:CustomValidator ControlToValidate="NRIC" CssClass="failureNotification" Display="Dynamic"
-                    ErrorMessage="Please enter your NRIC." OnServerValidate="NRIC_NotNull" runat="server"
-                    ToolTip="Please enter your NRIC." ValidationGroup="RegisterUserValidationGroup">
-                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
-                    Please enter your NRIC.
-                </asp:CustomValidator>
                 <asp:RegularExpressionValidator ControlToValidate="NRIC" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please enter a valid NRIC." runat="server" ToolTip="Please enter a valid NRIC."
                     ValidationExpression="^[SFTG]\d{7}[A-Z]$" ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please enter a valid NRIC.
                 </asp:RegularExpressionValidator>
-                <asp:CustomValidator ControlToValidate="NRIC" CssClass="failureNotification" Display="Dynamic"
-                    ErrorMessage="Please enter a valid NRIC." OnServerValidate="NRIC_Pattern" runat="server"
-                    ToolTip="Please enter a valid NRIC." ValidationGroup="RegisterUserValidationGroup">
-                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
-                    Please enter a valid NRIC.
-                </asp:CustomValidator>
-                <%--TODO: Make sure that the NRIC is unique--%>
+                <%--TODO: Make sure that the NRIC is unique using LINQ to SQL--%>
                 <%--<asp:SqlDataSource ConnectionString="<%$ ConnectionStrings:ApplicationServices %>"
                     EnableCaching="True" ID="SqlDataSource1" ProviderName="<%$ ConnectionStrings:ApplicationServices.ProviderName %>"
                     runat="server" SelectCommand="SELECT UserId FROM UserParticulars">
@@ -90,13 +78,7 @@
                     Please enter your first name.
                 </asp:RequiredFieldValidator>
                 <asp:CustomValidator ControlToValidate="FirstName" CssClass="failureNotification"
-                    Display="Dynamic" ErrorMessage="Please enter your first name." OnServerValidate="FirstName_NotNull"
-                    runat="server" ToolTip="Please enter your first name." ValidationGroup="RegisterUserValidationGroup">
-                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
-                    Please enter your first name.
-                </asp:CustomValidator>
-                <asp:CustomValidator ControlToValidate="FirstName" CssClass="failureNotification"
-                    Display="Dynamic" ErrorMessage="Please enter a valid first name." OnServerValidate="FirstName_Pattern"
+                    Display="Dynamic" ErrorMessage="Please enter a valid first name." OnServerValidate="IsFirstNameValid"
                     runat="server" ToolTip="Please enter a valid first name." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please enter a valid first name.
@@ -110,7 +92,7 @@
                 <ajaxToolkit:FilteredTextBoxExtender Enabled="True" FilterType="LowercaseLetters, UppercaseLetters"
                     runat="server" TargetControlID="MiddleName" />
                 <asp:CustomValidator ControlToValidate="MiddleName" CssClass="failureNotification"
-                    Display="Dynamic" ErrorMessage="Please enter a valid middle name." OnServerValidate="MiddleName_Pattern"
+                    Display="Dynamic" ErrorMessage="Please enter a valid middle name." OnServerValidate="IsMiddleNameValid"
                     runat="server" ToolTip="Please enter a valid middle name." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please enter a valid middle name.
@@ -130,13 +112,7 @@
                     Please enter your last name.
                 </asp:RequiredFieldValidator>
                 <asp:CustomValidator ControlToValidate="LastName" CssClass="failureNotification"
-                    Display="Dynamic" ErrorMessage="Please enter your last name." OnServerValidate="LastName_NotNull"
-                    runat="server" ToolTip="Please enter your last name." ValidationGroup="RegisterUserValidationGroup">
-                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
-                    Please enter your last name.
-                </asp:CustomValidator>
-                <asp:CustomValidator ControlToValidate="LastName" CssClass="failureNotification"
-                    Display="Dynamic" ErrorMessage="Please enter a valid last name." OnServerValidate="LastName_Pattern"
+                    Display="Dynamic" ErrorMessage="Please enter a valid last name." OnServerValidate="IsLastNameValid"
                     runat="server" ToolTip="Please enter a valid last name." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please enter a valid last name.
@@ -157,13 +133,7 @@
                     Please specify your gender.
                 </asp:RequiredFieldValidator>
                 <asp:CustomValidator ControlToValidate="Gender" CssClass="failureNotification"
-                    Display="Dynamic" ErrorMessage="Please specify your gender." OnServerValidate="Gender_NotNull"
-                    runat="server" ToolTip="Please specify your gender." ValidationGroup="RegisterUserValidationGroup">
-                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
-                    Please specify your gender.
-                </asp:CustomValidator>
-                <asp:CustomValidator ControlToValidate="Gender" CssClass="failureNotification"
-                    Display="Dynamic" ErrorMessage="Please specify a valid gender." OnServerValidate="Gender_Pattern"
+                    Display="Dynamic" ErrorMessage="Please specify a valid gender." OnServerValidate="IsGenderValid"
                     runat="server" ToolTip="Please specify a valid gender." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify a valid gender.
@@ -187,6 +157,12 @@
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify a salutation.
                 </asp:RequiredFieldValidator>
+                <asp:CustomValidator ControlToValidate="Prefix" CssClass="failureNotification"
+                    Display="Dynamic" ErrorMessage="Please specify a valid salutation." OnServerValidate="IsPrefixValid"
+                    runat="server" ToolTip="Please specify a valid salutation." ValidationGroup="RegisterUserValidationGroup">
+                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please specify a valid salutation.
+                </asp:CustomValidator>
             </div>
             <%--End of Prefix--%>
             <%--Start of Suffix--%>

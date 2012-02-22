@@ -7,9 +7,9 @@ using System.Web.Security;
 using System.Web.UI.WebControls;
 
 /*
- * Note that all custom validators are validated according to where they are placed in the ASP file.
- * E.g. a validator located at line 10 would trigger before a validator at line 20.
- * It is this behaviour that we are utilizing to do the server validation.
+ * Note that all user input are first desensitized by calling the HttpUtility.HTMLEncode() method.
+ * For more information, please refer to:
+ * http://msdn.microsoft.com/en-us/library/73z22y6h.aspx
  */
 
 public partial class Account_Register : System.Web.UI.Page
@@ -21,6 +21,13 @@ public partial class Account_Register : System.Web.UI.Page
         {
             Server.Transfer("~/Error/Error.aspx");
         }
+
+        /*
+         * Validates all controls on the page, just in case of server postback.
+         * For more information, please refer to:
+         * http://msdn.microsoft.com/en-us/library/0ke7bxeh.aspx
+         */
+        Validate();
     }
 
     /*
@@ -39,6 +46,14 @@ public partial class Account_Register : System.Web.UI.Page
 
     protected void RegisterButton_Click(object sender, EventArgs e)
     {
+        /*
+         * Trigger all validators to perform input checks.
+         * This single line is all that we need for server side input validation.
+         * For more information, please refer to:
+         * http://msdn.microsoft.com/en-us/library/0ke7bxeh.aspx
+         */
+        Validate();
+
         //using (var context = new RISDB_Context())
         //{
         //    Table<Country> countries = context.GetTable<Country>();
@@ -59,41 +74,21 @@ public partial class Account_Register : System.Web.UI.Page
                         null);
     }
 
-    // Method to check whether user account alredy exists
+    // Method to check whether user account already exists
     protected void UniqueUserName_Validate(object sender, ServerValidateEventArgs args)
     {
         args.IsValid = (Membership.GetUser(HttpUtility.HtmlEncode(UserName.Text.Trim())) == null);
     }
 
-    // Server side validation to check whether NRIC provided is a null value
-    protected void NRIC_NotNull(object source, ServerValidateEventArgs args)
-    {
-        args.IsValid = !string.IsNullOrEmpty(HttpUtility.HtmlEncode(NRIC.Text));
-    }
-
-    // Server side validation to check whether NRIC provided is valid
-    protected void NRIC_Pattern(object source, ServerValidateEventArgs args)
-    {
-        var match = new Regex(@"^[SFTG]\d{7}[A-Z]$").Match(HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant()));
-        args.IsValid = match.Success;
-    }
-
-    // Server side validation to check whether first name provided is valid
-    protected void FirstName_NotNull(object source, ServerValidateEventArgs args)
-    {
-        args.IsValid = !string.IsNullOrEmpty(HttpUtility.HtmlEncode(FirstName.Text));
-    }
-
-
-    // Server side validation to check whether user first name has numbers
-    protected void FirstName_Pattern(object source, ServerValidateEventArgs args)
+    // Server side validation to check whether first name no numeric characters
+    protected void IsFirstNameValid(object source, ServerValidateEventArgs args)
     {
         var firstName = (HttpUtility.HtmlEncode(FirstName.Text.Trim().ToCharArray()));
         args.IsValid = !firstName.Any(Char.IsDigit);
     }
 
-    // Server side validation to check whether middle name provided has numbers
-    protected void MiddleName_Pattern(object source, ServerValidateEventArgs args)
+    // Server side validation to check whether middle name has no numeric characters
+    protected void IsMiddleNameValid(object source, ServerValidateEventArgs args)
     {
         var temp = HttpUtility.HtmlEncode(MiddleName.Text);
         if (string.IsNullOrEmpty(temp))
@@ -103,41 +98,59 @@ public partial class Account_Register : System.Web.UI.Page
         args.IsValid = !middleName.Any(Char.IsDigit);
     }
 
-    // Server side validation to check whether last name provided is valid
-    protected void LastName_NotNull(object source, ServerValidateEventArgs args)
-    {
-        args.IsValid = !string.IsNullOrEmpty(HttpUtility.HtmlEncode(LastName.Text));
-    }
-
-    // Server side validation to check whether user first name has numbers
-    protected void LastName_Pattern(object source, ServerValidateEventArgs args)
+    // Server side validation to check whether last name has no numeric characters
+    protected void IsLastNameValid(object source, ServerValidateEventArgs args)
     {
         var lastName = (HttpUtility.HtmlEncode(LastName.Text.Trim().ToCharArray()));
         args.IsValid = !lastName.Any(Char.IsDigit);
     }
 
-    // Server side validation to check whether last name provided is valid
-    protected void Gender_NotNull(object source, ServerValidateEventArgs args)
-    {
-        args.IsValid = !string.IsNullOrEmpty(Gender.SelectedValue);
-    }
-
-    // Server side validation to check whether user first name has numbers
-    protected void Gender_Pattern(object source, ServerValidateEventArgs args)
+    // Server side validation to check whether gender is within acceptable values
+    protected void IsGenderValid(object source, ServerValidateEventArgs args)
     {
         var gender = HttpUtility.HtmlEncode(Gender.Text.Trim().ToLowerInvariant());
 
-        // First check that the value is male
-        args.IsValid = ((String.CompareOrdinal(gender, "male")) == 0);
+        /*
+         * We utilize the implicit fall through feature of the switch statement as
+         * more than one value is valid.
+         * For more information, please refer to:
+         * http://msdn.microsoft.com/en-us/library/06tc147t.aspx
+         */
+        switch (gender)
+        {
+            case "male":
+            case "female":
+                args.IsValid = true;
+                return;
+            default:
+                args.IsValid = false;
+                return;
+        }
+    }
+
+    // Server side validation to check whether prefix is within acceptable values
+    protected void IsPrefixValid(object source, ServerValidateEventArgs args)
+    {
+        var prefix = HttpUtility.HtmlEncode(Prefix.Text.Trim().ToLowerInvariant());
 
         /*
-         * The IF block will be entered iff the above statement returns false,
-         * i.e. the string value is not male
+         * We utilize the implicit fall through feature of the switch statement as
+         * more than one value is valid.
+         * For more information, please refer to:
+         * http://msdn.microsoft.com/en-us/library/06tc147t.aspx
          */
-        if (!args.IsValid)
+        switch (prefix)
         {
-            // Then check that the value is female
-            args.IsValid = ((String.CompareOrdinal(gender, "female")) == 0);
+            case "dr.":
+            case "mdm.":
+            case "mr.":
+            case "ms.":
+            case "prof.":
+                args.IsValid = true;
+                return;
+            default:
+                args.IsValid = false;
+                return;
         }
     }
 }
