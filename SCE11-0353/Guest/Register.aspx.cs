@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Data.Linq;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI.WebControls;
 
 /*
- * Note that all user input are first desensitized by calling the HttpUtility.HTMLEncode() method.
+ * Notes: 
+ * 
+ * 1) All user input are first desensitized by calling the HttpUtility.HTMLEncode() method.
  * For more information, please refer to:
  * http://msdn.microsoft.com/en-us/library/73z22y6h.aspx
+ * 
+ * 2) We let the compiler determine at run-time the data type of local variables.
+ * Hence the use of the new C# keyword 'var'. For more information, please refer to:
+ * http://msdn.microsoft.com/en-us/library/bb384061.aspx
  */
 
 public partial class Account_Register : System.Web.UI.Page
@@ -24,10 +29,15 @@ public partial class Account_Register : System.Web.UI.Page
 
         /*
          * Validates all controls on the page, just in case of server postback.
+         * Specifically, we are checking whether the server is returning any error messages
+         * from user submitted information beforehand.
          * For more information, please refer to:
          * http://msdn.microsoft.com/en-us/library/0ke7bxeh.aspx
          */
-        Validate();
+        if (Page.IsPostBack)
+        {
+            Validate();
+        }
     }
 
     /*
@@ -83,6 +93,10 @@ public partial class Account_Register : System.Web.UI.Page
     // Server side validation to check whether first name no numeric characters
     protected void IsFirstNameValid(object source, ServerValidateEventArgs args)
     {
+        /*
+         * Step 1: Desensitize the input
+         * Step 2: Check for numeric characters
+         */
         var firstName = (HttpUtility.HtmlEncode(FirstName.Text.Trim().ToCharArray()));
         args.IsValid = !firstName.Any(Char.IsDigit);
     }
@@ -90,17 +104,26 @@ public partial class Account_Register : System.Web.UI.Page
     // Server side validation to check whether middle name has no numeric characters
     protected void IsMiddleNameValid(object source, ServerValidateEventArgs args)
     {
+        /*
+         * Step 1: Desensitize the input
+         * Step 2: Check for null or empty value
+         * Step 3: Check for numeric characters
+         */
         var temp = HttpUtility.HtmlEncode(MiddleName.Text);
         if (string.IsNullOrEmpty(temp))
             return;
 
-        var middleName = (HttpUtility.HtmlEncode(temp.Trim().ToCharArray()));
+        var middleName = (temp.Trim().ToCharArray());
         args.IsValid = !middleName.Any(Char.IsDigit);
     }
 
     // Server side validation to check whether last name has no numeric characters
     protected void IsLastNameValid(object source, ServerValidateEventArgs args)
     {
+        /*
+         * Step 1: Desensitize the input
+         * Step 2: Check for numeric characters
+         */
         var lastName = (HttpUtility.HtmlEncode(LastName.Text.Trim().ToCharArray()));
         args.IsValid = !lastName.Any(Char.IsDigit);
     }
@@ -108,7 +131,17 @@ public partial class Account_Register : System.Web.UI.Page
     // Server side validation to check whether gender is within acceptable values
     protected void IsGenderValid(object source, ServerValidateEventArgs args)
     {
-        var gender = HttpUtility.HtmlEncode(Gender.Text.Trim().ToLowerInvariant());
+        /*
+         * Step 1: Desensitize the input
+         * Step 2: Check for valid input range
+         */
+        char gender;
+        var parse = Char.TryParse(HttpUtility.HtmlEncode(Gender.SelectedValue.Trim().ToLowerInvariant()), out gender);
+        if (!parse)
+        {
+            args.IsValid = false;
+            return;
+        }
 
         /*
          * We utilize the implicit fall through feature of the switch statement as
@@ -118,8 +151,9 @@ public partial class Account_Register : System.Web.UI.Page
          */
         switch (gender)
         {
-            case "male":
-            case "female":
+            // True iff gender == 'm' || gender == 'f'
+            case 'm':
+            case 'f':
                 args.IsValid = true;
                 return;
             default:
@@ -131,6 +165,10 @@ public partial class Account_Register : System.Web.UI.Page
     // Server side validation to check whether prefix is within acceptable values
     protected void IsPrefixValid(object source, ServerValidateEventArgs args)
     {
+        /*
+         * Step 1: Desensitize the input
+         * Step 2: Check for valid input range
+         */
         var prefix = HttpUtility.HtmlEncode(Prefix.Text.Trim().ToLowerInvariant());
 
         /*
@@ -141,11 +179,38 @@ public partial class Account_Register : System.Web.UI.Page
          */
         switch (prefix)
         {
+            // True iff prefix == "dr." || prefix == "mdm." || prefix == "mr." || prefix == "ms." || prefix == "prof."
             case "dr.":
             case "mdm.":
             case "mr.":
             case "ms.":
             case "prof.":
+                args.IsValid = true;
+                return;
+            default:
+                args.IsValid = false;
+                return;
+        }
+    }
+
+    // Server side validation to check whether suffix is within acceptable values
+    protected void IsSuffixValid(object source, ServerValidateEventArgs args)
+    {
+        /*
+         * Step 1: Desensitize the input
+         * Step 2: Check for null or empty input
+         * Step 3: Check for valid input range
+         */
+        var temp = HttpUtility.HtmlEncode(Suffix.SelectedValue);
+        if (String.IsNullOrEmpty(temp))
+            return;
+
+        var suffix = (temp.Trim().ToLowerInvariant());
+        switch (suffix)
+        {
+            // True iff suffix == "jr." || suffix == "sr."
+            case "jr.":
+            case "sr.":
                 args.IsValid = true;
                 return;
             default:
