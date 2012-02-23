@@ -184,7 +184,7 @@
             <%-- / Suffix --%>
             <%-- DOB --%>
             <div>
-                <asp:Label AssociatedControlID="Prefix" runat="server" Text="* Date of Birth (dd/mm/yyyy): " />
+                <asp:Label AssociatedControlID="DateOfBirth" runat="server" Text="* Date of Birth (dd/mm/yyyy): " />
                 <asp:TextBox CssClass="textEntry" ID="DateOfBirth" runat="server" />
                 <asp:ImageButton ID="DOB_Cal" ImageUrl="~/Images/icons/calendar.png" runat="server" />
                 <ajaxToolkit:CalendarExtender ClearTime="True" DaysModeTitleFormat="dd/MM/yyyy" Enabled="True"
@@ -195,8 +195,8 @@
                     Enabled="True" ID="DOB_Input" Mask="99/99/9999" MaskType="Date" runat="server"
                     TargetControlID="DateOfBirth" />
                 <ajaxToolkit:MaskedEditValidator ControlExtender="DOB_Input" ControlToValidate="DateOfBirth"
-                    CssClass="failureNotification" Display="Dynamic" EmptyValueBlurredText="Please specify your date of birth."
-                    EmptyValueMessage="Please specify your date of birth." InvalidValueBlurredMessage="Please specify a valid date of birth."
+                    CssClass="failureNotification" Display="Dynamic" EmptyValueBlurredText="<img src='../Images/icons/error.png'> Please specify your date of birth."
+                    EmptyValueMessage="Please specify your date of birth." InvalidValueBlurredMessage="<img src='../Images/icons/error.png'> Please specify a valid date of birth."
                     InvalidValueMessage="Please specify a valid date of birth." IsValidEmpty="False"
                     runat="server" ValidationExpression="^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$"
                     ValidationGroup="RegisterUserValidationGroup" />
@@ -207,13 +207,68 @@
                 <asp:Label AssociatedControlID="Address" runat="server" Text="* Address: " />
                 <asp:TextBox CssClass="textEntry" ID="Address" runat="server" TextMode="MultiLine" />
                 <asp:RequiredFieldValidator ControlToValidate="Address" CssClass="failureNotification"
-                    Display="Dynamic" ErrorMessage="Please specify an address." runat="server"
-                    ToolTip="Please specify an address." ValidationGroup="RegisterUserValidationGroup">
+                    Display="Dynamic" ErrorMessage="Please specify an address." runat="server" ToolTip="Please specify an address."
+                    ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify an address.
                 </asp:RequiredFieldValidator>
             </div>
             <%-- / Address --%>
+            <%-- Contact Number --%>
+            <div>
+                <asp:Label AssociatedControlID="ContactNumber" runat="server" Text="* Contact Number: " />
+                <asp:TextBox CssClass="textEntry" ID="ContactNumber" runat="server" />
+                <ajaxToolkit:MaskedEditExtender AutoComplete="False" ClearTextOnInvalid="False" ClipboardEnabled="False"
+                    Enabled="True" ID="Contact_Input" Mask="99999999" MaskType="Number" runat="server"
+                    TargetControlID="ContactNumber" />
+                <ajaxToolkit:MaskedEditValidator ControlExtender="Contact_Input" ControlToValidate="ContactNumber"
+                    CssClass="failureNotification" Display="Dynamic" EmptyValueBlurredText="<img src='../Images/icons/error.png'> Please specify your contact number."
+                    EmptyValueMessage="Please specify your contact number." InvalidValueBlurredMessage="<img src='../Images/icons/error.png'> Please specify a valid contact number."
+                    InvalidValueMessage="Please specify a valid contact number." IsValidEmpty="False"
+                    runat="server" ValidationExpression="^[3689]\d{7}$" ValidationGroup="RegisterUserValidationGroup" />
+            </div>
+            <%-- / Contact Number --%>
+            <%-- Postal Code --%>
+            <div>
+                <asp:Label AssociatedControlID="PostalCode" runat="server" Text="* Postal Code: " />
+                <asp:TextBox CssClass="textEntry" ID="PostalCode" runat="server" />
+                <ajaxToolkit:MaskedEditExtender AutoComplete="False" ClearTextOnInvalid="False" ClipboardEnabled="False"
+                    Enabled="True" ID="PostalCode_Input" Mask="999999" MaskType="Number" runat="server"
+                    TargetControlID="PostalCode" />
+                <ajaxToolkit:MaskedEditValidator ControlExtender="PostalCode_Input" ControlToValidate="PostalCode"
+                    CssClass="failureNotification" Display="Dynamic" EmptyValueBlurredText="<img src='../Images/icons/error.png'> Please specify your contact number."
+                    EmptyValueMessage="Please specify your contact number." InvalidValueBlurredMessage="<img src='../Images/icons/error.png'> Please specify a valid contact number."
+                    InvalidValueMessage="Please specify a valid contact number." IsValidEmpty="False"
+                    runat="server" ValidationExpression="\d{6}$" ValidationGroup="RegisterUserValidationGroup" />
+            </div>
+            <%-- / Postal Code --%>
+            <%-- Country --%>
+            <asp:Label AssociatedControlID="Country" runat="server" Text="* Country of Residence: " />
+            <asp:TextBox CssClass="textEntry" ID="Country" runat="server" ReadOnly="True" />
+            <ajaxToolkit:AutoCompleteExtender Enabled="True" MinimumPrefixLength="1" runat="server"
+                TargetControlID="Country" />
+            <asp:SqlDataSource ID="CountryList" runat="server" />
+            <%-- / Country --%>
+            <%-- Nationality --%>
+            <div>
+                <asp:Label AssociatedControlID="Nationality" runat="server" Text="* Nationality: " />
+                <asp:TextBox CssClass="textEntry" ID="Nationality" runat="server" />
+                <ajaxToolkit:FilteredTextBoxExtender Enabled="True" FilterType="LowercaseLetters, UppercaseLetters"
+                    runat="server" TargetControlID="Nationality" />
+                <asp:RequiredFieldValidator ControlToValidate="Nationality" CssClass="failureNotification"
+                    Display="Dynamic" ErrorMessage="Please specify your nationality." runat="server"
+                    ToolTip="Please specify your nationality." ValidationGroup="RegisterUserValidationGroup">
+                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please specify your nationality.
+                </asp:RequiredFieldValidator>
+                <asp:CustomValidator ControlToValidate="Nationality" CssClass="failureNotification"
+                    Display="Dynamic" ErrorMessage="Please specify a valid nationality." OnServerValidate="IsNationalityValid"
+                    runat="server" ToolTip="Please specify a valid nationality." ValidationGroup="RegisterUserValidationGroup">
+                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please specify a valid nationality.
+                </asp:CustomValidator>
+            </div>
+            <%-- / Nationality --%>
         </fieldset>
     </asp:Panel>
     <ajaxToolkit:CollapsiblePanelExtender CollapseControlID="PersonalInfoHeader" CollapsedImage="~/Images/icons/bullet_arrow_down.png"

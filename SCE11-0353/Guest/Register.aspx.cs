@@ -52,6 +52,8 @@ public partial class Account_Register : System.Web.UI.Page
         //FormsAuthentication.SetAuthCookie(UserName.Text, true);
 
         // Add user to the patient role
+        var dob = DateOfBirth.Text;
+        return;
     }
 
     protected void RegisterButton_Click(object sender, EventArgs e)
@@ -217,5 +219,16 @@ public partial class Account_Register : System.Web.UI.Page
                 args.IsValid = false;
                 return;
         }
+    }
+
+    // Server side validation to check whether nationality is within acceptable values
+    protected void IsNationalityValid(object source, ServerValidateEventArgs args)
+    {
+        /*
+         * Step 1: Desensitize the input
+         * Step 2: Check for numeric characters
+         */
+        var lastName = (HttpUtility.HtmlEncode(LastName.Text.Trim().ToCharArray()));
+        args.IsValid = !lastName.Any(Char.IsDigit);
     }
 }
