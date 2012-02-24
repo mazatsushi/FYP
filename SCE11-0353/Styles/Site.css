@@ -19,6 +19,34 @@
 
 /* FORM ELEMENTS   
 ----------------------------------------------------------*/
+.autocomplete_completionListElement
+{
+    margin: 0px !important;
+    background-color: inherit;
+    color: windowtext;
+    border: buttonshadow;
+    border-width: 1px;
+    border-style: solid;
+    overflow: auto;
+    height: 200px;
+    text-align: left;
+    list-style-type: none;
+}
+
+.autocomplete_highlightedListItem
+{
+    background-color: #ffff99;
+    color: black;
+    padding: 1px;
+}
+
+.autocomplete_listItem
+{
+    background-color: window;
+    color: windowtext;
+    padding: 1px;
+}
+
 .formDivs
 {
     padding: 10px 0px 10px 0px;

@@ -1,177 +1,177 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 13.75, 15.5" name="DataClasses">
-  <DataContextMoniker Name="/RISDB_Context" />
+  <DataContextMoniker Name="/RIS_DB" />
   <nestedChildShapes>
     <classShape Id="d157d265-0b67-4088-a5c6-ac12bda88eb9" absoluteBounds="9, 5.5, 2, 1.5785953776041666">
-      <DataClassMoniker Name="/RISDB_Context/Appointment" />
+      <DataClassMoniker Name="/RIS_DB/Appointment" />
       <nestedChildShapes>
         <elementListCompartment Id="86652dd2-6b57-49b8-8c9f-ff1d4adf0266" absoluteBounds="9.015, 5.96, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="d307e372-c49d-4387-8bb1-78d95c592038" absoluteBounds="3.5, 3.25, 2, 1.1939925130208344">
-      <DataClassMoniker Name="/RISDB_Context/BloodType" />
+      <DataClassMoniker Name="/RIS_DB/BloodType" />
       <nestedChildShapes>
         <elementListCompartment Id="0797c453-26a3-48c4-87ac-1bd27dcfc17e" absoluteBounds="3.515, 3.7100000000000009, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="de7f4f09-fef9-428d-8634-496d68330620" absoluteBounds="8.75, 12.875, 2, 1.1939925130208344">
-      <DataClassMoniker Name="/RISDB_Context/Country" />
+      <DataClassMoniker Name="/RIS_DB/Country" />
       <nestedChildShapes>
         <elementListCompartment Id="3b2ca6a3-1abc-4aec-b990-00aca4f1b433" absoluteBounds="8.765, 13.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="e920ac99-c3df-41fe-8324-2e9bb3f4c2de" absoluteBounds="0.75, 6.375, 2, 1.1939925130208344">
-      <DataClassMoniker Name="/RISDB_Context/Department" />
+      <DataClassMoniker Name="/RIS_DB/Department" />
       <nestedChildShapes>
         <elementListCompartment Id="e7210d35-f64d-402b-9e7b-e5cd873adc7c" absoluteBounds="0.765, 6.835, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="978d4c83-2a04-49f0-90d6-9ad98f72ff2f" absoluteBounds="6.25, 14, 2, 1.1939925130208344">
-      <DataClassMoniker Name="/RISDB_Context/DrugAllergy" />
+      <DataClassMoniker Name="/RIS_DB/DrugAllergy" />
       <nestedChildShapes>
         <elementListCompartment Id="c0458b29-d94b-483c-b082-cb598c04e008" absoluteBounds="6.265, 14.46, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="a47ed4e3-9d3a-4976-a92b-33fe23b57cf6" absoluteBounds="6.25, 5.25, 2, 1.5785953776041666">
-      <DataClassMoniker Name="/RISDB_Context/Image" />
+      <DataClassMoniker Name="/RIS_DB/Image" />
       <nestedChildShapes>
         <elementListCompartment Id="49d57e2f-dbdb-4e81-a225-8ca6b9db8c72" absoluteBounds="6.265, 5.71, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="3e7f4b89-b14b-4704-a5d4-4bac888235cb" absoluteBounds="9, 3.375, 2, 1.3862939453124992">
-      <DataClassMoniker Name="/RISDB_Context/Note" />
+      <DataClassMoniker Name="/RIS_DB/Note" />
       <nestedChildShapes>
         <elementListCompartment Id="33a0b0bb-4436-4246-8c53-249913b4a89f" absoluteBounds="9.015, 3.835, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="f54430cb-7586-4870-b4e5-8c64c08bf130" absoluteBounds="6.25, 11.75, 2, 1.1939925130208344">
-      <DataClassMoniker Name="/RISDB_Context/Modality" />
+      <DataClassMoniker Name="/RIS_DB/Modality" />
       <nestedChildShapes>
         <elementListCompartment Id="b6a339df-ef54-4713-8a66-b7e67628b2bc" absoluteBounds="6.2650000000000006, 12.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="9f4d31cc-9087-4998-901c-31db099f1953" absoluteBounds="6.25, 2.625, 2, 1.3862939453124987">
-      <DataClassMoniker Name="/RISDB_Context/Patient" />
+      <DataClassMoniker Name="/RIS_DB/Patient" />
       <nestedChildShapes>
         <elementListCompartment Id="c50edcb3-e592-4df8-98ed-6aaee965e2df" absoluteBounds="6.265, 3.0850000000000009, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="d9038ecd-d0e1-41d6-af4e-06185bfbb011" absoluteBounds="9, 0.75, 2, 1.1939925130208344">
-      <DataClassMoniker Name="/RISDB_Context/PatientsWithDrugAllergy" />
+      <DataClassMoniker Name="/RIS_DB/PatientsWithDrugAllergy" />
       <nestedChildShapes>
         <elementListCompartment Id="953454d4-e4b1-4002-a748-3a18cda9bbc2" absoluteBounds="9.015, 1.2100000000000009, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="c8901ae1-bd65-4e6a-8400-96b3b4c8a683" absoluteBounds="9, 8.5, 2, 1.5785953776041666">
-      <DataClassMoniker Name="/RISDB_Context/Series" />
+      <DataClassMoniker Name="/RIS_DB/Series" />
       <nestedChildShapes>
         <elementListCompartment Id="bc8a7999-05d3-42b0-ae0b-feeb720a1908" absoluteBounds="9.015, 8.96, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="280432e4-aeda-4754-a1cc-9b4261500e37" absoluteBounds="3.5, 6.25, 2, 1.5785953776041666">
-      <DataClassMoniker Name="/RISDB_Context/Staff" />
+      <DataClassMoniker Name="/RIS_DB/Staff" />
       <nestedChildShapes>
         <elementListCompartment Id="bbd62d8b-2fb6-4654-a76c-55dcc2ce6edd" absoluteBounds="3.515, 6.71, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="64401664-3271-4779-85cc-6bb2b719f91a" absoluteBounds="6.25, 8.125, 2, 2.3478011067708344">
-      <DataClassMoniker Name="/RISDB_Context/Study" />
+      <DataClassMoniker Name="/RIS_DB/Study" />
       <nestedChildShapes>
         <elementListCompartment Id="56635fe4-4d9b-4909-a6d6-f2317b1a3448" absoluteBounds="6.265, 8.585, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="f377e301-3059-4481-bc3e-fc4cac817064" absoluteBounds="11.5, 11.75, 2, 3.5016097005208309">
-      <DataClassMoniker Name="/RISDB_Context/UserParticular" />
+      <DataClassMoniker Name="/RIS_DB/UserParticular" />
       <nestedChildShapes>
         <elementListCompartment Id="19c46087-beba-47d6-8ea1-a5afb2c3afa0" absoluteBounds="11.515, 12.21, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <associationConnector edgePoints="[(8.25 : 5.25); (8.44107443490112 : 5.05892556509888 : JumpStart); (8.55892556509888 : 4.94107443490112 : JumpEnd); (8.625 : 4.875); (8.625 : 5.1362939453125); (9 : 4.7612939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RISDB_Context/Image/Image_Note" />
+      <AssociationMoniker Name="/RIS_DB/Image/Image_Note" />
       <nodes>
         <classShapeMoniker Id="a47ed4e3-9d3a-4976-a92b-33fe23b57cf6" />
         <classShapeMoniker Id="3e7f4b89-b14b-4704-a5d4-4bac888235cb" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(8.25 : 3.9494429077524); (8.44107443490112 : 4.14051734265352 : JumpStart); (8.55892556509888 : 4.25836847285128 : JumpEnd); (8.8125 : 4.5119429077524); (8.8125 : 6.28929768880208); (9 : 6.28929768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RISDB_Context/Patient/Patient_Appointment" />
+      <AssociationMoniker Name="/RIS_DB/Patient/Patient_Appointment" />
       <nodes>
         <classShapeMoniker Id="9f4d31cc-9087-4998-901c-31db099f1953" />
         <classShapeMoniker Id="d157d265-0b67-4088-a5c6-ac12bda88eb9" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(5.5 : 3.63064697265625); (6.25 : 3.63064697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RISDB_Context/BloodType/BloodType_Patient" />
+      <AssociationMoniker Name="/RIS_DB/BloodType/BloodType_Patient" />
       <nodes>
         <classShapeMoniker Id="d307e372-c49d-4387-8bb1-78d95c592038" />
         <classShapeMoniker Id="9f4d31cc-9087-4998-901c-31db099f1953" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(7.25 : 14); (7.25 : 13.1939925130208); (8.5 : 13.1939925130208); (8.5 : 1.34699625651042); (9 : 1.34699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RISDB_Context/DrugAllergy/DrugAllergy_PatientsWithDrugAllergy" />
+      <AssociationMoniker Name="/RIS_DB/DrugAllergy/DrugAllergy_PatientsWithDrugAllergy" />
       <nodes>
         <classShapeMoniker Id="978d4c83-2a04-49f0-90d6-9ad98f72ff2f" />
         <classShapeMoniker Id="d9038ecd-d0e1-41d6-af4e-06185bfbb011" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(7.25 : 2.625); (7.25 : 1.67674688476563); (8.41666666666667 : 1.67674688476563 : JumpStart); (8.58333333333333 : 1.67674688476563 : JumpEnd); (9 : 1.67674688476563)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RISDB_Context/Patient/Patient_PatientsWithDrugAllergy" />
+      <AssociationMoniker Name="/RIS_DB/Patient/Patient_PatientsWithDrugAllergy" />
       <nodes>
         <classShapeMoniker Id="9f4d31cc-9087-4998-901c-31db099f1953" />
         <classShapeMoniker Id="d9038ecd-d0e1-41d6-af4e-06185bfbb011" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(9 : 8.5); (8.625 : 8.3221572265625); (8.625 : 6.07054968880208); (8.25 : 6.07054968880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RISDB_Context/Series/Series_Image" />
+    <associationConnector edgePoints="[(9 : 8.5); (8.625 : 8.3221572265625); (8.625 : 6.07054968880208); (8.58333333333333 : 6.07054968880208 : JumpStart); (8.41666666666667 : 6.07054968880208 : JumpEnd); (8.25 : 6.07054968880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/RIS_DB/Series/Series_Image" />
       <nodes>
         <classShapeMoniker Id="c8901ae1-bd65-4e6a-8400-96b3b4c8a683" />
         <classShapeMoniker Id="a47ed4e3-9d3a-4976-a92b-33fe23b57cf6" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 12.28125); (10.90625 : 12.28125); (10.90625 : 10.0785953776042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RISDB_Context/Modality/Modality_Series" />
+    <associationConnector edgePoints="[(8.25 : 12.28125); (8.41666666666667 : 12.28125 : JumpStart); (8.58333333333333 : 12.28125 : JumpEnd); (10.90625 : 12.28125); (10.90625 : 10.0785953776042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/RIS_DB/Modality/Modality_Series" />
       <nodes>
         <classShapeMoniker Id="f54430cb-7586-4870-b4e5-8c64c08bf130" />
         <classShapeMoniker Id="c8901ae1-bd65-4e6a-8400-96b3b4c8a683" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(5.5 : 6.53929768880208); (6.25 : 6.53929768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RISDB_Context/Staff/Staff_Image" />
+      <AssociationMoniker Name="/RIS_DB/Staff/Staff_Image" />
       <nodes>
         <classShapeMoniker Id="280432e4-aeda-4754-a1cc-9b4261500e37" />
         <classShapeMoniker Id="a47ed4e3-9d3a-4976-a92b-33fe23b57cf6" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(2.75 : 6.97199625651042); (3.5 : 6.97199625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RISDB_Context/Department/Department_Staff" />
+      <AssociationMoniker Name="/RIS_DB/Department/Department_Staff" />
       <nodes>
         <classShapeMoniker Id="e920ac99-c3df-41fe-8324-2e9bb3f4c2de" />
         <classShapeMoniker Id="280432e4-aeda-4754-a1cc-9b4261500e37" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(8.25 : 8.18653746153846); (8.44107443490112 : 7.99546302663734 : JumpStart); (8.55892556509888 : 7.87761189643958 : JumpEnd); (8.56607443490112 : 7.87046302663734 : JumpStart); (8.68392556509888 : 7.75261189643958 : JumpEnd); (8.8125 : 7.62403746153846); (8.8125 : 6.71519853320313); (9 : 6.71519853320313)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RISDB_Context/Study/Study_Appointment" />
+      <AssociationMoniker Name="/RIS_DB/Study/Study_Appointment" />
       <nodes>
         <classShapeMoniker Id="64401664-3271-4779-85cc-6bb2b719f91a" />
         <classShapeMoniker Id="d157d265-0b67-4088-a5c6-ac12bda88eb9" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 9.32055018880208); (9 : 9.32055018880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RISDB_Context/Study/Study_Series" />
+    <associationConnector edgePoints="[(8.25 : 9.32055018880208); (8.41666666666667 : 9.32055018880208 : JumpStart); (8.58333333333333 : 9.32055018880208 : JumpEnd); (9 : 9.32055018880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/RIS_DB/Study/Study_Series" />
       <nodes>
         <classShapeMoniker Id="64401664-3271-4779-85cc-6bb2b719f91a" />
         <classShapeMoniker Id="c8901ae1-bd65-4e6a-8400-96b3b4c8a683" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(4.5 : 7.82859537760417); (4.5 : 9.29890055338542); (6.25 : 9.29890055338542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RISDB_Context/Staff/Staff_Study" />
+      <AssociationMoniker Name="/RIS_DB/Staff/Staff_Study" />
       <nodes>
         <classShapeMoniker Id="280432e4-aeda-4754-a1cc-9b4261500e37" />
         <classShapeMoniker Id="64401664-3271-4779-85cc-6bb2b719f91a" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(10.75 : 13.4719962565104); (11.5 : 13.4719962565104)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RISDB_Context/Country/Country_UserParticular" />
+      <AssociationMoniker Name="/RIS_DB/Country/Country_UserParticular" />
       <nodes>
         <classShapeMoniker Id="de7f4f09-fef9-428d-8634-496d68330620" />
         <classShapeMoniker Id="f377e301-3059-4481-bc3e-fc4cac817064" />

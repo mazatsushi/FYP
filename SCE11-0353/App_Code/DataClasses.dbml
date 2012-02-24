@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="RIS_DB" Class="RISDB_Context" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="RIS_DB" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=.;AttachDbFilename=|DataDirectory|\RIS_DB.mdf;Initial Catalog=RIS_DB;Integrated Security=False;Persist Security Info=True;User ID=sa;User Instance=False" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="RIS_DBConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Appointments" Member="Appointments">
     <Type Name="Appointment">

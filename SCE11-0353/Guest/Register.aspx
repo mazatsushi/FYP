@@ -236,18 +236,25 @@
                     Enabled="True" ID="PostalCode_Input" Mask="999999" MaskType="Number" runat="server"
                     TargetControlID="PostalCode" />
                 <ajaxToolkit:MaskedEditValidator ControlExtender="PostalCode_Input" ControlToValidate="PostalCode"
-                    CssClass="failureNotification" Display="Dynamic" EmptyValueBlurredText="<img src='../Images/icons/error.png'> Please specify your contact number."
-                    EmptyValueMessage="Please specify your contact number." InvalidValueBlurredMessage="<img src='../Images/icons/error.png'> Please specify a valid contact number."
-                    InvalidValueMessage="Please specify a valid contact number." IsValidEmpty="False"
-                    runat="server" ValidationExpression="\d{6}$" ValidationGroup="RegisterUserValidationGroup" />
+                    CssClass="failureNotification" Display="Dynamic" EmptyValueBlurredText="<img src='../Images/icons/error.png'> Please specify your postal code."
+                    EmptyValueMessage="Please specify your postal code." InvalidValueBlurredMessage="<img src='../Images/icons/error.png'> Please specify a valid postal."
+                    InvalidValueMessage="Please specify a valid postal." IsValidEmpty="False" runat="server"
+                    ValidationExpression="\d{6}$" ValidationGroup="RegisterUserValidationGroup" />
             </div>
             <%-- / Postal Code --%>
             <%-- Country --%>
             <asp:Label AssociatedControlID="Country" runat="server" Text="* Country of Residence: " />
-            <asp:TextBox CssClass="textEntry" ID="Country" runat="server" ReadOnly="True" />
-            <ajaxToolkit:AutoCompleteExtender Enabled="True" MinimumPrefixLength="1" runat="server"
-                TargetControlID="Country" />
-            <asp:SqlDataSource ID="CountryList" runat="server" />
+            <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" DataSourceID="CountryListing" DataTextField="CountryName"
+                DataValueField="CountryName" DropDownStyle="DropDownList" ID="Country" MaxLength="0"
+                runat="server" Style="display: inline;" />
+            <asp:SqlDataSource ConnectionString="<%$ ConnectionStrings:ApplicationServices %>"
+                ID="CountryListing" runat="server" SelectCommand="SELECT DISTINCT [CountryName] FROM [Countries] ORDER BY [CountryName]" />
+            <asp:RequiredFieldValidator ControlToValidate="Nationality" CssClass="failureNotification"
+                Display="Dynamic" ErrorMessage="Please specify your country of residence." runat="server"
+                ToolTip="Please specify your country of residence." ValidationGroup="RegisterUserValidationGroup">
+                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please specify your country of residence.
+            </asp:RequiredFieldValidator>
             <%-- / Country --%>
             <%-- Nationality --%>
             <div>
