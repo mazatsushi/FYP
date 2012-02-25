@@ -32,6 +32,9 @@
         </div>
         <div id="menucontainer">
             <ajaxToolkit:ToolkitScriptManager ID="ScriptManager" runat="server" EnableCdn="True" EnableViewState="False">
+                <Services>
+                    <asp:ServiceReference Path="~/Services/WebServices.svc"/>
+                </Services>
             </ajaxToolkit:ToolkitScriptManager>
             <%--The data source of the navigation menu.--%>
             <asp:SiteMapDataSource ID="siteMap" runat="server" ShowStartingNode="False" />

@@ -55,14 +55,12 @@
                     Please enter a valid NRIC.
                 </asp:RegularExpressionValidator>
                 <%--TODO: Make sure that the NRIC is unique using LINQ to SQL--%>
-                <%--<asp:SqlDataSource ConnectionString="<%$ ConnectionStrings:ApplicationServices %>"
-                    EnableCaching="True" ID="SqlDataSource1" ProviderName="<%$ ConnectionStrings:ApplicationServices.ProviderName %>"
-                    runat="server" SelectCommand="SELECT UserId FROM UserParticulars">
-                    <SelectParameters>
-                        <asp:ControlParameter ControlID="NRIC" DbType="String" Name="NRIC" PropertyName="Text"
-                            Type="String" />
-                    </SelectParameters>
-                </asp:SqlDataSource>--%>
+                <asp:CustomValidator ControlToValidate="NRIC" CssClass="failureNotification" Display="Dynamic"
+                    ErrorMessage="NRIC already in use." OnServerValidate="NRICNotExists" runat="server"
+                    ToolTip="NRIC already in use." ValidationGroup="RegisterUserValidationGroup">
+                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    NRIC already in use.
+                </asp:CustomValidator>
             </div>
             <%-- / NRIC --%>
             <%-- / First Name --%>
@@ -246,7 +244,7 @@
             <asp:Label AssociatedControlID="Country" runat="server" Text="* Country of Residence: " />
             <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" DataSourceID="CountryListing" DataTextField="CountryName"
                 DataValueField="CountryName" DropDownStyle="DropDownList" ID="Country" MaxLength="0"
-                runat="server" Style="display: inline;" />
+                runat="server" />
             <asp:SqlDataSource ConnectionString="<%$ ConnectionStrings:ApplicationServices %>"
                 ID="CountryListing" runat="server" SelectCommand="SELECT DISTINCT [CountryName] FROM [Countries] ORDER BY [CountryName]" />
             <asp:RequiredFieldValidator ControlToValidate="Nationality" CssClass="failureNotification"
@@ -302,7 +300,7 @@
                     Please enter your user name.
                 </asp:RequiredFieldValidator>
                 <asp:CustomValidator ControlToValidate="UserName" CssClass="failureNotification"
-                    Display="Dynamic" ErrorMessage="User name is already in use." OnServerValidate="UniqueUserName_Validate"
+                    Display="Dynamic" ErrorMessage="User name is already in use." OnServerValidate="UserNameNotExists"
                     runat="server" ToolTip="User name is already in use." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     User name is already in use.
@@ -320,8 +318,8 @@
                     Please enter your e-mail address.
                 </asp:RequiredFieldValidator>
                 <%--Matches a valid email address including ip's which are rarely used. Allows for a-z0-9_.- in the username,
-                                but not ending in a full stop i.e user.@domain.com is invalid and a-z0-9- as the optional sub domain(s)
-                                with domain name and a 2-7 char (a-z) tld allowing for short tld's like ca and new ones like museum.--%>
+                but not ending in a full stop i.e user.@domain.com is invalid and a-z0-9- as the optional sub domain(s)
+                with domain name and a 2-7 char (a-z) tld allowing for short tld's like ca and new ones like museum.--%>
                 <asp:RegularExpressionValidator ControlToValidate="Email" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please enter a valid e-mail address." runat="server"
                     ToolTip="Please enter a valid e-mail address." ValidationExpression="^[\w-]+(\.[\w-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\`d{1,3}\.){3}\d{1,3})(:\d{4})?$"
@@ -330,7 +328,7 @@
                     Please enter a valid e-mail address.
                 </asp:RegularExpressionValidator>
                 <asp:CustomValidator ControlToValidate="Email" CssClass="failureNotification" Display="Dynamic"
-                    ErrorMessage="E-mail address is already in use." OnServerValidate="UniqueEmail_Validate"
+                    ErrorMessage="E-mail address is already in use." OnServerValidate="EmailNotInUse"
                     runat="server" ToolTip="Em-ail address is already in use." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     E-mail address is already in use.

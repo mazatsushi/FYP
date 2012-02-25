@@ -51,8 +51,6 @@ public partial class Account_Register : System.Web.UI.Page
         //FormsAuthentication.SetAuthCookie(UserName.Text, true);
 
         // Add user to the patient role
-        var dob = DateOfBirth.Text;
-        return;
     }
 
     protected void RegisterButton_Click(object sender, EventArgs e)
@@ -65,11 +63,10 @@ public partial class Account_Register : System.Web.UI.Page
          */
         Validate();
 
-        //using (var context = new RISDB_Context())
+        //using (var db = new RIS_DB())
         //{
-        //    Table<Country> countries = context.GetTable<Country>();
-        //    IQueryable<Country> query = from cust in countries
-        //                                select cust;
+        //    var query = from country in db.Countries
+        //                select country;
         //    foreach (var country in query)
         //    {
         //        Console.WriteLine("Country Name: {0}", country.CountryName);
@@ -78,17 +75,14 @@ public partial class Account_Register : System.Web.UI.Page
         //}
     }
 
-    // Method to check whether user email is unique
-    protected void UniqueEmail_Validate(object sender, ServerValidateEventArgs args)
+    // Server side validation to check whether NRIC already exists
+    protected void NRICNotExists(object source, ServerValidateEventArgs args)
     {
-        args.IsValid = (Membership.GetUserNameByEmail(HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant())) ==
-                        null);
-    }
-
-    // Method to check whether user account already exists
-    protected void UniqueUserName_Validate(object sender, ServerValidateEventArgs args)
-    {
-        args.IsValid = (Membership.GetUser(HttpUtility.HtmlEncode(UserName.Text.Trim())) == null);
+        /*
+         * Step 1: Desensitize the input
+         * Step 2: Check for existing NRIC
+         */
+        var nric = (HttpUtility.HtmlEncode(NRIC.Text.Trim().ToCharArray()));
     }
 
     // Server side validation to check whether first name no numeric characters
@@ -229,5 +223,18 @@ public partial class Account_Register : System.Web.UI.Page
          */
         var lastName = (HttpUtility.HtmlEncode(LastName.Text.Trim().ToCharArray()));
         args.IsValid = !lastName.Any(Char.IsDigit);
+    }
+
+    // Method to check whether username already exists
+    protected void UserNameNotExists(object sender, ServerValidateEventArgs args)
+    {
+        args.IsValid = (Membership.GetUser(HttpUtility.HtmlEncode(UserName.Text.Trim())) == null);
+    }
+
+    // Method to check whether user email already exists
+    protected void EmailNotInUse(object sender, ServerValidateEventArgs args)
+    {
+        args.IsValid = (Membership.GetUserNameByEmail(HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant())) ==
+                        null);
     }
 }

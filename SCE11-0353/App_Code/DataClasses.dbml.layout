@@ -86,7 +86,7 @@
         <elementListCompartment Id="19c46087-beba-47d6-8ea1-a5afb2c3afa0" absoluteBounds="11.515, 12.21, 1.9700000000000002, 2.941609700520833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(8.25 : 5.25); (8.44107443490112 : 5.05892556509888 : JumpStart); (8.55892556509888 : 4.94107443490112 : JumpEnd); (8.625 : 4.875); (8.625 : 5.1362939453125); (9 : 4.7612939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(8.25 : 5.25); (8.44107443490112 : 5.05892556509888 : JumpStart); (8.55892556509888 : 4.94107443490112 : JumpEnd); (8.625 : 4.875); (8.625 : 5.1362939453125); (8.75357443490112 : 5.00771951041138 : JumpStart); (8.87142556509888 : 4.88986838021362 : JumpEnd); (9 : 4.7612939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/RIS_DB/Image/Image_Note" />
       <nodes>
         <classShapeMoniker Id="a47ed4e3-9d3a-4976-a92b-33fe23b57cf6" />
@@ -149,14 +149,14 @@
         <classShapeMoniker Id="280432e4-aeda-4754-a1cc-9b4261500e37" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 8.18653746153846); (8.44107443490112 : 7.99546302663734 : JumpStart); (8.55892556509888 : 7.87761189643958 : JumpEnd); (8.56607443490112 : 7.87046302663734 : JumpStart); (8.68392556509888 : 7.75261189643958 : JumpEnd); (8.8125 : 7.62403746153846); (8.8125 : 6.71519853320313); (9 : 6.71519853320313)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(8.25 : 8.18653746153846); (8.44107443490112 : 7.99546302663734 : JumpStart); (8.55892556509888 : 7.87761189643958 : JumpEnd); (8.8125 : 7.62403746153846); (8.8125 : 6.71519853320313); (9 : 6.71519853320313)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/RIS_DB/Study/Study_Appointment" />
       <nodes>
         <classShapeMoniker Id="64401664-3271-4779-85cc-6bb2b719f91a" />
         <classShapeMoniker Id="d157d265-0b67-4088-a5c6-ac12bda88eb9" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.25 : 9.32055018880208); (8.41666666666667 : 9.32055018880208 : JumpStart); (8.58333333333333 : 9.32055018880208 : JumpEnd); (9 : 9.32055018880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(8.25 : 9.32055018880208); (9 : 9.32055018880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/RIS_DB/Study/Study_Series" />
       <nodes>
         <classShapeMoniker Id="64401664-3271-4779-85cc-6bb2b719f91a" />

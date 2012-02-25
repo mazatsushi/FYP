@@ -73,7 +73,7 @@ public partial class RIS_DB : System.Data.Linq.DataContext
   #endregion
 	
 	public RIS_DB() : 
-			base(global::System.Configuration.ConfigurationManager.ConnectionStrings["RIS_DBConnectionString"].ConnectionString, mappingSource)
+			base(global::System.Configuration.ConfigurationManager.ConnectionStrings["ApplicationServices"].ConnectionString, mappingSource)
 	{
 		OnCreated();
 	}
