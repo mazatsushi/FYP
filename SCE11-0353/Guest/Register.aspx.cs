@@ -82,7 +82,14 @@ public partial class Account_Register : System.Web.UI.Page
          * Step 1: Desensitize the input
          * Step 2: Check for existing NRIC
          */
-        var nric = (HttpUtility.HtmlEncode(NRIC.Text.Trim().ToCharArray()));
+        var input = (HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant()));
+        using (var db = new RIS_DB())
+        {
+            var query = from record in db.UserParticulars
+                        where (record.NRIC == input)
+                        select record.NRIC;
+            args.IsValid = !query.Any();
+        }
     }
 
     // Server side validation to check whether first name no numeric characters

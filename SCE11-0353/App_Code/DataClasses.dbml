@@ -1,20 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="RIS_DB" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=RIS_DB;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ApplicationServices" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.Appointments" Member="Appointments">
-    <Type Name="Appointment">
-      <Column Name="AppointmentId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="AppointmentDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="StudyId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="PatientId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Patient_Appointment" Member="Patient" ThisKey="PatientId" OtherKey="PatientId" Type="Patient" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
-      <Association Name="Study_Appointment" Member="Study" ThisKey="StudyId" OtherKey="StudyId" Type="Study" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.BloodTypes" Member="BloodTypes">
     <Type Name="BloodType">
       <Column Name="BloodTypeId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="BloodType" Member="BloodType1" Type="System.String" DbType="NVarChar(3) NOT NULL" CanBeNull="false" />
       <Association Name="BloodType_Patient" Member="Patients" ThisKey="BloodTypeId" OtherKey="BloodTypeId" Type="Patient" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserParticulars" Member="UserParticulars">
+    <Type Name="UserParticular">
+      <Column Name="NRIC" Type="System.String" DbType="NChar(9) NOT NULL" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(80) NOT NULL" CanBeNull="false" />
+      <Column Name="MiddleName" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(80) NOT NULL" CanBeNull="false" />
+      <Column Name="Gender" Type="System.Char" DbType="NChar(1) NOT NULL" CanBeNull="false" />
+      <Column Name="Prefix" Type="System.String" DbType="NVarChar(5) NOT NULL" CanBeNull="false" />
+      <Column Name="Suffix" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Column Name="DateOfBirth" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ContactNumber" Type="System.String" DbType="NVarChar(8) NOT NULL" CanBeNull="false" />
+      <Column Name="PostalCode" Type="System.String" DbType="NVarChar(6) NOT NULL" CanBeNull="false" />
+      <Column Name="CountryOfResidence" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nationality" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Country_UserParticular" Member="Country" ThisKey="CountryOfResidence" OtherKey="CountryId" Type="Country" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Countries" Member="Countries">
@@ -31,6 +40,12 @@
       <Association Name="Department_Staff" Member="Staffs" ThisKey="DepartmentId" OtherKey="DepartmentId" Type="Staff" />
     </Type>
   </Table>
+  <Table Name="dbo.DicomImages" Member="DicomImages">
+    <Type Name="DicomImage">
+      <Column Name="DicomUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="DicomImage_Image" Member="Image" ThisKey="DicomUID" OtherKey="DicomUID" Type="Image" Cardinality="One" />
+    </Type>
+  </Table>
   <Table Name="dbo.DrugAllergies" Member="DrugAllergies">
     <Type Name="DrugAllergy">
       <Column Name="DrugAllergyId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -45,8 +60,16 @@
       <Column Name="SeriesId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="DicomUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Association Name="Image_Note" Member="Notes" ThisKey="ImageId" OtherKey="ImageId" Type="Note" />
+      <Association Name="DicomImage_Image" Member="DicomImage" ThisKey="DicomUID" OtherKey="DicomUID" Type="DicomImage" IsForeignKey="true" />
       <Association Name="Series_Image" Member="Series" ThisKey="SeriesId" OtherKey="SeriesId" Type="Series" IsForeignKey="true" />
       <Association Name="Staff_Image" Member="Staff" ThisKey="TakenBy" OtherKey="StaffId" Type="Staff" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Modalities" Member="Modalities">
+    <Type Name="Modality">
+      <Column Name="ModalityId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Modality_Series" Member="Series" ThisKey="ModalityId" OtherKey="ModalityType" Type="Series" />
     </Type>
   </Table>
   <Table Name="dbo.Notes" Member="Notes">
@@ -57,20 +80,13 @@
       <Association Name="Image_Note" Member="Image" ThisKey="ImageId" OtherKey="ImageId" Type="Image" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Modalities" Member="Modalities">
-    <Type Name="Modality">
-      <Column Name="ModalityId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Association Name="Modality_Series" Member="Series" ThisKey="ModalityId" OtherKey="ModalityType" Type="Series" />
-    </Type>
-  </Table>
   <Table Name="dbo.Patients" Member="Patients">
     <Type Name="Patient">
       <Column Name="PatientId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="BloodTypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Association Name="Patient_Appointment" Member="Appointments" ThisKey="PatientId" OtherKey="PatientId" Type="Appointment" />
       <Association Name="Patient_PatientsWithDrugAllergy" Member="PatientsWithDrugAllergies" ThisKey="PatientId" OtherKey="PatientId" Type="PatientsWithDrugAllergy" />
+      <Association Name="Patient_Appointment" Member="Appointments" ThisKey="PatientId" OtherKey="PatientId" Type="Appointment" />
       <Association Name="BloodType_Patient" Member="BloodType" ThisKey="BloodTypeId" OtherKey="BloodTypeId" Type="BloodType" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
@@ -114,28 +130,19 @@
       <Column Name="StudyUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="DateCompleted" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="ReferredBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Study_Appointment" Member="Appointments" ThisKey="StudyId" OtherKey="StudyId" Type="Appointment" />
       <Association Name="Study_Series" Member="Series" ThisKey="StudyId" OtherKey="StudyId" Type="Series" />
+      <Association Name="Study_Appointment" Member="Appointments" ThisKey="StudyId" OtherKey="StudyId" Type="Appointment" />
       <Association Name="Staff_Study" Member="Staff" ThisKey="ReferredBy" OtherKey="StaffId" Type="Staff" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.UserParticulars" Member="UserParticulars">
-    <Type Name="UserParticular">
-      <Column Name="NRIC" Type="System.String" DbType="NChar(8) NOT NULL" CanBeNull="false" />
-      <Column Name="FirstName" Type="System.String" DbType="NVarChar(80) NOT NULL" CanBeNull="false" />
-      <Column Name="MiddleName" Type="System.String" DbType="NVarChar(80)" CanBeNull="true" />
-      <Column Name="LastName" Type="System.String" DbType="NVarChar(80) NOT NULL" CanBeNull="false" />
-      <Column Name="Gender" Type="System.Char" DbType="NChar(1) NOT NULL" CanBeNull="false" />
-      <Column Name="Prefix" Type="System.String" DbType="NVarChar(5) NOT NULL" CanBeNull="false" />
-      <Column Name="Suffix" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
-      <Column Name="DateOfBirth" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="Address" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="ContactNumber" Type="System.String" DbType="NVarChar(8) NOT NULL" CanBeNull="false" />
-      <Column Name="PostalCode" Type="System.String" DbType="NVarChar(6) NOT NULL" CanBeNull="false" />
-      <Column Name="CountryOfResidence" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Nationality" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Association Name="Country_UserParticular" Member="Country" ThisKey="CountryOfResidence" OtherKey="CountryId" Type="Country" IsForeignKey="true" />
+  <Table Name="dbo.Appointments" Member="Appointments">
+    <Type Name="Appointment">
+      <Column Name="AppointmentId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AppointmentDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="StudyId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PatientId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Patient_Appointment" Member="Patient" ThisKey="PatientId" OtherKey="PatientId" Type="Patient" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Study_Appointment" Member="Study" ThisKey="StudyId" OtherKey="StudyId" Type="Study" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
 </Database>
