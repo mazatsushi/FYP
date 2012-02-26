@@ -18,13 +18,14 @@ using System.Web.UI.WebControls;
 
 public partial class Account_Register : System.Web.UI.Page
 {
+    // Private constant used for ASP.NET Membership user creation
+    private const bool isApproved = true;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         // If the user is already logged on, reject
         if (User.Identity.IsAuthenticated)
-        {
             Server.Transfer("~/Error/Error.aspx");
-        }
 
         /*
          * Validates all controls on the page, just in case of server postback.
@@ -34,9 +35,7 @@ public partial class Account_Register : System.Web.UI.Page
          * http://msdn.microsoft.com/en-us/library/0ke7bxeh.aspx
          */
         if (Page.IsPostBack)
-        {
             Validate();
-        }
     }
 
     /*
@@ -55,24 +54,104 @@ public partial class Account_Register : System.Web.UI.Page
 
     protected void RegisterButton_Click(object sender, EventArgs e)
     {
-        /*
-         * Trigger all validators to perform input checks.
-         * This single line is all that we need for server side input validation.
-         * For more information, please refer to:
-         * http://msdn.microsoft.com/en-us/library/0ke7bxeh.aspx
-         */
-        Validate();
+        if (!IsValid)
+            return;
 
-        //using (var db = new RIS_DB())
-        //{
-        //    var query = from country in db.Countries
-        //                select country;
-        //    foreach (var country in query)
-        //    {
-        //        Console.WriteLine("Country Name: {0}", country.CountryName);
-        //    }
-        //    Console.ReadLine();
-        //}
+        /*
+         * At this point, all user entered information has been verified.
+         * We shall now perform two critical actions:
+         * 1) Programmatically add account information to the Membership provider
+         *  1.1) Note that since we manually checked whether the username and email are unique,
+         *  it is 100% guaranteed that Membership information is valid as well.
+         * 2) Programmatically insert personal particulars into the associated table.
+         * 3) Programmatically add the newly created user to the 'Patient' role.
+         */
+        Console.WriteLine("test");
+
+        // Fetch information that is needed for creating a new account
+        var username = UserName.Text.Trim();
+        var password = Password.Text.Trim();
+        var email = Email.Text.Trim().ToLowerInvariant();
+        var question = Question.Text.Trim();
+        var answer = Answer.Text.Trim();
+
+        // Create new account in Membership
+        MembershipCreateStatus status;
+        var user = Membership.CreateUser(username, password, email, question, answer, isApproved, out status);
+
+        // Return and show error message if account creation unsuccessful
+        if (user == null)
+        {
+            ErrorMessage.Text += HttpUtility.HtmlDecode("<ul>");
+            switch (status)
+            {
+                case MembershipCreateStatus.DuplicateUserName:
+                    ErrorMessage.Text += HttpUtility.HtmlDecode("<li>Username already exists. Please enter a different user name.</li>");
+                    break;
+
+                case MembershipCreateStatus.DuplicateEmail:
+                    ErrorMessage.Text += HttpUtility.HtmlDecode("<li>A username for that e-mail address already exists. Please enter a different e-mail address.</li>");
+                    break;
+
+                case MembershipCreateStatus.InvalidPassword:
+                    ErrorMessage.Text += HttpUtility.HtmlDecode("<li>The password provided is invalid. Please enter a valid password value.</li>");
+                    break;
+
+                case MembershipCreateStatus.InvalidEmail:
+                    ErrorMessage.Text += HttpUtility.HtmlDecode("<li>The e-mail address provided is invalid. Please check the value and try again.</li>");
+                    break;
+
+                case MembershipCreateStatus.InvalidAnswer:
+                    ErrorMessage.Text += HttpUtility.HtmlDecode("<li>The password retrieval answer provided is invalid. Please check the value and try again.</li>");
+                    break;
+
+                case MembershipCreateStatus.InvalidQuestion:
+                    ErrorMessage.Text += HttpUtility.HtmlDecode("<li>The password retrieval question provided is invalid. Please check the value and try again.</li>");
+                    break;
+
+                case MembershipCreateStatus.InvalidUserName:
+                    ErrorMessage.Text += HttpUtility.HtmlDecode("<li>The user name provided is invalid. Please check the value and try again.</li>");
+                    break;
+
+                case MembershipCreateStatus.ProviderError:
+                    ErrorMessage.Text += HttpUtility.HtmlDecode("<li>The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.</li>");
+                    break;
+
+                case MembershipCreateStatus.UserRejected:
+                    ErrorMessage.Text += HttpUtility.HtmlDecode("<li>The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.</li>");
+                    break;
+
+                default:
+                    ErrorMessage.Text += HttpUtility.HtmlDecode("<li>An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.</li>");
+                    break;
+            }
+            ErrorMessage.Text += HttpUtility.HtmlDecode("</ul>");
+            return;
+        }
+
+        // Fetch information that is needed for storing personal information
+        var nric = NRIC.Text.Trim().ToUpperInvariant();
+        var firstName = FirstName.Text.Trim();
+        var middleName = MiddleName.Text;
+        if (!String.IsNullOrEmpty(middleName))
+            middleName = middleName.Trim();
+        var lastName = LastName.Text.Trim();
+        var gender = Gender.SelectedValue;
+        var namePrefix = Prefix.Text.Trim();
+        var nameSuffix = Suffix.Text;
+        if (!String.IsNullOrEmpty(nameSuffix))
+            nameSuffix = nameSuffix.Trim();
+        var dob = DateOfBirth.Text.Trim();
+        var address = Address.Text.Trim();
+        var contact = ContactNumber.Text.Trim();
+        var postalCode = PostalCode.Text.Trim();
+        var country = Country.Text.Trim();
+        var nationality = Nationality.Text.Trim();
+
+        // Add user personal information into the UserParticulars table
+        using (var db = new RIS_DB())
+        {
+        }
     }
 
     // Server side validation to check whether NRIC already exists

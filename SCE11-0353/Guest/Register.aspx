@@ -26,7 +26,7 @@
     <div>
         <%-- Error Notifications --%>
         <span class="failureNotification">
-            <asp:Literal ID="ErrorMessage" runat="server" />
+            <asp:Literal ID="ErrorMessage" runat="server" Text="" />
         </span>
         <asp:ValidationSummary CssClass="failureNotification" runat="server" ValidationGroup="RegisterUserValidationGroup" />
         <%-- / Error Notifications --%>
