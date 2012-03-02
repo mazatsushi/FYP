@@ -19,23 +19,14 @@ using System.Web.UI.WebControls;
 public partial class Account_Register : System.Web.UI.Page
 {
     // Private constant used for ASP.NET Membership user creation
-    private const bool isApproved = true;
+    private const bool IsApproved = true;
+    private const string RoleName = "Patient";
 
     protected void Page_Load(object sender, EventArgs e)
     {
         // If the user is already logged on, reject
         if (User.Identity.IsAuthenticated)
             Server.Transfer("~/Error/Error.aspx");
-
-        /*
-         * Validates all controls on the page, just in case of server postback.
-         * Specifically, we are checking whether the server is returning any error messages
-         * from user submitted information beforehand.
-         * For more information, please refer to:
-         * http://msdn.microsoft.com/en-us/library/0ke7bxeh.aspx
-         */
-        if (Page.IsPostBack)
-            Validate();
     }
 
     /*
@@ -43,15 +34,6 @@ public partial class Account_Register : System.Web.UI.Page
      * We will add them to the 'Patients' role programatically here.
      * Accounts for all other roles are to be done by the 'Administrator' role.
      */
-
-    protected void CreatedUser(object sender, EventArgs e)
-    {
-        // Create a persistent cookie
-        //FormsAuthentication.SetAuthCookie(UserName.Text, true);
-
-        // Add user to the patient role
-    }
-
     protected void RegisterButton_Click(object sender, EventArgs e)
     {
         if (!IsValid)
@@ -66,7 +48,6 @@ public partial class Account_Register : System.Web.UI.Page
          * 2) Programmatically insert personal particulars into the associated table.
          * 3) Programmatically add the newly created user to the 'Patient' role.
          */
-        Console.WriteLine("test");
 
         // Fetch information that is needed for creating a new account
         var username = UserName.Text.Trim();
@@ -77,7 +58,7 @@ public partial class Account_Register : System.Web.UI.Page
 
         // Create new account in Membership
         MembershipCreateStatus status;
-        var user = Membership.CreateUser(username, password, email, question, answer, isApproved, out status);
+        var user = Membership.CreateUser(username, password, email, question, answer, IsApproved, out status);
 
         // Return and show error message if account creation unsuccessful
         if (user == null)
@@ -132,16 +113,16 @@ public partial class Account_Register : System.Web.UI.Page
         // Fetch information that is needed for storing personal information
         var nric = NRIC.Text.Trim().ToUpperInvariant();
         var firstName = FirstName.Text.Trim();
-        var middleName = MiddleName.Text;
-        if (!String.IsNullOrEmpty(middleName))
-            middleName = middleName.Trim();
+        var middleName = string.Empty;
+        if (!String.IsNullOrEmpty(MiddleName.Text))
+            middleName = MiddleName.Text.Trim();
         var lastName = LastName.Text.Trim();
-        var gender = Gender.SelectedValue;
+        var gender = Char.Parse(Gender.SelectedValue);
         var namePrefix = Prefix.Text.Trim();
-        var nameSuffix = Suffix.Text;
-        if (!String.IsNullOrEmpty(nameSuffix))
-            nameSuffix = nameSuffix.Trim();
-        var dob = DateOfBirth.Text.Trim();
+        var nameSuffix = string.Empty;
+        if (!String.IsNullOrEmpty(Suffix.Text))
+            nameSuffix = Suffix.Text.Trim();
+        var dob = DateTime.Parse(DateOfBirth.Text.Trim());
         var address = Address.Text.Trim();
         var contact = ContactNumber.Text.Trim();
         var postalCode = PostalCode.Text.Trim();
@@ -151,7 +132,37 @@ public partial class Account_Register : System.Web.UI.Page
         // Add user personal information into the UserParticulars table
         using (var db = new RIS_DB())
         {
+            // Get the country ID
+            var countryId = (from cty in db.Countries
+                             where cty.CountryName == country
+                             select cty).First<Country>().CountryId;
+
+            // Insert all data into user particulars table
+            var userParticulars = new UserParticular()
+                                      {
+                                          NRIC = nric,
+                                          FirstName = firstName,
+                                          MiddleName = middleName,
+                                          LastName = lastName,
+                                          Gender = gender,
+                                          Prefix = namePrefix,
+                                          Suffix = nameSuffix,
+                                          DateOfBirth = dob,
+                                          Address = address,
+                                          ContactNumber = contact,
+                                          PostalCode = postalCode,
+                                          CountryOfResidence = countryId,
+                                          Nationality = nationality,
+                                          //Ignore the potential error below, since we are 100% sure it is valid
+                                          UserId = Guid.Parse(user.ProviderUserKey.ToString())
+                                      };
+            db.UserParticulars.InsertOnSubmit(userParticulars);
+            db.SubmitChanges();
         }
+
+        // Add user to the patient role then redirect as appropriate
+        Roles.AddUserToRole(username, RoleName);
+        Server.Transfer("~/Guest/AccountCreated.aspx");
     }
 
     // Server side validation to check whether NRIC already exists
@@ -298,6 +309,13 @@ public partial class Account_Register : System.Web.UI.Page
                 args.IsValid = false;
                 return;
         }
+    }
+
+    // Server side validation to check whether date of birth is within acceptable values
+    protected void IsDobValid(object source, ServerValidateEventArgs args)
+    {
+        var dob = DateTime.Parse(DateOfBirth.Text.Trim());
+        args.IsValid = (dob < DateTime.Today);
     }
 
     // Server side validation to check whether nationality is within acceptable values

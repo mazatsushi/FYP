@@ -22,8 +22,8 @@
             <br />
             <asp:LoginView ID="loginView" runat="server">
                 <AnonymousTemplate>
-                    [<asp:LinkButton ID="loginLink" runat="server" PostBackUrl="~/Guest/Login.aspx">Login</asp:LinkButton>]
-                    [<asp:LinkButton ID="registerLink" runat="server" PostBackUrl="~/Guest/Register.aspx">Register</asp:LinkButton>]
+                    [<asp:HyperLink ID="loginLink" runat="server" NavigateUrl="~/Guest/Login.aspx">Login</asp:HyperLink>]
+                    [<asp:HyperLink ID="registerLink" runat="server" NavigateUrl="~/Guest/Register.aspx">Register</asp:HyperLink>]
                 </AnonymousTemplate>
                 <LoggedInTemplate>
                     [<asp:LinkButton ID="logoutLink" runat="server" PostBackUrl="~/Account/Logout.aspx">Logout</asp:LinkButton>]

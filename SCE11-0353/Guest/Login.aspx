@@ -1,22 +1,23 @@
-<%@ Page AutoEventWireup="true" CodeFile="Login.aspx.cs" Inherits="Account_Login"
+<%@ Page AutoEventWireup="true" CodeFile="Login.aspx.cs" Culture="en-SG" Inherits="Account_Login"
     Language="C#" MasterPageFile="~/Site.master" Title="Login" %>
 
-<asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
+<asp:Content runat="server" ContentPlaceHolderID="HeadContent">
 </asp:Content>
-<asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
+<asp:Content runat="server" ContentPlaceHolderID="MainContent">
     <h2>
         Log In
     </h2>
     <p>
         Please enter your username and password.
-        <asp:HyperLink EnableViewState="false" NavigateUrl="~/Guest/Register.aspx" runat="server" Text="Register" />
+        <asp:HyperLink EnableViewState="false" NavigateUrl="~/Guest/Register.aspx" runat="server"
+            Text="Register" />
         if you don't have an account.
     </p>
     <asp:Login BackColor="#F5F5F5" EnableViewState="True" Font-Names="Verdana" Font-Size="1em"
         ForeColor="#333333" ID="LoginUser" OnLoggedIn="OnLoggedIn" runat="server">
         <LayoutTemplate>
             <span class="failureNotification">
-                <asp:Literal ID="FailureText" runat="server"></asp:Literal>
+                <asp:Literal ID="FailureText" runat="server" />
             </span>
             <asp:ValidationSummary CssClass="failureNotification" ID="LoginUserValidationSummary"
                 runat="server" ValidationGroup="LoginUserValidationGroup" />

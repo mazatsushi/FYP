@@ -1,9 +1,9 @@
-﻿<%@ Page AutoEventWireup="true" CodeFile="Register.aspx.cs" Inherits="Account_Register"
+﻿<%@ Page AutoEventWireup="true" CodeFile="Register.aspx.cs" Culture="en-SG" Inherits="Account_Register"
     Language="C#" MasterPageFile="~/Site.master" Title="Register" %>
 
-<asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
+<asp:Content runat="server" ContentPlaceHolderID="HeadContent">
 </asp:Content>
-<asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
+<asp:Content runat="server" ContentPlaceHolderID="MainContent">
     <div>
         <h2>
             Create a New Account (Patient)
@@ -190,14 +190,20 @@
                     StartDate="1/1/1940" TargetControlID="DateOfBirth" TodaysDateFormat="dd/MM/yyyy"
                     PopupPosition="TopLeft" />
                 <ajaxToolkit:MaskedEditExtender AutoComplete="False" ClearTextOnInvalid="False" ClipboardEnabled="False"
-                    Enabled="True" ID="DOB_Input" Mask="99/99/9999" MaskType="Date" runat="server"
-                    TargetControlID="DateOfBirth" />
+                    CultureName="en-SG" Enabled="True" ID="DOB_Input" Mask="99/99/9999" MaskType="Date"
+                    runat="server" TargetControlID="DateOfBirth" />
                 <ajaxToolkit:MaskedEditValidator ControlExtender="DOB_Input" ControlToValidate="DateOfBirth"
                     CssClass="failureNotification" Display="Dynamic" EmptyValueBlurredText="<img src='../Images/icons/error.png'> Please specify your date of birth."
                     EmptyValueMessage="Please specify your date of birth." InvalidValueBlurredMessage="<img src='../Images/icons/error.png'> Please specify a valid date of birth."
                     InvalidValueMessage="Please specify a valid date of birth." IsValidEmpty="False"
-                    runat="server" ValidationExpression="^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$"
+                    runat="server" ValidationExpression="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$"
                     ValidationGroup="RegisterUserValidationGroup" />
+                <asp:CustomValidator ControlToValidate="DateOfBirth" CssClass="failureNotification"
+                    Display="Dynamic" ErrorMessage="Please specify a valid date of birth." OnServerValidate="IsDobValid"
+                    runat="server" ToolTip="Please specify a valid date of birth." ValidationGroup="RegisterUserValidationGroup">
+                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please specify a valid date of birth.
+                </asp:CustomValidator>
             </div>
             <%-- / DOB --%>
             <%-- Address --%>
