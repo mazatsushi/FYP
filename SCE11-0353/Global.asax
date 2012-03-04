@@ -35,5 +35,4 @@
         // or SQLServer, the event is not raised.
 
     }
-       
 </script>

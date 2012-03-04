@@ -4,24 +4,31 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI.WebControls;
 
-/*
- * Notes: 
- * 
- * 1) All user input are first desensitized by calling the HttpUtility.HTMLEncode() method.
- * For more information, please refer to:
- * http://msdn.microsoft.com/en-us/library/73z22y6h.aspx
- * 
- * 2) We let the compiler determine at run-time the data type of local variables.
- * Hence the use of the new C# keyword 'var'. For more information, please refer to:
- * http://msdn.microsoft.com/en-us/library/bb384061.aspx
- */
+/// <summary>
+/// Code behind for the ~/Guest/Register.aspx page
+/// 
+/// Note:
+/// 1) All user input are first desensitized by calling the HttpUtility.HTMLEncode() method.
+/// For more information, please refer to: http://msdn.microsoft.com/en-us/library/73z22y6h.aspx
+/// 
+/// 2) We let the compiler determine at run-time the data type of local variables.
+/// Hence the use of the new C# keyword 'var'. For more information, please refer to:
+/// http://msdn.microsoft.com/en-us/library/bb384061.aspx
+/// </summary>
 
 public partial class Account_Register : System.Web.UI.Page
 {
-    // Private constant used for ASP.NET Membership user creation
+    /// <summary>
+    /// Private constants used for ASP.NET Membership user creation
+    /// </summary>
     private const bool IsApproved = true;
     private const string RoleName = "Patient";
 
+    /// <summary>
+    /// Page load event
+    /// </summary>
+    /// <param name="sender">The web element that triggered the event</param>
+    /// <param name="e">Event parameters</param>
     protected void Page_Load(object sender, EventArgs e)
     {
         // If the user is already logged on, reject
@@ -29,11 +36,13 @@ public partial class Account_Register : System.Web.UI.Page
             Server.Transfer("~/Error/Error.aspx");
     }
 
-    /*
-     * Event that triggers when a new user account has been created.
-     * We will add them to the 'Patients' role programatically here.
-     * Accounts for all other roles are to be done by the 'Administrator' role.
-     */
+    /// <summary>
+    /// Event that triggers when a new user account has been created.
+    /// We will add them to the 'Patients' role programatically here.
+    /// Accounts for all other roles are to be done by the 'Administrator' role.
+    /// </summary>
+    /// <param name="sender">The web element that triggered the event</param>
+    /// <param name="e">Event parameters</param>
     protected void RegisterButton_Click(object sender, EventArgs e)
     {
         if (!IsValid)
@@ -165,7 +174,11 @@ public partial class Account_Register : System.Web.UI.Page
         Server.Transfer("~/Guest/AccountCreated.aspx");
     }
 
-    // Server side validation to check whether NRIC already exists
+    /// <summary>
+    /// Server side validation to check whether NRIC already exists
+    /// </summary>
+    /// <param name="source">The web element that triggered the event</param>
+    /// <param name="args">Event parameters</param>
     protected void NRICNotExists(object source, ServerValidateEventArgs args)
     {
         /*
@@ -182,7 +195,11 @@ public partial class Account_Register : System.Web.UI.Page
         }
     }
 
-    // Server side validation to check whether first name no numeric characters
+    /// <summary>
+    /// Server side validation to check whether first name no numeric characters
+    /// </summary>
+    /// <param name="source">The web element that triggered the event</param>
+    /// <param name="args">Event parameters</param>
     protected void IsFirstNameValid(object source, ServerValidateEventArgs args)
     {
         /*
@@ -193,7 +210,11 @@ public partial class Account_Register : System.Web.UI.Page
         args.IsValid = !firstName.Any(Char.IsDigit);
     }
 
-    // Server side validation to check whether middle name has no numeric characters
+    /// <summary>
+    /// Server side validation to check whether middle name has no numeric characters
+    /// </summary>
+    /// <param name="source">The web element that triggered the event</param>
+    /// <param name="args">Event parameters</param>
     protected void IsMiddleNameValid(object source, ServerValidateEventArgs args)
     {
         /*
@@ -209,7 +230,11 @@ public partial class Account_Register : System.Web.UI.Page
         args.IsValid = !middleName.Any(Char.IsDigit);
     }
 
-    // Server side validation to check whether last name has no numeric characters
+    /// <summary>
+    /// Server side validation to check whether last name has no numeric characters
+    /// </summary>
+    /// <param name="source">The web element that triggered the event</param>
+    /// <param name="args">Event parameters</param>
     protected void IsLastNameValid(object source, ServerValidateEventArgs args)
     {
         /*
@@ -220,7 +245,11 @@ public partial class Account_Register : System.Web.UI.Page
         args.IsValid = !lastName.Any(Char.IsDigit);
     }
 
-    // Server side validation to check whether gender is within acceptable values
+    /// <summary>
+    /// Server side validation to check whether gender is within acceptable values
+    /// </summary>
+    /// <param name="source">The web element that triggered the event</param>
+    /// <param name="args">Event parameters</param>
     protected void IsGenderValid(object source, ServerValidateEventArgs args)
     {
         /*
@@ -254,7 +283,11 @@ public partial class Account_Register : System.Web.UI.Page
         }
     }
 
-    // Server side validation to check whether prefix is within acceptable values
+    /// <summary>
+    /// Server side validation to check whether prefix is within acceptable values
+    /// </summary>
+    /// <param name="source">The web element that triggered the event</param>
+    /// <param name="args">Event parameters</param>
     protected void IsPrefixValid(object source, ServerValidateEventArgs args)
     {
         /*
@@ -285,7 +318,11 @@ public partial class Account_Register : System.Web.UI.Page
         }
     }
 
-    // Server side validation to check whether suffix is within acceptable values
+    /// <summary>
+    /// Server side validation to check whether suffix is within acceptable values
+    /// </summary>
+    /// <param name="source">The web element that triggered the event</param>
+    /// <param name="args">Event parameters</param>
     protected void IsSuffixValid(object source, ServerValidateEventArgs args)
     {
         /*
@@ -311,14 +348,22 @@ public partial class Account_Register : System.Web.UI.Page
         }
     }
 
-    // Server side validation to check whether date of birth is within acceptable values
+    /// <summary>
+    /// Server side validation to check whether date of birth is within acceptable values
+    /// </summary>
+    /// <param name="source">The web element that triggered the event</param>
+    /// <param name="args">Event parameters</param>
     protected void IsDobValid(object source, ServerValidateEventArgs args)
     {
         var dob = DateTime.Parse(DateOfBirth.Text.Trim());
         args.IsValid = (dob < DateTime.Today);
     }
 
-    // Server side validation to check whether nationality is within acceptable values
+    /// <summary>
+    /// Server side validation to check whether nationality is within acceptable values
+    /// </summary>
+    /// <param name="source">The web element that triggered the event</param>
+    /// <param name="args">Event parameters</param>
     protected void IsNationalityValid(object source, ServerValidateEventArgs args)
     {
         /*
@@ -329,13 +374,21 @@ public partial class Account_Register : System.Web.UI.Page
         args.IsValid = !lastName.Any(Char.IsDigit);
     }
 
-    // Method to check whether username already exists
+    /// <summary>
+    /// Method to check whether username already exists
+    /// </summary>
+    /// <param name="source">The web element that triggered the event</param>
+    /// <param name="args">Event parameters</param>
     protected void UserNameNotExists(object sender, ServerValidateEventArgs args)
     {
         args.IsValid = (Membership.GetUser(HttpUtility.HtmlEncode(UserName.Text.Trim())) == null);
     }
 
-    // Method to check whether user email already exists
+    /// <summary>
+    /// Method to check whether user email already exists
+    /// </summary>
+    /// <param name="source">The web element that triggered the event</param>
+    /// <param name="args">Event parameters</param>
     protected void EmailNotInUse(object sender, ServerValidateEventArgs args)
     {
         args.IsValid = (Membership.GetUserNameByEmail(HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant())) ==

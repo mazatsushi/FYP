@@ -1,0 +1,1 @@
+﻿This folder contains the SQL script(s) used for populating RIS_DB with dummy data.

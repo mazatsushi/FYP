@@ -1,7 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
-    CodeFile="UpdateParticulars.aspx.cs" Inherits="Account_UpdateParticulars" %>
+﻿<%@ Page AutoEventWireup="true" CodeFile="UpdateParticulars.aspx.cs" Culture="en-SG"
+    Inherits="Account_UpdateParticulars" Language="C#" MasterPageFile="~/Site.master"
+    Title="Update Particulars" %>
 
-<asp:Content ID="HeaderContent" ContentPlaceHolderID="HeadContent" runat="Server">
+<asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="Server">
+<asp:Content ContentPlaceHolderID="MainContent" runat="Server">
+    
 </asp:Content>

@@ -1,13 +1,13 @@
-﻿<%@ Page Title="About Us" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
-    CodeFile="About.aspx.cs" Inherits="About" %>
+﻿<%@ Page AutoEventWireup="true" CodeFile="About.aspx.cs" Culture="en-SG" Inherits="About"
+    Language="C#" MasterPageFile="~/Site.master" Title="About Us" %>
 
-<asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
+<asp:Content ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
-<asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
+<asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <h2>
         About
     </h2>
     <p>
-        Put content here.
+        This is an online Radiology Information System.
     </p>
 </asp:Content>

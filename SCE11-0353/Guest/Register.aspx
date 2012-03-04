@@ -1,9 +1,9 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="Register.aspx.cs" Culture="en-SG" Inherits="Account_Register"
     Language="C#" MasterPageFile="~/Site.master" Title="Register" %>
 
-<asp:Content runat="server" ContentPlaceHolderID="HeadContent">
+<asp:Content ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
-<asp:Content runat="server" ContentPlaceHolderID="MainContent">
+<asp:Content ContentPlaceHolderID="MainContent" runat="server">
     <div>
         <h2>
             Create a New Account (Patient)

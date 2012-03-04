@@ -1,11 +1,22 @@
 using System;
-using System.Web;
 using System.Web.Security;
+
+/// <summary>
+/// Code behind for the ~/Guest/Login.aspx page
+/// </summary>
 
 public partial class Account_Login : System.Web.UI.Page
 {
+	/// <summary>
+	/// An array string containing the various roles in the RIS
+	/// </summary>
 	private string[] _roleList = new string[] { "Admin", "Physician", "Radiologist", "Staff", "Patient" };
 
+	/// <summary>
+	/// Page load event
+	/// </summary>
+	/// <param name="sender">The web element that triggered the event</param>
+	/// <param name="e">Event parameters</param>
 	protected void Page_Load(object sender, EventArgs e)
 	{
 		// Reject if the user is already authenticated
@@ -15,11 +26,11 @@ public partial class Account_Login : System.Web.UI.Page
 		}
 	}
 
-	/*
-	 * Event that triggers after login is successful.
-	 * We shall redirect the user to their respective role's home page.
-	 */
-
+	/// <summary>
+	/// Event that triggers when the user is successfully logged in.
+	/// </summary>
+	/// <param name="sender">The web element that triggered the event</param>
+	/// <param name="e">Event parameters</param>
 	protected void OnLoggedIn(object sender, EventArgs e)
 	{
 		switch (FindMostPrivilegedRole(LoginUser.UserName))
@@ -42,8 +53,12 @@ public partial class Account_Login : System.Web.UI.Page
 		}
 	}
 
-	// Method that determines the most privileged role for the user who just logged in.
-	private static int FindMostPrivilegedRole(string username)
+	/// <summary>
+	/// Finds the most privileged role that the current user is assigned to
+	/// </summary>
+	/// <param name="username">The user name</param>
+	/// <returns>A numeric value presenting the highest role of the user</returns>
+	private int FindMostPrivilegedRole(string username)
 	{
 		int roleNum;
 		/*
