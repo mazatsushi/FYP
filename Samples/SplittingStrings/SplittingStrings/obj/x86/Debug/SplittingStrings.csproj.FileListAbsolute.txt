@@ -1,0 +1,5 @@
+E:\Temp\Projects\FYP\Samples\SplittingStrings\SplittingStrings\bin\Debug\SplittingStrings.exe
+E:\Temp\Projects\FYP\Samples\SplittingStrings\SplittingStrings\bin\Debug\SplittingStrings.pdb
+E:\Temp\Projects\FYP\Samples\SplittingStrings\SplittingStrings\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\Temp\Projects\FYP\Samples\SplittingStrings\SplittingStrings\obj\x86\Debug\SplittingStrings.exe
+E:\Temp\Projects\FYP\Samples\SplittingStrings\SplittingStrings\obj\x86\Debug\SplittingStrings.pdb
