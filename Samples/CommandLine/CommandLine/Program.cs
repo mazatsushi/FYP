@@ -14,7 +14,7 @@ namespace CommandLine
         {
             const string fileName = @"E:\Temp\Projects\FYP\SCE11-0353\Uploads\dicom2.exe";
             const string workDir = @"E:\Temp\Projects\FYP\SCE11-0353\Uploads";
-            const string commandLineArguments = @"dicom2.exe -p *.dcm";
+            const string commandLineArguments = @"-p *.dcm";
 
             var info = new ProcessStartInfo
                                         {
