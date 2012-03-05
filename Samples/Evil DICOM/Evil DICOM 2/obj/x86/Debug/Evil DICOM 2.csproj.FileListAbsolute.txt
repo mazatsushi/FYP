@@ -1,0 +1,10 @@
+E:\Temp\Projects\FYP\Samples\Evil DICOM\Evil DICOM 2\bin\Debug\Evil DICOM 2.exe
+E:\Temp\Projects\FYP\Samples\Evil DICOM\Evil DICOM 2\bin\Debug\Evil DICOM 2.pdb
+E:\Temp\Projects\FYP\Samples\Evil DICOM\Evil DICOM 2\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\Temp\Projects\FYP\Samples\Evil DICOM\Evil DICOM 2\obj\x86\Debug\Evil_DICOM_2.Form1.resources
+E:\Temp\Projects\FYP\Samples\Evil DICOM\Evil DICOM 2\obj\x86\Debug\Evil_DICOM_2.Properties.Resources.resources
+E:\Temp\Projects\FYP\Samples\Evil DICOM\Evil DICOM 2\obj\x86\Debug\GenerateResource.read.1.tlog
+E:\Temp\Projects\FYP\Samples\Evil DICOM\Evil DICOM 2\obj\x86\Debug\GenerateResource.write.1.tlog
+E:\Temp\Projects\FYP\Samples\Evil DICOM\Evil DICOM 2\obj\x86\Debug\Evil DICOM 2.exe
+E:\Temp\Projects\FYP\Samples\Evil DICOM\Evil DICOM 2\obj\x86\Debug\Evil DICOM 2.pdb
+E:\Temp\Projects\FYP\Samples\Evil DICOM\Evil DICOM 2\bin\Debug\EvilDicom.dll
