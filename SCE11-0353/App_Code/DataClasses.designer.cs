@@ -61,6 +61,9 @@ public partial class RIS_DB : System.Data.Linq.DataContext
   partial void InsertPatientsWithDrugAllergy(PatientsWithDrugAllergy instance);
   partial void UpdatePatientsWithDrugAllergy(PatientsWithDrugAllergy instance);
   partial void DeletePatientsWithDrugAllergy(PatientsWithDrugAllergy instance);
+  partial void InsertPngImage(PngImage instance);
+  partial void UpdatePngImage(PngImage instance);
+  partial void DeletePngImage(PngImage instance);
   partial void InsertSeries(Series instance);
   partial void UpdateSeries(Series instance);
   partial void DeleteSeries(Series instance);
@@ -190,6 +193,14 @@ public partial class RIS_DB : System.Data.Linq.DataContext
 		get
 		{
 			return this.GetTable<PatientsWithDrugAllergy>();
+		}
+	}
+	
+	public System.Data.Linq.Table<PngImage> PngImages
+	{
+		get
+		{
+			return this.GetTable<PngImage>();
 		}
 	}
 	
@@ -991,7 +1002,9 @@ public partial class DicomImage : INotifyPropertyChanging, INotifyPropertyChange
 	
 	private System.Guid _DicomUID;
 	
-	private EntityRef<Image> _Image;
+	private System.Data.Linq.Binary _Image;
+	
+	private EntityRef<Image> _Image1;
 	
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -999,11 +1012,13 @@ public partial class DicomImage : INotifyPropertyChanging, INotifyPropertyChange
     partial void OnCreated();
     partial void OnDicomUIDChanging(System.Guid value);
     partial void OnDicomUIDChanged();
+    partial void OnImageChanging(System.Data.Linq.Binary value);
+    partial void OnImageChanged();
     #endregion
 	
 	public DicomImage()
 	{
-		this._Image = default(EntityRef<Image>);
+		this._Image1 = default(EntityRef<Image>);
 		OnCreated();
 	}
 	
@@ -1027,31 +1042,51 @@ public partial class DicomImage : INotifyPropertyChanging, INotifyPropertyChange
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DicomImage_Image", Storage="_Image", ThisKey="DicomUID", OtherKey="DicomUID", IsUnique=true, IsForeignKey=false)]
-	public Image Image
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Image", DbType="VarBinary(MAX)", UpdateCheck=UpdateCheck.Never)]
+	public System.Data.Linq.Binary Image
 	{
 		get
 		{
-			return this._Image.Entity;
+			return this._Image;
 		}
 		set
 		{
-			Image previousValue = this._Image.Entity;
+			if ((this._Image != value))
+			{
+				this.OnImageChanging(value);
+				this.SendPropertyChanging();
+				this._Image = value;
+				this.SendPropertyChanged("Image");
+				this.OnImageChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DicomImage_Image", Storage="_Image1", ThisKey="DicomUID", OtherKey="DicomUID", IsUnique=true, IsForeignKey=false)]
+	public Image Image1
+	{
+		get
+		{
+			return this._Image1.Entity;
+		}
+		set
+		{
+			Image previousValue = this._Image1.Entity;
 			if (((previousValue != value) 
-						|| (this._Image.HasLoadedOrAssignedValue == false)))
+						|| (this._Image1.HasLoadedOrAssignedValue == false)))
 			{
 				this.SendPropertyChanging();
 				if ((previousValue != null))
 				{
-					this._Image.Entity = null;
+					this._Image1.Entity = null;
 					previousValue.DicomImage = null;
 				}
-				this._Image.Entity = value;
+				this._Image1.Entity = value;
 				if ((value != null))
 				{
 					value.DicomImage = this;
 				}
-				this.SendPropertyChanged("Image");
+				this.SendPropertyChanged("Image1");
 			}
 		}
 	}
@@ -1209,6 +1244,8 @@ public partial class Image : INotifyPropertyChanging, INotifyPropertyChanged
 	
 	private EntityRef<DicomImage> _DicomImage;
 	
+	private EntityRef<PngImage> _PngImage;
+	
 	private EntityRef<Series> _Series;
 	
 	private EntityRef<Staff> _Staff;
@@ -1231,6 +1268,7 @@ public partial class Image : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		this._Notes = new EntitySet<Note>(new Action<Note>(this.attach_Notes), new Action<Note>(this.detach_Notes));
 		this._DicomImage = default(EntityRef<DicomImage>);
+		this._PngImage = default(EntityRef<PngImage>);
 		this._Series = default(EntityRef<Series>);
 		this._Staff = default(EntityRef<Staff>);
 		OnCreated();
@@ -1247,6 +1285,10 @@ public partial class Image : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._ImageId != value))
 			{
+				if (this._PngImage.HasLoadedOrAssignedValue)
+				{
+					throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+				}
 				this.OnImageIdChanging(value);
 				this.SendPropertyChanging();
 				this._ImageId = value;
@@ -1358,12 +1400,12 @@ public partial class Image : INotifyPropertyChanging, INotifyPropertyChanged
 				if ((previousValue != null))
 				{
 					this._DicomImage.Entity = null;
-					previousValue.Image = null;
+					previousValue.Image1 = null;
 				}
 				this._DicomImage.Entity = value;
 				if ((value != null))
 				{
-					value.Image = this;
+					value.Image1 = this;
 					this._DicomUID = value.DicomUID;
 				}
 				else
@@ -1371,6 +1413,40 @@ public partial class Image : INotifyPropertyChanging, INotifyPropertyChanged
 					this._DicomUID = default(System.Guid);
 				}
 				this.SendPropertyChanged("DicomImage");
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PngImage_Image", Storage="_PngImage", ThisKey="ImageId", OtherKey="ImageId", IsForeignKey=true)]
+	public PngImage PngImage
+	{
+		get
+		{
+			return this._PngImage.Entity;
+		}
+		set
+		{
+			PngImage previousValue = this._PngImage.Entity;
+			if (((previousValue != value) 
+						|| (this._PngImage.HasLoadedOrAssignedValue == false)))
+			{
+				this.SendPropertyChanging();
+				if ((previousValue != null))
+				{
+					this._PngImage.Entity = null;
+					previousValue.Images.Remove(this);
+				}
+				this._PngImage.Entity = value;
+				if ((value != null))
+				{
+					value.Images.Add(this);
+					this._ImageId = value.ImageId;
+				}
+				else
+				{
+					this._ImageId = default(int);
+				}
+				this.SendPropertyChanged("PngImage");
 			}
 		}
 	}
@@ -2113,6 +2189,144 @@ public partial class PatientsWithDrugAllergy : INotifyPropertyChanging, INotifyP
 		{
 			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 		}
+	}
+}
+
+[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PngImages")]
+public partial class PngImage : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private System.Guid _ImageUID;
+	
+	private int _ImageId;
+	
+	private System.Data.Linq.Binary _Image;
+	
+	private EntitySet<Image> _Images;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnImageUIDChanging(System.Guid value);
+    partial void OnImageUIDChanged();
+    partial void OnImageIdChanging(int value);
+    partial void OnImageIdChanged();
+    partial void OnImageChanging(System.Data.Linq.Binary value);
+    partial void OnImageChanged();
+    #endregion
+	
+	public PngImage()
+	{
+		this._Images = new EntitySet<Image>(new Action<Image>(this.attach_Images), new Action<Image>(this.detach_Images));
+		OnCreated();
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageUID", DbType="UniqueIdentifier NOT NULL")]
+	public System.Guid ImageUID
+	{
+		get
+		{
+			return this._ImageUID;
+		}
+		set
+		{
+			if ((this._ImageUID != value))
+			{
+				this.OnImageUIDChanging(value);
+				this.SendPropertyChanging();
+				this._ImageUID = value;
+				this.SendPropertyChanged("ImageUID");
+				this.OnImageUIDChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	public int ImageId
+	{
+		get
+		{
+			return this._ImageId;
+		}
+		set
+		{
+			if ((this._ImageId != value))
+			{
+				this.OnImageIdChanging(value);
+				this.SendPropertyChanging();
+				this._ImageId = value;
+				this.SendPropertyChanged("ImageId");
+				this.OnImageIdChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Image", DbType="VarBinary(MAX)", UpdateCheck=UpdateCheck.Never)]
+	public System.Data.Linq.Binary Image
+	{
+		get
+		{
+			return this._Image;
+		}
+		set
+		{
+			if ((this._Image != value))
+			{
+				this.OnImageChanging(value);
+				this.SendPropertyChanging();
+				this._Image = value;
+				this.SendPropertyChanged("Image");
+				this.OnImageChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PngImage_Image", Storage="_Images", ThisKey="ImageId", OtherKey="ImageId")]
+	public EntitySet<Image> Images
+	{
+		get
+		{
+			return this._Images;
+		}
+		set
+		{
+			this._Images.Assign(value);
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+	
+	private void attach_Images(Image entity)
+	{
+		this.SendPropertyChanging();
+		entity.PngImage = this;
+	}
+	
+	private void detach_Images(Image entity)
+	{
+		this.SendPropertyChanging();
+		entity.PngImage = null;
 	}
 }
 

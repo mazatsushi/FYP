@@ -43,7 +43,8 @@
   <Table Name="dbo.DicomImages" Member="DicomImages">
     <Type Name="DicomImage">
       <Column Name="DicomUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Association Name="DicomImage_Image" Member="Image" ThisKey="DicomUID" OtherKey="DicomUID" Type="Image" Cardinality="One" />
+      <Column Name="Image" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="DicomImage_Image" Member="Image1" ThisKey="DicomUID" OtherKey="DicomUID" Type="Image" Cardinality="One" />
     </Type>
   </Table>
   <Table Name="dbo.DrugAllergies" Member="DrugAllergies">
@@ -61,6 +62,7 @@
       <Column Name="DicomUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Association Name="Image_Note" Member="Notes" ThisKey="ImageId" OtherKey="ImageId" Type="Note" />
       <Association Name="DicomImage_Image" Member="DicomImage" ThisKey="DicomUID" OtherKey="DicomUID" Type="DicomImage" IsForeignKey="true" />
+      <Association Name="PngImage_Image" Member="PngImage" ThisKey="ImageId" OtherKey="ImageId" Type="PngImage" IsForeignKey="true" />
       <Association Name="Series_Image" Member="Series" ThisKey="SeriesId" OtherKey="SeriesId" Type="Series" IsForeignKey="true" />
       <Association Name="Staff_Image" Member="Staff" ThisKey="TakenBy" OtherKey="StaffId" Type="Staff" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
@@ -96,6 +98,14 @@
       <Column Name="DrugAllergyId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Association Name="DrugAllergy_PatientsWithDrugAllergy" Member="DrugAllergy" ThisKey="DrugAllergyId" OtherKey="DrugAllergyId" Type="DrugAllergy" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
       <Association Name="Patient_PatientsWithDrugAllergy" Member="Patient" ThisKey="PatientId" OtherKey="PatientId" Type="Patient" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PngImages" Member="PngImages">
+    <Type Name="PngImage">
+      <Column Name="ImageUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ImageId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Image" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="PngImage_Image" Member="Images" ThisKey="ImageId" OtherKey="ImageId" Type="Image" />
     </Type>
   </Table>
   <Table Name="dbo.Series" Member="Series">
