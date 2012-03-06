@@ -16,6 +16,12 @@ public class DatabaseHandler
     {
     }
 
+    /// <summary>
+    /// Adds a user to a pre-specified role name
+    /// </summary>
+    /// <param name="username">The user name</param>
+    /// <param name="rolename">The role name</param>
+    /// <returns>True if the add was successful. False otherwise.</returns>
     public static bool AddUserToRole(string username, string rolename)
     {
         var addStatus = false;

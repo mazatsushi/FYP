@@ -64,7 +64,6 @@ public class DicomHandler
             using (var process = Process.Start(startInfo))
             {
                 process.WaitForExit();
-
                 /*
                  * Using the variable pngFilePath created above, we check whether conversion is successful by
                  * checking whether the file exists in the same directory that we uploaded the DICOM file to.
