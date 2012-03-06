@@ -56,7 +56,7 @@
                 </asp:RegularExpressionValidator>
                 <%--TODO: Make sure that the NRIC is unique using LINQ to SQL--%>
                 <asp:CustomValidator ControlToValidate="NRIC" CssClass="failureNotification" Display="Dynamic"
-                    ErrorMessage="NRIC already in use." OnServerValidate="NRICNotExists" runat="server"
+                    ErrorMessage="NRIC already in use." OnServerValidate="NricNotExists" runat="server"
                     ToolTip="NRIC already in use." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     NRIC already in use.

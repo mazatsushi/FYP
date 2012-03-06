@@ -67,7 +67,7 @@ public partial class Account_Register : System.Web.UI.Page
 
         // Create new account in Membership
         MembershipCreateStatus status;
-        var user = Membership.CreateUser(username, password, email, question, answer, IsApproved, out status);
+        var user = DatabaseHandler.CreateUser(username, password, email, question, answer, IsApproved, out status);
 
         // Return and show error message if account creation unsuccessful
         if (user == null)
@@ -104,15 +104,15 @@ public partial class Account_Register : System.Web.UI.Page
                     break;
 
                 case MembershipCreateStatus.ProviderError:
-                    ErrorMessage.Text += HttpUtility.HtmlDecode("<li>The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.</li>");
+                    ErrorMessage.Text += HttpUtility.HtmlDecode("<li>The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact the system administrator.</li>");
                     break;
 
                 case MembershipCreateStatus.UserRejected:
-                    ErrorMessage.Text += HttpUtility.HtmlDecode("<li>The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.</li>");
+                    ErrorMessage.Text += HttpUtility.HtmlDecode("<li>The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact the system administrator.</li>");
                     break;
 
                 default:
-                    ErrorMessage.Text += HttpUtility.HtmlDecode("<li>An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.</li>");
+                    ErrorMessage.Text += HttpUtility.HtmlDecode("<li>An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact the system administrator.</li>");
                     break;
             }
             ErrorMessage.Text += HttpUtility.HtmlDecode("</ul>");
@@ -122,13 +122,13 @@ public partial class Account_Register : System.Web.UI.Page
         // Fetch information that is needed for storing personal information
         var nric = NRIC.Text.Trim().ToUpperInvariant();
         var firstName = FirstName.Text.Trim();
-        var middleName = string.Empty;
+        string middleName = null;
         if (!String.IsNullOrEmpty(MiddleName.Text))
             middleName = MiddleName.Text.Trim();
         var lastName = LastName.Text.Trim();
         var gender = Char.Parse(Gender.SelectedValue);
         var namePrefix = Prefix.Text.Trim();
-        var nameSuffix = string.Empty;
+        string nameSuffix = null;
         if (!String.IsNullOrEmpty(Suffix.Text))
             nameSuffix = Suffix.Text.Trim();
         var dob = DateTime.Parse(DateOfBirth.Text.Trim());
@@ -139,38 +139,27 @@ public partial class Account_Register : System.Web.UI.Page
         var nationality = Nationality.Text.Trim();
 
         // Add user personal information into the UserParticulars table
-        using (var db = new RIS_DB())
+        var countryId = DatabaseHandler.GetCountryId(country);
+        var addStatus = DatabaseHandler.AddUserParticulars(user.ProviderUserKey, nric, firstName, middleName, lastName, gender, nameSuffix, namePrefix, dob, address, contact, postalCode, countryId, nationality);
+
+        if (!addStatus)
         {
-            // Get the country ID
-            var countryId = (from cty in db.Countries
-                             where cty.CountryName == country
-                             select cty).First<Country>().CountryId;
-
-            // Insert all data into user particulars table
-            var userParticulars = new UserParticular()
-                                      {
-                                          NRIC = nric,
-                                          FirstName = firstName,
-                                          MiddleName = middleName,
-                                          LastName = lastName,
-                                          Gender = gender,
-                                          Prefix = namePrefix,
-                                          Suffix = nameSuffix,
-                                          DateOfBirth = dob,
-                                          Address = address,
-                                          ContactNumber = contact,
-                                          PostalCode = postalCode,
-                                          CountryOfResidence = countryId,
-                                          Nationality = nationality,
-                                          //Ignore the potential error below, since we are 100% sure it is valid
-                                          UserId = Guid.Parse(user.ProviderUserKey.ToString())
-                                      };
-            db.UserParticulars.InsertOnSubmit(userParticulars);
-            db.SubmitChanges();
+            ErrorMessage.Text += HttpUtility.HtmlDecode("<ul>");
+            ErrorMessage.Text += HttpUtility.HtmlDecode("<li>An error occured while adding your information. Please contact the system administrator.</li>");
+            ErrorMessage.Text += HttpUtility.HtmlDecode("</ul>");
+            return;
         }
-
+        
         // Add user to the patient role then redirect as appropriate
-        Roles.AddUserToRole(username, RoleName);
+        addStatus = DatabaseHandler.AddUserToRole(username, RoleName);
+        if (!addStatus)
+        {
+            ErrorMessage.Text += HttpUtility.HtmlDecode("<ul>");
+            ErrorMessage.Text += HttpUtility.HtmlDecode("<li>An error occured while adding your role. Please contact the system administrator.</li>");
+            ErrorMessage.Text += HttpUtility.HtmlDecode("</ul>");
+            return;
+        }
+        
         Server.Transfer("~/Guest/AccountCreated.aspx");
     }
 
@@ -179,20 +168,13 @@ public partial class Account_Register : System.Web.UI.Page
     /// </summary>
     /// <param name="source">The web element that triggered the event</param>
     /// <param name="args">Event parameters</param>
-    protected void NRICNotExists(object source, ServerValidateEventArgs args)
+    protected void NricNotExists(object source, ServerValidateEventArgs args)
     {
         /*
          * Step 1: Desensitize the input
          * Step 2: Check for existing NRIC
          */
-        var input = (HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant()));
-        using (var db = new RIS_DB())
-        {
-            var query = from record in db.UserParticulars
-                        where (record.NRIC == input)
-                        select record.NRIC;
-            args.IsValid = !query.Any();
-        }
+        args.IsValid = DatabaseHandler.NricNotExists(HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant()));
     }
 
     /// <summary>
@@ -377,21 +359,20 @@ public partial class Account_Register : System.Web.UI.Page
     /// <summary>
     /// Method to check whether username already exists
     /// </summary>
-    /// <param name="source">The web element that triggered the event</param>
+    /// <param name="sender">The web element that triggered the event</param>
     /// <param name="args">Event parameters</param>
     protected void UserNameNotExists(object sender, ServerValidateEventArgs args)
     {
-        args.IsValid = (Membership.GetUser(HttpUtility.HtmlEncode(UserName.Text.Trim())) == null);
+        args.IsValid = DatabaseHandler.UserNameNotExists(HttpUtility.HtmlEncode(UserName.Text.Trim()));
     }
 
     /// <summary>
     /// Method to check whether user email already exists
     /// </summary>
-    /// <param name="source">The web element that triggered the event</param>
+    /// <param name="sender">The web element that triggered the event</param>
     /// <param name="args">Event parameters</param>
     protected void EmailNotInUse(object sender, ServerValidateEventArgs args)
     {
-        args.IsValid = (Membership.GetUserNameByEmail(HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant())) ==
-                        null);
+        args.IsValid = DatabaseHandler.EmailNotInUse(HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant()));
     }
 }
