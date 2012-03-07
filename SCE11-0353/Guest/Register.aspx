@@ -120,7 +120,7 @@
             <%-- Gender --%>
             <div>
                 <asp:Label AssociatedControlID="Gender" runat="server" Text="* Gender: " />
-                <asp:RadioButtonList ID="Gender" RepeatDirection="Horizontal" runat="server">
+                <asp:RadioButtonList CssClass="float" ID="Gender" RepeatDirection="Horizontal" runat="server">
                     <asp:ListItem Text="Male" Value="m" />
                     <asp:ListItem Text="Female" Value="f" />
                 </asp:RadioButtonList>
@@ -139,7 +139,7 @@
             </div>
             <%-- / Gender --%>
             <%-- Prefix --%>
-            <div>
+            <div class="clear">
                 <asp:Label AssociatedControlID="Prefix" runat="server" Text="* Salutation: " />
                 <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" DropDownStyle="DropDownList" ID="Prefix"
                     runat="server">
@@ -198,12 +198,11 @@
                     InvalidValueMessage="Please specify a valid date of birth." IsValidEmpty="False"
                     runat="server" ValidationExpression="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$"
                     ValidationGroup="RegisterUserValidationGroup" />
-                <asp:CustomValidator ControlToValidate="DateOfBirth" CssClass="failureNotification"
-                    Display="Dynamic" ErrorMessage="Please specify a valid date of birth." OnServerValidate="IsDobValid"
-                    runat="server" ToolTip="Please specify a valid date of birth." ValidationGroup="RegisterUserValidationGroup">
-                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                <asp:RangeValidator ControlToValidate="DateOfBirth" CssClass="failureNotification"
+                    ErrorMessage="Please specify a valid date of birth." ID="DateRangeCheck" runat="server"
+                    Type="Date" ValidationGroup="RegisterUserValidationGroup"><asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify a valid date of birth.
-                </asp:CustomValidator>
+                </asp:RangeValidator>
             </div>
             <%-- / DOB --%>
             <%-- Address --%>
@@ -246,22 +245,24 @@
                     ValidationExpression="\d{6}$" ValidationGroup="RegisterUserValidationGroup" />
             </div>
             <%-- / Postal Code --%>
-            <%-- Country --%>
-            <asp:Label AssociatedControlID="Country" runat="server" Text="* Country of Residence: " />
-            <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" DataSourceID="CountryListing" DataTextField="CountryName"
-                DataValueField="CountryName" DropDownStyle="DropDownList" ID="Country" MaxLength="0"
-                runat="server" />
-            <asp:SqlDataSource ConnectionString="<%$ ConnectionStrings:ApplicationServices %>"
-                ID="CountryListing" runat="server" SelectCommand="SELECT DISTINCT [CountryName] FROM [Countries] ORDER BY [CountryName]" />
-            <asp:RequiredFieldValidator ControlToValidate="Nationality" CssClass="failureNotification"
-                Display="Dynamic" ErrorMessage="Please specify your country of residence." runat="server"
-                ToolTip="Please specify your country of residence." ValidationGroup="RegisterUserValidationGroup">
+            <div>
+                <%-- Country --%>
+                <asp:Label AssociatedControlID="Country" runat="server" Text="* Country of Residence: " />
+                <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" CssClass="float" DataSourceID="CountryListing"
+                    DataTextField="CountryName" DataValueField="CountryName" DropDownStyle="DropDownList"
+                    ID="Country" MaxLength="0" runat="server" />
+                <asp:SqlDataSource ConnectionString="<%$ ConnectionStrings:ApplicationServices %>"
+                    ID="CountryListing" runat="server" SelectCommand="SELECT DISTINCT [CountryName] FROM [Countries] ORDER BY [CountryName]" />
+                <asp:RequiredFieldValidator ControlToValidate="Nationality" CssClass="failureNotification"
+                    Display="Dynamic" ErrorMessage="Please specify your country of residence." runat="server"
+                    ToolTip="Please specify your country of residence." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify your country of residence.
-            </asp:RequiredFieldValidator>
-            <%-- / Country --%>
+                </asp:RequiredFieldValidator>
+                <%-- / Country --%>
+            </div>
             <%-- Nationality --%>
-            <div>
+            <div class="clear">
                 <asp:Label AssociatedControlID="Nationality" runat="server" Text="* Nationality: " />
                 <asp:TextBox CssClass="textEntry" ID="Nationality" runat="server" />
                 <ajaxToolkit:FilteredTextBoxExtender Enabled="True" FilterType="LowercaseLetters, UppercaseLetters"
@@ -410,10 +411,10 @@
     <%-- / Account Information --%>
     <div>
         <asp:Button BackColor="#F7F6F3" BorderColor="#E6E2D8" BorderStyle="Solid" BorderWidth="1px"
+            Font-Names="Verdana" Font-Size="1em" runat="server" Text="Create User" ValidationGroup="RegisterUserValidationGroup"
+            OnClick="RegisterButton_Click" />
+        <asp:Button BackColor="#F7F6F3" BorderColor="#E6E2D8" BorderStyle="Solid" BorderWidth="1px"
             Font-Names="Verdana" Font-Size="1em" PostBackUrl="~/Default.aspx" runat="server"
             Text="Cancel" />
-        <asp:Button BackColor="#F7F6F3" BorderColor="#E6E2D8" BorderStyle="Solid" BorderWidth="1px"
-            Font-Names="Verdana" Font-Size="1em" runat="server" Text="Create User" ValidationGroup="RegisterUserValidationGroup"
-            ID="RegisterButton" OnClick="RegisterButton_Click" />
     </div>
 </asp:Content>

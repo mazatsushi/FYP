@@ -101,7 +101,6 @@ public class DicomHandler
              * The sum of the length of the arguments and the length of the full path to the process exceeds 2080. The error message associated with this exception can be one of the following: "The data area passed to a system call is too small." or "Access is denied."
              */
         }
-
         return convertResult;
     }
 }

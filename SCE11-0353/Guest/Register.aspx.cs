@@ -32,8 +32,14 @@ public partial class Account_Register : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         // If the user is already logged on, reject
+        // Reject if the user is already authenticated
         if (User.Identity.IsAuthenticated)
-            Server.Transfer("~/Error/Error.aspx");
+        {
+            TransferToHome(User.Identity.Name);
+        }
+
+        DateRangeCheck.MinimumValue = "1/1/1900";
+        DateRangeCheck.MaximumValue = DateTime.Today.ToShortDateString();
     }
 
     /// <summary>
@@ -63,7 +69,7 @@ public partial class Account_Register : System.Web.UI.Page
         var password = Password.Text.Trim();
         var email = Email.Text.Trim().ToLowerInvariant();
         var question = Question.Text.Trim();
-        var answer = Answer.Text.Trim();
+        var answer = Answer.Text.Trim().ToLowerInvariant();
 
         // Create new account in Membership
         MembershipCreateStatus status;
@@ -174,7 +180,7 @@ public partial class Account_Register : System.Web.UI.Page
          * Step 1: Desensitize the input
          * Step 2: Check for existing NRIC
          */
-        args.IsValid = DatabaseHandler.NricNotExists(HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant()));
+        args.IsValid = !DatabaseHandler.NricExists(HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant()));
     }
 
     /// <summary>
@@ -330,22 +336,6 @@ public partial class Account_Register : System.Web.UI.Page
         }
     }
 
-    /// <summary>
-    /// Server side validation to check whether date of birth is within acceptable values
-    /// </summary>
-    /// <param name="source">The web element that triggered the event</param>
-    /// <param name="args">Event parameters</param>
-    protected void IsDobValid(object source, ServerValidateEventArgs args)
-    {
-        var dob = DateTime.Parse(DateOfBirth.Text.Trim());
-        args.IsValid = (dob < DateTime.Today);
-    }
-
-    /// <summary>
-    /// Server side validation to check whether nationality is within acceptable values
-    /// </summary>
-    /// <param name="source">The web element that triggered the event</param>
-    /// <param name="args">Event parameters</param>
     protected void IsNationalityValid(object source, ServerValidateEventArgs args)
     {
         /*
@@ -363,7 +353,7 @@ public partial class Account_Register : System.Web.UI.Page
     /// <param name="args">Event parameters</param>
     protected void UserNameNotExists(object sender, ServerValidateEventArgs args)
     {
-        args.IsValid = DatabaseHandler.UserNameNotExists(HttpUtility.HtmlEncode(UserName.Text.Trim()));
+        args.IsValid = !DatabaseHandler.UserNameExists(HttpUtility.HtmlEncode(UserName.Text.Trim()));
     }
 
     /// <summary>
@@ -373,6 +363,32 @@ public partial class Account_Register : System.Web.UI.Page
     /// <param name="args">Event parameters</param>
     protected void EmailNotInUse(object sender, ServerValidateEventArgs args)
     {
-        args.IsValid = DatabaseHandler.EmailNotInUse(HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant()));
+        args.IsValid = !DatabaseHandler.EmailInUse(HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant()));
+    }
+
+    /// <summary>
+    /// Method that redirects the user to their role's home page
+    /// </summary>
+    /// <param name="username">The user name</param>
+    private void TransferToHome(string username)
+    {
+        switch (DatabaseHandler.FindMostPrivilegedRole(username))
+        {
+            case 1:
+                Response.Redirect("~/Admin/Default.aspx");
+                break;
+            case 2:
+                Response.Redirect("~/Physician/Default.aspx");
+                break;
+            case 3:
+                Response.Redirect("~/Radiologist/Default.aspx");
+                break;
+            case 4:
+                Response.Redirect("~/Staff/Default.aspx");
+                break;
+            case 5:
+                Response.Redirect("~/Patient/Default.aspx");
+                break;
+        }
     }
 }

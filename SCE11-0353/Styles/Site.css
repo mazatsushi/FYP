@@ -47,6 +47,11 @@
     padding: 1px;
 }
 
+.float
+{
+    float: left;
+}
+
 .formDivs
 {
     padding: 10px 0px 10px 0px;
@@ -254,6 +259,12 @@ body
 .error
 {
     color: Red;
+}
+
+.padding
+{
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 #errorMsg

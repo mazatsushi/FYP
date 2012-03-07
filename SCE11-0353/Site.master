@@ -31,11 +31,7 @@
             </asp:LoginView>
         </div>
         <div id="menucontainer">
-            <ajaxToolkit:ToolkitScriptManager ID="ScriptManager" runat="server" EnableCdn="True" EnableViewState="False">
-                <Services>
-                    <asp:ServiceReference Path="~/Services/WebServices.svc"/>
-                </Services>
-            </ajaxToolkit:ToolkitScriptManager>
+            <ajaxToolkit:ToolkitScriptManager ID="ScriptManager" runat="server" EnableCdn="True" EnableViewState="False" />
             <%--The data source of the navigation menu.--%>
             <asp:SiteMapDataSource ID="siteMap" runat="server" ShowStartingNode="False" />
             <%--The navigation menu of the application.--%>
