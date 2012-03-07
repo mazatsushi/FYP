@@ -21,7 +21,7 @@ public class MailHandler
         {
             using (var mailServer = new SmtpClient())
             {
-                mailServer.SendAsync(mail, new object());
+                mailServer.Send(mail);
             }
         }
         catch (ArgumentNullException) {}

@@ -1,7 +1,14 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="ResetPasswordSuccess.aspx.cs" Inherits="Guest_ResetPasswordSuccess" %>
+﻿<%@ Page AutoEventWireup="true" CodeFile="ResetPasswordSuccess.aspx.cs" Culture="en-SG"
+    Inherits="Guest_ResetPasswordSuccess" Language="C#" MasterPageFile="~/Site.master"
+    Title="Reset Password" %>
 
-<asp:Content ContentPlaceHolderID="HeadContent" Runat="Server">
+<asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
-<asp:Content ContentPlaceHolderID="MainContent" Runat="Server">
+<asp:Content ContentPlaceHolderID="MainContent" runat="Server">
+    <h2>
+        Reset Password
+    </h2>
+    <h3>
+        Your new password has been sent to your email address.
+    </h3>
 </asp:Content>
-

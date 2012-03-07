@@ -9,7 +9,9 @@
     </h2>
     <p>
         Please enter your username and password.
-        <asp:HyperLink EnableViewState="false" NavigateUrl="~/Guest/Register.aspx" runat="server"
+    </p>
+    <p>
+        Please <asp:HyperLink EnableViewState="false" NavigateUrl="~/Guest/Register.aspx" runat="server"
             Text="Register" />
         if you don't have an account.
     </p>
@@ -47,13 +49,18 @@
                         <asp:Label AssociatedControlID="RememberMe" CssClass="inline" ID="RememberMeLabel"
                             runat="server">Keep me logged in</asp:Label>
                     </div>
+                    <div class="submitButton">
+                        <asp:Button CommandName="Login" ID="LoginButton" runat="server" Text="Log In" ValidationGroup="LoginUserValidationGroup" />
+                    </div>
                 </fieldset>
-                <div class="submitButton">
-                    <asp:Button CommandName="Login" ID="LoginButton" runat="server" Text="Log In" ValidationGroup="LoginUserValidationGroup" />
+                <div>
+                    <asp:LinkButton CausesValidation="False" PostBackUrl="~/Guest/ResetPassword.aspx"
+                        runat="server" Text="Forgot Your Password?" />
                 </div>
             </div>
         </LayoutTemplate>
-        <LoginButtonStyle BackColor="#FFFBFF" Font-Names="Verdana" ForeColor="#284775" />
+        <LoginButtonStyle BackColor="#F7F6F3" BorderColor="#E6E2D8" BorderStyle="Solid" BorderWidth="1px"
+            Font-Names="Verdana" Font-Size="1em" />
         <TextBoxStyle Font-Size="1em" />
     </asp:Login>
 </asp:Content>

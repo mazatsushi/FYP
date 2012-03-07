@@ -146,7 +146,7 @@ public partial class Account_Register : System.Web.UI.Page
 
         // Add user personal information into the UserParticulars table
         var countryId = DatabaseHandler.GetCountryId(country);
-        var addStatus = DatabaseHandler.AddUserParticulars(user.ProviderUserKey, nric, firstName, middleName, lastName, gender, nameSuffix, namePrefix, dob, address, contact, postalCode, countryId, nationality);
+        var addStatus = DatabaseHandler.AddUserParticulars(user.ProviderUserKey, nric, firstName, middleName, lastName, gender, namePrefix, nameSuffix, dob, address, contact, postalCode, countryId, nationality);
 
         if (!addStatus)
         {
