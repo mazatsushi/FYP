@@ -64,10 +64,10 @@
                     </p>
                 </fieldset>
                 <p class="submitButton">
-                    <asp:Button CausesValidation="False" CommandName="Cancel" ID="CancelPushButton" OnClick="CancelPushButton_Click"
-                        runat="server" Text="Cancel" />
-                    <asp:Button CommandName="ChangePassword" ID="ChangePasswordPushButton" runat="server"
-                        Text="Change Password" ValidationGroup="ChangeUserPasswordValidationGroup" />
+                    <asp:Button CommandName="ChangePassword" CssClass="buttons" ID="ChangePasswordPushButton"
+                        runat="server" Text="Change Password" ValidationGroup="ChangeUserPasswordValidationGroup" />
+                    <asp:Button CausesValidation="False" CommandName="Cancel" CssClass="buttons" ID="CancelPushButton"
+                        OnClick="CancelPushButton_Click" runat="server" Text="Cancel" />
                 </p>
             </div>
         </ChangePasswordTemplate>

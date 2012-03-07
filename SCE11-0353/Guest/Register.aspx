@@ -54,7 +54,6 @@
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please enter a valid NRIC.
                 </asp:RegularExpressionValidator>
-                <%--TODO: Make sure that the NRIC is unique using LINQ to SQL--%>
                 <asp:CustomValidator ControlToValidate="NRIC" CssClass="failureNotification" Display="Dynamic"
                     ErrorMessage="NRIC already in use." OnServerValidate="NricNotExists" runat="server"
                     ToolTip="NRIC already in use." ValidationGroup="RegisterUserValidationGroup">
@@ -245,22 +244,22 @@
                     ValidationExpression="\d{6}$" ValidationGroup="RegisterUserValidationGroup" />
             </div>
             <%-- / Postal Code --%>
+            <%-- Country --%>
             <div>
-                <%-- Country --%>
                 <asp:Label AssociatedControlID="Country" runat="server" Text="* Country of Residence: " />
                 <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" CssClass="float" DataSourceID="CountryListing"
                     DataTextField="CountryName" DataValueField="CountryName" DropDownStyle="DropDownList"
                     ID="Country" MaxLength="0" runat="server" />
                 <asp:SqlDataSource ConnectionString="<%$ ConnectionStrings:ApplicationServices %>"
                     ID="CountryListing" runat="server" SelectCommand="SELECT DISTINCT [CountryName] FROM [Countries] ORDER BY [CountryName]" />
-                <asp:RequiredFieldValidator ControlToValidate="Nationality" CssClass="failureNotification"
+                <asp:RequiredFieldValidator ControlToValidate="Country" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please specify your country of residence." runat="server"
                     ToolTip="Please specify your country of residence." ValidationGroup="RegisterUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify your country of residence.
                 </asp:RequiredFieldValidator>
-                <%-- / Country --%>
             </div>
+            <%-- / Country --%>
             <%-- Nationality --%>
             <div class="clear">
                 <asp:Label AssociatedControlID="Nationality" runat="server" Text="* Nationality: " />
@@ -412,7 +411,6 @@
     <div>
         <asp:Button CssClass="buttons" runat="server" Text="Create User" ValidationGroup="RegisterUserValidationGroup"
             OnClick="RegisterButton_Click" />
-        <asp:Button CssClass="buttons" PostBackUrl="~/Default.aspx" runat="server"
-            Text="Cancel" />
+        <asp:Button CssClass="buttons" PostBackUrl="~/Default.aspx" runat="server" Text="Cancel" />
     </div>
 </asp:Content>

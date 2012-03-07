@@ -9,6 +9,8 @@ using System.Web.Security;
 /// </summary>
 public class DatabaseHandler
 {
+    private static readonly string[] _roles = { "Admin", "Physician", "Radiologist", "Staff", "Patient" };
+
     /// <summary>
     /// Adds a user to a pre-specified role name
     /// </summary>
@@ -23,9 +25,9 @@ public class DatabaseHandler
             Roles.AddUserToRole(username, rolename);
             addStatus = true;
         }
-        catch (ArgumentNullException) {}
-        catch (ArgumentException) {}
-        catch (ProviderException) {}
+        catch (ArgumentNullException) { }
+        catch (ArgumentException) { }
+        catch (ProviderException) { }
         return addStatus;
     }
 
@@ -79,7 +81,7 @@ public class DatabaseHandler
                 addStatus = true;
             }
         }
-        catch {}
+        catch { }
         return addStatus;
     }
 
@@ -106,36 +108,19 @@ public class DatabaseHandler
     /// <returns>A numeric value presenting the highest role of the user</returns>
     public static int FindMostPrivilegedRole(string username)
     {
-        int roleNum;
+        var roleNum = -1;
         /*
          * It is entirely possible that the user belongs to more than one role.
          * Regardless we shall just search for the most privileged role assigned.
          */
         var roles = Roles.GetRolesForUser(username);
-        if (roles.Any().Equals("Admin"))
+        for (var i = 0; i < _roles.Length; ++i)
         {
-            // User has administrator privileges
-            roleNum = 1;
-        }
-        else if (roles.Any().Equals("Physician"))
-        {
-            // User has physician privileges
-            roleNum = 2;
-        }
-        else if (roles.Any().Equals("Radiologist"))
-        {
-            // User has radiologist privileges
-            roleNum = 3;
-        }
-        else if (roles.Any().Equals("Staff"))
-        {
-            // User has staff privileges
-            roleNum = 4;
-        }
-        else
-        {
-            // User has patient privileges
-            roleNum = 5;
+            if (!roles.Contains(_roles[i]))
+                continue;
+
+            roleNum = i;
+            break;
         }
         return roleNum;
     }
@@ -187,6 +172,16 @@ public class DatabaseHandler
             question = user.PasswordQuestion;
         }
         return question;
+    }
+
+    /// <summary>
+    /// Gets the MembershipUser object given the username
+    /// </summary>
+    /// <param name="username">The user name</param>
+    /// <returns>An object reference to the MembershipUser if an account exists. Null otherwise.</returns>
+    public static MembershipUser GetUser(string username)
+    {
+        return Membership.GetUser(username);
     }
 
     /// <summary>

@@ -39,19 +39,19 @@ public partial class Account_Login : System.Web.UI.Page
 	{
 		switch (DatabaseHandler.FindMostPrivilegedRole(username))
 		{
-			case 1:
+			case 0:
 				Response.Redirect("~/Admin/Default.aspx");
 				break;
-			case 2:
+			case 1:
 				Response.Redirect("~/Physician/Default.aspx");
 				break;
-			case 3:
+			case 2:
 				Response.Redirect("~/Radiologist/Default.aspx");
 				break;
-			case 4:
+			case 3:
 				Response.Redirect("~/Staff/Default.aspx");
 				break;
-			case 5:
+			case 4:
 				Response.Redirect("~/Patient/Default.aspx");
 				break;
 		}

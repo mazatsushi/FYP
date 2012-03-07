@@ -13,7 +13,7 @@
         <span class="failureNotification">
             <asp:Literal ID="ErrorMessage" runat="server" Text="" />
         </span>
-        <asp:ValidationSummary CssClass="failureNotification" runat="server" ValidationGroup="RegisterUserValidationGroup" />
+        <asp:ValidationSummary CssClass="failureNotification" runat="server" ValidationGroup="ResetPasswordValidationGroup" />
         <%-- / Error Notifications --%>
     </div>
     <h3>
@@ -26,12 +26,12 @@
         </div>
         <%-- / Security Question --%>
         <%-- Security Answer --%>
-        <div class="padding">
+        <div class="topPadding">
             <asp:Label AssociatedControlID="Answer" runat="server" Text="Security Answer:" />
             <asp:TextBox CssClass="textEntry" ID="Answer" runat="server" />
             <asp:RequiredFieldValidator ControlToValidate="Answer" CssClass="failureNotification"
                 Display="Dynamic" ErrorMessage="Security answer is required." runat="server"
-                ToolTip="Security answer is required." ValidationGroup="RegisterUserValidationGroup">
+                ToolTip="Security answer is required." ValidationGroup="ResetPasswordValidationGroup">
             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
             Security answer is required.
             </asp:RequiredFieldValidator>
@@ -40,7 +40,7 @@
     </div>
     <br />
     <div>
-        <asp:Button CssClass="buttons" runat="server" Text="Reset Password" ValidationGroup="RegisterUserValidationGroup"
+        <asp:Button CssClass="buttons" runat="server" Text="Reset Password" ValidationGroup="ResetPasswordValidationGroup"
             OnClick="ResetButtonClick" />
         <asp:Button CssClass="buttons" PostBackUrl="~/Default.aspx" runat="server" Text="Cancel" />
     </div>

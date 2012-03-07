@@ -13,7 +13,7 @@
         <span class="failureNotification">
             <asp:Literal ID="ErrorMessage" runat="server" Text="" />
         </span>
-        <asp:ValidationSummary CssClass="failureNotification" runat="server" ValidationGroup="RegisterUserValidationGroup" />
+        <asp:ValidationSummary CssClass="failureNotification" runat="server" ValidationGroup="ResetPasswordValidationGroup" />
         <%-- / Error Notifications --%>
     </div>
     <h3>
@@ -25,21 +25,21 @@
         <asp:TextBox CssClass="textEntry" ID="UserName" runat="server" />
         <asp:RequiredFieldValidator ControlToValidate="UserName" CssClass="failureNotification"
             Display="Dynamic" ErrorMessage="Please enter your user name." runat="server"
-            ToolTip="Please enter your user name." ValidationGroup="RegisterUserValidationGroup"
+            ToolTip="Please enter your user name." ValidationGroup="ResetPasswordValidationGroup"
             SetFocusOnError="True">
             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
             Please enter your user name.
         </asp:RequiredFieldValidator>
         <asp:CustomValidator ControlToValidate="UserName" CssClass="failureNotification"
             Display="Dynamic" ErrorMessage="User name not found." OnServerValidate="UserNameExists"
-            runat="server" ToolTip="User name not found." ValidationGroup="RegisterUserValidationGroup">
+            runat="server" ToolTip="User name not found." ValidationGroup="ResetPasswordValidationGroup">
             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
             User name not found.
         </asp:CustomValidator>
     </div>
     <%-- / Username --%>
-    <div class="padding">
-        <asp:Button CssClass="buttons" runat="server" Text="Next" ValidationGroup="RegisterUserValidationGroup"
+    <div class="topPadding">
+        <asp:Button CssClass="buttons" runat="server" Text="Next" ValidationGroup="ResetPasswordValidationGroup"
             OnClick="NextButtonClick" />
         <asp:Button CssClass="buttons" PostBackUrl="~/Default.aspx" runat="server" Text="Cancel" />
     </div>

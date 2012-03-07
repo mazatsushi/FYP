@@ -336,6 +336,11 @@ public partial class Account_Register : System.Web.UI.Page
         }
     }
 
+    /// <summary>
+    /// Method to check whether nationality is valid
+    /// </summary>
+    /// <param name="source">The web element that triggered the event</param>
+    /// <param name="args">Event parameters</param>
     protected void IsNationalityValid(object source, ServerValidateEventArgs args)
     {
         /*

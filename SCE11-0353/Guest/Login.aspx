@@ -58,7 +58,7 @@
                     <asp:LinkButton CausesValidation="False" PostBackUrl="~/Guest/ResetPassword.aspx"
                         runat="server" Text="Forgot Your Password?" />
                 </div>
-                <div class="padding">
+                <div class="topPadding">
                     <asp:LinkButton CausesValidation="False" PostBackUrl="~/Guest/AppealUnlock.aspx"
                         runat="server" Text="Account Locked Out?" />
                 </div>

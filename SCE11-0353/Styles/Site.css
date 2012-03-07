@@ -1,4 +1,15 @@
-﻿/* COLLAPSIBLE PANEL   
+﻿/* ACCOUNT MANAGEMENT TABLE
+----------------------------------------------------------*/
+.table {
+    border: 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.table td {
+    text-align: center;
+}
+
+/* COLLAPSIBLE PANEL   
 ----------------------------------------------------------*/
 .collapsePanel
 {
@@ -271,7 +282,13 @@ body
     color: Red;
 }
 
-.padding
+.sidePadding
+{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.topPadding
 {
     padding-top: 10px;
 }
