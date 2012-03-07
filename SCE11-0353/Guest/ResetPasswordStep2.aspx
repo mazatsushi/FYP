@@ -40,11 +40,8 @@
     </div>
     <br />
     <div>
-        <asp:Button BackColor="#F7F6F3" BorderColor="#E6E2D8" BorderStyle="Solid" BorderWidth="1px"
-            Font-Names="Verdana" Font-Size="1em" runat="server" Text="Reset Password" ValidationGroup="RegisterUserValidationGroup"
+        <asp:Button CssClass="buttons" runat="server" Text="Reset Password" ValidationGroup="RegisterUserValidationGroup"
             OnClick="ResetButtonClick" />
-        <asp:Button BackColor="#F7F6F3" BorderColor="#E6E2D8" BorderStyle="Solid" BorderWidth="1px"
-            Font-Names="Verdana" Font-Size="1em" PostBackUrl="~/Default.aspx" runat="server"
-            Text="Cancel" />
+        <asp:Button CssClass="buttons" PostBackUrl="~/Default.aspx" runat="server" Text="Cancel" />
     </div>
 </asp:Content>

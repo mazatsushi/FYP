@@ -19,6 +19,16 @@
 
 /* FORM ELEMENTS   
 ----------------------------------------------------------*/
+.buttons
+{
+    background-color: #F7F6F3;
+    border-color: #E6E2D8;
+    border-width: 1px;
+    border-style: Solid;
+    font-family: Verdana;
+    font-size: 1em;
+}
+
 .autocomplete_completionListElement
 {
     margin: 0px !important;
@@ -264,7 +274,6 @@ body
 .padding
 {
     padding-top: 10px;
-    padding-bottom: 10px;
 }
 
 #errorMsg

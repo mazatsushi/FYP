@@ -410,11 +410,9 @@
         runat="server" TargetControlID="AccountInfoContent" TextLabelID="AccountInfoPanelLabel" />
     <%-- / Account Information --%>
     <div>
-        <asp:Button BackColor="#F7F6F3" BorderColor="#E6E2D8" BorderStyle="Solid" BorderWidth="1px"
-            Font-Names="Verdana" Font-Size="1em" runat="server" Text="Create User" ValidationGroup="RegisterUserValidationGroup"
+        <asp:Button CssClass="buttons" runat="server" Text="Create User" ValidationGroup="RegisterUserValidationGroup"
             OnClick="RegisterButton_Click" />
-        <asp:Button BackColor="#F7F6F3" BorderColor="#E6E2D8" BorderStyle="Solid" BorderWidth="1px"
-            Font-Names="Verdana" Font-Size="1em" PostBackUrl="~/Default.aspx" runat="server"
+        <asp:Button CssClass="buttons" PostBackUrl="~/Default.aspx" runat="server"
             Text="Cancel" />
     </div>
 </asp:Content>

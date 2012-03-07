@@ -1,12 +1,12 @@
-﻿<%@ Page AutoEventWireup="true" CodeFile="ResetPassword.aspx.cs" Culture="en-SG"
-    Inherits="Account_ResetPassword" Language="C#" MasterPageFile="~/Site.master"
-    Title="Reset Password" %>
+﻿<%@ Page Title="Appeal For Account Unlock" Language="C#" MasterPageFile="~/Site.master"
+    AutoEventWireup="true" CodeFile="AppealUnlock.aspx.cs" Inherits="Guest_AppealUnlock"
+    Culture="en-SG" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
 <asp:Content ContentPlaceHolderID="MainContent" runat="Server">
     <h2>
-        Reset Password
+        Appeal to Unlock Account
     </h2>
     <div>
         <%-- Error Notifications --%>

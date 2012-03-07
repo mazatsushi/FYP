@@ -35,7 +35,7 @@
             <%--The data source of the navigation menu.--%>
             <asp:SiteMapDataSource ID="siteMap" runat="server" ShowStartingNode="False" />
             <%--The navigation menu of the application.--%>
-            <asp:Menu runat="server" ItemWrap="True" Orientation="Horizontal"
+            <asp:Menu runat="server" CssClass="menu" ItemWrap="True" Orientation="Horizontal"
                 RenderingMode="List" DynamicHoverStyle-BackColor="#465c71" DynamicHorizontalOffset="2"
                 Font-Names="Verdana" Font-Size="1em" ForeColor="#ffffff" StaticSubMenuIndent="10px"
                 BackColor="#465c71" DataSourceID="siteMap" StaticDisplayLevels="1" MaximumDynamicDisplayLevels="3">

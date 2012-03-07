@@ -11,8 +11,9 @@
         Please enter your username and password.
     </p>
     <p>
-        Please <asp:HyperLink EnableViewState="false" NavigateUrl="~/Guest/Register.aspx" runat="server"
-            Text="Register" />
+        Please
+        <asp:HyperLink EnableViewState="false" NavigateUrl="~/Guest/Register.aspx" runat="server"
+            Text="register" />
         if you don't have an account.
     </p>
     <asp:Login BackColor="#F5F5F5" EnableViewState="True" Font-Names="Verdana" Font-Size="1em"
@@ -49,18 +50,19 @@
                         <asp:Label AssociatedControlID="RememberMe" CssClass="inline" ID="RememberMeLabel"
                             runat="server">Keep me logged in</asp:Label>
                     </div>
-                    <div class="submitButton">
-                        <asp:Button CommandName="Login" ID="LoginButton" runat="server" Text="Log In" ValidationGroup="LoginUserValidationGroup" />
+                    <div class="submitButton, padding">
+                        <asp:Button CommandName="Login" CssClass="buttons" runat="server" Text="Log In" ValidationGroup="LoginUserValidationGroup" />
                     </div>
                 </fieldset>
                 <div>
                     <asp:LinkButton CausesValidation="False" PostBackUrl="~/Guest/ResetPassword.aspx"
                         runat="server" Text="Forgot Your Password?" />
                 </div>
+                <div class="padding">
+                    <asp:LinkButton CausesValidation="False" PostBackUrl="~/Guest/AppealUnlock.aspx"
+                        runat="server" Text="Account Locked Out?" />
+                </div>
             </div>
         </LayoutTemplate>
-        <LoginButtonStyle BackColor="#F7F6F3" BorderColor="#E6E2D8" BorderStyle="Solid" BorderWidth="1px"
-            Font-Names="Verdana" Font-Size="1em" />
-        <TextBoxStyle Font-Size="1em" />
     </asp:Login>
 </asp:Content>
