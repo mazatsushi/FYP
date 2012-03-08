@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 public partial class Account_UpdateParticulars : System.Web.UI.Page
 {
     private MembershipUser _user;
-
+    
     /// <summary>
     /// Page load event
     /// </summary>
@@ -18,26 +18,10 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
     /// <param name="e">Event parameters</param>
     protected void Page_Load(object sender, EventArgs e)
     {
-        DateRangeCheck.MinimumValue = "1/1/1900";
-        DateRangeCheck.MaximumValue = DateTime.Today.ToShortDateString();
-
         // Get the user name, and fill in the fields as required.
         _user = DatabaseHandler.GetUser(User.Identity.Name);
+        
         Email.Text = _user.Email;
-    }
-
-    /// <summary>
-    /// Server side validation to check whether NRIC already exists
-    /// </summary>
-    /// <param name="source">The web element that triggered the event</param>
-    /// <param name="args">Event parameters</param>
-    protected void NricNotExists(object source, ServerValidateEventArgs args)
-    {
-        /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for existing NRIC
-         */
-        args.IsValid = !DatabaseHandler.NricExists(HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant()));
     }
 
     /// <summary>
@@ -219,9 +203,7 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
     }
     
     /// <summary>
-    /// Event that triggers when a new user account has been created.
-    /// We will add them to the 'Patients' role programatically here.
-    /// Accounts for all other roles are to be done by the 'Administrator' role.
+    /// Event that triggers when the update button is clicked.
     /// </summary>
     /// <param name="sender">The web element that triggered the event</param>
     /// <param name="e">Event parameters</param>
@@ -233,22 +215,44 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
         /*
          * At this point, all user entered information has been verified.
          * We shall now perform two critical actions:
-         * 1) Programmatically add account information to the Membership provider
-         *  1.1) Note that since we manually checked whether the username and email are unique,
-         *  it is 100% guaranteed that Membership information is valid as well.
-         * 2) Programmatically insert personal particulars into the associated table.
-         * 3) Programmatically add the newly created user to the 'Patient' role.
+         * 1) Programmatically update account information via Membership
+         *  1.1) Note that since we manually checked whether email is unique,
+         *  it is 100% guaranteed that it is valid as well.
+         * 2) Call DatabaseHandler to handle the updates for us.
          */
 
         // TODO: Membership takes in the UserParticulars 
-        // Fetch information that is needed for creating a new account
+        // Fetch all information
         var email = Email.Text.Trim().ToLowerInvariant();
-        var question = Question.Text.Trim();
-        var answer = Answer.Text.Trim().ToLowerInvariant();
-
-        // Create new account in Membership
-        MembershipCreateStatus status;
+        
         // TODO: Change the line of code below
-        var user = DatabaseHandler.CreateUser(username, password, email, question, answer, IsApproved, out status);
+        //var user = DatabaseHandler.CreateUser(username, password, email, question, answer, IsApproved, out status);
+    }
+
+    /// <summary>
+    /// Event handler for when the Cancel button in this page is clicked
+    /// </summary>
+    /// <param name="sender">The web element that triggered the event</param>
+    /// <param name="e">Event parameters</param>
+    protected void CancelButtonClick(object sender, EventArgs e)
+    {
+        switch (DatabaseHandler.FindMostPrivilegedRole(User.Identity.Name))
+        {
+            case 0:
+                Response.Redirect("~/Admin/Default.aspx");
+                break;
+            case 1:
+                Response.Redirect("~/Physician/Default.aspx");
+                break;
+            case 2:
+                Response.Redirect("~/Radiologist/Default.aspx");
+                break;
+            case 3:
+                Response.Redirect("~/Staff/Default.aspx");
+                break;
+            case 4:
+                Response.Redirect("~/Patient/Default.aspx");
+                break;
+        }
     }
 }

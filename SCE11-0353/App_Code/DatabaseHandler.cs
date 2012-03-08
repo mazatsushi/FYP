@@ -9,7 +9,7 @@ using System.Web.Security;
 /// </summary>
 public class DatabaseHandler
 {
-    private static readonly string[] _roles = { "Admin", "Physician", "Radiologist", "Staff", "Patient" };
+    private static readonly string[] Roles = { "Admin", "Physician", "Radiologist", "Staff", "Patient" };
 
     /// <summary>
     /// Adds a user to a pre-specified role name
@@ -22,7 +22,7 @@ public class DatabaseHandler
         var addStatus = false;
         try
         {
-            Roles.AddUserToRole(username, rolename);
+            System.Web.Security.Roles.AddUserToRole(username, rolename);
             addStatus = true;
         }
         catch (ArgumentNullException) { }
@@ -102,6 +102,20 @@ public class DatabaseHandler
     }
 
     /// <summary>
+    /// Calls the Membership API to change a specified user's password reset question and answer
+    /// </summary>
+    /// <param name="username">The user name</param>
+    /// <param name="password">The password</param>
+    /// <param name="question">The security question</param>
+    /// <param name="answer">The answer to the security question</param>
+    /// <returns></returns>
+    public static bool ChangeQuestionAndAnswer(string username, string password, string question, string answer)
+    {
+        var user = Membership.GetUser(username);
+        return user != null && user.ChangePasswordQuestionAndAnswer(password, question, answer);
+    }
+
+    /// <summary>
     /// Finds the most privileged role that the current user is assigned to
     /// </summary>
     /// <param name="username">The user name</param>
@@ -113,10 +127,10 @@ public class DatabaseHandler
          * It is entirely possible that the user belongs to more than one role.
          * Regardless we shall just search for the most privileged role assigned.
          */
-        var roles = Roles.GetRolesForUser(username);
-        for (var i = 0; i < _roles.Length; ++i)
+        var roles = System.Web.Security.Roles.GetRolesForUser(username);
+        for (var i = 0; i < Roles.Length; ++i)
         {
-            if (!roles.Contains(_roles[i]))
+            if (!roles.Contains(Roles[i]))
                 continue;
 
             roleNum = i;
@@ -158,6 +172,18 @@ public class DatabaseHandler
         return email;
     }
 
+    public static UserParticular GetUserParticulars(string userGuid)
+    {
+        UserParticular temp;
+        using (var db = new RIS_DB())
+        {
+            temp = (from user in db.UserParticulars
+                    where user.UserId == Guid.Parse(userGuid)
+                    select user).First<UserParticular>();
+        }
+        return temp;
+    }
+
     /// <summary>
     /// Gets the Guid for a user given the user name
     /// </summary>
@@ -171,6 +197,20 @@ public class DatabaseHandler
         {
             question = user.PasswordQuestion;
         }
+        return question;
+    }
+
+    /// <summary>
+    /// Gets the password reset question of a user given the user name
+    /// </summary>
+    /// <param name="username">The user name</param>
+    /// <returns>The string containing the password reset question if account exists. Null otherwise.</returns>
+    public static string GetQuestion(string username)
+    {
+        var question = string.Empty;
+        var membershipUser = Membership.GetUser(username);
+        if (membershipUser != null)
+            question = membershipUser.PasswordQuestion;
         return question;
     }
 

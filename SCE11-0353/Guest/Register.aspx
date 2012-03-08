@@ -63,7 +63,7 @@
             </div>
             <%-- / NRIC --%>
             <%-- / First Name --%>
-            <div>
+            <div class="topPadding">
                 <asp:Label AssociatedControlID="FirstName" runat="server" Text="* First Name: " />
                 <asp:TextBox CssClass="textEntry" ID="FirstName" runat="server" />
                 <ajaxToolkit:FilteredTextBoxExtender Enabled="True" FilterType="LowercaseLetters, UppercaseLetters"
@@ -83,7 +83,7 @@
             </div>
             <%-- / First Name --%>
             <%-- Middle Name --%>
-            <div>
+            <div class="topPadding">
                 <asp:Label AssociatedControlID="MiddleName" runat="server" Text="Middle Name: " />
                 <asp:TextBox CssClass="textEntry" ID="MiddleName" runat="server" />
                 <ajaxToolkit:FilteredTextBoxExtender Enabled="True" FilterType="LowercaseLetters, UppercaseLetters"
@@ -97,7 +97,7 @@
             </div>
             <%-- / Middle Name --%>
             <%-- Last Name --%>
-            <div>
+            <div class="topPadding">
                 <asp:Label AssociatedControlID="LastName" runat="server" Text="* Last Name: " />
                 <asp:TextBox CssClass="textEntry" ID="LastName" runat="server" />
                 <ajaxToolkit:FilteredTextBoxExtender Enabled="True" FilterType="LowercaseLetters, UppercaseLetters"
@@ -117,7 +117,7 @@
             </div>
             <%-- / Last Name --%>
             <%-- Gender --%>
-            <div>
+            <div class="topPadding">
                 <asp:Label AssociatedControlID="Gender" runat="server" Text="* Gender: " />
                 <asp:RadioButtonList CssClass="float" ID="Gender" RepeatDirection="Horizontal" runat="server">
                     <asp:ListItem Text="Male" Value="m" />
@@ -139,7 +139,7 @@
             <%-- / Gender --%>
             <%-- Prefix --%>
             <div class="clear">
-                <asp:Label AssociatedControlID="Prefix" runat="server" Text="* Salutation: " />
+                <asp:Label AssociatedControlID="Prefix" CssClass="topPadding" runat="server" Text="* Salutation: " />
                 <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" DropDownStyle="DropDownList" ID="Prefix"
                     runat="server">
                     <asp:ListItem Text="Dr." Value="Dr." />
@@ -163,7 +163,7 @@
             </div>
             <%-- / Prefix --%>
             <%-- Suffix --%>
-            <div>
+            <div class="topPadding">
                 <asp:Label AssociatedControlID="Suffix" runat="server" Text="Suffix: " />
                 <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" DropDownStyle="DropDownList" ID="Suffix"
                     runat="server">
@@ -180,7 +180,7 @@
             </div>
             <%-- / Suffix --%>
             <%-- DOB --%>
-            <div>
+            <div class="topPadding">
                 <asp:Label AssociatedControlID="DateOfBirth" runat="server" Text="* Date of Birth (dd/mm/yyyy): " />
                 <asp:TextBox CssClass="textEntry" ID="DateOfBirth" runat="server" />
                 <asp:ImageButton ID="DOB_Cal" ImageUrl="~/Images/icons/calendar.png" runat="server" />
@@ -205,7 +205,7 @@
             </div>
             <%-- / DOB --%>
             <%-- Address --%>
-            <div>
+            <div class="topPadding">
                 <asp:Label AssociatedControlID="Address" runat="server" Text="* Address: " />
                 <asp:TextBox CssClass="textEntry" ID="Address" runat="server" TextMode="MultiLine" />
                 <asp:RequiredFieldValidator ControlToValidate="Address" CssClass="failureNotification"
@@ -217,7 +217,7 @@
             </div>
             <%-- / Address --%>
             <%-- Contact Number --%>
-            <div>
+            <div class="topPadding">
                 <asp:Label AssociatedControlID="ContactNumber" runat="server" Text="* Contact Number: " />
                 <asp:TextBox CssClass="textEntry" ID="ContactNumber" runat="server" />
                 <ajaxToolkit:MaskedEditExtender AutoComplete="False" ClearTextOnInvalid="False" ClipboardEnabled="False"
@@ -231,7 +231,7 @@
             </div>
             <%-- / Contact Number --%>
             <%-- Postal Code --%>
-            <div>
+            <div class="topPadding">
                 <asp:Label AssociatedControlID="PostalCode" runat="server" Text="* Postal Code: " />
                 <asp:TextBox CssClass="textEntry" ID="PostalCode" runat="server" />
                 <ajaxToolkit:MaskedEditExtender AutoComplete="False" ClearTextOnInvalid="False" ClipboardEnabled="False"
@@ -245,7 +245,7 @@
             </div>
             <%-- / Postal Code --%>
             <%-- Country --%>
-            <div>
+            <div class="topPadding">
                 <asp:Label AssociatedControlID="Country" runat="server" Text="* Country of Residence: " />
                 <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" CssClass="float" DataSourceID="CountryListing"
                     DataTextField="CountryName" DataValueField="CountryName" DropDownStyle="DropDownList"
@@ -262,7 +262,7 @@
             <%-- / Country --%>
             <%-- Nationality --%>
             <div class="clear">
-                <asp:Label AssociatedControlID="Nationality" runat="server" Text="* Nationality: " />
+                <asp:Label AssociatedControlID="Nationality" CssClass="topPadding" runat="server" Text="* Nationality: " />
                 <asp:TextBox CssClass="textEntry" ID="Nationality" runat="server" />
                 <ajaxToolkit:FilteredTextBoxExtender Enabled="True" FilterType="LowercaseLetters, UppercaseLetters"
                     runat="server" TargetControlID="Nationality" />
@@ -314,7 +314,7 @@
             </div>
             <%-- / Username --%>
             <%-- Email --%>
-            <div>
+            <div class="topPadding">
                 <asp:Label AssociatedControlID="Email" runat="server" Text="* E-mail:" />
                 <asp:TextBox CssClass="textEntry" ID="Email" runat="server" />
                 <asp:RequiredFieldValidator ControlToValidate="Email" CssClass="failureNotification"
@@ -342,7 +342,7 @@
             </div>
             <%-- / Email --%>
             <%-- Password --%>
-            <div>
+            <div class="topPadding">
                 <asp:Label AssociatedControlID="Password" runat="server" Text="* Password:" />
                 <asp:TextBox CssClass="passwordEntry" ID="Password" runat="server" TextMode="Password" />
                 <asp:RequiredFieldValidator ControlToValidate="Password" CssClass="failureNotification"
@@ -360,7 +360,7 @@
             </div>
             <%-- / Password --%>
             <%-- Confirm Password --%>
-            <div>
+            <div class="topPadding">
                 <asp:Label AssociatedControlID="ConfirmPassword" runat="server" Text="* Confirm Password:" />
                 <asp:TextBox CssClass="passwordEntry" ID="ConfirmPassword" runat="server" TextMode="Password" />
                 <asp:RequiredFieldValidator ControlToValidate="ConfirmPassword" CssClass="failureNotification"
@@ -378,7 +378,7 @@
             </div>
             <%-- / Confirm Password --%>
             <%-- Security Question --%>
-            <div>
+            <div class="topPadding">
                 <asp:Label AssociatedControlID="Question" runat="server" Text="* Security Question:" />
                 <asp:TextBox CssClass="textEntry" ID="Question" runat="server" />
                 <asp:RequiredFieldValidator ControlToValidate="Question" CssClass="failureNotification"
@@ -390,7 +390,7 @@
             </div>
             <%-- / Security Question --%>
             <%-- Security Answer --%>
-            <div>
+            <div class="topPadding">
                 <asp:Label AssociatedControlID="Answer" runat="server" Text="* Security Answer:" />
                 <asp:TextBox CssClass="textEntry" ID="Answer" runat="server" />
                 <asp:RequiredFieldValidator ControlToValidate="Answer" CssClass="failureNotification"

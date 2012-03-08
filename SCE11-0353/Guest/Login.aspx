@@ -50,7 +50,7 @@
                         <asp:Label AssociatedControlID="RememberMe" CssClass="inline" ID="RememberMeLabel"
                             runat="server">Keep me logged in</asp:Label>
                     </div>
-                    <div class="submitButton, padding">
+                    <div class="submitButton, topPadding">
                         <asp:Button CommandName="Login" CssClass="buttons" runat="server" Text="Log In" ValidationGroup="LoginUserValidationGroup" />
                     </div>
                 </fieldset>

@@ -24,12 +24,12 @@
             <span class="failureNotification">
                 <asp:Literal ID="FailureText" runat="server" />
             </span>
-            <asp:ValidationSummary CssClass="failureNotification" ID="ChangeUserPasswordValidationSummary"
-                runat="server" ValidationGroup="ChangeUserPasswordValidationGroup" />
+            <asp:ValidationSummary CssClass="failureNotification" runat="server" ValidationGroup="ChangeUserPasswordValidationGroup" />
             <div class="accountInfo">
                 <fieldset class="changePassword">
                     <legend>Account Information</legend>
-                    <p>
+                    <%-- Current Password --%>
+                    <div>
                         <asp:Label AssociatedControlID="CurrentPassword" runat="server" Text="Old Password: " />
                         <asp:TextBox CssClass="passwordEntry" ID="CurrentPassword" runat="server" TextMode="Password" />
                         <asp:RequiredFieldValidator ControlToValidate="CurrentPassword" CssClass="failureNotification"
@@ -37,8 +37,10 @@
                             ValidationGroup="ChangeUserPasswordValidationGroup">
                             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> Current password is required.
                         </asp:RequiredFieldValidator>
-                    </p>
-                    <p>
+                    </div>
+                    <%-- / Current Password --%>
+                    <%-- New Password --%>
+                    <div class="topPadding">
                         <asp:Label AssociatedControlID="NewPassword" runat="server" Text="New Password: " />
                         <asp:TextBox CssClass="passwordEntry" ID="NewPassword" runat="server" TextMode="Password" />
                         <asp:RequiredFieldValidator ControlToValidate="NewPassword" CssClass="failureNotification"
@@ -46,8 +48,16 @@
                             ValidationGroup="ChangeUserPasswordValidationGroup">
                             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> New password is required.
                         </asp:RequiredFieldValidator>
-                    </p>
-                    <p>
+                        <ajaxToolkit:PasswordStrength BarBorderCssClass="BarBorder" BarIndicatorCssClass="BarIndicator"
+                            DisplayPosition="RightSide" Enabled="True" HelpStatusLabelID="PasswordStrengthLabel"
+                            MinimumNumericCharacters="1" MinimumSymbolCharacters="1" PreferredPasswordLength="6"
+                            runat="server" StrengthIndicatorType="BarIndicator" TargetControlID="NewPassword" />
+                        <br />
+                        <asp:Label ID="PasswordStrengthLabel" runat="server" Text="Label" />
+                    </div>
+                    <%-- / New Password --%>
+                    <%-- Confirm New Password --%>
+                    <div class="topPadding">
                         <asp:Label AssociatedControlID="ConfirmNewPassword" runat="server" Text="Confirm New Password: " />
                         <asp:TextBox CssClass="passwordEntry" ID="ConfirmNewPassword" runat="server" TextMode="Password" />
                         <asp:RequiredFieldValidator ControlToValidate="ConfirmNewPassword" CssClass="failureNotification"
@@ -61,7 +71,8 @@
                             runat="server" ValidationGroup="ChangeUserPasswordValidationGroup">
                             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> Both new passwords must match.
                         </asp:CompareValidator>
-                    </p>
+                    </div>
+                    <%-- / Confirm New Password --%>
                 </fieldset>
                 <p class="submitButton">
                     <asp:Button CommandName="ChangePassword" CssClass="buttons" ID="ChangePasswordPushButton"
