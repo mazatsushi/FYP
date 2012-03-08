@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration.Provider;
+using System.Data.Linq;
 using System.Linq;
 using System.Web.Security;
 
@@ -116,6 +117,16 @@ public class DatabaseHandler
     }
 
     /// <summary>
+    /// Method to check whether user email already exists
+    /// </summary>
+    /// <param name="email">The web element that triggered the event</param>
+    /// <returns>True if the email is currently in use. False otherwise.</returns>
+    public static bool EmailInUse(string email)
+    {
+        return (Membership.GetUserNameByEmail(email) != null);
+    }
+
+    /// <summary>
     /// Finds the most privileged role that the current user is assigned to
     /// </summary>
     /// <param name="username">The user name</param>
@@ -149,9 +160,7 @@ public class DatabaseHandler
         int id;
         using (var db = new RIS_DB())
         {
-            id = (from cty in db.Countries
-                  where cty.CountryName.Equals(countryName)
-                  select cty).First<Country>().CountryId;
+            id = (db.Countries.Single(c => c.CountryName.Equals(countryName)).CountryId);
         }
         return id;
     }
@@ -165,9 +174,7 @@ public class DatabaseHandler
     {
         using (var db = new RIS_DB())
         {
-            return (from cty in db.Countries
-             where cty.CountryId == id
-             select cty).First<Country>().CountryName;
+            return (db.Countries.Single(c => c.CountryId == id).CountryName);
         }
     }
 
@@ -198,9 +205,7 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB())
             {
-                return (from user in db.UserParticulars
-                        where user.UserId == Guid.Parse(userGuid)
-                        select user).First<UserParticular>();
+                return (db.UserParticulars.Single(u => u.UserId == Guid.Parse(userGuid)));
             }
         }
         catch (InvalidOperationException)
@@ -256,13 +261,12 @@ public class DatabaseHandler
     /// <returns>True if the NRIC is currently in use. False otherwise.</returns>
     public static bool NricExists(string nric)
     {
-        bool exists;
+        bool exists = false;
         using (var db = new RIS_DB())
         {
-            var query = from record in db.UserParticulars
-                        where (record.NRIC.Equals(nric))
-                        select record.NRIC;
-            exists = query.Any();
+            var result = db.UserParticulars.Single(u => u.NRIC.Equals(nric));
+            if (result != null)
+                exists = true;
         }
         return exists;
     }
@@ -298,6 +302,67 @@ public class DatabaseHandler
     }
 
     /// <summary>
+    /// Updates the account information of a user
+    /// </summary>
+    /// <param name="u">The MembershipUser object reference to the user account</param>
+    /// <returns>True if update is successful. False otherwise.</returns>
+    public static bool UpdateAccount(MembershipUser u)
+    {
+        var update = false;
+        try
+        {
+            Membership.UpdateUser(u);
+            update = true;
+        }
+        catch (ProviderException e)
+        { }
+        return update;
+    }
+
+    /// <summary>
+    /// Updates the personal information of a user
+    /// </summary>
+    /// <param name="userGuid">User ID</param>
+    /// <param name="firstName">User's first name</param>
+    /// <param name="middleName">User's middle name</param>
+    /// <param name="lastName">User's last name</param>
+    /// <param name="namePrefix">User's name prefix</param>
+    /// <param name="nameSuffix">User's name suffix</param>
+    /// <param name="address">User address</param>
+    /// <param name="contact">User contact number</param>
+    /// <param name="postalCode">The postal code</param>
+    /// <param name="countryId">The country ID</param>
+    /// <param name="nationality">The user's nationality</param>
+    /// <returns>True if the update is successful. False otherwise.</returns>
+    public static bool UpdateParticulars(object userGuid, string firstName, string middleName, string lastName, string namePrefix, string nameSuffix, string address, string contact, string postalCode, int countryId, string nationality)
+    {
+        var success = false;
+        try
+        {
+            using (var db = new RIS_DB())
+            {
+                var user = db.UserParticulars.Single(u => u.UserId == Guid.Parse(userGuid.ToString()));
+                user.FirstName = firstName;
+                user.MiddleName = middleName;
+                user.LastName = lastName;
+                user.Prefix = namePrefix;
+                user.Suffix = nameSuffix;
+                user.Address = address;
+                user.ContactNumber = contact;
+                user.PostalCode = postalCode;
+                user.CountryOfResidence = countryId;
+                user.Nationality = nationality;
+                db.SubmitChanges();
+                success = true;
+            }
+        }
+        catch (ChangeConflictException)
+        {
+        }
+        return success;
+    }
+
+    /// <summary>
     /// Queries database to check whether username already exists
     /// </summary>
     /// <param name="username">The web element that triggered the event</param>
@@ -305,15 +370,5 @@ public class DatabaseHandler
     public static bool UserNameExists(string username)
     {
         return (Membership.GetUser(username) != null);
-    }
-
-    /// <summary>
-    /// Method to check whether user email already exists
-    /// </summary>
-    /// <param name="email">The web element that triggered the event</param>
-    /// <returns>True if the email is currently in use. False otherwise.</returns>
-    public static bool EmailInUse(string email)
-    {
-        return (Membership.GetUserNameByEmail(email) != null);
     }
 }

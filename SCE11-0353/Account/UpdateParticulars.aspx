@@ -29,7 +29,7 @@
     </asp:Panel>
     <asp:Panel CssClass="collapsePanel" ID="PersonalInfoContent" runat="server">
         <fieldset class="register">
-            <%-- / First Name --%>
+            <%-- First Name --%>
             <div class="topPadding">
                 <asp:Label AssociatedControlID="FirstName" runat="server" Text="* First Name: " />
                 <asp:TextBox CssClass="textEntry" ID="FirstName" runat="server" />

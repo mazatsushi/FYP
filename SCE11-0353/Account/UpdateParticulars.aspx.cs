@@ -10,10 +10,9 @@ using System.Web.UI.WebControls;
 /// </summary>
 public partial class Account_UpdateParticulars : System.Web.UI.Page
 {
-    private MembershipUser _user;
-    private UserParticular _particulars;
-    private string _countryName;
-    
+    private MembershipUser _account;
+    private const string RedirectUrl = "~/Account/UpdateParticularsSuccess.aspx";
+
     /// <summary>
     /// Page load event
     /// </summary>
@@ -22,25 +21,24 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         // Fill in account information fields
-        _user = DatabaseHandler.GetUser(User.Identity.Name);
-        Email.Text = _user.Email;
+        _account = DatabaseHandler.GetUser(User.Identity.Name);
+        Email.Text = _account.Email;
 
         // Fill in personal information fields
-        _particulars = DatabaseHandler.GetUserParticulars(_user.ProviderUserKey.ToString());
-        if (null == _particulars)
+        var particulars = DatabaseHandler.GetUserParticulars(_account.ProviderUserKey.ToString());
+        if (null == particulars)
             return;
 
-        FirstName.Text = _particulars.FirstName;
-        MiddleName.Text = _particulars.MiddleName;
-        LastName.Text = _particulars.LastName;
-        Prefix.SelectedValue = _particulars.Gender.ToString(CultureInfo.InvariantCulture);
-        Suffix.SelectedValue = _particulars.Suffix;
-        Address.Text = _particulars.Address;
-        ContactNumber.Text = _particulars.ContactNumber;
-        PostalCode.Text = _particulars.PostalCode;
-        Nationality.Text = _particulars.Nationality;
-        _countryName = DatabaseHandler.GetCountryName(_particulars.CountryOfResidence);
-        Country.SelectedValue = _countryName;
+        FirstName.Text = particulars.FirstName;
+        MiddleName.Text = particulars.MiddleName;
+        LastName.Text = particulars.LastName;
+        Prefix.SelectedValue = particulars.Gender.ToString(CultureInfo.InvariantCulture);
+        Suffix.SelectedValue = particulars.Suffix;
+        Address.Text = particulars.Address;
+        ContactNumber.Text = particulars.ContactNumber;
+        PostalCode.Text = particulars.PostalCode;
+        Nationality.Text = particulars.Nationality;
+        Country.SelectedValue = DatabaseHandler.GetCountryName(particulars.CountryOfResidence);
     }
 
     /// <summary>
@@ -182,7 +180,7 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
     {
         args.IsValid = !DatabaseHandler.EmailInUse(HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant()));
     }
-    
+
     /// <summary>
     /// Event that triggers when the update button is clicked.
     /// </summary>
@@ -202,12 +200,42 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
          * 2) Call DatabaseHandler to handle the updates for us.
          */
 
-        // TODO: Membership takes in the UserParticulars 
-        // Fetch all information
+        // Fetch account information and update
         var email = Email.Text.Trim().ToLowerInvariant();
-        
-        // TODO: Change the line of code below
-        //var user = DatabaseHandler.CreateUser(username, password, email, question, answer, IsApproved, out status);
+        if (String.IsNullOrEmpty(email))
+            return;
+
+        _account.Email = email;
+        if (DatabaseHandler.UpdateAccount(_account))
+        {
+            ErrorMessage.Text = HttpUtility.HtmlDecode("An error occured while trying to update your account information");
+            return;
+        }
+
+        var firstName = FirstName.Text.Trim();
+        string middleName = null;
+        if (!String.IsNullOrEmpty(MiddleName.Text))
+            middleName = MiddleName.Text.Trim();
+        var lastName = LastName.Text.Trim();
+        var namePrefix = Prefix.Text.Trim();
+        string nameSuffix = null;
+        if (!String.IsNullOrEmpty(Suffix.Text))
+            nameSuffix = Suffix.Text.Trim();
+        var address = Address.Text.Trim();
+        var contact = ContactNumber.Text.Trim();
+        var postalCode = PostalCode.Text.Trim();
+        var nationality = Nationality.Text.Trim();
+        var countryId = DatabaseHandler.GetCountryId(Country.Text.Trim());
+
+        if (!DatabaseHandler.UpdateParticulars(_account.ProviderUserKey, firstName, middleName, lastName, namePrefix, nameSuffix, address, contact, postalCode, countryId, nationality))
+        {
+            ErrorMessage.Text += HttpUtility.HtmlDecode("<ul>");
+            ErrorMessage.Text += HttpUtility.HtmlDecode("<li>An error occured while adding your role. Please contact the system administrator.</li>");
+            ErrorMessage.Text += HttpUtility.HtmlDecode("</ul>");
+            return;
+        }
+
+        Server.Transfer(RedirectUrl);
     }
 
     /// <summary>

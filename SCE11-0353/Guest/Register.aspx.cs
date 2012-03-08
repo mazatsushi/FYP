@@ -141,11 +141,10 @@ public partial class Account_Register : System.Web.UI.Page
         var address = Address.Text.Trim();
         var contact = ContactNumber.Text.Trim();
         var postalCode = PostalCode.Text.Trim();
-        var country = Country.Text.Trim();
         var nationality = Nationality.Text.Trim();
+        var countryId = DatabaseHandler.GetCountryId(Country.Text.Trim());
 
         // Add user personal information into the UserParticulars table
-        var countryId = DatabaseHandler.GetCountryId(country);
         var addStatus = DatabaseHandler.AddUserParticulars(user.ProviderUserKey, nric, firstName, middleName, lastName, gender, namePrefix, nameSuffix, dob, address, contact, postalCode, countryId, nationality);
 
         if (!addStatus)
