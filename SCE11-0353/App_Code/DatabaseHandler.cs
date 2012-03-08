@@ -157,6 +157,21 @@ public class DatabaseHandler
     }
 
     /// <summary>
+    /// Gets a country name given its id
+    /// </summary>
+    /// <param name="id">The country id</param>
+    /// <returns>A string containing the country name. Null otherwise.</returns>
+    public static string GetCountryName(int id)
+    {
+        using (var db = new RIS_DB())
+        {
+            return (from cty in db.Countries
+             where cty.CountryId == id
+             select cty).First<Country>().CountryName;
+        }
+    }
+
+    /// <summary>
     /// Queries the Membership API to get the user email via the username
     /// </summary>
     /// <param name="username">The user name</param>
@@ -172,16 +187,26 @@ public class DatabaseHandler
         return email;
     }
 
+    /// <summary>
+    /// Gets all of a user particulars given their user id
+    /// </summary>
+    /// <param name="userGuid"></param>
+    /// <returns>A class representing a tuple in the UserParticulars table</returns>
     public static UserParticular GetUserParticulars(string userGuid)
     {
-        UserParticular temp;
-        using (var db = new RIS_DB())
+        try
         {
-            temp = (from user in db.UserParticulars
-                    where user.UserId == Guid.Parse(userGuid)
-                    select user).First<UserParticular>();
+            using (var db = new RIS_DB())
+            {
+                return (from user in db.UserParticulars
+                        where user.UserId == Guid.Parse(userGuid)
+                        select user).First<UserParticular>();
+            }
         }
-        return temp;
+        catch (InvalidOperationException)
+        {
+            return null;
+        }
     }
 
     /// <summary>

@@ -83,27 +83,6 @@
                 </asp:CustomValidator>
             </div>
             <%-- / Last Name --%>
-            <%-- Gender --%>
-            <div class="topPadding">
-                <asp:Label AssociatedControlID="Gender" runat="server" Text="* Gender: " />
-                <asp:RadioButtonList CssClass="float" ID="Gender" RepeatDirection="Horizontal" runat="server">
-                    <asp:ListItem Text="Male" Value="m" />
-                    <asp:ListItem Text="Female" Value="f" />
-                </asp:RadioButtonList>
-                <asp:RequiredFieldValidator ControlToValidate="Gender" CssClass="failureNotification"
-                    Display="Dynamic" ErrorMessage="Please specify your gender." runat="server" ToolTip="Please specify your gender."
-                    ValidationGroup="UpdateParticularsValidationGroup">
-                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
-                    Please specify your gender.
-                </asp:RequiredFieldValidator>
-                <asp:CustomValidator ControlToValidate="Gender" CssClass="failureNotification" Display="Dynamic"
-                    ErrorMessage="Please specify a valid gender." OnServerValidate="IsGenderValid"
-                    runat="server" ToolTip="Please specify a valid gender." ValidationGroup="UpdateParticularsValidationGroup">
-                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
-                    Please specify a valid gender.
-                </asp:CustomValidator>
-            </div>
-            <%-- / Gender --%>
             <%-- Prefix --%>
             <div class="clear">
                 <asp:Label AssociatedControlID="Prefix" CssClass="topPadding" runat="server" Text="* Salutation: " />

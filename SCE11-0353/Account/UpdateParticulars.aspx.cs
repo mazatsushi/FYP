@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
@@ -10,6 +11,8 @@ using System.Web.UI.WebControls;
 public partial class Account_UpdateParticulars : System.Web.UI.Page
 {
     private MembershipUser _user;
+    private UserParticular _particulars;
+    private string _countryName;
     
     /// <summary>
     /// Page load event
@@ -18,10 +21,26 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
     /// <param name="e">Event parameters</param>
     protected void Page_Load(object sender, EventArgs e)
     {
-        // Get the user name, and fill in the fields as required.
+        // Fill in account information fields
         _user = DatabaseHandler.GetUser(User.Identity.Name);
-        
         Email.Text = _user.Email;
+
+        // Fill in personal information fields
+        _particulars = DatabaseHandler.GetUserParticulars(_user.ProviderUserKey.ToString());
+        if (null == _particulars)
+            return;
+
+        FirstName.Text = _particulars.FirstName;
+        MiddleName.Text = _particulars.MiddleName;
+        LastName.Text = _particulars.LastName;
+        Prefix.SelectedValue = _particulars.Gender.ToString(CultureInfo.InvariantCulture);
+        Suffix.SelectedValue = _particulars.Suffix;
+        Address.Text = _particulars.Address;
+        ContactNumber.Text = _particulars.ContactNumber;
+        PostalCode.Text = _particulars.PostalCode;
+        Nationality.Text = _particulars.Nationality;
+        _countryName = DatabaseHandler.GetCountryName(_particulars.CountryOfResidence);
+        Country.SelectedValue = _countryName;
     }
 
     /// <summary>
@@ -72,44 +91,6 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
          */
         var lastName = (HttpUtility.HtmlEncode(LastName.Text.Trim().ToCharArray()));
         args.IsValid = !lastName.Any(Char.IsDigit);
-    }
-
-    /// <summary>
-    /// Server side validation to check whether gender is within acceptable values
-    /// </summary>
-    /// <param name="source">The web element that triggered the event</param>
-    /// <param name="args">Event parameters</param>
-    protected void IsGenderValid(object source, ServerValidateEventArgs args)
-    {
-        /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for valid input range
-         */
-        char gender;
-        var parse = Char.TryParse(HttpUtility.HtmlEncode(Gender.SelectedValue.Trim().ToLowerInvariant()), out gender);
-        if (!parse)
-        {
-            args.IsValid = false;
-            return;
-        }
-
-        /*
-         * We utilize the implicit fall through feature of the switch statement as
-         * more than one value is valid.
-         * For more information, please refer to:
-         * http://msdn.microsoft.com/en-us/library/06tc147t.aspx
-         */
-        switch (gender)
-        {
-            // True iff gender == 'm' || gender == 'f'
-            case 'm':
-            case 'f':
-                args.IsValid = true;
-                return;
-            default:
-                args.IsValid = false;
-                return;
-        }
     }
 
     /// <summary>
