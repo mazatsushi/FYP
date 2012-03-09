@@ -1,5 +1,4 @@
 using System;
-using System.Web.Security;
 
 /// <summary>
 /// Code behind for the ~/Guest/Login.aspx page
@@ -19,7 +18,7 @@ public partial class Account_Login : System.Web.UI.Page
 		{
 			TransferToHome(User.Identity.Name);
 		}
-    }
+	}
 
 	/// <summary>
 	/// Event that triggers when the user is successfully logged in.

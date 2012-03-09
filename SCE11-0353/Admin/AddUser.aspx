@@ -61,13 +61,13 @@
                     runat="server" TargetControlID="FirstName" />
                 <asp:RequiredFieldValidator ControlToValidate="FirstName" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please enter your first name." runat="server"
-                    ToolTip="Please enter your first name." ValidationGroup="RegisterUserValidationGroup">
+                    ToolTip="Please enter your first name." ValidationGroup="AddUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please enter your first name.
                 </asp:RequiredFieldValidator>
                 <asp:CustomValidator ControlToValidate="FirstName" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please enter a valid first name." OnServerValidate="IsFirstNameValid"
-                    runat="server" ToolTip="Please enter a valid first name." ValidationGroup="RegisterUserValidationGroup">
+                    runat="server" ToolTip="Please enter a valid first name." ValidationGroup="AddUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please enter a valid first name.
                 </asp:CustomValidator>
@@ -81,7 +81,7 @@
                     runat="server" TargetControlID="MiddleName" />
                 <asp:CustomValidator ControlToValidate="MiddleName" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please enter a valid middle name." OnServerValidate="IsMiddleNameValid"
-                    runat="server" ToolTip="Please enter a valid middle name." ValidationGroup="RegisterUserValidationGroup">
+                    runat="server" ToolTip="Please enter a valid middle name." ValidationGroup="AddUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please enter a valid middle name.
                 </asp:CustomValidator>
@@ -95,13 +95,13 @@
                     runat="server" TargetControlID="LastName" />
                 <asp:RequiredFieldValidator ControlToValidate="LastName" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please enter your last name." runat="server"
-                    ToolTip="Please enter your last name." ValidationGroup="RegisterUserValidationGroup">
+                    ToolTip="Please enter your last name." ValidationGroup="AddUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please enter your last name.
                 </asp:RequiredFieldValidator>
                 <asp:CustomValidator ControlToValidate="LastName" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please enter a valid last name." OnServerValidate="IsLastNameValid"
-                    runat="server" ToolTip="Please enter a valid last name." ValidationGroup="RegisterUserValidationGroup">
+                    runat="server" ToolTip="Please enter a valid last name." ValidationGroup="AddUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please enter a valid last name.
                 </asp:CustomValidator>
@@ -114,23 +114,23 @@
                     <asp:ListItem Text="Male" Value="m" />
                     <asp:ListItem Text="Female" Value="f" />
                 </asp:RadioButtonList>
-                <asp:RequiredFieldValidator  ControlToValidate="Gender" CssClass="failureNotification"
+                <asp:RequiredFieldValidator ControlToValidate="Gender" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please specify your gender." runat="server" ToolTip="Please specify your gender."
-                    ValidationGroup="RegisterUserValidationGroup">
+                    ValidationGroup="AddUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify your gender.
                 </asp:RequiredFieldValidator>
                 <asp:CustomValidator ControlToValidate="Gender" CssClass="failureNotification" Display="Dynamic"
                     ErrorMessage="Please specify a valid gender." OnServerValidate="IsGenderValid"
-                    runat="server" ToolTip="Please specify a valid gender." ValidationGroup="RegisterUserValidationGroup">
+                    runat="server" ToolTip="Please specify a valid gender." ValidationGroup="AddUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify a valid gender.
                 </asp:CustomValidator>
             </div>
             <%-- / Gender --%>
             <%-- Prefix --%>
-            <div class="clear">
-                <asp:Label AssociatedControlID="Prefix" CssClass="topPadding" runat="server" Text="* Salutation: " />
+            <div class="clear topPadding">
+                <asp:Label AssociatedControlID="Prefix" runat="server" Text="* Salutation: " />
                 <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" DropDownStyle="DropDownList" ID="Prefix"
                     runat="server">
                     <asp:ListItem Text="Dr." Value="Dr." />
@@ -141,13 +141,13 @@
                 </ajaxToolkit:ComboBox>
                 <asp:RequiredFieldValidator ControlToValidate="Prefix" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please specify a salutation." runat="server"
-                    ToolTip="Please specify a salutation." ValidationGroup="RegisterUserValidationGroup">
+                    ToolTip="Please specify a salutation." ValidationGroup="AddUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify a salutation.
                 </asp:RequiredFieldValidator>
                 <asp:CustomValidator ControlToValidate="Prefix" CssClass="failureNotification" Display="Dynamic"
                     ErrorMessage="Please specify a valid salutation." OnServerValidate="IsPrefixValid"
-                    runat="server" ToolTip="Please specify a valid salutation." ValidationGroup="RegisterUserValidationGroup">
+                    runat="server" ToolTip="Please specify a valid salutation." ValidationGroup="AddUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify a valid salutation.
                 </asp:CustomValidator>
@@ -164,7 +164,7 @@
                 </ajaxToolkit:ComboBox>
                 <asp:CustomValidator ControlToValidate="Suffix" CssClass="failureNotification" Display="Dynamic"
                     ErrorMessage="Please specify a valid suffix." OnServerValidate="IsSuffixValid"
-                    runat="server" ToolTip="Please specify a valid suffix." ValidationGroup="RegisterUserValidationGroup">
+                    runat="server" ToolTip="Please specify a valid suffix." ValidationGroup="AddUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify a valid suffix.
                 </asp:CustomValidator>
@@ -187,10 +187,10 @@
                     EmptyValueMessage="Please specify your date of birth." InvalidValueBlurredMessage="<img src='../Images/icons/error.png'> Please specify a valid date of birth."
                     InvalidValueMessage="Please specify a valid date of birth." IsValidEmpty="False"
                     runat="server" ValidationExpression="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$"
-                    ValidationGroup="RegisterUserValidationGroup" />
+                    ValidationGroup="AddUserValidationGroup" />
                 <asp:RangeValidator ControlToValidate="DateOfBirth" CssClass="failureNotification"
                     ErrorMessage="Please specify a valid date of birth." ID="DateRangeCheck" runat="server"
-                    Type="Date" ValidationGroup="RegisterUserValidationGroup"><asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Type="Date" ValidationGroup="AddUserValidationGroup"><asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify a valid date of birth.
                 </asp:RangeValidator>
             </div>
@@ -201,7 +201,7 @@
                 <asp:TextBox CssClass="textEntry" ID="Address" runat="server" TextMode="MultiLine" />
                 <asp:RequiredFieldValidator ControlToValidate="Address" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please specify an address." runat="server" ToolTip="Please specify an address."
-                    ValidationGroup="RegisterUserValidationGroup">
+                    ValidationGroup="AddUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify an address.
                 </asp:RequiredFieldValidator>
@@ -218,7 +218,7 @@
                     CssClass="failureNotification" Display="Dynamic" EmptyValueBlurredText="<img src='../Images/icons/error.png'> Please specify your contact number."
                     EmptyValueMessage="Please specify your contact number." InvalidValueBlurredMessage="<img src='../Images/icons/error.png'> Please specify a valid contact number."
                     InvalidValueMessage="Please specify a valid contact number." IsValidEmpty="False"
-                    runat="server" ValidationExpression="^[3689]\d{7}$" ValidationGroup="RegisterUserValidationGroup" />
+                    runat="server" ValidationExpression="^[3689]\d{7}$" ValidationGroup="AddUserValidationGroup" />
             </div>
             <%-- / Contact Number --%>
             <%-- Postal Code --%>
@@ -232,7 +232,7 @@
                     CssClass="failureNotification" Display="Dynamic" EmptyValueBlurredText="<img src='../Images/icons/error.png'> Please specify your postal code."
                     EmptyValueMessage="Please specify your postal code." InvalidValueBlurredMessage="<img src='../Images/icons/error.png'> Please specify a valid postal."
                     InvalidValueMessage="Please specify a valid postal." IsValidEmpty="False" runat="server"
-                    ValidationExpression="\d{6}$" ValidationGroup="RegisterUserValidationGroup" />
+                    ValidationExpression="\d{6}$" ValidationGroup="AddUserValidationGroup" />
             </div>
             <%-- / Postal Code --%>
             <%-- Country --%>
@@ -245,27 +245,27 @@
                     ID="CountryListing" runat="server" SelectCommand="SELECT DISTINCT [CountryName] FROM [Countries] ORDER BY [CountryName]" />
                 <asp:RequiredFieldValidator ControlToValidate="Country" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please specify your country of residence." runat="server"
-                    ToolTip="Please specify your country of residence." ValidationGroup="RegisterUserValidationGroup">
+                    ToolTip="Please specify your country of residence." ValidationGroup="AddUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify your country of residence.
                 </asp:RequiredFieldValidator>
             </div>
             <%-- / Country --%>
             <%-- Nationality --%>
-            <div class="clear">
-                <asp:Label AssociatedControlID="Nationality" CssClass="topPadding" runat="server" Text="* Nationality: " />
+            <div class="clear topPadding">
+                <asp:Label AssociatedControlID="Nationality" runat="server" Text="* Nationality: " />
                 <asp:TextBox CssClass="textEntry" ID="Nationality" runat="server" />
                 <ajaxToolkit:FilteredTextBoxExtender Enabled="True" FilterType="LowercaseLetters, UppercaseLetters"
                     runat="server" TargetControlID="Nationality" />
                 <asp:RequiredFieldValidator ControlToValidate="Nationality" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please specify your nationality." runat="server"
-                    ToolTip="Please specify your nationality." ValidationGroup="RegisterUserValidationGroup">
+                    ToolTip="Please specify your nationality." ValidationGroup="AddUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify your nationality.
                 </asp:RequiredFieldValidator>
                 <asp:CustomValidator ControlToValidate="Nationality" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please specify a valid nationality." OnServerValidate="IsNationalityValid"
-                    runat="server" ToolTip="Please specify a valid nationality." ValidationGroup="RegisterUserValidationGroup">
+                    runat="server" ToolTip="Please specify a valid nationality." ValidationGroup="AddUserValidationGroup">
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify a valid nationality.
                 </asp:CustomValidator>
@@ -279,9 +279,99 @@
         TextLabelID="PersonalInfoPanelLabel">
     </ajaxToolkit:CollapsiblePanelExtender>
     <%-- / Personal Information --%>
+    <%-- Account Information --%>
+    <asp:Panel CssClass="collapsePanelHeader" ID="AccountInfoHeader" runat="server">
+        <asp:Image ID="AccountInfoPanelArrow" runat="server" />
+        Account Information (<asp:Label ID="AccountInfoPanelLabel" runat="server" />)
+    </asp:Panel>
+    <asp:Panel ID="AccountInfoContent" runat="server" CssClass="collapsePanel">
+        <fieldset class="register">
+            <%-- Username --%>
+            <div>
+                <asp:Label AssociatedControlID="UserName" runat="server" Text="* User Name: " />
+                <asp:TextBox CssClass="textEntry" ID="UserName" runat="server" />
+                <asp:RequiredFieldValidator ControlToValidate="UserName" CssClass="failureNotification"
+                    Display="Dynamic" ErrorMessage="Please enter your user name." runat="server"
+                    ToolTip="Please enter your user name." ValidationGroup="AddUserValidationGroup">
+                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please enter your user name.
+                </asp:RequiredFieldValidator>
+                <asp:CustomValidator ControlToValidate="UserName" CssClass="failureNotification"
+                    Display="Dynamic" ErrorMessage="User name is already in use." OnServerValidate="UserNameNotExists"
+                    runat="server" ToolTip="User name is already in use." ValidationGroup="AddUserValidationGroup">
+                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    User name is already in use.
+                </asp:CustomValidator>
+            </div>
+            <%-- / Username --%>
+            <%-- Email --%>
+            <div class="topPadding">
+                <asp:Label AssociatedControlID="Email" runat="server" Text="* E-mail:" />
+                <asp:TextBox CssClass="textEntry" ID="Email" runat="server" />
+                <asp:RequiredFieldValidator ControlToValidate="Email" CssClass="failureNotification"
+                    Display="Dynamic" ErrorMessage="Please enter your e-mail address." runat="server"
+                    ToolTip="Please enter your e-mail address." ValidationGroup="AddUserValidationGroup">
+                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please enter your e-mail address.
+                </asp:RequiredFieldValidator>
+                <%--Matches a valid email address including ip's which are rarely used. Allows for a-z0-9_.- in the username,
+                but not ending in a full stop i.e user.@domain.com is invalid and a-z0-9- as the optional sub domain(s)
+                with domain name and a 2-7 char (a-z) tld allowing for short tld's like ca and new ones like museum.--%>
+                <asp:RegularExpressionValidator ControlToValidate="Email" CssClass="failureNotification"
+                    Display="Dynamic" ErrorMessage="Please enter a valid e-mail address." runat="server"
+                    ToolTip="Please enter a valid e-mail address." ValidationExpression="^[\w-]+(\.[\w-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\`d{1,3}\.){3}\d{1,3})(:\d{4})?$"
+                    ValidationGroup="AddUserValidationGroup">
+                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please enter a valid e-mail address.
+                </asp:RegularExpressionValidator>
+                <asp:CustomValidator ControlToValidate="Email" CssClass="failureNotification" Display="Dynamic"
+                    ErrorMessage="E-mail address is already in use." OnServerValidate="EmailNotInUse"
+                    runat="server" ToolTip="Em-ail address is already in use." ValidationGroup="AddUserValidationGroup">
+                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    E-mail address is already in use.
+                </asp:CustomValidator>
+            </div>
+            <%-- / Email --%>
+            <%-- Security Question --%>
+            <div class="topPadding">
+                <asp:Label AssociatedControlID="Question" runat="server" Text="* Security Question:" />
+                <asp:TextBox CssClass="textEntry" ID="Question" runat="server" />
+                <asp:RequiredFieldValidator ControlToValidate="Question" CssClass="failureNotification"
+                    Display="Dynamic" ErrorMessage="Security question is required." runat="server"
+                    ToolTip="Security question is required." ValidationGroup="AddUserValidationGroup">
+                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Security question is required.
+                </asp:RequiredFieldValidator>
+            </div>
+            <%-- / Security Question --%>
+            <%-- Security Answer --%>
+            <div class="topPadding">
+                <asp:Label AssociatedControlID="Answer" runat="server" Text="* Security Answer:" />
+                <asp:TextBox CssClass="textEntry" ID="Answer" runat="server" />
+                <asp:RequiredFieldValidator ControlToValidate="Answer" CssClass="failureNotification"
+                    Display="Dynamic" ErrorMessage="Security answer is required." runat="server"
+                    ToolTip="Security answer is required." ValidationGroup="AddUserValidationGroup">
+                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Security answer is required.
+                </asp:RequiredFieldValidator>
+            </div>
+            <%-- / Security Answer --%>
+            <%-- Role --%>
+            <div class="topPadding">
+                <asp:Label AssociatedControlID="Answer" runat="server" Text="* Role:" />
+            </div>
+            <%-- / Role --%>
+        </fieldset>
+    </asp:Panel>
+    <ajaxToolkit:CollapsiblePanelExtender CollapseControlID="AccountInfoHeader" CollapsedImage="~/Images/icons/bullet_arrow_down.png"
+        CollapsedText="Show" Enabled="True" ExpandControlID="AccountInfoHeader" ExpandedImage="~/Images/icons/bullet_arrow_up.png"
+        ExpandedText="Hide" ID="AccountInfoPanel" ImageControlID="AccountInfoPanelArrow"
+        runat="server" TargetControlID="AccountInfoContent" TextLabelID="AccountInfoPanelLabel" />
+    <%-- / Account Information --%>
     <div>
         <asp:Button CssClass="buttons" runat="server" Text="Create User" ValidationGroup="AddUserValidationGroup"
             OnClick="RegisterButtonClick" />
-        <asp:Button CssClass="buttons" PostBackUrl="~/Admin/Default.aspx" runat="server" Text="Cancel" />
+        <asp:Button CssClass="buttons" PostBackUrl="~/Admin/Default.aspx" runat="server"
+            Text="Cancel" />
     </div>
 </asp:Content>

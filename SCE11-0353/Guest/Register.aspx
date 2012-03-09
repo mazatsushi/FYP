@@ -138,8 +138,8 @@
             </div>
             <%-- / Gender --%>
             <%-- Prefix --%>
-            <div class="clear">
-                <asp:Label AssociatedControlID="Prefix" CssClass="topPadding" runat="server" Text="* Salutation: " />
+            <div class="clear topPadding">
+                <asp:Label AssociatedControlID="Prefix" runat="server" Text="* Salutation: " />
                 <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" DropDownStyle="DropDownList" ID="Prefix"
                     runat="server">
                     <asp:ListItem Text="Dr." Value="Dr." />
@@ -261,8 +261,8 @@
             </div>
             <%-- / Country --%>
             <%-- Nationality --%>
-            <div class="clear">
-                <asp:Label AssociatedControlID="Nationality" CssClass="topPadding" runat="server" Text="* Nationality: " />
+            <div class="clear topPadding">
+                <asp:Label AssociatedControlID="Nationality" runat="server" Text="* Nationality: " />
                 <asp:TextBox CssClass="textEntry" ID="Nationality" runat="server" />
                 <ajaxToolkit:FilteredTextBoxExtender Enabled="True" FilterType="LowercaseLetters, UppercaseLetters"
                     runat="server" TargetControlID="Nationality" />

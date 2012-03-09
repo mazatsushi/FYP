@@ -210,6 +210,26 @@ public partial class Admin_AddUser : System.Web.UI.Page
         args.IsValid = !lastName.Any(Char.IsDigit);
     }
 
+    /// <summary>
+    /// Method to check whether username already exists
+    /// </summary>
+    /// <param name="sender">The web element that triggered the event</param>
+    /// <param name="args">Event parameters</param>
+    protected void UserNameNotExists(object sender, ServerValidateEventArgs args)
+    {
+        args.IsValid = !DatabaseHandler.UserNameExists(HttpUtility.HtmlEncode(UserName.Text.Trim()));
+    }
+
+    /// <summary>
+    /// Method to check whether user email already exists
+    /// </summary>
+    /// <param name="sender">The web element that triggered the event</param>
+    /// <param name="args">Event parameters</param>
+    protected void EmailNotInUse(object sender, ServerValidateEventArgs args)
+    {
+        args.IsValid = !DatabaseHandler.EmailInUse(HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant()));
+    }
+
     protected void RegisterButtonClick(object sender, EventArgs e)
     {
     }
