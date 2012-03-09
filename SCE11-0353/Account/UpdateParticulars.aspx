@@ -128,7 +128,7 @@
             <%-- Address --%>
             <div class="topPadding">
                 <asp:Label AssociatedControlID="Address" runat="server" Text="* Address: " />
-                <asp:TextBox CssClass="textEntry" ID="Address" runat="server" TextMode="MultiLine" />
+                <asp:TextBox CssClass="textEntry" ID="Address" runat="server" OnTextChanged="UpdateText" TextMode="MultiLine" />
                 <asp:RequiredFieldValidator ControlToValidate="Address" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please specify an address." runat="server" ToolTip="Please specify an address."
                     ValidationGroup="UpdateParticularsValidationGroup">
@@ -236,12 +236,6 @@
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please enter a valid e-mail address.
                 </asp:RegularExpressionValidator>
-                <asp:CustomValidator ControlToValidate="Email" CssClass="failureNotification" Display="Dynamic"
-                    ErrorMessage="E-mail address is already in use." OnServerValidate="EmailNotInUse"
-                    runat="server" ToolTip="Em-ail address is already in use." ValidationGroup="UpdateParticularsValidationGroup">
-                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
-                    E-mail address is already in use.
-                </asp:CustomValidator>
             </div>
             <%-- / Email --%>
         </fieldset>

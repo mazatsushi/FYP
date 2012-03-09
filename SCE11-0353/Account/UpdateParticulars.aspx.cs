@@ -10,7 +10,6 @@ using System.Web.UI.WebControls;
 /// </summary>
 public partial class Account_UpdateParticulars : System.Web.UI.Page
 {
-    private MembershipUser _account;
     private const string RedirectUrl = "~/Account/UpdateParticularsSuccess.aspx";
 
     /// <summary>
@@ -20,19 +19,22 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
     /// <param name="e">Event parameters</param>
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (IsPostBack)
+            return;
+
         // Fill in account information fields
-        _account = DatabaseHandler.GetUser(User.Identity.Name);
-        Email.Text = _account.Email;
+        var user = DatabaseHandler.GetUser(User.Identity.Name);
+        Email.Text = user.Email;
 
         // Fill in personal information fields
-        var particulars = DatabaseHandler.GetUserParticulars(_account.ProviderUserKey.ToString());
+        var particulars = DatabaseHandler.GetUserParticulars(user.ProviderUserKey.ToString());
         if (null == particulars)
             return;
 
         FirstName.Text = particulars.FirstName;
         MiddleName.Text = particulars.MiddleName;
         LastName.Text = particulars.LastName;
-        Prefix.SelectedValue = particulars.Gender.ToString(CultureInfo.InvariantCulture);
+        Prefix.SelectedValue = particulars.Prefix.ToString(CultureInfo.InvariantCulture);
         Suffix.SelectedValue = particulars.Suffix;
         Address.Text = particulars.Address;
         ContactNumber.Text = particulars.ContactNumber;
@@ -171,16 +173,6 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
         args.IsValid = !lastName.Any(Char.IsDigit);
     }
 
-    // <summary>
-    /// Method to check whether user email already exists
-    /// </summary>
-    /// <param name="sender">The web element that triggered the event</param>
-    /// <param name="args">Event parameters</param>
-    protected void EmailNotInUse(object sender, ServerValidateEventArgs args)
-    {
-        args.IsValid = !DatabaseHandler.EmailInUse(HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant()));
-    }
-
     /// <summary>
     /// Event that triggers when the update button is clicked.
     /// </summary>
@@ -199,14 +191,15 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
          *  it is 100% guaranteed that it is valid as well.
          * 2) Call DatabaseHandler to handle the updates for us.
          */
+        var user = DatabaseHandler.GetUser(User.Identity.Name);
 
         // Fetch account information and update
         var email = Email.Text.Trim().ToLowerInvariant();
         if (String.IsNullOrEmpty(email))
             return;
 
-        _account.Email = email;
-        if (DatabaseHandler.UpdateAccount(_account))
+        user.Email = email;
+        if (!DatabaseHandler.UpdateAccount(user))
         {
             ErrorMessage.Text = HttpUtility.HtmlDecode("An error occured while trying to update your account information");
             return;
@@ -227,10 +220,10 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
         var nationality = Nationality.Text.Trim();
         var countryId = DatabaseHandler.GetCountryId(Country.Text.Trim());
 
-        if (!DatabaseHandler.UpdateParticulars(_account.ProviderUserKey, firstName, middleName, lastName, namePrefix, nameSuffix, address, contact, postalCode, countryId, nationality))
+        if (!DatabaseHandler.UpdateParticulars(user.ProviderUserKey, firstName, middleName, lastName, namePrefix, nameSuffix, address, contact, postalCode, countryId, nationality))
         {
             ErrorMessage.Text += HttpUtility.HtmlDecode("<ul>");
-            ErrorMessage.Text += HttpUtility.HtmlDecode("<li>An error occured while adding your role. Please contact the system administrator.</li>");
+            ErrorMessage.Text += HttpUtility.HtmlDecode("<li>An error occured while updating your particulars. Please contact the system administrator.</li>");
             ErrorMessage.Text += HttpUtility.HtmlDecode("</ul>");
             return;
         }
@@ -263,5 +256,11 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
                 Response.Redirect("~/Patient/Default.aspx");
                 break;
         }
+    }
+
+    protected void UpdateText(object sender, EventArgs e)
+    {
+        Console.WriteLine(sender.ToString());
+        Console.WriteLine(e.ToString());
     }
 }
