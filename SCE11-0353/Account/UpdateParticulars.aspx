@@ -128,7 +128,7 @@
             <%-- Address --%>
             <div class="topPadding">
                 <asp:Label AssociatedControlID="Address" runat="server" Text="* Address: " />
-                <asp:TextBox CssClass="textEntry" ID="Address" runat="server" OnTextChanged="UpdateText" TextMode="MultiLine" />
+                <asp:TextBox CssClass="textEntry" ID="Address" runat="server" TextMode="MultiLine" />
                 <asp:RequiredFieldValidator ControlToValidate="Address" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please specify an address." runat="server" ToolTip="Please specify an address."
                     ValidationGroup="UpdateParticularsValidationGroup">
@@ -247,7 +247,7 @@
     <%-- / Account Information --%>
     <div>
         <asp:Button CssClass="buttons" runat="server" Text="Update" ValidationGroup="UpdateParticularsValidationGroup"
-            OnClick="UpdateButton_Click" />
+            OnClick="UpdateButtonClick" />
         <asp:Button CssClass="buttons" OnClick="CancelButtonClick" runat="server" Text="Cancel" CausesValidation="False" />
     </div>
 </asp:Content>
