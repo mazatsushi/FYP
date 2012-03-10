@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration.Provider;
 using System.Data.Linq;
 using System.Linq;
@@ -15,6 +16,31 @@ public class DatabaseHandler
     private const int NonAlphaNumeric = 1;
 
     /// <summary>
+    /// Adds a new drug allergy to the database
+    /// </summary>
+    /// <param name="drugName">The drug name</param>
+    /// <returns>True if the drug was added. False otherwise.</returns>
+    public static bool AddNewDrug(string drugName)
+    {
+        var added = false;
+        try
+        {
+            using (var db = new RIS_DB())
+            {
+                var drug = new DrugAllergy
+                               {
+                                   DrugName = drugName
+                               };
+                db.DrugAllergies.InsertOnSubmit(drug);
+                db.SubmitChanges();
+                added = true;
+            }
+        }
+        catch (Exception) { }
+        return added;
+    }
+
+    /// <summary>
     /// Adds a user to a pre-specified role name
     /// </summary>
     /// <param name="username">The user name</param>
@@ -28,9 +54,9 @@ public class DatabaseHandler
             Roles.AddUserToRole(username, rolename);
             addStatus = true;
         }
-        catch (ArgumentNullException) {}
-        catch (ArgumentException) {}
-        catch (ProviderException) {}
+        catch (ArgumentNullException) { }
+        catch (ArgumentException) { }
+        catch (ProviderException) { }
         return addStatus;
     }
 
@@ -85,7 +111,7 @@ public class DatabaseHandler
             }
         }
         catch (Exception)
-        {}
+        { }
         return addStatus;
     }
 
@@ -117,6 +143,25 @@ public class DatabaseHandler
     {
         var user = Membership.GetUser(username);
         return user != null && user.ChangePasswordQuestionAndAnswer(password, question, answer);
+    }
+
+    /// <summary>
+    /// Determines whether or not a drug exists in the database
+    /// </summary>
+    /// <param name="drugName">The drug name</param>
+    /// <returns>True if the drug name is found in the database. False otherwise.</returns>
+    public static bool DrugExists(string drugName)
+    {
+        var found = false;
+        using (var db = new RIS_DB())
+        {
+            var query = (from d in db.DrugAllergies
+                         where d.DrugName.Equals(drugName)
+                         select d);
+            if (query.Any())
+                found = true;
+        }
+        return found;
     }
 
     /// <summary>
@@ -161,6 +206,32 @@ public class DatabaseHandler
     {
         var temp = Membership.GeneratePassword(PasswordLength, NonAlphaNumeric);
         return temp;
+    }
+
+    /// <summary>
+    /// Gets a list of all blood types
+    /// </summary>
+    /// <returns>A string array containing the names of all blood types stored in the data source.</returns>
+    public static List<string> GetAllBloodTypes()
+    {
+        using (var db = new RIS_DB())
+        {
+            return (from b in db.BloodTypes
+                    select b.BloodType1).ToList();
+        }
+    }
+
+    /// <summary>
+    /// Gets a list of all countries
+    /// </summary>
+    /// <returns>A string array containing the names of all blood types stored in the data source.</returns>
+    public static List<string> GetAllCountries()
+    {
+        using (var db = new RIS_DB())
+        {
+            return (from c in db.Countries
+                    select c.CountryName).ToList();
+        }
     }
 
     /// <summary>
@@ -214,6 +285,48 @@ public class DatabaseHandler
             email = user.Email;
         }
         return email;
+    }
+
+    /// <summary>
+    /// Gets user's GUID given their nric
+    /// </summary>
+    /// <param name="nric">The user NRIC</param>
+    /// <returns>A string containing the user's real name if found. Null otherwise.</returns>
+    public static string GetUserGuid(string nric)
+    {
+        var temp = string.Empty;
+        try
+        {
+            using (var db = new RIS_DB())
+            {
+                var user = (db.UserParticulars.Single(u => u.NRIC.Equals(nric)));
+                temp = user.UserId.ToString();
+            }
+        }
+        catch (InvalidOperationException)
+        { }
+        return temp;
+    }
+
+    /// <summary>
+    /// Gets user's real name given their nric
+    /// </summary>
+    /// <param name="nric">The user NRIC</param>
+    /// <returns>A string containing the user's real name if found. Null otherwise.</returns>
+    public static string GetUserRealName(string nric)
+    {
+        var temp = string.Empty;
+        try
+        {
+            using (var db = new RIS_DB())
+            {
+                var user = (db.UserParticulars.Single(u => u.NRIC.Equals(nric)));
+                temp = user.FirstName + " " + user.LastName;
+            }
+        }
+        catch (InvalidOperationException)
+        { }
+        return temp;
     }
 
     /// <summary>
@@ -287,13 +400,32 @@ public class DatabaseHandler
     }
 
     /// <summary>
+    /// Determines whether or not a user is in the specified role given their NRIC
+    /// </summary>
+    /// <param name="nric">User NRIC</param>
+    /// <returns>True if user is in the specified role. False otherwise.</returns>
+    public static bool IsInRole(string nric, string role)
+    {
+        var isInRole = false;
+        using (var db = new RIS_DB())
+        {
+            // Do not perform database joins as they are very intensive
+            var userGuid = db.UserParticulars.Single(u => u.NRIC.Equals(nric)).UserId.ToString();
+            var username = db.aspnet_Users.Single(u => u.UserId.Equals(Guid.Parse(userGuid))).UserName;
+            if (Roles.IsUserInRole(username, role))
+                isInRole = true;
+        }
+        return isInRole;
+    }
+
+    /// <summary>
     /// Queries database to check whether NRIC already exists
     /// </summary>
     /// <param name="nric">The web element that triggered the event</param>
     /// <returns>True if the NRIC is currently in use. False otherwise.</returns>
     public static bool NricExists(string nric)
     {
-        bool exists = false;
+        var exists = false;
         using (var db = new RIS_DB())
         {
             var result = (from user in db.UserParticulars
@@ -349,9 +481,9 @@ public class DatabaseHandler
             Roles.RemoveUserFromRole(username, rolename);
             removed = true;
         }
-        catch (ArgumentNullException) {}
-        catch (ArgumentException) {}
-        catch (ProviderException) {}
+        catch (ArgumentNullException) { }
+        catch (ArgumentException) { }
+        catch (ProviderException) { }
         return removed;
     }
 
@@ -395,7 +527,7 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB())
             {
-                var user = db.UserParticulars.Single(u => u.UserId == Guid.Parse(userGuid.ToString()));
+                var user = db.UserParticulars.Single(u => u.UserId.Equals(Guid.Parse(userGuid.ToString())));
                 user.FirstName = firstName;
                 user.MiddleName = middleName;
                 user.LastName = lastName;

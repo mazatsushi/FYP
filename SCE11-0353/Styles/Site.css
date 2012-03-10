@@ -351,6 +351,6 @@ nav, #menucontainer
 
 .failureNotification
 {
+    color: red;
     font-size: 1.2em;
-    color: Red;
 }

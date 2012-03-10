@@ -10,36 +10,32 @@
         Manage User Roles
     </h2>
     <%-- Error Notifications --%>
-    <div>
-        <span class="failureNotification">
-            <asp:Literal ID="ErrorMessage" runat="server" />
-        </span>
-        <asp:ValidationSummary CssClass="failureNotification" runat="server" ValidationGroup="UpdateUserValidationGroup" />
-    </div>
+    <asp:Panel CssClass="failureNotification" runat="server">
+        <asp:Literal ID="ErrorMessage" runat="server" />
+        <asp:ValidationSummary runat="server" ValidationGroup="UpdateUserValidationGroup" />
+    </asp:Panel>
     <%-- / Error Notifications --%>
     <%-- Role --%>
-    <div>
-        <div>
-            <h3>
-                <asp:Label AssociatedControlID="Role" ID="Label" runat="server" />
-            </h3>
-        </div>
-        <div>
-            <asp:CheckBoxList CellPadding="5" CellSpacing="5" CssClass="float" ID="Role" RepeatDirection="Horizontal"
-                runat="server" TextAlign="Left" />
-            <skm:CheckBoxListValidator ControlToValidate="Role" CssClass="failureNotification"
-                ErrorMessage="Please select at least one role." MinimumNumberOfSelectedCheckBoxes="1"
-                runat="server" ValidationGroup="UpdateUserValidationGroup">
+    <asp:Panel runat="server">
+        <h3>
+            <asp:Label AssociatedControlID="Role" ID="Label" runat="server" />
+        </h3>
+    </asp:Panel>
+    <asp:Panel runat="server">
+        <asp:CheckBoxList CellPadding="5" CellSpacing="5" CssClass="float" ID="Role" RepeatDirection="Horizontal"
+                          runat="server" TextAlign="Left" />
+        <skm:CheckBoxListValidator ControlToValidate="Role" CssClass="failureNotification"
+                                   ErrorMessage="Please select at least one role." MinimumNumberOfSelectedCheckBoxes="1"
+                                   runat="server" ValidationGroup="UpdateUserValidationGroup">
             <asp:Image ImageAlign="AbsBottom" ImageUrl="~/Images/icons/error.png" runat="server" />
             Please select at least one role.
-            </skm:CheckBoxListValidator>
-        </div>
-    </div>
+        </skm:CheckBoxListValidator>
+    </asp:Panel>
     <%-- / Role --%>
-    <div class="clear topPadding">
+    <asp:Panel class="clear topPadding" runat="server">
         <asp:Button CssClass="buttons" runat="server" Text="Update User Role(s)" ValidationGroup="UpdateUserValidationGroup"
             OnClick="UpdateButtonClick" />
         <asp:Button CssClass="buttons" PostBackUrl="~/Admin/Default.aspx" runat="server"
             Text="Cancel" />
-    </div>
+    </asp:Panel>
 </asp:Content>

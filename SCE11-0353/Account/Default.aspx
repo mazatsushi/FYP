@@ -21,9 +21,6 @@
                 <asp:ImageButton CausesValidation="False" ImageUrl="~/Images/Folder.png" PostBackUrl="~/Account/UpdateParticulars.aspx"
                     runat="server" />
             </td>
-            <td>
-                
-            </td>
         </tr>
         <tr>
             <td>
@@ -43,8 +40,4 @@
             </td>
         </tr>
     </table>
-    <div class="float">
-    </div>
-    <div class="sidePadding">
-    </div>
 </asp:Content>

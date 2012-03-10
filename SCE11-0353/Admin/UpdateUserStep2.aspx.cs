@@ -94,9 +94,19 @@ public partial class Admin_UpdateUserStep2 : System.Web.UI.Page
              */
             var affectedRole = _rolesList[i];
             if (_newRoles[i])
-                DatabaseHandler.AddUserToRole(_username, affectedRole);
+            {
+                if (!DatabaseHandler.AddUserToRole(_username, affectedRole))
+                {
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("There was an error updating the user role(s). Please contact the system administrator.");
+                }
+            }
             else
-                DatabaseHandler.RemoveUserFromRole(_username, affectedRole);
+            {
+                if (DatabaseHandler.RemoveUserFromRole(_username, affectedRole))
+                {
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("There was an error updating the user role(s). Please contact the system administrator.");
+                }
+            }
         }
 
         Server.Transfer("~/Admin/UpdateUserSuccess.aspx");

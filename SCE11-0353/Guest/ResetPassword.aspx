@@ -9,15 +9,15 @@
         Reset Password
     </h2>
     <%-- Error Notifications --%>
-    <div>
+    <asp:Panel runat="server">
         <asp:ValidationSummary CssClass="failureNotification" runat="server" ValidationGroup="ResetPasswordValidationGroup" />
-    </div>
+    </asp:Panel>
     <%-- / Error Notifications --%>
     <h3>
         Please provide your username
     </h3>
     <%-- Username --%>
-    <div>
+    <asp:Panel runat="server">
         <asp:Label AssociatedControlID="UserName" runat="server" Text="User Name: " />
         <asp:TextBox CssClass="textEntry" ID="UserName" runat="server" />
         <asp:RequiredFieldValidator ControlToValidate="UserName" CssClass="failureNotification"
@@ -33,11 +33,11 @@
             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
             User name not found.
         </asp:CustomValidator>
-    </div>
+    </asp:Panel>
     <%-- / Username --%>
-    <div class="topPadding">
+    <asp:Panel class="topPadding" runat="server">
         <asp:Button CssClass="buttons" runat="server" Text="Next" ValidationGroup="ResetPasswordValidationGroup"
             OnClick="NextButtonClick" />
         <asp:Button CssClass="buttons" PostBackUrl="~/Default.aspx" runat="server" Text="Cancel" />
-    </div>
+    </asp:Panel>
 </asp:Content>

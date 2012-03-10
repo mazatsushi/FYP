@@ -14,14 +14,12 @@
     <p>
         Elements marked with * are required.
     </p>
-    <div>
-        <%-- Error Notifications --%>
-        <span class="failureNotification">
-            <asp:Literal ID="ErrorMessage" runat="server" Text="" />
-        </span>
-        <asp:ValidationSummary CssClass="failureNotification" runat="server" ValidationGroup="UpdateParticularsValidationGroup" />
-        <%-- / Error Notifications --%>
-    </div>
+    <%-- Error Notifications --%>
+    <asp:Panel CssClass="failureNotification" runat="server">
+        <asp:Literal ID="ErrorMessage" runat="server" Text="" />
+        <asp:ValidationSummary runat="server" ValidationGroup="UpdateParticularsValidationGroup" />
+    </asp:Panel>
+    <%-- / Error Notifications --%>
     <%-- Personal Information --%>
     <asp:Panel CssClass="collapsePanelHeader" ID="PersonalInfoHeader" runat="server">
         <asp:Image ID="PersonalInfoPanelArrow" runat="server" />
@@ -30,7 +28,7 @@
     <asp:Panel CssClass="collapsePanel" ID="PersonalInfoContent" runat="server">
         <fieldset class="register">
             <%-- First Name --%>
-            <div class="topPadding">
+            <asp:Panel class="topPadding" runat="server">
                 <asp:Label AssociatedControlID="FirstName" runat="server" Text="* First Name: " />
                 <asp:TextBox CssClass="textEntry" ID="FirstName" runat="server" />
                 <ajaxToolkit:FilteredTextBoxExtender Enabled="True" FilterType="LowercaseLetters, UppercaseLetters"
@@ -47,10 +45,10 @@
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please enter a valid first name.
                 </asp:CustomValidator>
-            </div>
+            </asp:Panel>
             <%-- / First Name --%>
             <%-- Middle Name --%>
-            <div class="topPadding">
+            <asp:Panel class="topPadding" runat="server">
                 <asp:Label AssociatedControlID="MiddleName" runat="server" Text="Middle Name: " />
                 <asp:TextBox CssClass="textEntry" ID="MiddleName" runat="server" />
                 <ajaxToolkit:FilteredTextBoxExtender Enabled="True" FilterType="LowercaseLetters, UppercaseLetters"
@@ -61,10 +59,10 @@
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please enter a valid middle name.
                 </asp:CustomValidator>
-            </div>
+            </asp:Panel>
             <%-- / Middle Name --%>
             <%-- Last Name --%>
-            <div class="topPadding">
+            <asp:Panel class="topPadding" runat="server">
                 <asp:Label AssociatedControlID="LastName" runat="server" Text="* Last Name: " />
                 <asp:TextBox CssClass="textEntry" ID="LastName" runat="server" />
                 <ajaxToolkit:FilteredTextBoxExtender Enabled="True" FilterType="LowercaseLetters, UppercaseLetters"
@@ -81,10 +79,10 @@
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please enter a valid last name.
                 </asp:CustomValidator>
-            </div>
+            </asp:Panel>
             <%-- / Last Name --%>
             <%-- Prefix --%>
-            <div class="clear">
+            <asp:Panel class="clear" runat="server">
                 <asp:Label AssociatedControlID="Prefix" CssClass="topPadding" runat="server" Text="* Salutation: " />
                 <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" DropDownStyle="DropDownList" ID="Prefix"
                     runat="server">
@@ -106,10 +104,10 @@
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify a valid salutation.
                 </asp:CustomValidator>
-            </div>
+            </asp:Panel>
             <%-- / Prefix --%>
             <%-- Suffix --%>
-            <div class="topPadding">
+            <asp:Panel class="topPadding" runat="server">
                 <asp:Label AssociatedControlID="Suffix" runat="server" Text="Suffix: " />
                 <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" DropDownStyle="DropDownList" ID="Suffix"
                     runat="server">
@@ -123,10 +121,10 @@
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify a valid suffix.
                 </asp:CustomValidator>
-            </div>
+            </asp:Panel>
             <%-- / Suffix --%>
             <%-- Address --%>
-            <div class="topPadding">
+            <asp:Panel class="topPadding" runat="server">
                 <asp:Label AssociatedControlID="Address" runat="server" Text="* Address: " />
                 <asp:TextBox CssClass="textEntry" ID="Address" runat="server" TextMode="MultiLine" />
                 <asp:RequiredFieldValidator ControlToValidate="Address" CssClass="failureNotification"
@@ -135,10 +133,10 @@
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify an address.
                 </asp:RequiredFieldValidator>
-            </div>
+            </asp:Panel>
             <%-- / Address --%>
             <%-- Contact Number --%>
-            <div class="topPadding">
+            <asp:Panel class="topPadding" runat="server">
                 <asp:Label AssociatedControlID="ContactNumber" runat="server" Text="* Contact Number: " />
                 <asp:TextBox CssClass="textEntry" ID="ContactNumber" runat="server" />
                 <ajaxToolkit:MaskedEditExtender AutoComplete="False" ClearTextOnInvalid="False" ClipboardEnabled="False"
@@ -149,10 +147,10 @@
                     EmptyValueMessage="Please specify your contact number." InvalidValueBlurredMessage="<img src='../Images/icons/error.png'> Please specify a valid contact number."
                     InvalidValueMessage="Please specify a valid contact number." IsValidEmpty="False"
                     runat="server" ValidationExpression="^[3689]\d{7}$" ValidationGroup="UpdateParticularsValidationGroup" />
-            </div>
+            </asp:Panel>
             <%-- / Contact Number --%>
             <%-- Postal Code --%>
-            <div class="topPadding">
+            <asp:Panel class="topPadding" runat="server">
                 <asp:Label AssociatedControlID="PostalCode" runat="server" Text="* Postal Code: " />
                 <asp:TextBox CssClass="textEntry" ID="PostalCode" runat="server" />
                 <ajaxToolkit:MaskedEditExtender AutoComplete="False" ClearTextOnInvalid="False" ClipboardEnabled="False"
@@ -163,10 +161,10 @@
                     EmptyValueMessage="Please specify your postal code." InvalidValueBlurredMessage="<img src='../Images/icons/error.png'> Please specify a valid postal."
                     InvalidValueMessage="Please specify a valid postal." IsValidEmpty="False" runat="server"
                     ValidationExpression="\d{6}$" ValidationGroup="UpdateParticularsValidationGroup" />
-            </div>
+            </asp:Panel>
             <%-- / Postal Code --%>
             <%-- Country --%>
-            <div class="topPadding">
+            <asp:Panel class="topPadding" runat="server">
                 <asp:Label AssociatedControlID="Country" runat="server" Text="* Country of Residence: " />
                 <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" CssClass="float" DataSourceID="CountryListing"
                     DataTextField="CountryName" DataValueField="CountryName" DropDownStyle="DropDownList"
@@ -179,11 +177,12 @@
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify your country of residence.
                 </asp:RequiredFieldValidator>
-            </div>
+            </asp:Panel>
             <%-- / Country --%>
             <%-- Nationality --%>
-            <div class="clear">
-                <asp:Label AssociatedControlID="Nationality" CssClass="topPadding" runat="server" Text="* Nationality: " />
+            <asp:Panel class="clear" runat="server">
+                <asp:Label AssociatedControlID="Nationality" CssClass="topPadding" runat="server"
+                    Text="* Nationality: " />
                 <asp:TextBox CssClass="textEntry" ID="Nationality" runat="server" />
                 <ajaxToolkit:FilteredTextBoxExtender Enabled="True" FilterType="LowercaseLetters, UppercaseLetters"
                     runat="server" TargetControlID="Nationality" />
@@ -199,7 +198,7 @@
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify a valid nationality.
                 </asp:CustomValidator>
-            </div>
+            </asp:Panel>
             <%-- / Nationality --%>
         </fieldset>
     </asp:Panel>
@@ -217,7 +216,7 @@
     <asp:Panel ID="AccountInfoContent" runat="server" CssClass="collapsePanel">
         <fieldset class="register">
             <%-- Email --%>
-            <div>
+            <asp:Panel runat="server">
                 <asp:Label AssociatedControlID="Email" runat="server" Text="* E-mail:" />
                 <asp:TextBox CssClass="textEntry" ID="Email" runat="server" />
                 <asp:RequiredFieldValidator ControlToValidate="Email" CssClass="failureNotification"
@@ -236,7 +235,7 @@
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please enter a valid e-mail address.
                 </asp:RegularExpressionValidator>
-            </div>
+            </asp:Panel>
             <%-- / Email --%>
         </fieldset>
     </asp:Panel>
@@ -245,9 +244,10 @@
         ExpandedText="Hide" ID="AccountInfoPanel" ImageControlID="AccountInfoPanelArrow"
         runat="server" TargetControlID="AccountInfoContent" TextLabelID="AccountInfoPanelLabel" />
     <%-- / Account Information --%>
-    <div>
+    <asp:Panel runat="server">
         <asp:Button CssClass="buttons" runat="server" Text="Update" ValidationGroup="UpdateParticularsValidationGroup"
             OnClick="UpdateButtonClick" />
-        <asp:Button CssClass="buttons" OnClick="CancelButtonClick" runat="server" Text="Cancel" CausesValidation="False" />
-    </div>
+        <asp:Button CssClass="buttons" OnClick="CancelButtonClick" runat="server" Text="Cancel"
+            CausesValidation="False" />
+    </asp:Panel>
 </asp:Content>

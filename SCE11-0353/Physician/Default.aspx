@@ -1,7 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Physician_Home" %>
+﻿<%@ Page AutoEventWireup="true" CodeFile="Default.aspx.cs" Culture="en-SG" Inherits="Physician_Home"
+    Language="C#" MasterPageFile="~/Site.master" Title="Physician Home" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" Runat="Server">
+<asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" Runat="Server">
+<asp:Content ContentPlaceHolderID="MainContent" runat="Server">
+    Physician Homepage
 </asp:Content>
-

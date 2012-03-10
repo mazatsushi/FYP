@@ -21,15 +21,15 @@
     <asp:ChangePassword EnableViewState="false" RenderOuterTable="false" runat="server"
         SuccessPageUrl="~/Account/ChangePasswordSuccess.aspx">
         <ChangePasswordTemplate>
-            <span class="failureNotification">
+            <asp:Panel CssClass="failureNotification" runat="server">
                 <asp:Literal ID="FailureText" runat="server" />
-            </span>
-            <asp:ValidationSummary CssClass="failureNotification" runat="server" ValidationGroup="ChangeUserPasswordValidationGroup" />
-            <div class="accountInfo">
+                <asp:ValidationSummary runat="server" ValidationGroup="ChangeUserPasswordValidationGroup" />
+            </asp:Panel>
+            <asp:Panel class="accountInfo" runat="server">
                 <fieldset class="changePassword">
                     <legend>Account Information</legend>
                     <%-- Current Password --%>
-                    <div>
+                    <asp:Panel runat="server">
                         <asp:Label AssociatedControlID="CurrentPassword" runat="server" Text="Old Password: " />
                         <asp:TextBox CssClass="passwordEntry" ID="CurrentPassword" runat="server" TextMode="Password" />
                         <asp:RequiredFieldValidator ControlToValidate="CurrentPassword" CssClass="failureNotification"
@@ -37,10 +37,10 @@
                             ValidationGroup="ChangeUserPasswordValidationGroup">
                             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> Current password is required.
                         </asp:RequiredFieldValidator>
-                    </div>
+                    </asp:Panel>
                     <%-- / Current Password --%>
                     <%-- New Password --%>
-                    <div class="topPadding">
+                    <asp:Panel class="topPadding" runat="server">
                         <asp:Label AssociatedControlID="NewPassword" runat="server" Text="New Password: " />
                         <asp:TextBox CssClass="passwordEntry" ID="NewPassword" runat="server" TextMode="Password" />
                         <asp:RequiredFieldValidator ControlToValidate="NewPassword" CssClass="failureNotification"
@@ -54,10 +54,10 @@
                             runat="server" StrengthIndicatorType="BarIndicator" TargetControlID="NewPassword" />
                         <br />
                         <asp:Label ID="PasswordStrengthLabel" runat="server" Text="Label" />
-                    </div>
+                    </asp:Panel>
                     <%-- / New Password --%>
                     <%-- Confirm New Password --%>
-                    <div class="topPadding">
+                    <asp:Panel class="topPadding" runat="server">
                         <asp:Label AssociatedControlID="ConfirmNewPassword" runat="server" Text="Confirm New Password: " />
                         <asp:TextBox CssClass="passwordEntry" ID="ConfirmNewPassword" runat="server" TextMode="Password" />
                         <asp:RequiredFieldValidator ControlToValidate="ConfirmNewPassword" CssClass="failureNotification"
@@ -71,16 +71,16 @@
                             runat="server" ValidationGroup="ChangeUserPasswordValidationGroup">
                             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> Both new passwords must match.
                         </asp:CompareValidator>
-                    </div>
+                    </asp:Panel>
                     <%-- / Confirm New Password --%>
                 </fieldset>
-                <p class="submitButton">
+                <asp:Panel class="submitButton" runat="server">
                     <asp:Button CommandName="ChangePassword" CssClass="buttons" ID="ChangePasswordPushButton"
                         runat="server" Text="Change Password" ValidationGroup="ChangeUserPasswordValidationGroup" />
                     <asp:Button CausesValidation="False" CommandName="Cancel" CssClass="buttons" ID="CancelPushButton"
                         OnClick="CancelPushButton_Click" runat="server" Text="Cancel" />
-                </p>
-            </div>
+                </asp:Panel>
+            </asp:Panel>
         </ChangePasswordTemplate>
     </asp:ChangePassword>
 </asp:Content>

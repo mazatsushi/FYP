@@ -11,19 +11,17 @@
     <p>
         Use the form below to change your security question and answer.
     </p>
-    <div>
-        <%-- Error Notifications --%>
-        <span class="failureNotification">
-            <asp:Literal ID="ErrorMessage" runat="server" Text="" />
-        </span>
-        <asp:ValidationSummary CssClass="failureNotification" runat="server" ValidationGroup="ChangeQuestionValidationGroup" />
-        <%-- / Error Notifications --%>
-    </div>
-    <div class="accountInfo">
+    <%-- Error Notifications --%>
+    <asp:Panel CssClass="failureNotification" runat="server">
+        <asp:Literal ID="ErrorMessage" runat="server" Text="" />
+        <asp:ValidationSummary runat="server" ValidationGroup="ChangeQuestionValidationGroup" />
+    </asp:Panel>
+    <%-- / Error Notifications --%>
+    <asp:Panel class="accountInfo" runat="server">
         <fieldset class="changePassword">
             <legend>Security Question & Answer</legend>
             <%-- Password --%>
-            <div>
+            <asp:Panel runat="server">
                 <asp:Label AssociatedControlID="Password" runat="server" Text="Password: " />
                 <asp:TextBox CssClass="passwordEntry" ID="Password" runat="server" TextMode="Password" />
                 <asp:RequiredFieldValidator ControlToValidate="Password" CssClass="failureNotification"
@@ -32,10 +30,10 @@
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Password is required.
                 </asp:RequiredFieldValidator>
-            </div>
+            </asp:Panel>
             <%-- / Password --%>
             <%-- Security Question --%>
-            <div class="topPadding">
+            <asp:Panel class="topPadding" runat="server">
                 <asp:Label AssociatedControlID="Question" runat="server" Text="Security Question:" />
                 <asp:TextBox CssClass="textEntry" ID="Question" runat="server" />
                 <asp:RequiredFieldValidator ControlToValidate="Question" CssClass="failureNotification"
@@ -44,10 +42,10 @@
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Security question is required.
                 </asp:RequiredFieldValidator>
-            </div>
+            </asp:Panel>
             <%-- / Security Question --%>
             <%-- Security Answer --%>
-            <div class="topPadding">
+            <asp:Panel class="topPadding" runat="server">
                 <asp:Label AssociatedControlID="Answer" runat="server" Text="Security Answer:" />
                 <asp:TextBox CssClass="textEntry" ID="Answer" runat="server" />
                 <asp:RequiredFieldValidator ControlToValidate="Answer" CssClass="failureNotification"
@@ -56,13 +54,14 @@
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Security answer is required.
                 </asp:RequiredFieldValidator>
-            </div>
+            </asp:Panel>
             <%-- / Security Answer --%>
         </fieldset>
-    </div>
-    <div>
+    </asp:Panel>
+    <asp:Panel runat="server">
         <asp:Button CssClass="buttons" runat="server" Text="Update" ValidationGroup="ChangeQuestionValidationGroup"
             OnClick="UpdateButtonClick" />
-        <asp:Button CausesValidation="False" CssClass="buttons" OnClick="CancelButtonClick" runat="server" Text="Cancel" />
-    </div>
+        <asp:Button CausesValidation="False" CssClass="buttons" OnClick="CancelButtonClick"
+            runat="server" Text="Cancel" />
+    </asp:Panel>
 </asp:Content>

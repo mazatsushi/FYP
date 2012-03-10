@@ -1,10 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="RIS_DB" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=RIS_DB;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ApplicationServices" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.BloodTypes" Member="BloodTypes">
-    <Type Name="BloodType">
-      <Column Name="BloodTypeId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="BloodType" Member="BloodType1" Type="System.String" DbType="NVarChar(3) NOT NULL" CanBeNull="false" />
-      <Association Name="BloodType_Patient" Member="Patients" ThisKey="BloodTypeId" OtherKey="BloodTypeId" Type="Patient" />
+  <Table Name="dbo.Appointments" Member="Appointments">
+    <Type Name="Appointment">
+      <Column Name="AppointmentId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AppointmentDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="StudyId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PatientId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Patient_Appointment" Member="Patient" ThisKey="PatientId" OtherKey="PatientId" Type="Patient" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Study_Appointment" Member="Study" ThisKey="StudyId" OtherKey="StudyId" Type="Study" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.UserParticulars" Member="UserParticulars">
@@ -23,7 +26,158 @@
       <Column Name="CountryOfResidence" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Nationality" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="aspnet_User_UserParticular" Member="aspnet_User" ThisKey="UserId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
       <Association Name="Country_UserParticular" Member="Country" ThisKey="CountryOfResidence" OtherKey="CountryId" Type="Country" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.aspnet_Applications" Member="aspnet_Applications">
+    <Type Name="aspnet_Application">
+      <Column Name="ApplicationName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="LoweredApplicationName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="ApplicationId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Association Name="aspnet_Application_aspnet_Membership" Member="aspnet_Memberships" ThisKey="ApplicationId" OtherKey="ApplicationId" Type="aspnet_Membership" />
+      <Association Name="aspnet_Application_aspnet_Path" Member="aspnet_Paths" ThisKey="ApplicationId" OtherKey="ApplicationId" Type="aspnet_Path" />
+      <Association Name="aspnet_Application_aspnet_Role" Member="aspnet_Roles" ThisKey="ApplicationId" OtherKey="ApplicationId" Type="aspnet_Role" />
+      <Association Name="aspnet_Application_aspnet_User" Member="aspnet_Users" ThisKey="ApplicationId" OtherKey="ApplicationId" Type="aspnet_User" />
+    </Type>
+  </Table>
+  <Table Name="dbo.aspnet_Membership" Member="aspnet_Memberships">
+    <Type Name="aspnet_Membership">
+      <Column Name="ApplicationId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="PasswordFormat" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PasswordSalt" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="MobilePIN" Type="System.String" DbType="NVarChar(16)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="LoweredEmail" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="PasswordQuestion" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="PasswordAnswer" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="IsApproved" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsLockedOut" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="CreateDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastLoginDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastPasswordChangedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="LastLockoutDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FailedPasswordAttemptCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FailedPasswordAttemptWindowStart" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="FailedPasswordAnswerAttemptCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FailedPasswordAnswerAttemptWindowStart" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Comment" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="aspnet_Application_aspnet_Membership" Member="aspnet_Application" ThisKey="ApplicationId" OtherKey="ApplicationId" Type="aspnet_Application" IsForeignKey="true" />
+      <Association Name="aspnet_User_aspnet_Membership" Member="aspnet_User" ThisKey="UserId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.aspnet_Paths" Member="aspnet_Paths">
+    <Type Name="aspnet_Path">
+      <Column Name="ApplicationId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="PathId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Path" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="LoweredPath" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Association Name="aspnet_Path_aspnet_PersonalizationAllUser" Member="aspnet_PersonalizationAllUser" ThisKey="PathId" OtherKey="PathId" Type="aspnet_PersonalizationAllUser" Cardinality="One" />
+      <Association Name="aspnet_Path_aspnet_PersonalizationPerUser" Member="aspnet_PersonalizationPerUsers" ThisKey="PathId" OtherKey="PathId" Type="aspnet_PersonalizationPerUser" />
+      <Association Name="aspnet_Application_aspnet_Path" Member="aspnet_Application" ThisKey="ApplicationId" OtherKey="ApplicationId" Type="aspnet_Application" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.aspnet_PersonalizationAllUsers" Member="aspnet_PersonalizationAllUsers">
+    <Type Name="aspnet_PersonalizationAllUser">
+      <Column Name="PathId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PageSettings" Type="System.Data.Linq.Binary" DbType="Image NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="LastUpdatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="aspnet_Path_aspnet_PersonalizationAllUser" Member="aspnet_Path" ThisKey="PathId" OtherKey="PathId" Type="aspnet_Path" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.aspnet_PersonalizationPerUser" Member="aspnet_PersonalizationPerUsers">
+    <Type Name="aspnet_PersonalizationPerUser">
+      <Column Name="Id" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PathId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="PageSettings" Type="System.Data.Linq.Binary" DbType="Image NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="LastUpdatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="aspnet_Path_aspnet_PersonalizationPerUser" Member="aspnet_Path" ThisKey="PathId" OtherKey="PathId" Type="aspnet_Path" IsForeignKey="true" />
+      <Association Name="aspnet_User_aspnet_PersonalizationPerUser" Member="aspnet_User" ThisKey="UserId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.aspnet_Profile" Member="aspnet_Profiles">
+    <Type Name="aspnet_Profile">
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="PropertyNames" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="PropertyValuesString" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="PropertyValuesBinary" Type="System.Data.Linq.Binary" DbType="Image NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="LastUpdatedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="aspnet_User_aspnet_Profile" Member="aspnet_User" ThisKey="UserId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.aspnet_Roles" Member="aspnet_Roles">
+    <Type Name="aspnet_Role">
+      <Column Name="ApplicationId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="RoleId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RoleName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="LoweredRoleName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Association Name="aspnet_Role_aspnet_UsersInRole" Member="aspnet_UsersInRoles" ThisKey="RoleId" OtherKey="RoleId" Type="aspnet_UsersInRole" />
+      <Association Name="aspnet_Application_aspnet_Role" Member="aspnet_Application" ThisKey="ApplicationId" OtherKey="ApplicationId" Type="aspnet_Application" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.aspnet_SchemaVersions" Member="aspnet_SchemaVersions">
+    <Type Name="aspnet_SchemaVersion">
+      <Column Name="Feature" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CompatibleSchemaVersion" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IsCurrentVersion" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.aspnet_Users" Member="aspnet_Users">
+    <Type Name="aspnet_User">
+      <Column Name="ApplicationId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="LoweredUserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="MobileAlias" Type="System.String" DbType="NVarChar(16)" CanBeNull="true" />
+      <Column Name="IsAnonymous" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="LastActivityDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="aspnet_User_UserParticular" Member="UserParticular" ThisKey="UserId" OtherKey="UserId" Type="UserParticular" Cardinality="One" />
+      <Association Name="aspnet_User_aspnet_Membership" Member="aspnet_Membership" ThisKey="UserId" OtherKey="UserId" Type="aspnet_Membership" Cardinality="One" />
+      <Association Name="aspnet_User_aspnet_PersonalizationPerUser" Member="aspnet_PersonalizationPerUsers" ThisKey="UserId" OtherKey="UserId" Type="aspnet_PersonalizationPerUser" />
+      <Association Name="aspnet_User_aspnet_Profile" Member="aspnet_Profile" ThisKey="UserId" OtherKey="UserId" Type="aspnet_Profile" Cardinality="One" />
+      <Association Name="aspnet_User_aspnet_UsersInRole" Member="aspnet_UsersInRoles" ThisKey="UserId" OtherKey="UserId" Type="aspnet_UsersInRole" />
+      <Association Name="aspnet_User_Patient" Member="Patient" ThisKey="UserId" OtherKey="UserId" Type="Patient" Cardinality="One" />
+      <Association Name="aspnet_User_Staff" Member="Staff" ThisKey="UserId" OtherKey="UserId" Type="Staff" Cardinality="One" />
+      <Association Name="aspnet_Application_aspnet_User" Member="aspnet_Application" ThisKey="ApplicationId" OtherKey="ApplicationId" Type="aspnet_Application" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.aspnet_UsersInRoles" Member="aspnet_UsersInRoles">
+    <Type Name="aspnet_UsersInRole">
+      <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RoleId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="aspnet_Role_aspnet_UsersInRole" Member="aspnet_Role" ThisKey="RoleId" OtherKey="RoleId" Type="aspnet_Role" IsForeignKey="true" />
+      <Association Name="aspnet_User_aspnet_UsersInRole" Member="aspnet_User" ThisKey="UserId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.aspnet_WebEvent_Events" Member="aspnet_WebEvent_Events">
+    <Type Name="aspnet_WebEvent_Event">
+      <Column Name="EventId" Type="System.String" DbType="Char(32) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="EventTimeUtc" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EventTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EventType" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="EventSequence" Type="System.Decimal" DbType="Decimal(19,0) NOT NULL" CanBeNull="false" />
+      <Column Name="EventOccurrence" Type="System.Decimal" DbType="Decimal(19,0) NOT NULL" CanBeNull="false" />
+      <Column Name="EventCode" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EventDetailCode" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
+      <Column Name="ApplicationPath" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="ApplicationVirtualPath" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="MachineName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="RequestUrl" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
+      <Column Name="ExceptionType" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="Details" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+    </Type>
+  </Table>
+  <Table Name="dbo.BloodTypes" Member="BloodTypes">
+    <Type Name="BloodType">
+      <Column Name="BloodTypeId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="BloodType" Member="BloodType1" Type="System.String" DbType="NVarChar(3) NOT NULL" CanBeNull="false" />
+      <Association Name="BloodType_Patient" Member="Patients" ThisKey="BloodTypeId" OtherKey="BloodTypeId" Type="Patient" />
     </Type>
   </Table>
   <Table Name="dbo.Countries" Member="Countries">
@@ -87,8 +241,9 @@
       <Column Name="PatientId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="BloodTypeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Association Name="Patient_PatientsWithDrugAllergy" Member="PatientsWithDrugAllergies" ThisKey="PatientId" OtherKey="PatientId" Type="PatientsWithDrugAllergy" />
       <Association Name="Patient_Appointment" Member="Appointments" ThisKey="PatientId" OtherKey="PatientId" Type="Appointment" />
+      <Association Name="Patient_PatientsWithDrugAllergy" Member="PatientsWithDrugAllergies" ThisKey="PatientId" OtherKey="PatientId" Type="PatientsWithDrugAllergy" />
+      <Association Name="aspnet_User_Patient" Member="aspnet_User" ThisKey="UserId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
       <Association Name="BloodType_Patient" Member="BloodType" ThisKey="BloodTypeId" OtherKey="BloodTypeId" Type="BloodType" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
@@ -127,6 +282,7 @@
       <Column Name="UserId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Association Name="Staff_Image" Member="Images" ThisKey="StaffId" OtherKey="TakenBy" Type="Image" />
       <Association Name="Staff_Study" Member="Studies" ThisKey="StaffId" OtherKey="ReferredBy" Type="Study" />
+      <Association Name="aspnet_User_Staff" Member="aspnet_User" ThisKey="UserId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
       <Association Name="Department_Staff" Member="Department" ThisKey="DepartmentId" OtherKey="DepartmentId" Type="Department" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
@@ -140,19 +296,9 @@
       <Column Name="StudyUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="DateCompleted" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="ReferredBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Study_Series" Member="Series" ThisKey="StudyId" OtherKey="StudyId" Type="Series" />
       <Association Name="Study_Appointment" Member="Appointments" ThisKey="StudyId" OtherKey="StudyId" Type="Appointment" />
+      <Association Name="Study_Series" Member="Series" ThisKey="StudyId" OtherKey="StudyId" Type="Series" />
       <Association Name="Staff_Study" Member="Staff" ThisKey="ReferredBy" OtherKey="StaffId" Type="Staff" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Appointments" Member="Appointments">
-    <Type Name="Appointment">
-      <Column Name="AppointmentId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="AppointmentDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="StudyId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="PatientId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Patient_Appointment" Member="Patient" ThisKey="PatientId" OtherKey="PatientId" Type="Patient" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
-      <Association Name="Study_Appointment" Member="Study" ThisKey="StudyId" OtherKey="StudyId" Type="Study" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
 </Database>

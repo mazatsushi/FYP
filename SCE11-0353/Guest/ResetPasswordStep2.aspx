@@ -9,24 +9,22 @@
         Reset Password
     </h2>
     <%-- Error Notifications --%>
-    <div>
-        <span class="failureNotification">
-            <asp:Literal ID="ErrorMessage" runat="server" Text="" />
-        </span>
-        <asp:ValidationSummary CssClass="failureNotification" runat="server" ValidationGroup="ResetPasswordValidationGroup" />
-    </div>
+    <asp:Panel CssClass="failureNotification" runat="server">
+        <asp:Literal ID="ErrorMessage" runat="server" Text="" />
+        <asp:ValidationSummary runat="server" ValidationGroup="ResetPasswordValidationGroup" />
+    </asp:Panel>
     <%-- / Error Notifications --%>
     <h3>
         Please answer the following security question to reset your password.
     </h3>
-    <div>
+    <asp:Panel runat="server">
         <%-- Security Question --%>
-        <div>
+        <asp:Panel runat="server">
             <asp:Label ID="Question" runat="server" />
-        </div>
+        </asp:Panel>
         <%-- / Security Question --%>
         <%-- Security Answer --%>
-        <div class="topPadding">
+        <asp:Panel class="topPadding" runat="server">
             <asp:Label AssociatedControlID="Answer" runat="server" Text="Security Answer:" />
             <asp:TextBox CssClass="textEntry" ID="Answer" runat="server" />
             <asp:RequiredFieldValidator ControlToValidate="Answer" CssClass="failureNotification"
@@ -35,13 +33,12 @@
             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
             Security answer is required.
             </asp:RequiredFieldValidator>
-        </div>
+        </asp:Panel>
         <%-- / Security Answer --%>
-    </div>
-    <br />
-    <div>
+    </asp:Panel>
+    <asp:Panel CssClass="topPadding" runat="server">
         <asp:Button CssClass="buttons" runat="server" Text="Reset Password" ValidationGroup="ResetPasswordValidationGroup"
             OnClick="ResetButtonClick" />
         <asp:Button CssClass="buttons" PostBackUrl="~/Default.aspx" runat="server" Text="Cancel" />
-    </div>
+    </asp:Panel>
 </asp:Content>
