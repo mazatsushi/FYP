@@ -10,9 +10,9 @@ using System.Web.Security;
 /// </summary>
 public class DatabaseHandler
 {
-    private static readonly string[] roles = { "Admin", "Physician", "Radiologist", "Staff", "Patient" };
-    private const int passwordLength = 6;
-    private const int nonAlphaNumeric = 1;
+    private static readonly string[] RolesList = { "Admin", "Patient", "Physician", "Radiologist", "Staff" };
+    private const int PasswordLength = 6;
+    private const int NonAlphaNumeric = 1;
 
     /// <summary>
     /// Adds a user to a pre-specified role name
@@ -28,9 +28,9 @@ public class DatabaseHandler
             Roles.AddUserToRole(username, rolename);
             addStatus = true;
         }
-        catch (ArgumentNullException) { }
-        catch (ArgumentException) { }
-        catch (ProviderException) { }
+        catch (ArgumentNullException) {}
+        catch (ArgumentException) {}
+        catch (ProviderException) {}
         return addStatus;
     }
 
@@ -84,7 +84,8 @@ public class DatabaseHandler
                 addStatus = true;
             }
         }
-        catch { }
+        catch (Exception)
+        {}
         return addStatus;
     }
 
@@ -141,9 +142,9 @@ public class DatabaseHandler
          * Regardless we shall just search for the most privileged role assigned.
          */
         var roles = Roles.GetRolesForUser(username);
-        for (var i = 0; i < DatabaseHandler.roles.Length; ++i)
+        for (var i = 0; i < RolesList.Length; ++i)
         {
-            if (!roles.Contains(DatabaseHandler.roles[i]))
+            if (!roles.Contains(RolesList[i]))
                 continue;
 
             roleNum = i;
@@ -158,7 +159,7 @@ public class DatabaseHandler
     /// <returns>A random password.</returns>
     public static string GeneratePassword()
     {
-        var temp = Membership.GeneratePassword(passwordLength, nonAlphaNumeric);
+        var temp = Membership.GeneratePassword(PasswordLength, NonAlphaNumeric);
         return temp;
     }
 
@@ -276,6 +277,16 @@ public class DatabaseHandler
     }
 
     /// <summary>
+    /// Gets a list of the roles that a user is in.
+    /// </summary>
+    /// <param name="username">The user to return a list of roles for. </param>
+    /// <returns>A string array containing the names of all the roles that the specified user is in.</returns>
+    public static string[] GetUserRoles(string username)
+    {
+        return Roles.GetRolesForUser(username);
+    }
+
+    /// <summary>
     /// Queries database to check whether NRIC already exists
     /// </summary>
     /// <param name="nric">The web element that triggered the event</param>
@@ -325,6 +336,26 @@ public class DatabaseHandler
     }
 
     /// <summary>
+    /// Removes the specified user from the specified role.
+    /// </summary>
+    /// <param name="username">The user to remove from the specified role.</param>
+    /// <param name="rolename">The role to remove the specified user from.</param>
+    /// <returns>True if the user is successfully removed from a role. False otherwise.</returns>
+    public static bool RemoveUserFromRole(string username, string rolename)
+    {
+        var removed = false;
+        try
+        {
+            Roles.RemoveUserFromRole(username, rolename);
+            removed = true;
+        }
+        catch (ArgumentNullException) {}
+        catch (ArgumentException) {}
+        catch (ProviderException) {}
+        return removed;
+    }
+
+    /// <summary>
     /// Updates the account information of a user
     /// </summary>
     /// <param name="u">The MembershipUser object reference to the user account</param>
@@ -337,7 +368,7 @@ public class DatabaseHandler
             Membership.UpdateUser(u);
             update = true;
         }
-        catch (ProviderException e)
+        catch (ProviderException)
         { }
         return update;
     }

@@ -1,20 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
 
-	<siteMapNode url="#" title="Menu"  description="Menu">
-		<siteMapNode url="~/Default.aspx" title="Home"  description="Return to the landing page" />
-		<siteMapNode url="~/Admin/Default.aspx" title="Administrator" description="Administrator">
-			<siteMapNode url="~/Admin/AddUser.aspx" title="Add New User" description="Add New User"/>
+	<siteMapNode url="#" title="Menu">
+		<siteMapNode url="~/Default.aspx" title="Home" />
+		<siteMapNode url="~/Admin/Default.aspx" title="Administrator">
+			<siteMapNode url="~/Admin/AddUser.aspx" title="Add New User" />
+			<siteMapNode url="~/Admin/UpdateUser.aspx" title="Manage User Roles" />
 		</siteMapNode>
-		<siteMapNode url="~/Patient/Default.aspx" title="Patient" description="Patient"></siteMapNode>
-		<siteMapNode url="~/Physician/Default.aspx" title="Physician" description="Physician"></siteMapNode>
-		<siteMapNode url="~/Radiologist/Default.aspx" title="Radiologist" description="Radiologist"></siteMapNode>
-		<siteMapNode url="~/Staff/Default.aspx" title="Staff" description="Staff"></siteMapNode>
-		<siteMapNode url="~/Account/Default.aspx" title="Account Management" description="Account Management">
-			<siteMapNode url="~/Account/ChangePassword.aspx" title="Change Password" description="Change Password" />
-			<siteMapNode url="~/Account/UpdateParticulars.aspx" title="Update Particulars" description="Update Particulars" />
+		<siteMapNode url="~/Patient/Default.aspx" title="Patient"></siteMapNode>
+		<siteMapNode url="~/Physician/Default.aspx" title="Physician"></siteMapNode>
+		<siteMapNode url="~/Radiologist/Default.aspx" title="Radiologist"></siteMapNode>
+		<siteMapNode url="~/Staff/Default.aspx" title="Staff"></siteMapNode>
+		<siteMapNode url="~/Account/Default.aspx" title="Account Management">
+			<siteMapNode url="~/Account/ChangePassword.aspx" title="Change Password" />
+			<siteMapNode url="~/Account/UpdateParticulars.aspx" title="Update Particulars" />
 		</siteMapNode>
-		<siteMapNode url="~/About.aspx" title="About"  description="About Radiology Information System" />
+		<siteMapNode url="~/About.aspx" title="About" />
 	</siteMapNode>
 
 </siteMap>

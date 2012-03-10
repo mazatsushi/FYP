@@ -1,0 +1,6 @@
+C:\My Projects\ASP.NET Teaching\Tutorial 2.0 Websites\skmValidators\skmValidators\bin\Debug\skmValidators.dll
+C:\My Projects\ASP.NET Teaching\Tutorial 2.0 Websites\skmValidators\skmValidators\bin\Debug\skmValidators.pdb
+C:\My Projects\ASP.NET Teaching\Tutorial 2.0 Websites\skmValidators\skmValidators\obj\Debug\ResolveAssemblyReference.cache
+C:\My Projects\ASP.NET Teaching\Tutorial 2.0 Websites\skmValidators\skmValidators\obj\Debug\skmValidators.skmValidators.js
+C:\My Projects\ASP.NET Teaching\Tutorial 2.0 Websites\skmValidators\skmValidators\obj\Debug\skmValidators.dll
+C:\My Projects\ASP.NET Teaching\Tutorial 2.0 Websites\skmValidators\skmValidators\obj\Debug\skmValidators.pdb

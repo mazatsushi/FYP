@@ -385,16 +385,16 @@ public partial class Account_Register : System.Web.UI.Page
                 Response.Redirect("~/Admin/Default.aspx");
                 break;
             case 1:
-                Response.Redirect("~/Physician/Default.aspx");
+                Response.Redirect("~/Patient/Default.aspx");
                 break;
             case 2:
-                Response.Redirect("~/Radiologist/Default.aspx");
+                Response.Redirect("~/Physician/Default.aspx");
                 break;
             case 3:
-                Response.Redirect("~/Staff/Default.aspx");
+                Response.Redirect("~/Radiologist/Default.aspx");
                 break;
             case 4:
-                Response.Redirect("~/Patient/Default.aspx");
+                Response.Redirect("~/Staff/Default.aspx");
                 break;
         }
     }

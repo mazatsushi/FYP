@@ -1,6 +1,7 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="AddUser.aspx.cs" Culture="en-SG" Inherits="Admin_AddUser"
-    Language="C#" MasterPageFile="~/Site.master" Title="Add New User"%>
+    Language="C#" MasterPageFile="~/Site.master" Title="Add New User" %>
 
+<%@ Register Assembly="skmValidators" Namespace="skmValidators" TagPrefix="skm" %>
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
 <asp:Content ContentPlaceHolderID="MainContent" runat="Server">
@@ -358,15 +359,15 @@
             <%-- / Security Answer --%>
             <%-- Role --%>
             <div class="topPadding">
-                <asp:Label AssociatedControlID="Answer" runat="server" Text="* Role:" />
+                <asp:Label AssociatedControlID="Role" runat="server" Text="* Role:" />
                 <asp:CheckBoxList CellPadding="5" CellSpacing="5" CssClass="float" ID="Role" RepeatDirection="Horizontal"
-                    runat="server" TextAlign="Left" ValidationGroup="AddUserValidationGroup" />
-                <asp:RequiredFieldValidator ControlToValidate="Answer" CssClass="failureNotification"
-                    Display="Dynamic" ErrorMessage="Select a role for the user." runat="server" ToolTip="Select a role for the user."
-                    ValidationGroup="AddUserValidationGroup">
+                    runat="server" TextAlign="Left" />
+                <skm:CheckBoxListValidator ControlToValidate="Role" CssClass="failureNotification"
+                    ErrorMessage="Please select at least one role." MinimumNumberOfSelectedCheckBoxes="1"
+                    runat="server" ValidationGroup="AddUserValidationGroup">
                     <asp:Image ImageAlign="AbsBottom" ImageUrl="~/Images/icons/error.png" runat="server" />
-                    Select a role for the user.
-                </asp:RequiredFieldValidator>
+                    Please select at least one role.
+                </skm:CheckBoxListValidator>
             </div>
             <%-- / Role --%>
         </fieldset>

@@ -8,14 +8,14 @@
     <h2>
         Reset Password
     </h2>
+    <%-- Error Notifications --%>
     <div>
-        <%-- Error Notifications --%>
         <span class="failureNotification">
             <asp:Literal ID="ErrorMessage" runat="server" Text="" />
         </span>
         <asp:ValidationSummary CssClass="failureNotification" runat="server" ValidationGroup="ResetPasswordValidationGroup" />
-        <%-- / Error Notifications --%>
     </div>
+    <%-- / Error Notifications --%>
     <h3>
         Please answer the following security question to reset your password.
     </h3>

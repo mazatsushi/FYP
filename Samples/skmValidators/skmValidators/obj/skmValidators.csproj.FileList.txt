@@ -1,0 +1,6 @@
+bin\Debug\skmValidators.dll
+bin\Debug\skmValidators.pdb
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\skmValidators.dll
+obj\Debug\skmValidators.pdb
+obj\Debug\skmValidators.skmValidators.js
