@@ -3,7 +3,9 @@
 
 	<siteMapNode url="#" title="Menu"  description="Menu">
 		<siteMapNode url="~/Default.aspx" title="Home"  description="Return to the landing page" />
-		<siteMapNode url="~/Admin/Default.aspx" title="Administrator" description="Administrator"></siteMapNode>
+		<siteMapNode url="~/Admin/Default.aspx" title="Administrator" description="Administrator">
+			<siteMapNode url="~/Admin/AddUser.aspx" title="Add New User" description="Add New User"/>
+		</siteMapNode>
 		<siteMapNode url="~/Patient/Default.aspx" title="Patient" description="Patient"></siteMapNode>
 		<siteMapNode url="~/Physician/Default.aspx" title="Physician" description="Physician"></siteMapNode>
 		<siteMapNode url="~/Radiologist/Default.aspx" title="Radiologist" description="Radiologist"></siteMapNode>

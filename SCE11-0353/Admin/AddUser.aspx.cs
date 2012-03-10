@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI.WebControls;
 
 
@@ -17,6 +18,8 @@ using System.Web.UI.WebControls;
 /// </summary>
 public partial class Admin_AddUser : System.Web.UI.Page
 {
+    private const bool IsApproved = true;
+
     /// <summary>
     /// Page load event
     /// </summary>
@@ -24,8 +27,13 @@ public partial class Admin_AddUser : System.Web.UI.Page
     /// <param name="e">Event parameters</param>
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (IsPostBack)
+            return;
+
         DateRangeCheck.MinimumValue = "1/1/1900";
         DateRangeCheck.MaximumValue = DateTime.Today.ToShortDateString();
+        Role.DataSource = DatabaseHandler.GetAllRoles();
+        Role.DataBind();
     }
 
     /// <summary>
@@ -232,5 +240,117 @@ public partial class Admin_AddUser : System.Web.UI.Page
 
     protected void RegisterButtonClick(object sender, EventArgs e)
     {
+        /*
+         * At this point, all user entered information has been verified.
+         * We shall now perform two critical actions:
+         * 1) Programmatically add account information to the Membership provider
+         *  1.1) Note that since we manually checked whether the username and email are unique,
+         *  it is 100% guaranteed that Membership information is valid as well.
+         * 2) Programmatically insert personal particulars into the associated table.
+         * 3) Programmatically add the newly created user to the selected role(s).
+         */
+        // Fetch information that is needed for creating a new account
+        var username = UserName.Text.Trim();
+        var password = DatabaseHandler.GeneratePassword();
+        var email = Email.Text.Trim().ToLowerInvariant();
+        var question = Question.Text.Trim();
+        var answer = Answer.Text.Trim().ToLowerInvariant();
+
+        // Create new account in Membership
+        MembershipCreateStatus status;
+        var user = DatabaseHandler.CreateUser(username, password, email, question, answer, IsApproved, out status);
+
+        // Return and show error message if account creation unsuccessful
+        if (user == null)
+        {
+            ErrorMessage.Text = HttpUtility.HtmlDecode("<ul>");
+            switch (status)
+            {
+                case MembershipCreateStatus.DuplicateUserName:
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>Username already exists. Please enter a different user name.</li>");
+                    break;
+
+                case MembershipCreateStatus.DuplicateEmail:
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>A username for that e-mail address already exists. Please enter a different e-mail address.</li>");
+                    break;
+
+                case MembershipCreateStatus.InvalidPassword:
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>The password provided is invalid. Please enter a valid password value.</li>");
+                    break;
+
+                case MembershipCreateStatus.InvalidEmail:
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>The e-mail address provided is invalid. Please check the value and try again.</li>");
+                    break;
+
+                case MembershipCreateStatus.InvalidAnswer:
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>The password retrieval answer provided is invalid. Please check the value and try again.</li>");
+                    break;
+
+                case MembershipCreateStatus.InvalidQuestion:
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>The password retrieval question provided is invalid. Please check the value and try again.</li>");
+                    break;
+
+                case MembershipCreateStatus.InvalidUserName:
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>The user name provided is invalid. Please check the value and try again.</li>");
+                    break;
+
+                case MembershipCreateStatus.ProviderError:
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact the system administrator.</li>");
+                    break;
+
+                case MembershipCreateStatus.UserRejected:
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact the system administrator.</li>");
+                    break;
+
+                default:
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact the system administrator.</li>");
+                    break;
+            }
+            ErrorMessage.Text = HttpUtility.HtmlDecode("</ul>");
+            return;
+        }
+
+        // Fetch information that is needed for storing personal information
+        var nric = NRIC.Text.Trim().ToUpperInvariant();
+        var firstName = FirstName.Text.Trim();
+        string middleName = null;
+        if (!String.IsNullOrEmpty(MiddleName.Text))
+            middleName = MiddleName.Text.Trim();
+        var lastName = LastName.Text.Trim();
+        var gender = Char.Parse(Gender.SelectedValue);
+        var namePrefix = Prefix.Text.Trim();
+        string nameSuffix = null;
+        if (!String.IsNullOrEmpty(Suffix.Text))
+            nameSuffix = Suffix.Text.Trim();
+        var dob = DateTime.Parse(DateOfBirth.Text.Trim());
+        var address = Address.Text.Trim();
+        var contact = ContactNumber.Text.Trim();
+        var postalCode = PostalCode.Text.Trim();
+        var nationality = Nationality.Text.Trim();
+        var countryId = DatabaseHandler.GetCountryId(Country.Text.Trim());
+
+        // Add user personal information into the UserParticulars table
+        var addStatus = DatabaseHandler.AddUserParticulars(user.ProviderUserKey, nric, firstName, middleName, lastName, gender, namePrefix, nameSuffix, dob, address, contact, postalCode, countryId, nationality);
+
+        if (!addStatus)
+        {
+            ErrorMessage.Text = HttpUtility.HtmlDecode("<ul>");
+            ErrorMessage.Text = HttpUtility.HtmlDecode("<li>An error occured while adding your information. Please contact the system administrator.</li>");
+            ErrorMessage.Text = HttpUtility.HtmlDecode("</ul>");
+            return;
+        }
+
+        // Loop through the roles selected, adding user to each selected role
+        if ((from ListItem r in Role.Items where r.Selected select r).Any(r => !DatabaseHandler.AddUserToRole(username, r.Text)))
+        {
+            ErrorMessage.Text = HttpUtility.HtmlDecode("<ul>");
+            ErrorMessage.Text = HttpUtility.HtmlDecode("<li>An error occured while adding your role(s). Please contact the system administrator.</li>");
+            ErrorMessage.Text = HttpUtility.HtmlDecode("</ul>");
+            return;
+        }
+
+        // Send an email containing the password to user's inbox
+        MailHandler.SendNewPassword(email, password);
+        Server.Transfer("~/Admin/AddUserSuccess.aspx");
     }
 }

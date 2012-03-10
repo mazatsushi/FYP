@@ -10,7 +10,9 @@ using System.Web.Security;
 /// </summary>
 public class DatabaseHandler
 {
-    private static readonly string[] Roles = { "Admin", "Physician", "Radiologist", "Staff", "Patient" };
+    private static readonly string[] roles = { "Admin", "Physician", "Radiologist", "Staff", "Patient" };
+    private const int passwordLength = 6;
+    private const int nonAlphaNumeric = 1;
 
     /// <summary>
     /// Adds a user to a pre-specified role name
@@ -23,7 +25,7 @@ public class DatabaseHandler
         var addStatus = false;
         try
         {
-            System.Web.Security.Roles.AddUserToRole(username, rolename);
+            Roles.AddUserToRole(username, rolename);
             addStatus = true;
         }
         catch (ArgumentNullException) { }
@@ -138,16 +140,35 @@ public class DatabaseHandler
          * It is entirely possible that the user belongs to more than one role.
          * Regardless we shall just search for the most privileged role assigned.
          */
-        var roles = System.Web.Security.Roles.GetRolesForUser(username);
-        for (var i = 0; i < Roles.Length; ++i)
+        var roles = Roles.GetRolesForUser(username);
+        for (var i = 0; i < DatabaseHandler.roles.Length; ++i)
         {
-            if (!roles.Contains(Roles[i]))
+            if (!roles.Contains(DatabaseHandler.roles[i]))
                 continue;
 
             roleNum = i;
             break;
         }
         return roleNum;
+    }
+
+    /// <summary>
+    /// Generates a random password
+    /// </summary>
+    /// <returns>A random password.</returns>
+    public static string GeneratePassword()
+    {
+        var temp = Membership.GeneratePassword(passwordLength, nonAlphaNumeric);
+        return temp;
+    }
+
+    /// <summary>
+    /// Gets a list of all roles for RIS
+    /// </summary>
+    /// <returns>A string array containing the names of all the roles stored in the data source.</returns>
+    public static string[] GetAllRoles()
+    {
+        return Roles.GetAllRoles();
     }
 
     /// <summary>
@@ -264,8 +285,10 @@ public class DatabaseHandler
         bool exists = false;
         using (var db = new RIS_DB())
         {
-            var result = db.UserParticulars.Single(u => u.NRIC.Equals(nric));
-            if (result != null)
+            var result = (from user in db.UserParticulars
+                          where user.NRIC.Equals(nric)
+                          select user);
+            if (result.Any())
                 exists = true;
         }
         return exists;
