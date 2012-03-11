@@ -6,7 +6,7 @@ public partial class Guest_ResetPasswordStep2 : System.Web.UI.Page
     private string _username;
     private const string Prepend = "Security Question: ";
     private const string RedirectUrl = "~/Guest/ResetPassword.aspx";
-
+    
     protected void Page_Load(object sender, EventArgs e)
     {
         _username = Request.QueryString["Username"];
@@ -16,7 +16,7 @@ public partial class Guest_ResetPasswordStep2 : System.Web.UI.Page
             Server.Transfer(RedirectUrl);
         }
         
-        var temp = DatabaseHandler.GetResetQuestion(_username);
+        var temp = DatabaseHandler.GetQuestion(_username);
         if (String.IsNullOrWhiteSpace(temp))
         {
             Server.Transfer(RedirectUrl);

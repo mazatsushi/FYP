@@ -2,6 +2,10 @@
 using System.Web;
 using System.Web.UI.WebControls;
 
+/// <summary>
+/// Code behind for the ~/Admin/UpdateUserStep2.aspx page
+/// </summary>
+
 public partial class Admin_UpdateUserStep2 : System.Web.UI.Page
 {
     private string _username;

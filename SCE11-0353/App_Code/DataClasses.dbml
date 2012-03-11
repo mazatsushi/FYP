@@ -294,7 +294,7 @@
       <Column Name="DateStarted" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="StudyUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="DateCompleted" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="DateCompleted" Type="System.DateTime" DbType="DateTime NULL" CanBeNull="false" />
       <Column Name="ReferredBy" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="Study_Appointment" Member="Appointments" ThisKey="StudyId" OtherKey="StudyId" Type="Appointment" />
       <Association Name="Study_Series" Member="Series" ThisKey="StudyId" OtherKey="StudyId" Type="Series" />

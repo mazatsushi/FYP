@@ -14,23 +14,30 @@
         <asp:ValidationSummary CssClass="failureNotification" runat="server" ValidationGroup="PatientValidationGroup" />
     </asp:Panel>
     <%-- / Error Notifications --%>
-    <%-- Blood Type --%>
+    <%-- Patient Allergies --%>
     <asp:Panel runat="server">
-        <asp:Label AssociatedControlID="BloodType" runat="server" Text="Blood Type: " />
-        <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" DropDownStyle="DropDownList" ID="BloodType"
+        <h3>
+            <asp:Label ID="PatientNameLabel" runat="server" Text="Patient Name: " />
+        </h3>
+        <asp:Label runat="server" Text="Patient Allergies: " />
+        <asp:GridView ID="PatientAllergies" runat="server" AllowPaging="True" AllowSorting="True" />
+        
+        <%--<ajaxToolkit:ComboBox AutoCompleteMode="Suggest" DropDownStyle="DropDownList" ID="BloodType"
             MaxLength="0" runat="server" />
         <asp:RequiredFieldValidator ControlToValidate="BloodType" CssClass="failureNotification"
             Display="Dynamic" ErrorMessage="Please enter patient's blood type." runat="server"
             ToolTip="Please enter patient's blood type." ValidationGroup="PatientValidationGroup">
             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
             Please enter patient's blood type.
-        </asp:RequiredFieldValidator>
+        </asp:RequiredFieldValidator>--%>
     </asp:Panel>
-    <%-- / Blood Type --%>
-    <asp:Panel Enabled="False" runat="server" Visible="False">
+    <%-- / Patient Allergies --%>
+    <asp:Panel runat="server">
         <asp:Panel CssClass="topPadding" runat="server">
-            <asp:Button CssClass="buttons" OnClick="UpdateButtonClick" runat="server" Text="Update Blood Type"
+            <asp:Button CssClass="buttons" OnClick="UpdateButtonClick" runat="server" Text="Update Patient Allergy"
                 ValidationGroup="PatientValidationGroup" />
+                <asp:Button CssClass="buttons" PostBackUrl="~/Physician/Default.aspx" runat="server"
+            Text="Cancel" />
         </asp:Panel>
     </asp:Panel>
 </asp:Content>

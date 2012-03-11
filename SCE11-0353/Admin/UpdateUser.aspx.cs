@@ -2,6 +2,10 @@
 using System.Web;
 using System.Web.UI.WebControls;
 
+/// <summary>
+/// Code behind for the ~/Admin/UpdateUser.aspx page
+/// </summary>
+
 public partial class Admin_UpdateUser : System.Web.UI.Page
 {
     private const string RedirectUrl = "~/Admin/UpdateUserStep2.aspx";

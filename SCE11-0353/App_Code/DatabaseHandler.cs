@@ -41,6 +41,35 @@ public class DatabaseHandler
     }
 
     /// <summary>
+    /// Adds a staff member to the database
+    /// </summary>
+    /// <param name="userGuid">The user guid</param>
+    /// <param name="department">The department name</param>
+    /// <param name="isFellow">Whether the staff member is a fellow</param>
+    /// <returns>True if the staff was added. False otherwise.</returns>
+    public static bool AddStaff(string userGuid, string department, bool isFellow)
+    {
+        var added = false;
+        try
+        {
+            using (var db = new RIS_DB())
+            {
+                var staff = new Staff()
+                {
+                    DepartmentId = GetDepartmentId(department),
+                    IsFellow = isFellow,
+                    UserId = Guid.Parse(userGuid)
+                };
+                db.Staffs.InsertOnSubmit(staff);
+                db.SubmitChanges();
+                added = true;
+            }
+        }
+        catch (Exception) { }
+        return added;
+    }
+
+    /// <summary>
     /// Adds a user to a pre-specified role name
     /// </summary>
     /// <param name="username">The user name</param>
@@ -113,6 +142,97 @@ public class DatabaseHandler
         catch (Exception)
         { }
         return addStatus;
+    }
+
+    /// <summary>
+    /// Creates a new imaging appointment in the database
+    /// </summary>
+    /// <param name="time">The date and time of the appointment</param>
+    /// <param name="studyId">The study Id</param>
+    /// <param name="patientNric">Patient's NRIC</param>
+    /// <returns>True if appointment is created. False otherwise.</returns>
+    public static bool CreateAppointment(DateTime time, int studyId, string patientNric)
+    {
+        var created = false;
+        try
+        {
+            using (var db = new RIS_DB())
+            {
+                var guid = GetGuidFromNric(patientNric);
+                if (!string.IsNullOrEmpty(guid))
+                {
+                    var patientId = GetPatientIdFromGuid(guid);
+                    var app = new Appointment
+                                  {
+                                      AppointmentDate = time,
+                                      StudyId = studyId,
+                                      PatientId = patientId
+                                  };
+                    db.Appointments.InsertOnSubmit(app);
+                    db.SubmitChanges();
+                    created = true;
+                }
+            }
+        }
+        catch (InvalidOperationException) { }
+        return created;
+    }
+
+    /// <summary>
+    /// Creates a new imaging order in the database
+    /// </summary>
+    /// <param name="desc">A description of the imaging order</param>
+    /// <param name="staffId">The physician that referred the patient</param>
+    /// <returns>The study ID if the imaging order was created. 0 otherwise.</returns>
+    public static int CreateImagingOrder(string desc, int staffId)
+    {
+        var id = 0;
+        try
+        {
+            using (var db = new RIS_DB())
+            {
+                var study = new Study
+                                {
+                                    IsCompleted = false,
+                                    Diagnosis = null,
+                                    DateStarted = DateTime.Now,
+                                    Description = desc,
+                                    ReferredBy = staffId
+                                };
+                db.Studies.InsertOnSubmit(study);
+                db.SubmitChanges();
+                id = study.StudyId;
+            }
+        }
+        catch (InvalidOperationException) { }
+        return id;
+    }
+
+    /// <summary>
+    /// Create a new medical record to a patient account
+    /// </summary>
+    /// <param name="username">The username</param>
+    /// <param name="bloodType">The name of the patient's blood type</param>
+    /// <returns>True if the record was created. False otherwise.</returns>
+    public static bool CreateMedicalRecord(string username, string bloodType)
+    {
+        var created = false;
+        try
+        {
+            using (var db = new RIS_DB())
+            {
+                var p = new Patient
+                            {
+                                BloodTypeId = GetBloodTypeId(bloodType),
+                                UserId = Guid.Parse(GetGuidFromUsername(username))
+                            };
+                db.Patients.InsertOnSubmit(p);
+                db.SubmitChanges();
+                created = true;
+            }
+        }
+        catch (InvalidOperationException) { }
+        return created;
     }
 
     /// <summary>
@@ -211,7 +331,7 @@ public class DatabaseHandler
     /// <summary>
     /// Gets a list of all blood types
     /// </summary>
-    /// <returns>A string array containing the names of all blood types stored in the data source.</returns>
+    /// <returns>A string array containing the names of all blood types stored in the database.</returns>
     public static List<string> GetAllBloodTypes()
     {
         using (var db = new RIS_DB())
@@ -224,13 +344,26 @@ public class DatabaseHandler
     /// <summary>
     /// Gets a list of all countries
     /// </summary>
-    /// <returns>A string array containing the names of all blood types stored in the data source.</returns>
+    /// <returns>A string array containing the names of all countries stored in the database.</returns>
     public static List<string> GetAllCountries()
     {
         using (var db = new RIS_DB())
         {
             return (from c in db.Countries
                     select c.CountryName).ToList();
+        }
+    }
+
+    /// <summary>
+    /// Gets a list of all departments
+    /// </summary>
+    /// <returns>A string array containing the names of all departments stored in the database.</returns>
+    public static List<string> GetAllDepartments()
+    {
+        using (var db = new RIS_DB())
+        {
+            return (from d in db.Departments
+                    select d.DepartmentName).ToList();
         }
     }
 
@@ -259,6 +392,19 @@ public class DatabaseHandler
     }
 
     /// <summary>
+    /// Gets the blood type Id given its string value
+    /// </summary>
+    /// <param name="bloodType">The blood type name</param>
+    /// <returns>A foreign key value of the specified blood type</returns>
+    private static int GetBloodTypeId(string bloodType)
+    {
+        using (var db = new RIS_DB())
+        {
+            return db.BloodTypes.Single(b => b.BloodType1.Equals(bloodType)).BloodTypeId;
+        }
+    }
+
+    /// <summary>
     /// Gets a country name given its id
     /// </summary>
     /// <param name="id">The country id</param>
@@ -269,6 +415,119 @@ public class DatabaseHandler
         {
             return (db.Countries.Single(c => c.CountryId == id).CountryName);
         }
+    }
+
+    /// <summary>
+    /// Gets a department id given its name
+    /// </summary>
+    /// <param name="department">The department name</param>
+    /// <returns>A foreign key value of the specified department</returns>
+    public static int GetDepartmentId(string department)
+    {
+        using (var db = new RIS_DB())
+        {
+            return db.Departments.Single(d => d.DepartmentName.Equals(department)).DepartmentId;
+        }
+    }
+
+    /// <summary>
+    /// Gets the user GUID given the nric
+    /// </summary>
+    /// <param name="nric">The username</param>
+    /// <returns>The user GUID if found.</returns>
+    private static string GetGuidFromNric(string nric)
+    {
+        var guid = string.Empty;
+        try
+        {
+            using (var db = new RIS_DB())
+            {
+                guid = (db.UserParticulars.Single(u => u.NRIC.Equals(nric))).UserId.ToString();
+            }
+        }
+        catch (InvalidOperationException) { }
+        return guid;
+    }
+
+    /// <summary>
+    /// Gets the user GUID given the username
+    /// </summary>
+    /// <param name="username">The username</param>
+    /// <returns>The user GUID if found.</returns>
+    private static string GetGuidFromUsername(string username)
+    {
+        var guid = string.Empty;
+        try
+        {
+            using (var db = new RIS_DB())
+            {
+                guid = (db.aspnet_Users.Single(u => u.UserName.Equals(username))).UserId.ToString();
+            }
+        }
+        catch (InvalidOperationException) { }
+        return guid;
+    }
+
+    /// <summary>
+    /// Gets user's patient id given their guid
+    /// </summary>
+    /// <param name="guid">The user guid</param>
+    /// <returns>A string containing the user's guid if found. Null otherwise.</returns>
+    private static int GetPatientIdFromGuid(string guid)
+    {
+        var temp = -1;
+        try
+        {
+            using (var db = new RIS_DB())
+            {
+                temp = (db.Patients.Single(p => p.UserId.Equals(Guid.Parse(guid)))).PatientId;
+            }
+        }
+        catch (InvalidOperationException)
+        { }
+        return temp;
+    }
+
+    /// <summary>
+    /// Gets user's real name given their nric
+    /// </summary>
+    /// <param name="nric">The user NRIC</param>
+    /// <returns>A string containing the user's real name if found. Null otherwise.</returns>
+    public static string GetPatientName(string nric)
+    {
+        var temp = string.Empty;
+        try
+        {
+            using (var db = new RIS_DB())
+            {
+                var user = (db.UserParticulars.Single(u => u.NRIC.Equals(nric)));
+                temp = user.FirstName + " " + user.LastName;
+            }
+        }
+        catch (InvalidOperationException)
+        { }
+        return temp;
+    }
+
+    /// <summary>
+    /// Gets the staff ID given the username
+    /// </summary>
+    /// <param name="username">The staff username</param>
+    /// <returns>The staff ID if found.</returns>
+    public static int GetStaffId(string username)
+    {
+        var id = -1;
+        try
+        {
+            using (var db = new RIS_DB())
+            {
+                var guid = GetGuidFromUsername(username);
+                if (!String.IsNullOrEmpty(guid))
+                    id = db.Staffs.Single(s => s.UserId.Equals(Guid.Parse(guid))).StaffId;
+            }
+        }
+        catch (InvalidOperationException) { }
+        return id;
     }
 
     /// <summary>
@@ -288,45 +547,17 @@ public class DatabaseHandler
     }
 
     /// <summary>
-    /// Gets user's GUID given their nric
+    /// Gets the username given a NRIC
     /// </summary>
-    /// <param name="nric">The user NRIC</param>
-    /// <returns>A string containing the user's real name if found. Null otherwise.</returns>
-    public static string GetUserGuid(string nric)
+    /// <param name="nric">The user's NRIC</param>
+    /// <returns>A string containing the username if NRIC exists. Null otherwise</returns>
+    public static string GetUserName(string nric)
     {
-        var temp = string.Empty;
-        try
+        using (var db = new RIS_DB())
         {
-            using (var db = new RIS_DB())
-            {
-                var user = (db.UserParticulars.Single(u => u.NRIC.Equals(nric)));
-                temp = user.UserId.ToString();
-            }
+            var temp = db.UserParticulars.Single(up => up.NRIC.Equals(nric)).UserId;
+            return db.aspnet_Users.Single(u => u.UserId.Equals(temp)).UserName;
         }
-        catch (InvalidOperationException)
-        { }
-        return temp;
-    }
-
-    /// <summary>
-    /// Gets user's real name given their nric
-    /// </summary>
-    /// <param name="nric">The user NRIC</param>
-    /// <returns>A string containing the user's real name if found. Null otherwise.</returns>
-    public static string GetUserRealName(string nric)
-    {
-        var temp = string.Empty;
-        try
-        {
-            using (var db = new RIS_DB())
-            {
-                var user = (db.UserParticulars.Single(u => u.NRIC.Equals(nric)));
-                temp = user.FirstName + " " + user.LastName;
-            }
-        }
-        catch (InvalidOperationException)
-        { }
-        return temp;
     }
 
     /// <summary>
@@ -340,29 +571,13 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB())
             {
-                return (db.UserParticulars.Single(u => u.UserId == Guid.Parse(userGuid)));
+                return (db.UserParticulars.Single(u => u.UserId.Equals(Guid.Parse(userGuid))));
             }
         }
         catch (InvalidOperationException)
         {
             return null;
         }
-    }
-
-    /// <summary>
-    /// Gets the Guid for a user given the user name
-    /// </summary>
-    /// <param name="username">The user name</param>
-    /// <returns>The user guid if the username exists. Null otherwise.</returns>
-    public static string GetResetQuestion(string username)
-    {
-        string question = null;
-        var user = Membership.GetUser(username);
-        if (user != null)
-        {
-            question = user.PasswordQuestion;
-        }
-        return question;
     }
 
     /// <summary>
@@ -392,7 +607,7 @@ public class DatabaseHandler
     /// <summary>
     /// Gets a list of the roles that a user is in.
     /// </summary>
-    /// <param name="username">The user to return a list of roles for. </param>
+    /// <param name="username">The user to return a list of roles for.</param>
     /// <returns>A string array containing the names of all the roles that the specified user is in.</returns>
     public static string[] GetUserRoles(string username)
     {
@@ -400,9 +615,56 @@ public class DatabaseHandler
     }
 
     /// <summary>
+    /// Checks whether the user has prior medical records in the database.
+    /// </summary>
+    /// <param name="username">The username.</param>
+    /// <returns>True if prior medical records are found. False otherwise.</returns>
+    public static bool HasMedicalRecords(string username)
+    {
+        var found = false;
+        var guid = GetGuidFromUsername(username);
+        using (var db = new RIS_DB())
+        {
+            var query = (from p in db.Patients
+                         where p.UserId.Equals(Guid.Parse(guid))
+                         select p);
+            if (query.Any())
+                found = true;
+        }
+        return found;
+    }
+
+    /// <summary>
+    /// Checks whether the user has any open studies in the database.
+    /// </summary>
+    /// <param name="nric">The patient NRIC.</param>
+    /// <returns>True if existing appointment is found. False otherwise.</returns>
+    public static bool HasOpenStudies(string nric)
+    {
+        var found = false;
+        try
+        {
+            var guid = GetGuidFromNric(nric);
+            var patientId = GetPatientIdFromGuid(guid);
+            using (var db = new RIS_DB())
+            {
+                var query = (from s in db.Studies
+                             join a in db.Appointments on s.StudyId equals a.StudyId
+                             where (a.PatientId.Equals(patientId) && s.IsCompleted == false)
+                             select s.StudyId);
+                if (query.Any())
+                    found = true;
+            }
+        }
+        catch (InvalidOperationException) { }
+        return found;
+    }
+
+    /// <summary>
     /// Determines whether or not a user is in the specified role given their NRIC
     /// </summary>
     /// <param name="nric">User NRIC</param>
+    /// <param name="role">The role name</param>
     /// <returns>True if user is in the specified role. False otherwise.</returns>
     public static bool IsInRole(string nric, string role)
     {
@@ -503,6 +765,29 @@ public class DatabaseHandler
         catch (ProviderException)
         { }
         return update;
+    }
+
+    /// <summary>
+    /// Updates an existing medical record of a patient
+    /// </summary>
+    /// <param name="username">The username</param>
+    /// <param name="bloodType">The name of the patient's blood type</param>
+    /// <returns>True if the record was created. False otherwise.</returns>
+    public static bool UpdateMedicalRecord(string username, string bloodType)
+    {
+        var updated = false;
+        try
+        {
+            using (var db = new RIS_DB())
+            {
+                var patient = db.Patients.Single(p => p.UserId.Equals(GetGuidFromUsername(username)));
+                patient.BloodTypeId = GetBloodTypeId(bloodType);
+                db.SubmitChanges();
+            }
+            updated = true;
+        }
+        catch (InvalidOperationException) { }
+        return updated;
     }
 
     /// <summary>

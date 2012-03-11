@@ -53,7 +53,7 @@
             </asp:Panel>
             <%-- / NRIC --%>
             <%-- / First Name --%>
-            <asp:Panel class="topPadding" runat="server">
+            <asp:Panel CssClass="topPadding" runat="server">
                 <asp:Label AssociatedControlID="FirstName" runat="server" Text="* First Name: " />
                 <asp:TextBox CssClass="textEntry" ID="FirstName" runat="server" />
                 <ajaxToolkit:FilteredTextBoxExtender Enabled="True" FilterType="LowercaseLetters, UppercaseLetters"
@@ -73,7 +73,7 @@
             </asp:Panel>
             <%-- / First Name --%>
             <%-- Middle Name --%>
-            <asp:Panel class="topPadding" runat="server">
+            <asp:Panel CssClass="topPadding" runat="server">
                 <asp:Label AssociatedControlID="MiddleName" runat="server" Text="Middle Name: " />
                 <asp:TextBox CssClass="textEntry" ID="MiddleName" runat="server" />
                 <ajaxToolkit:FilteredTextBoxExtender Enabled="True" FilterType="LowercaseLetters, UppercaseLetters"
@@ -87,7 +87,7 @@
             </asp:Panel>
             <%-- / Middle Name --%>
             <%-- Last Name --%>
-            <asp:Panel class="topPadding" runat="server">
+            <asp:Panel CssClass="topPadding" runat="server">
                 <asp:Label AssociatedControlID="LastName" runat="server" Text="* Last Name: " />
                 <asp:TextBox CssClass="textEntry" ID="LastName" runat="server" />
                 <ajaxToolkit:FilteredTextBoxExtender Enabled="True" FilterType="LowercaseLetters, UppercaseLetters"
@@ -107,7 +107,7 @@
             </asp:Panel>
             <%-- / Last Name --%>
             <%-- Gender --%>
-            <asp:Panel class="topPadding" runat="server">
+            <asp:Panel CssClass="topPadding" runat="server">
                 <asp:Label AssociatedControlID="Gender" runat="server" Text="* Gender: " />
                 <asp:RadioButtonList CssClass="float" ID="Gender" RepeatDirection="Horizontal" runat="server">
                     <asp:ListItem Text="Male" Value="m" />
@@ -128,7 +128,7 @@
             </asp:Panel>
             <%-- / Gender --%>
             <%-- Prefix --%>
-            <asp:Panel class="clear topPadding" runat="server">
+            <asp:Panel CssClass="clear topPadding" runat="server">
                 <asp:Label AssociatedControlID="Prefix" runat="server" Text="* Salutation: " />
                 <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" DropDownStyle="DropDownList" ID="Prefix"
                     runat="server">
@@ -153,7 +153,7 @@
             </asp:Panel>
             <%-- / Prefix --%>
             <%-- Suffix --%>
-            <asp:Panel class="topPadding" runat="server">
+            <asp:Panel CssClass="topPadding" runat="server">
                 <asp:Label AssociatedControlID="Suffix" runat="server" Text="Suffix: " />
                 <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" DropDownStyle="DropDownList" ID="Suffix"
                     runat="server">
@@ -170,7 +170,7 @@
             </asp:Panel>
             <%-- / Suffix --%>
             <%-- DOB --%>
-            <asp:Panel class="topPadding" runat="server">
+            <asp:Panel CssClass="topPadding" runat="server">
                 <asp:Label AssociatedControlID="DateOfBirth" runat="server" Text="* Date of Birth (dd/mm/yyyy): " />
                 <asp:TextBox CssClass="textEntry" ID="DateOfBirth" runat="server" />
                 <asp:ImageButton ID="DOB_Cal" ImageUrl="~/Images/icons/calendar.png" runat="server" />
@@ -195,7 +195,7 @@
             </asp:Panel>
             <%-- / DOB --%>
             <%-- Address --%>
-            <asp:Panel class="topPadding" runat="server">
+            <asp:Panel CssClass="topPadding" runat="server">
                 <asp:Label AssociatedControlID="Address" runat="server" Text="* Address: " />
                 <asp:TextBox CssClass="textEntry" ID="Address" runat="server" TextMode="MultiLine" />
                 <asp:RequiredFieldValidator ControlToValidate="Address" CssClass="failureNotification"
@@ -207,7 +207,7 @@
             </asp:Panel>
             <%-- / Address --%>
             <%-- Contact Number --%>
-            <asp:Panel class="topPadding" runat="server">
+            <asp:Panel CssClass="topPadding" runat="server">
                 <asp:Label AssociatedControlID="ContactNumber" runat="server" Text="* Contact Number: " />
                 <asp:TextBox CssClass="textEntry" ID="ContactNumber" runat="server" />
                 <ajaxToolkit:MaskedEditExtender AutoComplete="False" ClearTextOnInvalid="False" ClipboardEnabled="False"
@@ -221,7 +221,7 @@
             </asp:Panel>
             <%-- / Contact Number --%>
             <%-- Postal Code --%>
-            <asp:Panel class="topPadding" runat="server">
+            <asp:Panel CssClass="topPadding" runat="server">
                 <asp:Label AssociatedControlID="PostalCode" runat="server" Text="* Postal Code: " />
                 <asp:TextBox CssClass="textEntry" ID="PostalCode" runat="server" />
                 <ajaxToolkit:MaskedEditExtender AutoComplete="False" ClearTextOnInvalid="False" ClipboardEnabled="False"
@@ -235,13 +235,10 @@
             </asp:Panel>
             <%-- / Postal Code --%>
             <%-- Country --%>
-            <asp:Panel class="topPadding" runat="server">
+            <asp:Panel CssClass="topPadding" runat="server">
                 <asp:Label AssociatedControlID="Country" runat="server" Text="* Country of Residence: " />
-                <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" CssClass="float" DataSourceID="CountryListing"
-                    DataTextField="CountryName" DataValueField="CountryName" DropDownStyle="DropDownList"
+                <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" CssClass="float" DropDownStyle="DropDownList"
                     ID="Country" MaxLength="0" runat="server" />
-                <asp:SqlDataSource ConnectionString="<%$ ConnectionStrings:ApplicationServices %>"
-                    ID="CountryListing" runat="server" SelectCommand="SELECT DISTINCT [CountryName] FROM [Countries] ORDER BY [CountryName]" />
                 <asp:RequiredFieldValidator ControlToValidate="Country" CssClass="failureNotification"
                     Display="Dynamic" ErrorMessage="Please specify your country of residence." runat="server"
                     ToolTip="Please specify your country of residence." ValidationGroup="AddUserValidationGroup">
@@ -251,7 +248,7 @@
             </asp:Panel>
             <%-- / Country --%>
             <%-- Nationality --%>
-            <asp:Panel class="clear topPadding" runat="server">
+            <asp:Panel CssClass="clear topPadding" runat="server">
                 <asp:Label AssociatedControlID="Nationality" runat="server" Text="* Nationality: " />
                 <asp:TextBox CssClass="textEntry" ID="Nationality" runat="server" />
                 <ajaxToolkit:FilteredTextBoxExtender Enabled="True" FilterType="LowercaseLetters, UppercaseLetters"
@@ -304,7 +301,7 @@
             </asp:Panel>
             <%-- / Username --%>
             <%-- Email --%>
-            <asp:Panel class="topPadding" runat="server">
+            <asp:Panel CssClass="topPadding" runat="server">
                 <asp:Label AssociatedControlID="Email" runat="server" Text="* E-mail:" />
                 <asp:TextBox CssClass="textEntry" ID="Email" runat="server" />
                 <asp:RequiredFieldValidator ControlToValidate="Email" CssClass="failureNotification"
@@ -332,7 +329,7 @@
             </asp:Panel>
             <%-- / Email --%>
             <%-- Security Question --%>
-            <asp:Panel class="topPadding" runat="server">
+            <asp:Panel CssClass="topPadding" runat="server">
                 <asp:Label AssociatedControlID="Question" runat="server" Text="* Security Question:" />
                 <asp:TextBox CssClass="textEntry" ID="Question" runat="server" />
                 <asp:RequiredFieldValidator ControlToValidate="Question" CssClass="failureNotification"
@@ -344,7 +341,7 @@
             </asp:Panel>
             <%-- / Security Question --%>
             <%-- Security Answer --%>
-            <asp:Panel class="topPadding" runat="server">
+            <asp:Panel CssClass="topPadding" runat="server">
                 <asp:Label AssociatedControlID="Answer" runat="server" Text="* Security Answer:" />
                 <asp:TextBox CssClass="textEntry" ID="Answer" runat="server" />
                 <asp:RequiredFieldValidator ControlToValidate="Answer" CssClass="failureNotification"
@@ -356,7 +353,7 @@
             </asp:Panel>
             <%-- / Security Answer --%>
             <%-- Role --%>
-            <asp:Panel class="topPadding" runat="server">
+            <asp:Panel cssclass="topPadding" runat="server">
                 <asp:Label AssociatedControlID="Role" runat="server" Text="* Role:" />
                 <asp:CheckBoxList CellPadding="5" CellSpacing="5" CssClass="float" ID="Role" RepeatDirection="Horizontal"
                     runat="server" TextAlign="Left" />
@@ -375,6 +372,35 @@
         ExpandedText="Hide" ID="AccountInfoPanel" ImageControlID="AccountInfoPanelArrow"
         runat="server" TargetControlID="AccountInfoContent" TextLabelID="AccountInfoPanelLabel" />
     <%-- / Account Information --%>
+    <%-- Staff Information --%>
+    <asp:Panel CssClass="collapsePanelHeader" ID="StaffInfoHeader" runat="server">
+        <asp:Image ID="StaffInfoPanelArrow" runat="server" />
+        Staff Information (<asp:Label ID="StaffInfoPanelLabel" runat="server" />)
+    </asp:Panel>
+    <asp:Panel ID="StaffInfoContent" runat="server" CssClass="collapsePanel">
+        <fieldset class="register">
+            <asp:Panel runat="server">
+                <asp:Label AssociatedControlID="Department" runat="server" Text="* Department: " />
+                <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" CssClass="float" DropDownStyle="DropDownList"
+                    ID="Department" MaxLength="0" runat="server" />
+                <asp:RequiredFieldValidator ControlToValidate="Department" CssClass="failureNotification"
+                    Display="Dynamic" ErrorMessage="Please specify the staff department." runat="server"
+                    ToolTip="Please specify the staff department." ValidationGroup="AddUserValidationGroup">
+                <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                Please specify the staff department.
+                </asp:RequiredFieldValidator>
+            </asp:Panel>
+            <asp:Panel CssClass="clear topPadding" runat="server">
+                <asp:CheckBox ID="IsFellow" runat="server" Text="This staff member is a fellow"
+                    ValidationGroup="AddUserValidationGroup" />
+            </asp:Panel>
+        </fieldset>
+    </asp:Panel>
+    <ajaxToolkit:CollapsiblePanelExtender CollapseControlID="StaffInfoHeader" CollapsedImage="~/Images/icons/bullet_arrow_down.png"
+        CollapsedText="Show" Enabled="True" ExpandControlID="StaffInfoHeader" ExpandedImage="~/Images/icons/bullet_arrow_up.png"
+        ExpandedText="Hide" ID="StaffInfoPanel" ImageControlID="StaffInfoPanelArrow"
+        runat="server" TargetControlID="StaffInfoContent" TextLabelID="StaffInfoPanelLabel" />
+    <%-- / Staff Information --%>
     <asp:Panel runat="server">
         <asp:Button CssClass="buttons" runat="server" Text="Create User" ValidationGroup="AddUserValidationGroup"
             OnClick="RegisterButtonClick" />

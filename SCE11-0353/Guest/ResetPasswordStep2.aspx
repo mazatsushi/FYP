@@ -24,7 +24,7 @@
         </asp:Panel>
         <%-- / Security Question --%>
         <%-- Security Answer --%>
-        <asp:Panel class="topPadding" runat="server">
+        <asp:Panel CssClass="topPadding" runat="server">
             <asp:Label AssociatedControlID="Answer" runat="server" Text="Security Answer:" />
             <asp:TextBox CssClass="textEntry" ID="Answer" runat="server" />
             <asp:RequiredFieldValidator ControlToValidate="Answer" CssClass="failureNotification"

@@ -16,6 +16,7 @@ using System.Web.UI.WebControls;
 /// Hence the use of the new C# keyword 'var'. For more information, please refer to:
 /// http://msdn.microsoft.com/en-us/library/bb384061.aspx
 /// </summary>
+
 public partial class Admin_AddUser : System.Web.UI.Page
 {
     private const bool IsApproved = true;
@@ -32,8 +33,15 @@ public partial class Admin_AddUser : System.Web.UI.Page
 
         DateRangeCheck.MinimumValue = "1/1/1900";
         DateRangeCheck.MaximumValue = DateTime.Today.ToShortDateString();
+
+        Country.DataSource = DatabaseHandler.GetAllCountries();
+        Country.DataBind();
+
         Role.DataSource = DatabaseHandler.GetAllRoles();
         Role.DataBind();
+
+        Department.DataSource = DatabaseHandler.GetAllDepartments();
+        Department.DataBind();
     }
 
     /// <summary>
@@ -263,50 +271,48 @@ public partial class Admin_AddUser : System.Web.UI.Page
         // Return and show error message if account creation unsuccessful
         if (user == null)
         {
-            ErrorMessage.Text = HttpUtility.HtmlDecode("<ul>");
             switch (status)
             {
                 case MembershipCreateStatus.DuplicateUserName:
-                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>Username already exists. Please enter a different user name.</li>");
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("Username already exists. Please enter a different user name.");
                     break;
 
                 case MembershipCreateStatus.DuplicateEmail:
-                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>A username for that e-mail address already exists. Please enter a different e-mail address.</li>");
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("A username for that e-mail address already exists. Please enter a different e-mail address.");
                     break;
 
                 case MembershipCreateStatus.InvalidPassword:
-                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>The password provided is invalid. Please enter a valid password value.</li>");
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("The password provided is invalid. Please enter a valid password value.");
                     break;
 
                 case MembershipCreateStatus.InvalidEmail:
-                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>The e-mail address provided is invalid. Please check the value and try again.</li>");
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("The e-mail address provided is invalid. Please check the value and try again.");
                     break;
 
                 case MembershipCreateStatus.InvalidAnswer:
-                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>The password retrieval answer provided is invalid. Please check the value and try again.</li>");
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("The password retrieval answer provided is invalid. Please check the value and try again.");
                     break;
 
                 case MembershipCreateStatus.InvalidQuestion:
-                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>The password retrieval question provided is invalid. Please check the value and try again.</li>");
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("The password retrieval question provided is invalid. Please check the value and try again.");
                     break;
 
                 case MembershipCreateStatus.InvalidUserName:
-                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>The user name provided is invalid. Please check the value and try again.</li>");
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("The user name provided is invalid. Please check the value and try again.");
                     break;
 
                 case MembershipCreateStatus.ProviderError:
-                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact the system administrator.</li>");
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact the system administrator.");
                     break;
 
                 case MembershipCreateStatus.UserRejected:
-                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact the system administrator.</li>");
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact the system administrator.");
                     break;
 
                 default:
-                    ErrorMessage.Text = HttpUtility.HtmlDecode("<li>An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact the system administrator.</li>");
+                    ErrorMessage.Text = HttpUtility.HtmlDecode("An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact the system administrator.");
                     break;
             }
-            ErrorMessage.Text = HttpUtility.HtmlDecode("</ul>");
             return;
         }
 
@@ -334,18 +340,23 @@ public partial class Admin_AddUser : System.Web.UI.Page
 
         if (!addStatus)
         {
-            ErrorMessage.Text = HttpUtility.HtmlDecode("<ul>");
-            ErrorMessage.Text = HttpUtility.HtmlDecode("<li>An error occured while adding your information. Please contact the system administrator.</li>");
-            ErrorMessage.Text = HttpUtility.HtmlDecode("</ul>");
+            ErrorMessage.Text = HttpUtility.HtmlDecode("An error occured while adding staff information. Please contact the system administrator.");
             return;
         }
 
         // Loop through the roles selected, adding user to each selected role
         if ((from ListItem r in Role.Items where r.Selected select r).Any(r => !DatabaseHandler.AddUserToRole(username, r.Text)))
         {
-            ErrorMessage.Text = HttpUtility.HtmlDecode("<ul>");
-            ErrorMessage.Text = HttpUtility.HtmlDecode("<li>An error occured while adding your role(s). Please contact the system administrator.</li>");
-            ErrorMessage.Text = HttpUtility.HtmlDecode("</ul>");
+            ErrorMessage.Text = HttpUtility.HtmlDecode("An error occured while adding staff role(s). Please contact the system administrator.");
+            return;
+        }
+
+        var department = HttpUtility.HtmlEncode(Department.Text.Trim());
+
+        // Add staff information into the Staff table
+        if (!DatabaseHandler.AddStaff(user.ProviderUserKey.ToString(), department, IsFellow.Checked))
+        {
+            ErrorMessage.Text = HttpUtility.HtmlDecode("An error occured while adding staff information. Please contact the system administrator.");
             return;
         }
 

@@ -3,8 +3,9 @@ using System.Web;
 using System.Web.UI.WebControls;
 
 /// <summary>
-/// Code behind for the ~/Guest/Register.aspx page
+/// Code behind for the ~/Physician/AddAllergy.aspx page
 /// </summary>
+
 public partial class Physician_AddAllergy : System.Web.UI.Page
 {
     /// <summary>

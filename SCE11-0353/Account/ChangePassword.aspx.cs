@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web.Security;
 
 /// <summary>
 /// Code behind for the ~/Account/ChangePassword.aspx page

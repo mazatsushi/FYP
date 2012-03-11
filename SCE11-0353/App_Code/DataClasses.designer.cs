@@ -6504,7 +6504,7 @@ public partial class Study : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCompleted", DbType="DateTime NOT NULL")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCompleted", DbType="DateTime NULL")]
 	public System.DateTime DateCompleted
 	{
 		get

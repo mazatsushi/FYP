@@ -2,3 +2,13 @@
 password: M(r{7m
 reset: shepard
 role: Physician
+
+username: miranda
+password: 2O(i|O
+reset: lawson
+role: Radiologist
+
+username: porky
+password: 11111!
+reset: bun
+role: Patient

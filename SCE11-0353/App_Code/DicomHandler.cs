@@ -71,11 +71,11 @@ public class DicomHandler
                 convertResult = File.Exists(pngFilePath);
             }
         }
-        catch (ObjectDisposedException e)
+        catch (ObjectDisposedException)
         {
             //The process object has already been disposed.
         }
-        catch (InvalidOperationException e)
+        catch (InvalidOperationException)
         {
             /*
              * No file name was specified in the startInfo parameter's FileName property.
@@ -85,15 +85,15 @@ public class DicomHandler
              * The UseShellExecute property of the startInfo parameter is true and the UserName property is not Nothing or empty or the Password property is not Nothing.
              */
         }
-        catch (ArgumentException e)
+        catch (ArgumentException)
         {
             // The startInfo parameter is Nothing.
         }
-        catch (FileNotFoundException e)
+        catch (FileNotFoundException)
         {
             // The file specified in the startInfo parameter's FileName property could not be found.
         }
-        catch (Win32Exception e)
+        catch (Win32Exception)
         {
             /*
              * An error occurred when opening the associated file.

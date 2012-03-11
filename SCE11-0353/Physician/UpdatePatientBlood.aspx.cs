@@ -2,9 +2,13 @@
 using System.Web;
 using System.Web.UI.WebControls;
 
+
+/// <summary>
+/// Code behind for the ~/Physician/UpdatePatientBlood.aspx page
+/// </summary>
+
 public partial class Physician_UpdatePatientBlood : System.Web.UI.Page
 {
-    private const string NameLabel = "Patient Name: ";
     private const string role = "Patient";
 
     /// <summary>
@@ -35,7 +39,7 @@ public partial class Physician_UpdatePatientBlood : System.Web.UI.Page
             return;
         }
 
-        Server.Transfer("~/Physician/UpdatePatientBlood2.aspx");
+        Server.Transfer("~/Physician/UpdatePatientBlood2.aspx?Username=" + DatabaseHandler.GetUserName(nric) + "&PatientName=" + DatabaseHandler.GetPatientName(nric));
     }
 
     /// <summary>

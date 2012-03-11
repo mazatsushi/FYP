@@ -1,5 +1,5 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="AddAllergy.aspx.cs" Culture="en-SG" Inherits="Physician_AddAllergy"
-    Language="C#" MasterPageFile="~/Site.master" Title="Add Medical Allergy" %>
+    Language="C#" MasterPageFile="~/Site.master" Title="Add Drug Allergy" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
@@ -34,7 +34,7 @@
         </asp:CustomValidator>
     </asp:Panel>
     <%-- / Drug name --%>
-    <asp:Panel class="topPadding" runat="server">
+    <asp:Panel CssClass="topPadding" runat="server">
         <asp:Button CssClass="buttons" OnClick="AddButtonClick" runat="server" Text="Add Allergy"
             ValidationGroup="DrugValidationGroup" />
         <asp:Button CssClass="buttons" PostBackUrl="~/Physician/Default.aspx" runat="server"

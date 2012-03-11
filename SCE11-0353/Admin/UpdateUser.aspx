@@ -39,7 +39,7 @@
         </asp:CustomValidator>
     </asp:Panel>
     <%-- / Username --%>
-    <asp:Panel class="topPadding" runat="server">
+    <asp:Panel CssClass="topPadding" runat="server">
         <asp:Button CssClass="buttons" runat="server" Text="Next" ValidationGroup="UpdateUserValidationGroup"
             OnClick="NextButtonClick" />
         <asp:Button CssClass="buttons" PostBackUrl="~/Default.aspx" runat="server" Text="Cancel" />
