@@ -793,7 +793,7 @@ public partial class UserParticular : INotifyPropertyChanging, INotifyPropertyCh
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateOfBirth", DbType="DateTime NOT NULL")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateOfBirth", DbType="DateTime2(7) NOT NULL")]
 	public System.DateTime DateOfBirth
 	{
 		get
@@ -6444,7 +6444,7 @@ public partial class Study : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateStarted", DbType="DateTime NOT NULL")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateStarted", DbType="DateTime2(7) NOT NULL")]
 	public System.DateTime DateStarted
 	{
 		get
@@ -6504,7 +6504,7 @@ public partial class Study : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCompleted", DbType="DateTime NULL")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCompleted", DbType="DateTime2(7) NULL")]
 	public System.DateTime DateCompleted
 	{
 		get

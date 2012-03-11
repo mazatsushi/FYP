@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration.Provider;
 using System.Data.Linq;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Web.Security;
 
