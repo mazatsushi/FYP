@@ -4461,7 +4461,7 @@ public partial class DicomImage : INotifyPropertyChanging, INotifyPropertyChange
 		OnCreated();
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DicomUID", DbType="UniqueIdentifier NOT NULL", IsPrimaryKey=true)]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DicomUID", DbType="UniqueIdentifier ROWGUIDCOL NOT NULL", IsPrimaryKey=true)]
 	public System.Guid DicomUID
 	{
 		get
@@ -4481,7 +4481,7 @@ public partial class DicomImage : INotifyPropertyChanging, INotifyPropertyChange
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Image", DbType="VarBinary(MAX)", UpdateCheck=UpdateCheck.Never)]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Image", DbType="VarBinary(MAX) FILESTREAM NULL", UpdateCheck=UpdateCheck.Never)]
 	public System.Data.Linq.Binary Image
 	{
 		get
@@ -4856,7 +4856,7 @@ public partial class Image : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PngImage_Image", Storage="_PngImage", ThisKey="ImageId", OtherKey="ImageId", IsForeignKey=true)]
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PngImage_Image", Storage="_PngImage", ThisKey="ImageId", OtherKey="ImageID", IsForeignKey=true)]
 	public PngImage PngImage
 	{
 		get
@@ -4879,7 +4879,7 @@ public partial class Image : INotifyPropertyChanging, INotifyPropertyChanged
 				if ((value != null))
 				{
 					value.Images.Add(this);
-					this._ImageId = value.ImageId;
+					this._ImageId = value.ImageID;
 				}
 				else
 				{
@@ -5692,8 +5692,8 @@ public partial class PngImage : INotifyPropertyChanging, INotifyPropertyChanged
     partial void OnCreated();
     partial void OnImageUIDChanging(System.Guid value);
     partial void OnImageUIDChanged();
-    partial void OnImageIdChanging(int value);
-    partial void OnImageIdChanged();
+    partial void OnImageIDChanging(int value);
+    partial void OnImageIDChanged();
     partial void OnImageChanging(System.Data.Linq.Binary value);
     partial void OnImageChanged();
     #endregion
@@ -5704,7 +5704,7 @@ public partial class PngImage : INotifyPropertyChanging, INotifyPropertyChanged
 		OnCreated();
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageUID", DbType="UniqueIdentifier NOT NULL")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageUID", DbType="UniqueIdentifier ROWGUIDCOL NOT NULL")]
 	public System.Guid ImageUID
 	{
 		get
@@ -5724,8 +5724,8 @@ public partial class PngImage : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-	public int ImageId
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Name="ImageId", Storage="_ImageId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY(1,1)", IsPrimaryKey=true, IsDbGenerated=true)]
+	public int ImageID
 	{
 		get
 		{
@@ -5735,16 +5735,16 @@ public partial class PngImage : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._ImageId != value))
 			{
-				this.OnImageIdChanging(value);
+				this.OnImageIDChanging(value);
 				this.SendPropertyChanging();
 				this._ImageId = value;
-				this.SendPropertyChanged("ImageId");
-				this.OnImageIdChanged();
+				this.SendPropertyChanged("ImageID");
+				this.OnImageIDChanged();
 			}
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Image", DbType="VarBinary(MAX)", UpdateCheck=UpdateCheck.Never)]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Image", DbType="VarBinary(MAX) FILESTREAM NULL", UpdateCheck=UpdateCheck.Never)]
 	public System.Data.Linq.Binary Image
 	{
 		get
@@ -5764,7 +5764,7 @@ public partial class PngImage : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PngImage_Image", Storage="_Images", ThisKey="ImageId", OtherKey="ImageId")]
+	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PngImage_Image", Storage="_Images", ThisKey="ImageID", OtherKey="ImageId")]
 	public EntitySet<Image> Images
 	{
 		get
@@ -5818,8 +5818,6 @@ public partial class Series : INotifyPropertyChanging, INotifyPropertyChanged
 	
 	private int _SeriesId;
 	
-	private System.Guid _SeriesUID;
-	
 	private int _ModalityType;
 	
 	private int _StudyId;
@@ -5836,8 +5834,6 @@ public partial class Series : INotifyPropertyChanging, INotifyPropertyChanged
     partial void OnCreated();
     partial void OnSeriesIdChanging(int value);
     partial void OnSeriesIdChanged();
-    partial void OnSeriesUIDChanging(System.Guid value);
-    partial void OnSeriesUIDChanged();
     partial void OnModalityTypeChanging(int value);
     partial void OnModalityTypeChanged();
     partial void OnStudyIdChanging(int value);
@@ -5868,26 +5864,6 @@ public partial class Series : INotifyPropertyChanging, INotifyPropertyChanged
 				this._SeriesId = value;
 				this.SendPropertyChanged("SeriesId");
 				this.OnSeriesIdChanged();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SeriesUID", DbType="UniqueIdentifier NOT NULL")]
-	public System.Guid SeriesUID
-	{
-		get
-		{
-			return this._SeriesUID;
-		}
-		set
-		{
-			if ((this._SeriesUID != value))
-			{
-				this.OnSeriesUIDChanging(value);
-				this.SendPropertyChanging();
-				this._SeriesUID = value;
-				this.SendPropertyChanged("SeriesUID");
-				this.OnSeriesUIDChanged();
 			}
 		}
 	}

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Configuration.Provider;
 using System.Data.Linq;
-using System.Data.SqlTypes;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web.Security;
 
@@ -15,6 +16,43 @@ public class DatabaseHandler
     private static readonly string[] RolesList = { "Admin", "Patient", "Physician", "Radiologist", "Staff" };
     private const int PasswordLength = 6;
     private const int NonAlphaNumeric = 1;
+    private const string WorkDirectory = @"E:\Temp\Projects\FYP\SCE11-0353\Uploads\";
+    private const string PngExtension = ".png";
+    private const string DicomExtension = ".dcm";
+
+    public static bool SaveImages(string fileNameOnly)
+    {
+        var success = false;
+        try
+        {
+            using (var db = new RIS_DB())
+            {
+                // Save DICOM
+                var binData = File.ReadAllBytes(WorkDirectory + fileNameOnly + DicomExtension);
+                var dicomFile = new DicomImage
+                                {
+                                    Image = new Binary(binData)
+                                };
+                db.DicomImages.InsertOnSubmit(dicomFile);
+                var dicomUid = dicomFile.DicomUID;
+                // Save PNGs
+                var files = new DirectoryInfo(WorkDirectory).GetFiles("*.png");
+                foreach (var fileInfo in files)
+                {
+                    var binData2 = File.ReadAllBytes(fileInfo.FullName);
+                    var pngFile = new PngImage
+                                      {
+                                          Image = new Binary(binData2)
+                                      };
+                    db.PngImages.InsertOnSubmit(pngFile);
+                }
+                db.SubmitChanges();
+                success = true;
+            }
+        }
+        catch (Exception) { }
+        return success;
+    }
 
     /// <summary>
     /// Adds a new drug allergy to the database
@@ -55,7 +93,7 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB())
             {
-                var staff = new Staff()
+                var staff = new Staff
                 {
                     DepartmentId = GetDepartmentId(department),
                     IsFellow = isFellow,
@@ -210,26 +248,54 @@ public class DatabaseHandler
     }
 
     /// <summary>
-    /// Create a new medical record to a patient account
+    /// Create a new medical record tied to a patient's account
     /// </summary>
-    /// <param name="username">The username</param>
+    /// <param name="nric">The patient's NRIC</param>
     /// <param name="bloodType">The name of the patient's blood type</param>
     /// <returns>True if the record was created. False otherwise.</returns>
-    public static bool CreateMedicalRecord(string username, string bloodType)
+    public static bool CreateMedicalRecord(string nric, string bloodType)
     {
         var created = false;
         try
         {
+            var guid = GetGuidFromNric(nric);
             using (var db = new RIS_DB())
             {
                 var p = new Patient
                             {
                                 BloodTypeId = GetBloodTypeId(bloodType),
-                                UserId = Guid.Parse(GetGuidFromUsername(username))
+                                UserId = Guid.Parse(guid)
                             };
                 db.Patients.InsertOnSubmit(p);
                 db.SubmitChanges();
                 created = true;
+            }
+        }
+        catch (InvalidOperationException) { }
+        return created;
+    }
+
+    /// <summary>
+    /// Create a new series
+    /// </summary>
+    /// <param name="modId">The modality ID</param>
+    /// <param name="studyId">The study ID</param>
+    /// <returns>True if the record was created. False otherwise.</returns>
+    public static int CreateNewSeries(int modId, int studyId)
+    {
+        var created = 0;
+        try
+        {
+            using (var db = new RIS_DB())
+            {
+                var s = new Series
+                {
+                    ModalityType = modId,
+                    StudyId = studyId
+                };
+                db.Series.InsertOnSubmit(s);
+                db.SubmitChanges();
+                created = s.SeriesId;
             }
         }
         catch (InvalidOperationException) { }
@@ -278,6 +344,20 @@ public class DatabaseHandler
         {
             var query = (from d in db.DrugAllergies
                          where d.DrugName.Equals(drugName)
+                         select d);
+            if (query.Any())
+                found = true;
+        }
+        return found;
+    }
+
+    public static bool SeriesExists(int seriesId)
+    {
+        var found = false;
+        using (var db = new RIS_DB())
+        {
+            var query = (from d in db.Series
+                         where d.SeriesId == seriesId
                          select d);
             if (query.Any())
                 found = true;
@@ -378,6 +458,19 @@ public class DatabaseHandler
     }
 
     /// <summary>
+    /// Gets a list of all departments
+    /// </summary>
+    /// <returns>A string array containing the names of all departments stored in the database.</returns>
+    public static List<string> GetAllModalities()
+    {
+        using (var db = new RIS_DB())
+        {
+            return (from m in db.Modalities
+                    select m.Description).ToList();
+        }
+    }
+
+    /// <summary>
     /// Queries database to retrieve a country Id value
     /// </summary>
     /// <param name="countryName">The country name</param>
@@ -402,6 +495,14 @@ public class DatabaseHandler
         using (var db = new RIS_DB())
         {
             return db.BloodTypes.Single(b => b.BloodType1.Equals(bloodType)).BloodTypeId;
+        }
+    }
+
+    public static int GetModalityId(string desc)
+    {
+        using (var db = new RIS_DB())
+        {
+            return db.Modalities.Single(b => b.Description.Equals(desc)).ModalityId;
         }
     }
 
@@ -531,6 +632,38 @@ public class DatabaseHandler
         return id;
     }
 
+    public static IQueryable GetStudies(string nric)
+    {
+        try
+        {
+            var patientId = GetPatientIdFromGuid(GetGuidFromNric(nric));
+            var db = new RIS_DB();
+
+            var temp = (from s in db.Studies
+                        join a in db.Appointments on s.StudyId equals a.StudyId
+                        where (a.PatientId.Equals(patientId))
+                        select new
+                                   {
+                                       ID = s.StudyId,
+                                       Description = s.Description,
+                                       Date_Started = s.DateStarted,
+                                       Completed = s.IsCompleted,
+                                       Date_Completed = s.DateCompleted,
+                                       Diagnosis = s.Diagnosis,
+                                   });
+            return temp;
+
+        }
+        catch (InvalidOperationException)
+        {
+            return null;
+        }
+        catch (SqlException)
+        {
+            return null;
+        }
+    }
+
     /// <summary>
     /// Queries the Membership API to get the user email via the username
     /// </summary>
@@ -618,12 +751,12 @@ public class DatabaseHandler
     /// <summary>
     /// Checks whether the user has prior medical records in the database.
     /// </summary>
-    /// <param name="username">The username.</param>
+    /// <param name="nric">The username.</param>
     /// <returns>True if prior medical records are found. False otherwise.</returns>
-    public static bool HasMedicalRecords(string username)
+    public static bool HasMedicalRecords(string nric)
     {
         var found = false;
-        var guid = GetGuidFromUsername(username);
+        var guid = GetGuidFromNric(nric);
         using (var db = new RIS_DB())
         {
             var query = (from p in db.Patients
@@ -750,6 +883,21 @@ public class DatabaseHandler
         return removed;
     }
 
+    public static bool StudyExists(int studyId)
+    {
+        var found = false;
+        try
+        {
+            using (var db = new RIS_DB())
+            {
+                var query = db.Studies.Single(s => s.StudyId == studyId);
+                found = true;
+            }
+        }
+        catch (Exception) { }
+        return found;
+    }
+
     /// <summary>
     /// Updates the account information of a user
     /// </summary>
@@ -771,17 +919,17 @@ public class DatabaseHandler
     /// <summary>
     /// Updates an existing medical record of a patient
     /// </summary>
-    /// <param name="username">The username</param>
+    /// <param name="nric">The username</param>
     /// <param name="bloodType">The name of the patient's blood type</param>
     /// <returns>True if the record was created. False otherwise.</returns>
-    public static bool UpdateMedicalRecord(string username, string bloodType)
+    public static bool UpdateMedicalRecord(string nric, string bloodType)
     {
         var updated = false;
         try
         {
             using (var db = new RIS_DB())
             {
-                var patient = db.Patients.Single(p => p.UserId.Equals(GetGuidFromUsername(username)));
+                var patient = db.Patients.Single(p => p.UserId.Equals(GetGuidFromNric(nric)));
                 patient.BloodTypeId = GetBloodTypeId(bloodType);
                 db.SubmitChanges();
             }

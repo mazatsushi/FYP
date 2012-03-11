@@ -19,14 +19,14 @@
     <asp:Login BackColor="#F5F5F5" EnableViewState="True" Font-Names="Verdana" Font-Size="1em"
         ForeColor="#333333" ID="LoginUser" OnLoggedIn="OnLoggedIn" runat="server">
         <LayoutTemplate>
-            <asp:Panel CssClass="failureNotification" runat="server">
+            <div class="failureNotification">
                 <asp:Literal ID="FailureText" runat="server" />
                 <asp:ValidationSummary ID="LoginUserValidationSummary" runat="server" ValidationGroup="LoginUserValidationGroup" />
-            </asp:Panel>
-            <asp:Panel class="accountInfo" runat="server">
+            </div>
+            <div class="accountInfo">
                 <fieldset class="login">
                     <legend>Account Information</legend>
-                    <asp:Panel runat="server">
+                    <div>
                         <asp:Label AssociatedControlID="UserName" runat="server" Text="Username: " />
                         <asp:TextBox CssClass="textEntry" ID="UserName" runat="server" />
                         <asp:RequiredFieldValidator ControlToValidate="UserName" CssClass="failureNotification"
@@ -34,8 +34,8 @@
                             ValidationGroup="LoginUserValidationGroup">
                             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> Username is required.
                         </asp:RequiredFieldValidator>
-                    </asp:Panel>
-                    <asp:Panel runat="server">
+                    </div>
+                    <div>
                         <asp:Label AssociatedControlID="Password" runat="server" Text="Password: " />
                         <asp:TextBox CssClass="passwordEntry" ID="Password" runat="server" TextMode="Password" />
                         <asp:RequiredFieldValidator ControlToValidate="Password" CssClass="failureNotification"
@@ -43,25 +43,21 @@
                             ValidationGroup="LoginUserValidationGroup">
                             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> Password is required.
                         </asp:RequiredFieldValidator>
-                    </asp:Panel>
-                    <asp:Panel runat="server">
+                    </div>
+                    <div>
                         <asp:CheckBox ID="RememberMe" runat="server" />
                         <asp:Label AssociatedControlID="RememberMe" CssClass="inline" ID="RememberMeLabel"
                             runat="server">Keep me logged in</asp:Label>
-                    </asp:Panel>
-                    <asp:Panel class="submitButton, topPadding" runat="server">
+                    </div>
+                    <div class="submitButton, topPadding" runat="server">
                         <asp:Button CommandName="Login" CssClass="buttons" runat="server" Text="Log In" ValidationGroup="LoginUserValidationGroup" />
-                    </asp:Panel>
+                    </div>
                 </fieldset>
-                <asp:Panel runat="server">
+                <div>
                     <asp:LinkButton CausesValidation="False" PostBackUrl="~/Guest/ResetPassword.aspx"
                         runat="server" Text="Forgot Your Password?" />
-                </asp:Panel>
-                <%--<asp:Panel class="topPadding" runat="server">
-                    <asp:LinkButton CausesValidation="False" PostBackUrl="~/Guest/AppealUnlock.aspx"
-                        runat="server" Text="Account Locked Out?" />
-                </asp:Panel>--%>
-            </asp:Panel>
+                </div>
+            </div>
         </LayoutTemplate>
     </asp:Login>
 </asp:Content>

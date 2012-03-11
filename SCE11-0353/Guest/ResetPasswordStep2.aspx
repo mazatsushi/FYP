@@ -9,22 +9,22 @@
         Reset Password
     </h2>
     <%-- Error Notifications --%>
-    <asp:Panel CssClass="failureNotification" runat="server">
+    <div class="failureNotification">
         <asp:Literal ID="ErrorMessage" runat="server" Text="" />
         <asp:ValidationSummary runat="server" ValidationGroup="ResetPasswordValidationGroup" />
-    </asp:Panel>
+    </div>
     <%-- / Error Notifications --%>
     <h3>
         Please answer the following security question to reset your password.
     </h3>
-    <asp:Panel runat="server">
+    <div>
         <%-- Security Question --%>
-        <asp:Panel runat="server">
+        <div>
             <asp:Label ID="Question" runat="server" />
-        </asp:Panel>
+        </div>
         <%-- / Security Question --%>
         <%-- Security Answer --%>
-        <asp:Panel CssClass="topPadding" runat="server">
+        <div class="topPadding">
             <asp:Label AssociatedControlID="Answer" runat="server" Text="Security Answer:" />
             <asp:TextBox CssClass="textEntry" ID="Answer" runat="server" />
             <asp:RequiredFieldValidator ControlToValidate="Answer" CssClass="failureNotification"
@@ -33,12 +33,12 @@
             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
             Security answer is required.
             </asp:RequiredFieldValidator>
-        </asp:Panel>
+        </div>
         <%-- / Security Answer --%>
-    </asp:Panel>
-    <asp:Panel CssClass="topPadding" runat="server">
+    </div>
+    <div class="topPadding">
         <asp:Button CssClass="buttons" runat="server" Text="Reset Password" ValidationGroup="ResetPasswordValidationGroup"
             OnClick="ResetButtonClick" />
         <asp:Button CssClass="buttons" PostBackUrl="~/Default.aspx" runat="server" Text="Cancel" />
-    </asp:Panel>
+    </div>
 </asp:Content>

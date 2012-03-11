@@ -9,16 +9,16 @@
         Appeal to Unlock Account
     </h2>
     <%-- Error Notifications --%>
-    <asp:Panel CssClass="failureNotification" runat="server">
+    <div CssClass="failureNotification" runat="server">
         <asp:Literal ID="ErrorMessage" runat="server" Text="" />
         <asp:ValidationSummary runat="server" ValidationGroup="AppealValidationGroup" />
-    </asp:Panel>
+    </div>
     <%-- / Error Notifications --%>
     <h3>
         Please provide your username
     </h3>
     <%-- Username --%>
-    <asp:Panel runat="server">
+    <div>
         <asp:Label AssociatedControlID="UserName" runat="server" Text="User Name: " />
         <asp:TextBox CssClass="textEntry" ID="UserName" runat="server" />
         <asp:RequiredFieldValidator ControlToValidate="UserName" CssClass="failureNotification"
@@ -34,11 +34,11 @@
             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
             User name not found.
         </asp:CustomValidator>
-    </asp:Panel>
+    </div>
     <%-- / Username --%>
-    <asp:Panel CssClass="topPadding" runat="server">
+    <div class="topPadding">
         <asp:Button CssClass="buttons" runat="server" Text="Next" ValidationGroup="AppealValidationGroup"
             OnClick="NextButtonClick" />
         <asp:Button CssClass="buttons" PostBackUrl="~/Default.aspx" runat="server" Text="Cancel" />
-    </asp:Panel>
+    </div>
 </asp:Content>

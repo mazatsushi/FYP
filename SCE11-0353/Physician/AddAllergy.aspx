@@ -11,13 +11,13 @@
         Add a new medical allergy to the system.
     </p>
     <%-- Error Notifications --%>
-    <asp:Panel CssClass="failureNotification" runat="server">
+    <div class="failureNotification">
         <asp:Literal ID="ErrorMessage" runat="server" Text="" />
         <asp:ValidationSummary runat="server" ValidationGroup="DrugValidationGroup" />
-    </asp:Panel>
+    </div>
     <%-- / Error Notifications --%>
     <%-- Drug name --%>
-    <asp:Panel runat="server">
+    <div>
         <asp:Label AssociatedControlID="DrugName" runat="server" Text="Drug Name: " />
         <asp:TextBox CssClass="textEntry" ID="DrugName" runat="server" />
         <asp:RequiredFieldValidator ControlToValidate="DrugName" CssClass="failureNotification"
@@ -32,12 +32,12 @@
             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
             Drug allergy is already in system.
         </asp:CustomValidator>
-    </asp:Panel>
+    </div>
     <%-- / Drug name --%>
-    <asp:Panel CssClass="topPadding" runat="server">
+    <div class="topPadding">
         <asp:Button CssClass="buttons" OnClick="AddButtonClick" runat="server" Text="Add Allergy"
             ValidationGroup="DrugValidationGroup" />
         <asp:Button CssClass="buttons" PostBackUrl="~/Physician/Default.aspx" runat="server"
             Text="Cancel" />
-    </asp:Panel>
+    </div>
 </asp:Content>

@@ -9,6 +9,8 @@ using System.Web.UI.WebControls;
 
 public partial class Physician_CreateImagingOrder : System.Web.UI.Page
 {
+    private const string ExpectedUserRole = "Patient";
+
     /// <summary>
     /// Page load event
     /// </summary>
@@ -49,8 +51,29 @@ public partial class Physician_CreateImagingOrder : System.Web.UI.Page
     /// <param name="e">Event parameters</param>
     protected void CreateButtonClick(object sender, EventArgs e)
     {
+        Validate();
         if (!IsValid)
             return;
+
+        var nric = HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant());
+        if (!DatabaseHandler.IsInRole(nric, ExpectedUserRole))
+        {
+            ErrorMessage.Text = "NRIC provided does not belong to any patient.";
+            return;
+        }
+
+        if (!DatabaseHandler.HasMedicalRecords(nric))
+        {
+            ErrorMessage.Text = "Patient has no medical records in system. Please update blood type to create it.";
+            return;
+        }
+
+        if (DatabaseHandler.HasOpenStudies(nric))
+        {
+            ErrorMessage.Text = "Patient still has uncompleted studies.";
+            return;
+        }
+
         /*
          * At this point, all user entered information has been verified.
          * We shall now perform two critical actions:
@@ -78,7 +101,6 @@ public partial class Physician_CreateImagingOrder : System.Web.UI.Page
                 break;
         }
         date = date.AddMinutes((Int32.Parse(HttpUtility.HtmlEncode(Minute.Text.Trim()))));
-        var nric = HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant());
 
         if (!DatabaseHandler.CreateAppointment(date, studyId, nric))
         {
@@ -101,15 +123,5 @@ public partial class Physician_CreateImagingOrder : System.Web.UI.Page
          * Step 2: Check for existing NRIC
          */
         args.IsValid = DatabaseHandler.NricExists(HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant()));
-    }
-
-    /// <summary>
-    /// Server side validation to check whether patient has uncompleted studies
-    /// </summary>
-    /// <param name="source">The web element that triggered the event</param>
-    /// <param name="args">Event parameters</param>
-    protected void HasOpenStudies(object source, ServerValidateEventArgs args)
-    {
-        args.IsValid = !DatabaseHandler.HasOpenStudies(HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant()));
     }
 }

@@ -12,3 +12,8 @@ username: porky
 password: 11111!
 reset: bun
 role: Patient
+
+username: oldmaid
+password: 11111!
+reset: money
+role: Patient

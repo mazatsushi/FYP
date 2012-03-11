@@ -1,6 +1,0 @@
-E:\Temp\Projects\FYP\Samples\Evil DICOM\Evil DICOM\bin\Debug\Evil DICOM.exe
-E:\Temp\Projects\FYP\Samples\Evil DICOM\Evil DICOM\bin\Debug\Evil DICOM.pdb
-E:\Temp\Projects\FYP\Samples\Evil DICOM\Evil DICOM\bin\Debug\EvilDicom.dll
-E:\Temp\Projects\FYP\Samples\Evil DICOM\Evil DICOM\obj\x86\Debug\ResolveAssemblyReference.cache
-E:\Temp\Projects\FYP\Samples\Evil DICOM\Evil DICOM\obj\x86\Debug\Evil DICOM.exe
-E:\Temp\Projects\FYP\Samples\Evil DICOM\Evil DICOM\obj\x86\Debug\Evil DICOM.pdb
