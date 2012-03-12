@@ -122,12 +122,6 @@
         <elementListCompartment Id="41b1a8bf-ad0a-473f-9c6a-ad6dc4eb41f9" absoluteBounds="12.015, 23.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="97015f03-6428-4f09-84ad-19ba3caf9a02" absoluteBounds="14.75, 14.25, 2, 1.3862939453124987">
-      <DataClassMoniker Name="/RIS_DB/Note" />
-      <nestedChildShapes>
-        <elementListCompartment Id="d14a0e81-5ef1-45fa-947c-ddabe96ddd1b" absoluteBounds="14.765, 14.71, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="c1ac2ce4-7f64-4d44-bc7e-b7b8715704ab" absoluteBounds="9.25, 18.25, 2, 1.3862939453125023">
       <DataClassMoniker Name="/RIS_DB/Patient" />
       <nestedChildShapes>
@@ -164,7 +158,7 @@
         <elementListCompartment Id="d1535b6a-f415-49bb-8e57-54d8f3b090b6" absoluteBounds="12.015, 17.585, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(1.75 : 15.75); (1.75 : 12.2844962565104); (8.32291666666667 : 12.2844962565104 : JumpStart); (8.48958333333333 : 12.2844962565104 : JumpEnd); (9.25 : 12.2844962565104)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(1.75 : 15.75); (1.75 : 12.2844962565104); (9.25 : 12.2844962565104)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/RIS_DB/aspnet_Application/aspnet_Application_aspnet_Membership" />
       <nodes>
         <classShapeMoniker Id="59df41a4-a0cf-462d-9b94-a49959e79d8a" />
@@ -199,7 +193,7 @@
         <classShapeMoniker Id="6edd21d1-7b88-40cb-8898-ee725ac35916" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(4.5 : 20.0304996744792); (4.5 : 22.9094962565104); (4.94791916666667 : 22.9094962565104 : JumpStart); (5.11458583333333 : 22.9094962565104 : JumpEnd); (9.25 : 22.9094962565104)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(4.5 : 20.0304996744792); (4.5 : 22.9094962565104); (8.79166666666667 : 22.9094962565104 : JumpStart); (8.95833333333333 : 22.9094962565104 : JumpEnd); (9.25 : 22.9094962565104)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/RIS_DB/aspnet_User/aspnet_User_UserParticular" />
       <nodes>
         <classShapeMoniker Id="fc9466a2-3cdd-4c3f-9680-eb742e770e91" />
@@ -255,18 +249,11 @@
         <classShapeMoniker Id="c6913ecc-f369-431c-bb58-fe1296a3cb57" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(11.25 : 7.84699625651042); (12.3854141666667 : 7.84699625651042 : JumpStart); (12.5520808333333 : 7.84699625651042 : JumpEnd); (13 : 7.84699625651042); (13 : 14.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(11.25 : 7.84699625651042); (13 : 7.84699625651042); (13 : 14.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/RIS_DB/DicomImage/DicomImage_Image" />
       <nodes>
         <classShapeMoniker Id="39966d25-7bee-46bb-9cb1-05ffab69e06f" />
         <classShapeMoniker Id="1f213f5d-2a38-4244-94b4-2d7b7bfc397b" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(14 : 14.9431469726562); (14.75 : 14.9431469726562)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/RIS_DB/Image/Image_Note" />
-      <nodes>
-        <classShapeMoniker Id="1f213f5d-2a38-4244-94b4-2d7b7bfc397b" />
-        <classShapeMoniker Id="97015f03-6428-4f09-84ad-19ba3caf9a02" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(11.2276060208834 : 19.6362939453125); (11.6026060208834 : 20.0112939453125); (14.2916666666667 : 20.0112939453125 : JumpStart); (14.4583333333333 : 20.0112939453125 : JumpEnd); (15.75 : 20.0112939453125); (15.75 : 20.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
@@ -276,7 +263,7 @@
         <classShapeMoniker Id="3f8a85db-3ffb-4152-b957-790897d52c2b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 18.82812525); (5.97916666666667 : 18.82812525 : JumpStart); (6.14583333333333 : 18.82812525 : JumpEnd); (8.32291666666667 : 18.82812525 : JumpStart); (8.48958333333333 : 18.82812525 : JumpEnd); (9.25 : 18.82812525)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.5 : 18.82812525); (9.25 : 18.82812525)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/RIS_DB/aspnet_User/aspnet_User_Patient" />
       <nodes>
         <classShapeMoniker Id="fc9466a2-3cdd-4c3f-9680-eb742e770e91" />
@@ -311,7 +298,7 @@
         <classShapeMoniker Id="1f213f5d-2a38-4244-94b4-2d7b7bfc397b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(14.75 : 17.5); (14.375 : 17.125); (14.375 : 14.9142976888021); (14 : 14.9142976888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(15.75 : 17.5); (15.75 : 14.9142976888021); (14 : 14.9142976888021)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/RIS_DB/Series/Series_Image" />
       <nodes>
         <classShapeMoniker Id="3a0881e6-f065-4b1f-b1c2-3025b99898b4" />
@@ -332,7 +319,7 @@
         <classShapeMoniker Id="1f213f5d-2a38-4244-94b4-2d7b7bfc397b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 18.17187525); (5.97916666666667 : 18.17187525 : JumpStart); (6.14583333333333 : 18.17187525 : JumpEnd); (8.75 : 18.17187525); (8.75 : 18); (10.25 : 18); (10.25 : 16.7035953776042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(5.5 : 18.17187525); (8.75 : 18.17187525); (8.75 : 18); (10.25 : 18); (10.25 : 16.7035953776042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/RIS_DB/aspnet_User/aspnet_User_Staff" />
       <nodes>
         <classShapeMoniker Id="fc9466a2-3cdd-4c3f-9680-eb742e770e91" />

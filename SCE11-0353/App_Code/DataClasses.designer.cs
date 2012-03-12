@@ -88,9 +88,6 @@ public partial class RIS_DB : System.Data.Linq.DataContext
   partial void InsertModality(Modality instance);
   partial void UpdateModality(Modality instance);
   partial void DeleteModality(Modality instance);
-  partial void InsertNote(Note instance);
-  partial void UpdateNote(Note instance);
-  partial void DeleteNote(Note instance);
   partial void InsertPatient(Patient instance);
   partial void UpdatePatient(Patient instance);
   partial void DeletePatient(Patient instance);
@@ -298,14 +295,6 @@ public partial class RIS_DB : System.Data.Linq.DataContext
 		get
 		{
 			return this.GetTable<Modality>();
-		}
-	}
-	
-	public System.Data.Linq.Table<Note> Notes
-	{
-		get
-		{
-			return this.GetTable<Note>();
 		}
 	}
 	
@@ -4679,8 +4668,6 @@ public partial class Image : INotifyPropertyChanging, INotifyPropertyChanged
 	
 	private System.Guid _DicomUID;
 	
-	private EntitySet<Note> _Notes;
-	
 	private EntityRef<DicomImage> _DicomImage;
 	
 	private EntityRef<PngImage> _PngImage;
@@ -4705,7 +4692,6 @@ public partial class Image : INotifyPropertyChanging, INotifyPropertyChanged
 	
 	public Image()
 	{
-		this._Notes = new EntitySet<Note>(new Action<Note>(this.attach_Notes), new Action<Note>(this.detach_Notes));
 		this._DicomImage = default(EntityRef<DicomImage>);
 		this._PngImage = default(EntityRef<PngImage>);
 		this._Series = default(EntityRef<Series>);
@@ -4806,19 +4792,6 @@ public partial class Image : INotifyPropertyChanging, INotifyPropertyChanged
 				this.SendPropertyChanged("DicomUID");
 				this.OnDicomUIDChanged();
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Image_Note", Storage="_Notes", ThisKey="ImageId", OtherKey="ImageId")]
-	public EntitySet<Note> Notes
-	{
-		get
-		{
-			return this._Notes;
-		}
-		set
-		{
-			this._Notes.Assign(value);
 		}
 	}
 	
@@ -4977,18 +4950,6 @@ public partial class Image : INotifyPropertyChanging, INotifyPropertyChanged
 			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
-	
-	private void attach_Notes(Note entity)
-	{
-		this.SendPropertyChanging();
-		entity.Image = this;
-	}
-	
-	private void detach_Notes(Note entity)
-	{
-		this.SendPropertyChanging();
-		entity.Image = null;
-	}
 }
 
 [global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Modalities")]
@@ -5102,157 +5063,6 @@ public partial class Modality : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		this.SendPropertyChanging();
 		entity.Modality = null;
-	}
-}
-
-[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Notes")]
-public partial class Note : INotifyPropertyChanging, INotifyPropertyChanged
-{
-	
-	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-	
-	private int _NoteId;
-	
-	private string _Description;
-	
-	private int _ImageId;
-	
-	private EntityRef<Image> _Image;
-	
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnNoteIdChanging(int value);
-    partial void OnNoteIdChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    partial void OnImageIdChanging(int value);
-    partial void OnImageIdChanged();
-    #endregion
-	
-	public Note()
-	{
-		this._Image = default(EntityRef<Image>);
-		OnCreated();
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NoteId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-	public int NoteId
-	{
-		get
-		{
-			return this._NoteId;
-		}
-		set
-		{
-			if ((this._NoteId != value))
-			{
-				this.OnNoteIdChanging(value);
-				this.SendPropertyChanging();
-				this._NoteId = value;
-				this.SendPropertyChanged("NoteId");
-				this.OnNoteIdChanged();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-	public string Description
-	{
-		get
-		{
-			return this._Description;
-		}
-		set
-		{
-			if ((this._Description != value))
-			{
-				this.OnDescriptionChanging(value);
-				this.SendPropertyChanging();
-				this._Description = value;
-				this.SendPropertyChanged("Description");
-				this.OnDescriptionChanged();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageId", DbType="Int NOT NULL")]
-	public int ImageId
-	{
-		get
-		{
-			return this._ImageId;
-		}
-		set
-		{
-			if ((this._ImageId != value))
-			{
-				if (this._Image.HasLoadedOrAssignedValue)
-				{
-					throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-				}
-				this.OnImageIdChanging(value);
-				this.SendPropertyChanging();
-				this._ImageId = value;
-				this.SendPropertyChanged("ImageId");
-				this.OnImageIdChanged();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Image_Note", Storage="_Image", ThisKey="ImageId", OtherKey="ImageId", IsForeignKey=true)]
-	public Image Image
-	{
-		get
-		{
-			return this._Image.Entity;
-		}
-		set
-		{
-			Image previousValue = this._Image.Entity;
-			if (((previousValue != value) 
-						|| (this._Image.HasLoadedOrAssignedValue == false)))
-			{
-				this.SendPropertyChanging();
-				if ((previousValue != null))
-				{
-					this._Image.Entity = null;
-					previousValue.Notes.Remove(this);
-				}
-				this._Image.Entity = value;
-				if ((value != null))
-				{
-					value.Notes.Add(this);
-					this._ImageId = value.ImageId;
-				}
-				else
-				{
-					this._ImageId = default(int);
-				}
-				this.SendPropertyChanged("Image");
-			}
-		}
-	}
-	
-	public event PropertyChangingEventHandler PropertyChanging;
-	
-	public event PropertyChangedEventHandler PropertyChanged;
-	
-	protected virtual void SendPropertyChanging()
-	{
-		if ((this.PropertyChanging != null))
-		{
-			this.PropertyChanging(this, emptyChangingEventArgs);
-		}
-	}
-	
-	protected virtual void SendPropertyChanged(String propertyName)
-	{
-		if ((this.PropertyChanged != null))
-		{
-			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-		}
 	}
 }
 

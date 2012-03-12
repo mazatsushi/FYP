@@ -28,25 +28,38 @@ public class DatabaseHandler
             using (var db = new RIS_DB())
             {
                 // Save DICOM
-                var binData = File.ReadAllBytes(WorkDirectory + fileNameOnly + DicomExtension);
-                var dicomFile = new DicomImage
-                                {
-                                    Image = new Binary(binData)
-                                };
-                db.DicomImages.InsertOnSubmit(dicomFile);
-                var dicomUid = dicomFile.DicomUID;
-                // Save PNGs
-                var files = new DirectoryInfo(WorkDirectory).GetFiles("*.png");
+                //var binData = File.ReadAllBytes(WorkDirectory + fileNameOnly + DicomExtension);
+                //var dicomFile = new DicomImage
+                //                {
+                //                    Image = new Binary(binData)
+                //                };
+                //db.DicomImages.InsertOnSubmit(dicomFile);
+                //var dicomUid = dicomFile.DicomUID;
+                //// Save PNGs
+                //var files = new DirectoryInfo(WorkDirectory).GetFiles("*.png");
+                //foreach (var fileInfo in files)
+                //{
+                //    var binData2 = File.ReadAllBytes(fileInfo.FullName);
+                //    var pngFile = new PngImage
+                //                      {
+                //                          Image = new Binary(binData2)
+                //                      };
+                //    db.PngImages.InsertOnSubmit(pngFile);
+                //}
+                //db.SubmitChanges();
+
+                // Delete DICOM
+                var files = new DirectoryInfo(WorkDirectory).GetFiles("*.dcm");
                 foreach (var fileInfo in files)
                 {
-                    var binData2 = File.ReadAllBytes(fileInfo.FullName);
-                    var pngFile = new PngImage
-                                      {
-                                          Image = new Binary(binData2)
-                                      };
-                    db.PngImages.InsertOnSubmit(pngFile);
+                    fileInfo.Delete();
                 }
-                db.SubmitChanges();
+                // Delete PNGs
+                files = new DirectoryInfo(WorkDirectory).GetFiles("*.png");
+                foreach (var fileInfo in files)
+                {
+                    fileInfo.Delete();
+                }
                 success = true;
             }
         }
