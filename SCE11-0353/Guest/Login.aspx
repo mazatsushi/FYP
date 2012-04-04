@@ -21,7 +21,7 @@
         <LayoutTemplate>
             <div class="failureNotification">
                 <asp:Literal ID="FailureText" runat="server" />
-                <asp:ValidationSummary ID="LoginUserValidationSummary" runat="server" ValidationGroup="LoginUserValidationGroup" />
+                <asp:ValidationSummary runat="server" ValidationGroup="ValidationGroup" />
             </div>
             <div class="accountInfo">
                 <fieldset class="login">
@@ -31,7 +31,7 @@
                         <asp:TextBox CssClass="textEntry" ID="UserName" runat="server" />
                         <asp:RequiredFieldValidator ControlToValidate="UserName" CssClass="failureNotification"
                             ErrorMessage="Username is required." runat="server" ToolTip="Username is required."
-                            ValidationGroup="LoginUserValidationGroup">
+                            ValidationGroup="ValidationGroup">
                             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> Username is required.
                         </asp:RequiredFieldValidator>
                     </div>
@@ -40,7 +40,7 @@
                         <asp:TextBox CssClass="passwordEntry" ID="Password" runat="server" TextMode="Password" />
                         <asp:RequiredFieldValidator ControlToValidate="Password" CssClass="failureNotification"
                             ErrorMessage="Password is required." runat="server" ToolTip="Password is required."
-                            ValidationGroup="LoginUserValidationGroup">
+                            ValidationGroup="ValidationGroup">
                             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> Password is required.
                         </asp:RequiredFieldValidator>
                     </div>
@@ -50,7 +50,7 @@
                             runat="server">Keep me logged in</asp:Label>
                     </div>
                     <div class="submitButton, topPadding" runat="server">
-                        <asp:Button CommandName="Login" CssClass="buttons" runat="server" Text="Log In" ValidationGroup="LoginUserValidationGroup" />
+                        <asp:Button CommandName="Login" CssClass="buttons" runat="server" Text="Log In" ValidationGroup="ValidationGroup" />
                     </div>
                 </fieldset>
                 <div>
