@@ -12,6 +12,18 @@ public partial class Admin_UpdateUser : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!IsPostBack)
+        {
+            var nric = Request.QueryString["Nric"];
+            if (String.IsNullOrWhiteSpace(nric))
+            {
+                Server.Transfer("~/Common/SearchByNric.aspx?ReturnUrl=" + Request.Url);
+            }
+        }
+        else
+        {
+            ;
+        }
     }
 
     /// <summary>

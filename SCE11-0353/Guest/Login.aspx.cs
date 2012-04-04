@@ -27,6 +27,9 @@ public partial class Account_Login : System.Web.UI.Page
     /// <param name="e">Event parameters</param>
     protected void OnLoggedIn(object sender, EventArgs e)
     {
+        var url = Request.QueryString["ReturnUrl"];
+        if (!String.IsNullOrWhiteSpace(url))
+            Response.Redirect(ResolveUrl(url));
         TransferToHome(LoginUser.UserName);
     }
 
