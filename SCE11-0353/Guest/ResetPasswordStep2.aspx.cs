@@ -51,6 +51,6 @@ public partial class Guest_ResetPasswordStep2 : System.Web.UI.Page
         // Send an email containing the new password to user's inbox
         MailHandler.SendNewPassword(userEmail, newPassword);
 
-        Server.Transfer("~/Guest/ResetPasswordSuccess.aspx");
+        Response.Redirect("~/Guest/ResetPasswordSuccess.aspx");
     }
 }

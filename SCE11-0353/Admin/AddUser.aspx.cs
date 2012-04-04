@@ -362,6 +362,6 @@ public partial class Admin_AddUser : System.Web.UI.Page
 
         // Send an email containing the password to user's inbox
         MailHandler.SendNewPassword(email, password);
-        Server.Transfer("~/Admin/AddUserSuccess.aspx");
+        Response.Redirect("~/Admin/AddUserSuccess.aspx");
     }
 }

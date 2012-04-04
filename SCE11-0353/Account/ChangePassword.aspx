@@ -37,7 +37,8 @@
                                 <asp:RequiredFieldValidator ControlToValidate="CurrentPassword" CssClass="failureNotification"
                                     ErrorMessage="Current password is required." runat="server" ToolTip="Current Password is required."
                                     ValidationGroup="ValidationGroup">
-                            <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> Current password is required.
+                                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                                    Current password is required.
                                 </asp:RequiredFieldValidator>
                             </div>
                             <%-- / Current Password --%>
@@ -48,7 +49,8 @@
                                 <asp:RequiredFieldValidator ControlToValidate="NewPassword" CssClass="failureNotification"
                                     ErrorMessage="New password is required." runat="server" ToolTip="New password is required."
                                     ValidationGroup="ValidationGroup">
-                            <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> New password is required.
+                                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                                    New password is required.
                                 </asp:RequiredFieldValidator>
                                 <ajaxToolkit:PasswordStrength BarBorderCssClass="BarBorder" BarIndicatorCssClass="BarIndicator"
                                     DisplayPosition="RightSide" Enabled="True" HelpStatusLabelID="PasswordStrengthLabel"
@@ -65,13 +67,14 @@
                                 <asp:RequiredFieldValidator ControlToValidate="ConfirmNewPassword" CssClass="failureNotification"
                                     Display="Dynamic" ErrorMessage="Please enter new password again." runat="server"
                                     ToolTip="Please enter new password again." ValidationGroup="ValidationGroup">
-                            <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
-                            Please enter new password again.
+                                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                                    Please enter new password again.
                                 </asp:RequiredFieldValidator>
                                 <asp:CompareValidator ControlToCompare="NewPassword" ControlToValidate="ConfirmNewPassword"
                                     CssClass="failureNotification" Display="Dynamic" ErrorMessage="Both new passwords must match."
                                     runat="server" ValidationGroup="ValidationGroup">
-                            <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> Both new passwords must match.
+                                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                                    Both new passwords must match.
                                 </asp:CompareValidator>
                             </div>
                             <%-- / Confirm New Password --%>

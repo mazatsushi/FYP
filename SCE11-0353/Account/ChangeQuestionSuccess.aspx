@@ -7,7 +7,7 @@
         Change Security Question & Answer
     </h2>
     <h3>
-        Your security questio and answer has been changed successfully.
+        Your security question and answer has been changed successfully.
     </h3>
 </asp:Content>
 

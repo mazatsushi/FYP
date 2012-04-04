@@ -8,7 +8,7 @@ public partial class Account_ChangeQuestion : System.Web.UI.Page
 {
     private string _username;
     private const string RedirectToLogin = "~/Guest.Login.aspx";
-    private const string RedirectToSuccess = "~/Account/ChangeQuestionSuccess";
+    private const string RedirectToSuccess = "~/Account/ChangeQuestionSuccess.aspx";
 
     /// <summary>
     /// Page load event
@@ -66,6 +66,6 @@ public partial class Account_ChangeQuestion : System.Web.UI.Page
         if (!DatabaseHandler.ChangeQuestionAndAnswer(_username, password, question, answer))
             return;
 
-        Server.Transfer(RedirectToSuccess);
+        Response.Redirect(RedirectToSuccess);
     }
 }

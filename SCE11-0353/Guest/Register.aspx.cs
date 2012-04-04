@@ -165,7 +165,7 @@ public partial class Account_Register : System.Web.UI.Page
             return;
         }
         
-        Server.Transfer("~/Guest/AccountCreated.aspx");
+        Response.Redirect("~/Guest/AccountCreated.aspx");
     }
 
     /// <summary>

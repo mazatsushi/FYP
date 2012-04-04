@@ -10,11 +10,6 @@ public partial class Admin_UpdateUser : System.Web.UI.Page
 {
     private const string RedirectUrl = "~/Admin/UpdateUserStep2.aspx";
 
-    /// <summary>
-    /// Page load event
-    /// </summary>
-    /// <param name="sender">The web element that triggered the event</param>
-    /// <param name="e">Event parameters</param>
     protected void Page_Load(object sender, EventArgs e)
     {
     }
@@ -40,6 +35,6 @@ public partial class Admin_UpdateUser : System.Web.UI.Page
             return;
 
         var username = HttpUtility.HtmlEncode(UserName.Text.Trim());
-        Server.Transfer(RedirectUrl + "?Username=" + username);
+        Response.Redirect(RedirectUrl + "?Username=" + username);
     }
 }

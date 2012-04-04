@@ -21,6 +21,6 @@ public partial class Account_ResetPassword : System.Web.UI.Page
             return;
 
         var username = HttpUtility.HtmlEncode(UserName.Text.Trim());
-        Server.Transfer(RedirectUrl + "?Username=" + username);
+        Response.Redirect(RedirectUrl + "?Username=" + username);
     }
 }

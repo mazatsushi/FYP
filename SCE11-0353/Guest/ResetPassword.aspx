@@ -5,16 +5,16 @@
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
 <asp:Content ContentPlaceHolderID="MainContent" runat="Server">
-    <h2>
-        Reset Password
-    </h2>
-    <%-- Error Notifications --%>
-    <div>
-        <asp:ValidationSummary CssClass="failureNotification" runat="server" ValidationGroup="ValidationGroup" />
-    </div>
-    <%-- / Error Notifications --%>
-    <asp:UpdatePanel runat="server">
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>
+            <h2>
+                Reset Password
+            </h2>
+            <%-- Error Notifications --%>
+            <div>
+                <asp:ValidationSummary CssClass="failureNotification" runat="server" ValidationGroup="ValidationGroup" />
+            </div>
+            <%-- / Error Notifications --%>
             <h3>
                 Please provide your username
             </h3>

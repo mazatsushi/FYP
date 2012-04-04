@@ -229,7 +229,7 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
             return;
         }
 
-        Server.Transfer(RedirectUrl);
+        Response.Redirect(RedirectUrl);
     }
 
     /// <summary>
