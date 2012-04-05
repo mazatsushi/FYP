@@ -1,3 +1,4 @@
+use [RIS_DB]
 insert into [Countries] (CountryName)
 values
 ('Afghanistan'),
