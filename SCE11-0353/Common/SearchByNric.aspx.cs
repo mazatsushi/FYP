@@ -13,4 +13,12 @@ public partial class Common_SearchByNric : System.Web.UI.Page
     {
         args.IsValid = DatabaseHandler.NricExists(HttpUtility.HtmlEncode(Nric.Text.Trim().ToUpperInvariant()));
     }
+
+    protected void SearchButton_Click(object sender, EventArgs e)
+    {
+        if (!IsValid)
+            return;
+        
+        Response.Redirect("~/Common/NricFound.aspx");
+    }
 }

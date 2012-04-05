@@ -583,6 +583,24 @@ public class DatabaseHandler
         return guid;
     }
 
+    public static void GetPatientDetails(string nric)
+    {
+        using (var db = new RIS_DB())
+        {
+            var details = from u in db.UserParticulars
+                              where u.NRIC.Equals(nric.ToUpperInvariant())
+                              select new
+                                         {
+                                             u.NRIC,
+                                             u.Prefix,
+                                             u.FirstName,
+                                             u.LastName,
+                                             u.Gender,
+                                             u.DateOfBirth
+                                         };
+        }
+    }
+
     /// <summary>
     /// Gets user's patient id given their guid
     /// </summary>
