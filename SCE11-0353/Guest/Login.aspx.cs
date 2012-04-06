@@ -7,21 +7,7 @@ using System;
 public partial class Account_Login : System.Web.UI.Page
 {
     /// <summary>
-    /// Page load event
-    /// </summary>
-    /// <param name="sender">The web element that triggered the event</param>
-    /// <param name="e">Event parameters</param>
-    protected void Page_Load(object sender, EventArgs e)
-    {
-        // Reject if the user is already authenticated
-        if (User.Identity.IsAuthenticated)
-        {
-            TransferToHome(User.Identity.Name);
-        }
-    }
-
-    /// <summary>
-    /// Event that triggers when the user is successfully logged in.
+    /// Event that triggers when the user is successfully logged in
     /// </summary>
     /// <param name="sender">The web element that triggered the event</param>
     /// <param name="e">Event parameters</param>
@@ -34,7 +20,19 @@ public partial class Account_Login : System.Web.UI.Page
     }
 
     /// <summary>
-    /// Method that redirects the user to their role's home page
+    /// Page load event
+    /// </summary>
+    /// <param name="sender">The web element that triggered the event</param>
+    /// <param name="e">Event parameters</param>
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        // Reject if the user is already authenticated
+        if (User.Identity.IsAuthenticated)
+            TransferToHome(User.Identity.Name);
+    }
+
+    /// <summary>
+    /// Redirects the user to their role's home page
     /// </summary>
     /// <param name="username">The user name</param>
     private void TransferToHome(string username)
@@ -52,9 +50,6 @@ public partial class Account_Login : System.Web.UI.Page
                 break;
             case 3:
                 Response.Redirect("~/Radiologist/Default.aspx");
-                break;
-            case 4:
-                Response.Redirect("~/Staff/Default.aspx");
                 break;
         }
     }

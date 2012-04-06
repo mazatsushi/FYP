@@ -25,7 +25,6 @@
           <EntitySet Name="Series" EntityType="RIS_DB_Model.Store.Series" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Staff" EntityType="RIS_DB_Model.Store.Staff" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Studies" EntityType="RIS_DB_Model.Store.Studies" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="sysdiagrams" EntityType="RIS_DB_Model.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserParticulars" EntityType="RIS_DB_Model.Store.UserParticulars" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK__aspnet_Me__Appli__21B6055D" Association="RIS_DB_Model.Store.FK__aspnet_Me__Appli__21B6055D">
             <End Role="aspnet_Applications" EntitySet="aspnet_Applications" />
@@ -291,16 +290,6 @@
           <Property Name="DateCompleted" Type="datetime2" />
           <Property Name="Diagnosis" Type="nvarchar(max)" />
           <Property Name="ReferredBy" Type="uniqueidentifier" Nullable="false" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="UserParticulars">
           <Key>
@@ -845,7 +834,6 @@
           <EntitySet Name="Series" EntityType="RIS_DB_Model.Series" />
           <EntitySet Name="Staffs" EntityType="RIS_DB_Model.Staff" />
           <EntitySet Name="Studies" EntityType="RIS_DB_Model.Study" />
-          <EntitySet Name="sysdiagrams" EntityType="RIS_DB_Model.sysdiagram" />
           <EntitySet Name="UserParticulars" EntityType="RIS_DB_Model.UserParticular" />
           <AssociationSet Name="FK_Appointments_Patients" Association="RIS_DB_Model.FK_Appointments_Patients">
             <End Role="Patients" EntitySet="Patients" />
@@ -1125,16 +1113,6 @@
           <NavigationProperty Name="Appointments" Relationship="RIS_DB_Model.FK_Appointments_Studies" FromRole="Studies" ToRole="Appointments" />
           <NavigationProperty Name="Series" Relationship="RIS_DB_Model.FK_Series_Studies" FromRole="Studies" ToRole="Series" />
           <NavigationProperty Name="Staff" Relationship="RIS_DB_Model.FK_Studies_Staff" FromRole="Studies" ToRole="Staff" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="UserParticular">
           <Key>
@@ -1497,13 +1475,6 @@
             <ScalarProperty Name="Diagnosis" ColumnName="Diagnosis" />
             <ScalarProperty Name="ReferredBy" ColumnName="ReferredBy" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams"><EntityTypeMapping TypeName="RIS_DB_Model.sysdiagram"><MappingFragment StoreEntitySet="sysdiagrams">
-            <ScalarProperty Name="name" ColumnName="name" />
-            <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-            <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-            <ScalarProperty Name="version" ColumnName="version" />
-            <ScalarProperty Name="definition" ColumnName="definition" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="UserParticulars"><EntityTypeMapping TypeName="RIS_DB_Model.UserParticular"><MappingFragment StoreEntitySet="UserParticulars">
             <ScalarProperty Name="UserId" ColumnName="UserId" />
             <ScalarProperty Name="NRIC" ColumnName="NRIC" />
@@ -1574,7 +1545,6 @@
         <EntityTypeShape EntityType="RIS_DB_Model.Series" Width="1.5" PointX="15" PointY="10.625" Height="2.1725878906250031" IsExpanded="true" />
         <EntityTypeShape EntityType="RIS_DB_Model.Staff" Width="1.5" PointX="10.5" PointY="7.625" Height="2.1725878906250031" IsExpanded="true" />
         <EntityTypeShape EntityType="RIS_DB_Model.Study" Width="1.5" PointX="12.75" PointY="10.125" Height="2.9417936197916674" IsExpanded="true" />
-        <EntityTypeShape EntityType="RIS_DB_Model.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" Height="1.9802864583333388" IsExpanded="true" />
         <EntityTypeShape EntityType="RIS_DB_Model.UserParticular" Width="1.5" PointX="10.5" PointY="13.625" Height="4.0956022135416674" IsExpanded="true" />
         <AssociationConnector Association="RIS_DB_Model.FK_Appointments_Patients" ManuallyRouted="false">
           <ConnectorPoint PointX="12" PointY="11.711293945312502" />

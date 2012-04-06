@@ -6,26 +6,6 @@ using System.Web;
 /// </summary>
 public partial class Account_ChangeQuestion : System.Web.UI.Page
 {
-    private string _username;
-    private const string RedirectToLogin = "~/Guest.Login.aspx";
-    private const string RedirectToSuccess = "~/Account/ChangeQuestionSuccess.aspx";
-
-    /// <summary>
-    /// Page load event
-    /// </summary>
-    /// <param name="sender">The web element that triggered the event</param>
-    /// <param name="e">Event parameters</param>
-    protected void Page_Load(object sender, EventArgs e)
-    {
-        _username = User.Identity.Name;
-        var question = DatabaseHandler.GetQuestion(User.Identity.Name);
-
-        if (!String.IsNullOrEmpty(question))
-            Question.Text = question;
-        else
-            Server.Transfer(RedirectToLogin);
-    }
-
     /// <summary>
     /// Event handler for when the Cancel button in this page is clicked
     /// </summary>
@@ -39,19 +19,30 @@ public partial class Account_ChangeQuestion : System.Web.UI.Page
                 Response.Redirect("~/Admin/Default.aspx");
                 break;
             case 1:
-                Response.Redirect("~/Physician/Default.aspx");
+                Response.Redirect("~/Patient/Default.aspx");
                 break;
             case 2:
-                Response.Redirect("~/Radiologist/Default.aspx");
+                Response.Redirect("~/Physician/Default.aspx");
                 break;
             case 3:
-                Response.Redirect("~/Staff/Default.aspx");
-                break;
-            case 4:
-                Response.Redirect("~/Patient/Default.aspx");
+                Response.Redirect("~/Radiologist/Default.aspx");
                 break;
         }
     }
+
+    /// <summary>
+    /// Page load event
+    /// </summary>
+    /// <param name="sender">The web element that triggered the event</param>
+    /// <param name="e">Event parameters</param>
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (IsPostBack)
+            return;
+
+        Question.Text = HttpUtility.HtmlDecode(DatabaseHandler.GetQuestion(User.Identity.Name));
+    }
+    
     /// <summary>
     /// Event handler for when the update button in this page is clicked
     /// </summary>
@@ -63,9 +54,9 @@ public partial class Account_ChangeQuestion : System.Web.UI.Page
         var question = HttpUtility.HtmlEncode(Question.Text.Trim());
         var answer = HttpUtility.HtmlEncode(Answer.Text.Trim().ToLowerInvariant());
 
-        if (!DatabaseHandler.ChangeQuestionAndAnswer(_username, password, question, answer))
+        if (!DatabaseHandler.ChangeQuestionAndAnswer(User.Identity.Name, password, question, answer))
             return;
 
-        Response.Redirect(RedirectToSuccess);
+        Response.Redirect("~/Account/ChangeQuestionSuccess.aspx");
     }
 }

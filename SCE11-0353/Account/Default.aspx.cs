@@ -1,5 +1,9 @@
 ﻿using System;
 
+/// <summary>
+/// Code behind for the ~/Account/Default.aspx page
+/// </summary>
+
 public partial class Account_Default : System.Web.UI.Page
 {
     /// <summary>

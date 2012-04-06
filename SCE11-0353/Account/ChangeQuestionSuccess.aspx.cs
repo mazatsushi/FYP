@@ -1,7 +1,7 @@
 ﻿using System;
 
 /// <summary>
-/// Code behind for the ~/Account/ChangePassword.aspx page
+/// Code behind for the ~/Account/ChangePasswordSuccess.aspx page
 /// </summary>
 
 public partial class Account_ChangeQuestionSuccess : System.Web.UI.Page

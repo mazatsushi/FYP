@@ -80,10 +80,10 @@
                             <%-- / Confirm New Password --%>
                         </fieldset>
                         <div class="submitButton">
-                            <asp:Button CommandName="ChangePassword" CssClass="buttons" ID="ChangePasswordPushButton"
+                            <asp:Button CommandName="ChangePassword" CssClass="buttons" ID="ChangePasswordButton"
                                 runat="server" Text="Change Password" ValidationGroup="ValidationGroup" />
-                            <asp:Button CausesValidation="False" CommandName="Cancel" CssClass="buttons" ID="CancelPushButton"
-                                OnClick="CancelPushButton_Click" runat="server" Text="Cancel" />
+                            <asp:Button CausesValidation="False" CommandName="Cancel" CssClass="buttons" OnClick="CancelButton_Click"
+                                runat="server" Text="Cancel" />
                         </div>
                     </div>
                 </ChangePasswordTemplate>

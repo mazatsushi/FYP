@@ -9,8 +9,6 @@ using System.Web.UI.WebControls;
 /// </summary>
 public partial class Account_UpdateParticulars : System.Web.UI.Page
 {
-    private const string RedirectUrl = "~/Account/UpdateParticularsSuccess.aspx";
-
     /// <summary>
     /// Page load event
     /// </summary>
@@ -43,7 +41,7 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
     }
 
     /// <summary>
-    /// Server side validation to check whether first name no numeric characters
+    /// Checks whether first name no numeric characters
     /// </summary>
     /// <param name="source">The web element that triggered the event</param>
     /// <param name="args">Event parameters</param>
@@ -58,7 +56,7 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
     }
 
     /// <summary>
-    /// Server side validation to check whether middle name has no numeric characters
+    /// Checks whether middle name has no numeric characters
     /// </summary>
     /// <param name="source">The web element that triggered the event</param>
     /// <param name="args">Event parameters</param>
@@ -78,7 +76,7 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
     }
 
     /// <summary>
-    /// Server side validation to check whether last name has no numeric characters
+    /// Checks whether last name has no numeric characters
     /// </summary>
     /// <param name="source">The web element that triggered the event</param>
     /// <param name="args">Event parameters</param>
@@ -93,7 +91,7 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
     }
 
     /// <summary>
-    /// Server side validation to check whether prefix is within acceptable values
+    /// Checks whether prefix is within acceptable values
     /// </summary>
     /// <param name="source">The web element that triggered the event</param>
     /// <param name="args">Event parameters</param>
@@ -128,7 +126,7 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
     }
 
     /// <summary>
-    /// Server side validation to check whether suffix is within acceptable values
+    /// Checks whether suffix is within acceptable values
     /// </summary>
     /// <param name="source">The web element that triggered the event</param>
     /// <param name="args">Event parameters</param>
@@ -158,7 +156,7 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
     }
 
     /// <summary>
-    /// Method to check whether nationality is valid
+    /// Checks whether nationality is valid
     /// </summary>
     /// <param name="source">The web element that triggered the event</param>
     /// <param name="args">Event parameters</param>
@@ -193,7 +191,7 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
         var user = DatabaseHandler.GetUser(User.Identity.Name);
 
         // Fetch account information and update
-        var email = Email.Text.Trim().ToLowerInvariant();
+        var email = HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant());
         if (String.IsNullOrEmpty(email))
             return;
 
@@ -206,20 +204,20 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
             return;
         }
 
-        var firstName = FirstName.Text.Trim();
+        var firstName = HttpUtility.HtmlEncode(FirstName.Text.Trim());
         string middleName = null;
         if (!String.IsNullOrEmpty(MiddleName.Text))
-            middleName = MiddleName.Text.Trim();
-        var lastName = LastName.Text.Trim();
-        var namePrefix = Prefix.Text.Trim();
+            middleName = HttpUtility.HtmlEncode(MiddleName.Text.Trim());
+        var lastName = HttpUtility.HtmlEncode(LastName.Text.Trim());
+        var namePrefix = HttpUtility.HtmlEncode(Prefix.Text.Trim());
         string nameSuffix = null;
         if (!String.IsNullOrEmpty(Suffix.Text))
-            nameSuffix = Suffix.Text.Trim();
-        var address = Address.Text.Trim();
-        var contact = ContactNumber.Text.Trim();
-        var postalCode = PostalCode.Text.Trim();
-        var nationality = Nationality.Text.Trim();
-        var countryId = DatabaseHandler.GetCountryId(Country.Text.Trim());
+            nameSuffix = HttpUtility.HtmlEncode(Suffix.Text.Trim());
+        var address = HttpUtility.HtmlEncode(Address.Text.Trim());
+        var contact = HttpUtility.HtmlEncode(ContactNumber.Text.Trim());
+        var postalCode = HttpUtility.HtmlEncode(PostalCode.Text.Trim());
+        var nationality = HttpUtility.HtmlEncode(Nationality.Text.Trim());
+        var countryId = DatabaseHandler.GetCountryId(HttpUtility.HtmlEncode(Country.Text.Trim()));
 
         if (!DatabaseHandler.UpdateParticulars(user.ProviderUserKey, firstName, middleName, lastName, namePrefix, nameSuffix, address, contact, postalCode, countryId, nationality))
         {
@@ -229,7 +227,7 @@ public partial class Account_UpdateParticulars : System.Web.UI.Page
             return;
         }
 
-        Response.Redirect(RedirectUrl);
+        Response.Redirect("~/Account/UpdateParticularsSuccess.aspx");
     }
 
     /// <summary>

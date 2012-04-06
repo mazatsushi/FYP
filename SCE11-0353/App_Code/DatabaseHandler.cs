@@ -1,19 +1,20 @@
-﻿using System;
+﻿using RIS_DB_Model;
+using System;
 using System.Collections.Generic;
 using System.Configuration.Provider;
-using System.Data.Linq;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web.Security;
 
 /// <summary>
-/// This class handles database queries on behalf of the application.
+/// This class handles database queries on behalf of the entire application.
 /// It is the closest we get to a dedicated data access layer.
 /// </summary>
+
 public class DatabaseHandler
 {
-    private static readonly string[] RolesList = { "Admin", "Patient", "Physician", "Radiologist", "Staff" };
+    private static readonly string[] RolesList = { "Admin", "Patient", "Physician", "Radiologist" };
     private const int PasswordLength = 6;
     private const int NonAlphaNumeric = 1;
     private const string WorkDirectory = @"E:\Temp\Projects\FYP\SCE11-0353\Uploads\";
@@ -22,10 +23,11 @@ public class DatabaseHandler
 
     public static bool SaveImages(string fileNameOnly)
     {
+        // TODO: Finish this method
         var success = false;
         try
         {
-            using (var db = new RIS_DB())
+            using (var db = new RIS_DB_Entities())
             {
                 // Save DICOM
                 //var binData = File.ReadAllBytes(WorkDirectory + fileNameOnly + DicomExtension);
@@ -77,7 +79,7 @@ public class DatabaseHandler
         var added = false;
         try
         {
-            using (var db = new RIS_DB())
+            using (var db = new RIS_DB_Entities())
             {
                 var drug = new DrugAllergy
                                {
@@ -104,7 +106,7 @@ public class DatabaseHandler
         var added = false;
         try
         {
-            using (var db = new RIS_DB())
+            using (var db = new RIS_DB_Entities())
             {
                 var staff = new Staff
                 {
@@ -122,28 +124,7 @@ public class DatabaseHandler
     }
 
     /// <summary>
-    /// Adds a user to a pre-specified role name
-    /// </summary>
-    /// <param name="username">The user name</param>
-    /// <param name="rolename">The role name</param>
-    /// <returns>True if the add was successful. False otherwise.</returns>
-    public static bool AddUserToRole(string username, string rolename)
-    {
-        var addStatus = false;
-        try
-        {
-            Roles.AddUserToRole(username, rolename);
-            addStatus = true;
-        }
-        catch (ArgumentNullException) { }
-        catch (ArgumentException) { }
-        catch (ProviderException) { }
-        return addStatus;
-    }
-
-
-    /// <summary>
-    /// Queries the database to insert user particulars
+    /// Adds user particulars to database
     /// </summary>
     /// <param name="userGuid">The Guid of the user in Membership</param>
     /// <param name="nric">The NRIC</param>
@@ -165,7 +146,7 @@ public class DatabaseHandler
         var addStatus = false;
         try
         {
-            using (var db = new RIS_DB())
+            using (var db = new RIS_DB_Entities())
             {
                 // Insert all data into user particulars table
                 var userParticulars = new UserParticular
@@ -197,6 +178,40 @@ public class DatabaseHandler
     }
 
     /// <summary>
+    /// Adds a user to a role
+    /// </summary>
+    /// <param name="username">The user name</param>
+    /// <param name="rolename">The role name</param>
+    /// <returns>True if the add was successful. False otherwise.</returns>
+    public static bool AddUserToRole(string username, string rolename)
+    {
+        var addStatus = false;
+        try
+        {
+            Roles.AddUserToRole(username, rolename);
+            addStatus = true;
+        }
+        catch (ArgumentNullException) { }
+        catch (ArgumentException) { }
+        catch (ProviderException) { }
+        return addStatus;
+    }
+
+    /// <summary>
+    /// Change an user's password reset question and answer
+    /// </summary>
+    /// <param name="username">The user name</param>
+    /// <param name="password">The password</param>
+    /// <param name="question">The security question</param>
+    /// <param name="answer">The answer to the security question</param>
+    /// <returns></returns>
+    public static bool ChangeQuestionAndAnswer(string username, string password, string question, string answer)
+    {
+        var user = Membership.GetUser(username);
+        return user != null && user.ChangePasswordQuestionAndAnswer(password, question, answer);
+    }
+
+    /// <summary>
     /// Creates a new imaging appointment in the database
     /// </summary>
     /// <param name="time">The date and time of the appointment</param>
@@ -208,7 +223,7 @@ public class DatabaseHandler
         var created = false;
         try
         {
-            using (var db = new RIS_DB())
+            using (var db = new RIS_DB_Entities())
             {
                 var guid = GetGuidFromNric(patientNric);
                 if (!string.IsNullOrEmpty(guid))
@@ -241,7 +256,7 @@ public class DatabaseHandler
         var id = 0;
         try
         {
-            using (var db = new RIS_DB())
+            using (var db = new RIS_DB_Entities())
             {
                 var study = new Study
                                 {
@@ -261,7 +276,7 @@ public class DatabaseHandler
     }
 
     /// <summary>
-    /// Create a new medical record tied to a patient's account
+    /// Creates a new medical record tied to a patient's account
     /// </summary>
     /// <param name="nric">The patient's NRIC</param>
     /// <param name="bloodType">The name of the patient's blood type</param>
@@ -272,7 +287,7 @@ public class DatabaseHandler
         try
         {
             var guid = GetGuidFromNric(nric);
-            using (var db = new RIS_DB())
+            using (var db = new RIS_DB_Entities())
             {
                 var p = new Patient
                             {
@@ -289,7 +304,7 @@ public class DatabaseHandler
     }
 
     /// <summary>
-    /// Create a new series
+    /// Creates a new series
     /// </summary>
     /// <param name="modId">The modality ID</param>
     /// <param name="studyId">The study ID</param>
@@ -299,7 +314,7 @@ public class DatabaseHandler
         var created = 0;
         try
         {
-            using (var db = new RIS_DB())
+            using (var db = new RIS_DB_Entities())
             {
                 var s = new Series
                 {
@@ -316,7 +331,7 @@ public class DatabaseHandler
     }
 
     /// <summary>
-    /// Calls the Membership provider and creates a new user account
+    /// Creates a new user account
     /// </summary>
     /// <param name="username">The user name</param>
     /// <param name="password">The password</param>
@@ -332,28 +347,14 @@ public class DatabaseHandler
     }
 
     /// <summary>
-    /// Calls the Membership API to change a specified user's password reset question and answer
-    /// </summary>
-    /// <param name="username">The user name</param>
-    /// <param name="password">The password</param>
-    /// <param name="question">The security question</param>
-    /// <param name="answer">The answer to the security question</param>
-    /// <returns></returns>
-    public static bool ChangeQuestionAndAnswer(string username, string password, string question, string answer)
-    {
-        var user = Membership.GetUser(username);
-        return user != null && user.ChangePasswordQuestionAndAnswer(password, question, answer);
-    }
-
-    /// <summary>
-    /// Determines whether or not a drug exists in the database
+    /// Checks whether a drug already exists in the database
     /// </summary>
     /// <param name="drugName">The drug name</param>
     /// <returns>True if the drug name is found in the database. False otherwise.</returns>
     public static bool DrugExists(string drugName)
     {
         var found = false;
-        using (var db = new RIS_DB())
+        using (var db = new RIS_DB_Entities())
         {
             var query = (from d in db.DrugAllergies
                          where d.DrugName.Equals(drugName)
@@ -364,10 +365,25 @@ public class DatabaseHandler
         return found;
     }
 
+    /// <summary>
+    /// Checks whether email address is already in use
+    /// </summary>
+    /// <param name="email">The web element that triggered the event</param>
+    /// <returns>True if the email is currently in use. False otherwise.</returns>
+    public static bool EmailInUse(string email)
+    {
+        return (Membership.GetUserNameByEmail(email) != null);
+    }
+
+    /// <summary>
+    /// Checks if a series exists
+    /// </summary>
+    /// <param name="seriesId">The series id</param>
+    /// <returns>True if the series exists. False otherwise</returns>
     public static bool SeriesExists(int seriesId)
     {
         var found = false;
-        using (var db = new RIS_DB())
+        using (var db = new RIS_DB_Entities())
         {
             var query = (from d in db.Series
                          where d.SeriesId == seriesId
@@ -376,16 +392,6 @@ public class DatabaseHandler
                 found = true;
         }
         return found;
-    }
-
-    /// <summary>
-    /// Method to check whether user email already exists
-    /// </summary>
-    /// <param name="email">The web element that triggered the event</param>
-    /// <returns>True if the email is currently in use. False otherwise.</returns>
-    public static bool EmailInUse(string email)
-    {
-        return (Membership.GetUserNameByEmail(email) != null);
     }
 
     /// <summary>
@@ -428,7 +434,7 @@ public class DatabaseHandler
     /// <returns>A string array containing the names of all blood types stored in the database.</returns>
     public static List<string> GetAllBloodTypes()
     {
-        using (var db = new RIS_DB())
+        using (var db = new RIS_DB_Entities())
         {
             return (from b in db.BloodTypes
                     select b.BloodType1).ToList();
@@ -439,12 +445,13 @@ public class DatabaseHandler
     /// Gets a list of all countries
     /// </summary>
     /// <returns>A string array containing the names of all countries stored in the database.</returns>
-    public static List<string> GetAllCountries()
+    public static IQueryable<string> GetAllCountries()
     {
-        using (var db = new RIS_DB())
+        using (var db = new RIS_DB_Entities())
         {
             return (from c in db.Countries
-                    select c.CountryName).ToList();
+                    orderby c.CountryName ascending
+                    select c.CountryName);
         }
     }
 
@@ -454,10 +461,23 @@ public class DatabaseHandler
     /// <returns>A string array containing the names of all departments stored in the database.</returns>
     public static List<string> GetAllDepartments()
     {
-        using (var db = new RIS_DB())
+        using (var db = new RIS_DB_Entities())
         {
             return (from d in db.Departments
                     select d.DepartmentName).ToList();
+        }
+    }
+
+    /// <summary>
+    /// Gets a list of all departments
+    /// </summary>
+    /// <returns>A string array containing the names of all departments stored in the database.</returns>
+    public static List<string> GetAllModalities()
+    {
+        using (var db = new RIS_DB_Entities())
+        {
+            return (from m in db.Modalities
+                    select m.Description).ToList();
         }
     }
 
@@ -471,15 +491,15 @@ public class DatabaseHandler
     }
 
     /// <summary>
-    /// Gets a list of all departments
+    /// Gets the blood type Id given its string value
     /// </summary>
-    /// <returns>A string array containing the names of all departments stored in the database.</returns>
-    public static List<string> GetAllModalities()
+    /// <param name="bloodType">The blood type name</param>
+    /// <returns>A foreign key value of the specified blood type</returns>
+    private static int GetBloodTypeId(string bloodType)
     {
-        using (var db = new RIS_DB())
+        using (var db = new RIS_DB_Entities())
         {
-            return (from m in db.Modalities
-                    select m.Description).ToList();
+            return db.BloodTypes.Single(b => b.BloodType1.Equals(bloodType)).BloodTypeId;
         }
     }
 
@@ -491,29 +511,16 @@ public class DatabaseHandler
     public static int GetCountryId(string countryName)
     {
         int id;
-        using (var db = new RIS_DB())
+        using (var db = new RIS_DB_Entities())
         {
             id = (db.Countries.Single(c => c.CountryName.Equals(countryName)).CountryId);
         }
         return id;
     }
 
-    /// <summary>
-    /// Gets the blood type Id given its string value
-    /// </summary>
-    /// <param name="bloodType">The blood type name</param>
-    /// <returns>A foreign key value of the specified blood type</returns>
-    private static int GetBloodTypeId(string bloodType)
-    {
-        using (var db = new RIS_DB())
-        {
-            return db.BloodTypes.Single(b => b.BloodType1.Equals(bloodType)).BloodTypeId;
-        }
-    }
-
     public static int GetModalityId(string desc)
     {
-        using (var db = new RIS_DB())
+        using (var db = new RIS_DB_Entities())
         {
             return db.Modalities.Single(b => b.Description.Equals(desc)).ModalityId;
         }
@@ -526,7 +533,7 @@ public class DatabaseHandler
     /// <returns>A string containing the country name. Null otherwise.</returns>
     public static string GetCountryName(int id)
     {
-        using (var db = new RIS_DB())
+        using (var db = new RIS_DB_Entities())
         {
             return (db.Countries.Single(c => c.CountryId == id).CountryName);
         }
@@ -539,7 +546,7 @@ public class DatabaseHandler
     /// <returns>A foreign key value of the specified department</returns>
     public static int GetDepartmentId(string department)
     {
-        using (var db = new RIS_DB())
+        using (var db = new RIS_DB_Entities())
         {
             return db.Departments.Single(d => d.DepartmentName.Equals(department)).DepartmentId;
         }
@@ -555,7 +562,7 @@ public class DatabaseHandler
         var guid = string.Empty;
         try
         {
-            using (var db = new RIS_DB())
+            using (var db = new RIS_DB_Entities())
             {
                 guid = (db.UserParticulars.Single(u => u.NRIC.Equals(nric))).UserId.ToString();
             }
@@ -574,7 +581,7 @@ public class DatabaseHandler
         var guid = string.Empty;
         try
         {
-            using (var db = new RIS_DB())
+            using (var db = new RIS_DB_Entities())
             {
                 guid = (db.aspnet_Users.Single(u => u.UserName.Equals(username))).UserId.ToString();
             }
@@ -585,19 +592,19 @@ public class DatabaseHandler
 
     public static void GetPatientDetails(string nric)
     {
-        using (var db = new RIS_DB())
+        using (var db = new RIS_DB_Entities())
         {
             var details = from u in db.UserParticulars
-                              where u.NRIC.Equals(nric.ToUpperInvariant())
-                              select new
-                                         {
-                                             u.NRIC,
-                                             u.Prefix,
-                                             u.FirstName,
-                                             u.LastName,
-                                             u.Gender,
-                                             u.DateOfBirth
-                                         };
+                          where u.NRIC.Equals(nric.ToUpperInvariant())
+                          select new
+                                     {
+                                         u.NRIC,
+                                         u.Prefix,
+                                         u.FirstName,
+                                         u.LastName,
+                                         u.Gender,
+                                         u.DateOfBirth
+                                     };
         }
     }
 
@@ -611,7 +618,7 @@ public class DatabaseHandler
         var temp = -1;
         try
         {
-            using (var db = new RIS_DB())
+            using (var db = new RIS_DB_Entities())
             {
                 temp = (db.Patients.Single(p => p.UserId.Equals(Guid.Parse(guid)))).PatientId;
             }
@@ -631,7 +638,7 @@ public class DatabaseHandler
         var temp = string.Empty;
         try
         {
-            using (var db = new RIS_DB())
+            using (var db = new RIS_DB_Entities())
             {
                 var user = (db.UserParticulars.Single(u => u.NRIC.Equals(nric)));
                 temp = user.FirstName + " " + user.LastName;
@@ -652,7 +659,7 @@ public class DatabaseHandler
         var id = -1;
         try
         {
-            using (var db = new RIS_DB())
+            using (var db = new RIS_DB_Entities())
             {
                 var guid = GetGuidFromUsername(username);
                 if (!String.IsNullOrEmpty(guid))
@@ -668,7 +675,7 @@ public class DatabaseHandler
         try
         {
             var patientId = GetPatientIdFromGuid(GetGuidFromNric(nric));
-            var db = new RIS_DB();
+            var db = new RIS_DB_Entities();
 
             var temp = (from s in db.Studies
                         join a in db.Appointments on s.StudyId equals a.StudyId
@@ -718,7 +725,7 @@ public class DatabaseHandler
     /// <returns>A string containing the username if NRIC exists. Null otherwise</returns>
     public static string GetUserName(string nric)
     {
-        using (var db = new RIS_DB())
+        using (var db = new RIS_DB_Entities())
         {
             var temp = db.UserParticulars.Single(up => up.NRIC.Equals(nric)).UserId;
             return db.aspnet_Users.Single(u => u.UserId.Equals(temp)).UserName;
@@ -734,7 +741,7 @@ public class DatabaseHandler
     {
         try
         {
-            using (var db = new RIS_DB())
+            using (var db = new RIS_DB_Entities())
             {
                 return (db.UserParticulars.Single(u => u.UserId.Equals(Guid.Parse(userGuid))));
             }
@@ -788,7 +795,7 @@ public class DatabaseHandler
     {
         var found = false;
         var guid = GetGuidFromNric(nric);
-        using (var db = new RIS_DB())
+        using (var db = new RIS_DB_Entities())
         {
             var query = (from p in db.Patients
                          where p.UserId.Equals(Guid.Parse(guid))
@@ -811,7 +818,7 @@ public class DatabaseHandler
         {
             var guid = GetGuidFromNric(nric);
             var patientId = GetPatientIdFromGuid(guid);
-            using (var db = new RIS_DB())
+            using (var db = new RIS_DB_Entities())
             {
                 var query = (from s in db.Studies
                              join a in db.Appointments on s.StudyId equals a.StudyId
@@ -834,7 +841,7 @@ public class DatabaseHandler
     public static bool IsInRole(string nric, string role)
     {
         var isInRole = false;
-        using (var db = new RIS_DB())
+        using (var db = new RIS_DB_Entities())
         {
             // Do not perform database joins as they are very intensive
             var userGuid = db.UserParticulars.Single(u => u.NRIC.Equals(nric)).UserId.ToString();
@@ -853,7 +860,7 @@ public class DatabaseHandler
     public static bool NricExists(string nric)
     {
         var exists = false;
-        using (var db = new RIS_DB())
+        using (var db = new RIS_DB_Entities())
         {
             var result = (from user in db.UserParticulars
                           where user.NRIC.Equals(nric)
@@ -919,7 +926,7 @@ public class DatabaseHandler
         var found = false;
         try
         {
-            using (var db = new RIS_DB())
+            using (var db = new RIS_DB_Entities())
             {
                 var query = db.Studies.Single(s => s.StudyId == studyId);
                 found = true;
@@ -958,7 +965,7 @@ public class DatabaseHandler
         var updated = false;
         try
         {
-            using (var db = new RIS_DB())
+            using (var db = new RIS_DB_Entities())
             {
                 var patient = db.Patients.Single(p => p.UserId.Equals(GetGuidFromNric(nric)));
                 patient.BloodTypeId = GetBloodTypeId(bloodType);
@@ -990,7 +997,7 @@ public class DatabaseHandler
         var success = false;
         try
         {
-            using (var db = new RIS_DB())
+            using (var db = new RIS_DB_Entities())
             {
                 var user = db.UserParticulars.Single(u => u.UserId.Equals(Guid.Parse(userGuid.ToString())));
                 user.FirstName = firstName;
