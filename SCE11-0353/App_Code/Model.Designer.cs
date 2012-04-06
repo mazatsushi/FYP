@@ -18,65 +18,62 @@ using System.Runtime.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK_Appointments_Patients", "Patients", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DBModel.Patient), "Appointments", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DBModel.Appointment), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK__aspnet_Me__Appli__589C25F3", "aspnet_Applications", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DBModel.aspnet_Applications), "aspnet_Membership", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DBModel.aspnet_Membership), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK__aspnet_Pa__Appli__11D4A34F", "aspnet_Applications", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DBModel.aspnet_Applications), "aspnet_Paths", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DBModel.aspnet_Paths), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK__aspnet_Ro__Appli__7AF13DF7", "aspnet_Applications", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DBModel.aspnet_Applications), "aspnet_Roles", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DBModel.aspnet_Roles), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK__aspnet_Us__Appli__44952D46", "aspnet_Applications", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DBModel.aspnet_Applications), "aspnet_Users", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DBModel.aspnet_Users), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK__aspnet_Me__UserI__59904A2C", "aspnet_Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DBModel.aspnet_Users), "aspnet_Membership", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RIS_DBModel.aspnet_Membership), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK__aspnet_Pe__PathI__1975C517", "aspnet_Paths", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DBModel.aspnet_Paths), "aspnet_PersonalizationAllUsers", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RIS_DBModel.aspnet_PersonalizationAllUsers), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK__aspnet_Pe__PathI__1F2E9E6D", "aspnet_Paths", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RIS_DBModel.aspnet_Paths), "aspnet_PersonalizationPerUser", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DBModel.aspnet_PersonalizationPerUser), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK__aspnet_Pe__UserI__2022C2A6", "aspnet_Users", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RIS_DBModel.aspnet_Users), "aspnet_PersonalizationPerUser", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DBModel.aspnet_PersonalizationPerUser), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK__aspnet_Pr__UserI__6F7F8B4B", "aspnet_Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DBModel.aspnet_Users), "aspnet_Profile", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RIS_DBModel.aspnet_Profile), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK_Patients_aspnet_Users", "aspnet_Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DBModel.aspnet_Users), "Patients", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RIS_DBModel.Patient), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK_Staff_aspnet_Users", "aspnet_Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DBModel.aspnet_Users), "Staff", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RIS_DBModel.Staff), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK_UserParticulars_aspnet_Users", "aspnet_Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DBModel.aspnet_Users), "UserParticulars", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RIS_DBModel.UserParticular), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK_Patients_BloodTypes", "BloodTypes", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DBModel.BloodType), "Patients", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DBModel.Patient), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK_Users_Countries", "Countries", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DBModel.Country), "UserParticulars", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DBModel.UserParticular), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK_Staff_Departments", "Departments", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DBModel.Department), "Staff", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DBModel.Staff), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK_DicomImages_Images", "Images", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DBModel.Image), "DicomImages", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RIS_DBModel.DicomImage), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "fk_Images_PngImages", "PngImages", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DBModel.PngImage), "Images", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RIS_DBModel.Image), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK_Images_Series", "Series", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DBModel.Series), "Images", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DBModel.Image), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK_Series_Modalities", "Modalities", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DBModel.Modality), "Series", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DBModel.Series), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "FK_Series_Studies", "Studies", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DBModel.Study), "Series", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DBModel.Series), true)]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "aspnet_UsersInRoles", "aspnet_Roles", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DBModel.aspnet_Roles), "aspnet_Users", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DBModel.aspnet_Users))]
-[assembly: EdmRelationshipAttribute("RIS_DBModel", "PatientsWithDrugAllergies", "DrugAllergies", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DBModel.DrugAllergy), "Patients", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DBModel.Patient))]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "FK_Appointments_Patients", "Patients", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DB_Model.Patient), "Appointments", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DB_Model.Appointment), true)]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "FK_Appointments_Studies", "Studies", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DB_Model.Study), "Appointments", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DB_Model.Appointment), true)]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "FK__aspnet_Me__Appli__21B6055D", "aspnet_Applications", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DB_Model.aspnet_Applications), "aspnet_Membership", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DB_Model.aspnet_Membership), true)]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "FK__aspnet_Ro__Appli__38996AB5", "aspnet_Applications", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DB_Model.aspnet_Applications), "aspnet_Roles", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DB_Model.aspnet_Roles), true)]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "FK__aspnet_Us__Appli__0DAF0CB0", "aspnet_Applications", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DB_Model.aspnet_Applications), "aspnet_Users", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DB_Model.aspnet_Users), true)]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "FK__aspnet_Me__UserI__22AA2996", "aspnet_Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DB_Model.aspnet_Users), "aspnet_Membership", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RIS_DB_Model.aspnet_Membership), true)]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "FK_Patients_aspnet_Users", "aspnet_Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DB_Model.aspnet_Users), "Patients", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RIS_DB_Model.Patient), true)]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "FK_Staff_aspnet_Users", "aspnet_Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DB_Model.aspnet_Users), "Staff", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RIS_DB_Model.Staff), true)]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "FK_UserParticulars_aspnet_Users", "aspnet_Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DB_Model.aspnet_Users), "UserParticulars", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RIS_DB_Model.UserParticular), true)]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "FK_Patients_BloodTypes", "BloodTypes", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DB_Model.BloodType), "Patients", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DB_Model.Patient), true)]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "FK_UserParticulars_Countries", "Countries", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DB_Model.Country), "UserParticulars", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DB_Model.UserParticular), true)]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "FK_Staff_Departments", "Departments", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DB_Model.Department), "Staff", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DB_Model.Staff), true)]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "FK_Images_Series", "Series", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DB_Model.Series), "Images", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DB_Model.Image), true)]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "FK_Images_Staff", "Staff", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DB_Model.Staff), "Images", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DB_Model.Image), true)]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "FK_Notes_Images", "Images", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DB_Model.Image), "Notes", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DB_Model.Note), true)]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "FK_Series_Modalities", "Modalities", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DB_Model.Modality), "Series", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DB_Model.Series), true)]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "FK_Series_Studies", "Studies", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DB_Model.Study), "Series", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DB_Model.Series), true)]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "FK_Studies_Staff", "Staff", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RIS_DB_Model.Staff), "Studies", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DB_Model.Study), true)]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "aspnet_UsersInRoles", "aspnet_Roles", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DB_Model.aspnet_Roles), "aspnet_Users", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DB_Model.aspnet_Users))]
+[assembly: EdmRelationshipAttribute("RIS_DB_Model", "PatientsWithDrugAllergies", "DrugAllergies", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DB_Model.DrugAllergy), "Patients", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RIS_DB_Model.Patient))]
 
 #endregion
 
-namespace RIS_DBModel
+namespace RIS_DB_Model
 {
     #region Contexts
     
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    public partial class RIS_DBEntities : ObjectContext
+    public partial class RIS_DB_Entities : ObjectContext
     {
         #region Constructors
     
         /// <summary>
-        /// Initializes a new RIS_DBEntities object using the connection string found in the 'RIS_DBEntities' section of the application configuration file.
+        /// Initializes a new RIS_DB_Entities object using the connection string found in the 'RIS_DB_Entities' section of the application configuration file.
         /// </summary>
-        public RIS_DBEntities() : base("name=RIS_DBEntities", "RIS_DBEntities")
+        public RIS_DB_Entities() : base("name=RIS_DB_Entities", "RIS_DB_Entities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
         }
     
         /// <summary>
-        /// Initialize a new RIS_DBEntities object.
+        /// Initialize a new RIS_DB_Entities object.
         /// </summary>
-        public RIS_DBEntities(string connectionString) : base(connectionString, "RIS_DBEntities")
+        public RIS_DB_Entities(string connectionString) : base(connectionString, "RIS_DB_Entities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
         }
     
         /// <summary>
-        /// Initialize a new RIS_DBEntities object.
+        /// Initialize a new RIS_DB_Entities object.
         /// </summary>
-        public RIS_DBEntities(EntityConnection connection) : base(connection, "RIS_DBEntities")
+        public RIS_DB_Entities(EntityConnection connection) : base(connection, "RIS_DB_Entities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
@@ -143,70 +140,6 @@ namespace RIS_DBModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<aspnet_Paths> aspnet_Paths
-        {
-            get
-            {
-                if ((_aspnet_Paths == null))
-                {
-                    _aspnet_Paths = base.CreateObjectSet<aspnet_Paths>("aspnet_Paths");
-                }
-                return _aspnet_Paths;
-            }
-        }
-        private ObjectSet<aspnet_Paths> _aspnet_Paths;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<aspnet_PersonalizationAllUsers> aspnet_PersonalizationAllUsers
-        {
-            get
-            {
-                if ((_aspnet_PersonalizationAllUsers == null))
-                {
-                    _aspnet_PersonalizationAllUsers = base.CreateObjectSet<aspnet_PersonalizationAllUsers>("aspnet_PersonalizationAllUsers");
-                }
-                return _aspnet_PersonalizationAllUsers;
-            }
-        }
-        private ObjectSet<aspnet_PersonalizationAllUsers> _aspnet_PersonalizationAllUsers;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<aspnet_PersonalizationPerUser> aspnet_PersonalizationPerUser
-        {
-            get
-            {
-                if ((_aspnet_PersonalizationPerUser == null))
-                {
-                    _aspnet_PersonalizationPerUser = base.CreateObjectSet<aspnet_PersonalizationPerUser>("aspnet_PersonalizationPerUser");
-                }
-                return _aspnet_PersonalizationPerUser;
-            }
-        }
-        private ObjectSet<aspnet_PersonalizationPerUser> _aspnet_PersonalizationPerUser;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<aspnet_Profile> aspnet_Profile
-        {
-            get
-            {
-                if ((_aspnet_Profile == null))
-                {
-                    _aspnet_Profile = base.CreateObjectSet<aspnet_Profile>("aspnet_Profile");
-                }
-                return _aspnet_Profile;
-            }
-        }
-        private ObjectSet<aspnet_Profile> _aspnet_Profile;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<aspnet_Roles> aspnet_Roles
         {
             get
@@ -251,22 +184,6 @@ namespace RIS_DBModel
             }
         }
         private ObjectSet<aspnet_Users> _aspnet_Users;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<aspnet_WebEvent_Events> aspnet_WebEvent_Events
-        {
-            get
-            {
-                if ((_aspnet_WebEvent_Events == null))
-                {
-                    _aspnet_WebEvent_Events = base.CreateObjectSet<aspnet_WebEvent_Events>("aspnet_WebEvent_Events");
-                }
-                return _aspnet_WebEvent_Events;
-            }
-        }
-        private ObjectSet<aspnet_WebEvent_Events> _aspnet_WebEvent_Events;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -319,22 +236,6 @@ namespace RIS_DBModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<DicomImage> DicomImages
-        {
-            get
-            {
-                if ((_DicomImages == null))
-                {
-                    _DicomImages = base.CreateObjectSet<DicomImage>("DicomImages");
-                }
-                return _DicomImages;
-            }
-        }
-        private ObjectSet<DicomImage> _DicomImages;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<DrugAllergy> DrugAllergies
         {
             get
@@ -383,6 +284,22 @@ namespace RIS_DBModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<Note> Notes
+        {
+            get
+            {
+                if ((_Notes == null))
+                {
+                    _Notes = base.CreateObjectSet<Note>("Notes");
+                }
+                return _Notes;
+            }
+        }
+        private ObjectSet<Note> _Notes;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<Patient> Patients
         {
             get
@@ -395,22 +312,6 @@ namespace RIS_DBModel
             }
         }
         private ObjectSet<Patient> _Patients;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<PngImage> PngImages
-        {
-            get
-            {
-                if ((_PngImages == null))
-                {
-                    _PngImages = base.CreateObjectSet<PngImage>("PngImages");
-                }
-                return _PngImages;
-            }
-        }
-        private ObjectSet<PngImage> _PngImages;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -520,38 +421,6 @@ namespace RIS_DBModel
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the aspnet_Paths EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToaspnet_Paths(aspnet_Paths aspnet_Paths)
-        {
-            base.AddObject("aspnet_Paths", aspnet_Paths);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the aspnet_PersonalizationAllUsers EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToaspnet_PersonalizationAllUsers(aspnet_PersonalizationAllUsers aspnet_PersonalizationAllUsers)
-        {
-            base.AddObject("aspnet_PersonalizationAllUsers", aspnet_PersonalizationAllUsers);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the aspnet_PersonalizationPerUser EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToaspnet_PersonalizationPerUser(aspnet_PersonalizationPerUser aspnet_PersonalizationPerUser)
-        {
-            base.AddObject("aspnet_PersonalizationPerUser", aspnet_PersonalizationPerUser);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the aspnet_Profile EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToaspnet_Profile(aspnet_Profile aspnet_Profile)
-        {
-            base.AddObject("aspnet_Profile", aspnet_Profile);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the aspnet_Roles EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToaspnet_Roles(aspnet_Roles aspnet_Roles)
@@ -573,14 +442,6 @@ namespace RIS_DBModel
         public void AddToaspnet_Users(aspnet_Users aspnet_Users)
         {
             base.AddObject("aspnet_Users", aspnet_Users);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the aspnet_WebEvent_Events EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToaspnet_WebEvent_Events(aspnet_WebEvent_Events aspnet_WebEvent_Events)
-        {
-            base.AddObject("aspnet_WebEvent_Events", aspnet_WebEvent_Events);
         }
     
         /// <summary>
@@ -608,14 +469,6 @@ namespace RIS_DBModel
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the DicomImages EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToDicomImages(DicomImage dicomImage)
-        {
-            base.AddObject("DicomImages", dicomImage);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the DrugAllergies EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToDrugAllergies(DrugAllergy drugAllergy)
@@ -640,19 +493,19 @@ namespace RIS_DBModel
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the Notes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToNotes(Note note)
+        {
+            base.AddObject("Notes", note);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the Patients EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToPatients(Patient patient)
         {
             base.AddObject("Patients", patient);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the PngImages EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToPngImages(PngImage pngImage)
-        {
-            base.AddObject("PngImages", pngImage);
         }
     
         /// <summary>
@@ -706,7 +559,7 @@ namespace RIS_DBModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="Appointment")]
+    [EdmEntityTypeAttribute(NamespaceName="RIS_DB_Model", Name="Appointment")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class Appointment : EntityObject
@@ -719,14 +572,14 @@ namespace RIS_DBModel
         /// <param name="appointmentId">Initial value of the AppointmentId property.</param>
         /// <param name="appointmentDate">Initial value of the AppointmentDate property.</param>
         /// <param name="studyId">Initial value of the StudyId property.</param>
-        /// <param name="userId">Initial value of the UserId property.</param>
-        public static Appointment CreateAppointment(global::System.Int32 appointmentId, global::System.DateTime appointmentDate, global::System.Int32 studyId, global::System.Guid userId)
+        /// <param name="patientId">Initial value of the PatientId property.</param>
+        public static Appointment CreateAppointment(global::System.Int32 appointmentId, global::System.DateTime appointmentDate, global::System.Int32 studyId, global::System.Guid patientId)
         {
             Appointment appointment = new Appointment();
             appointment.AppointmentId = appointmentId;
             appointment.AppointmentDate = appointmentDate;
             appointment.StudyId = studyId;
-            appointment.UserId = userId;
+            appointment.PatientId = patientId;
             return appointment;
         }
 
@@ -813,24 +666,24 @@ namespace RIS_DBModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Guid UserId
+        public global::System.Guid PatientId
         {
             get
             {
-                return _UserId;
+                return _PatientId;
             }
             set
             {
-                OnUserIdChanging(value);
-                ReportPropertyChanging("UserId");
-                _UserId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("UserId");
-                OnUserIdChanged();
+                OnPatientIdChanging(value);
+                ReportPropertyChanging("PatientId");
+                _PatientId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PatientId");
+                OnPatientIdChanged();
             }
         }
-        private global::System.Guid _UserId;
-        partial void OnUserIdChanging(global::System.Guid value);
-        partial void OnUserIdChanged();
+        private global::System.Guid _PatientId;
+        partial void OnPatientIdChanging(global::System.Guid value);
+        partial void OnPatientIdChanged();
 
         #endregion
     
@@ -842,16 +695,16 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_Appointments_Patients", "Patients")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Appointments_Patients", "Patients")]
         public Patient Patient
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Patient>("RIS_DBModel.FK_Appointments_Patients", "Patients").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Patient>("RIS_DB_Model.FK_Appointments_Patients", "Patients").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Patient>("RIS_DBModel.FK_Appointments_Patients", "Patients").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Patient>("RIS_DB_Model.FK_Appointments_Patients", "Patients").Value = value;
             }
         }
         /// <summary>
@@ -863,13 +716,51 @@ namespace RIS_DBModel
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Patient>("RIS_DBModel.FK_Appointments_Patients", "Patients");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Patient>("RIS_DB_Model.FK_Appointments_Patients", "Patients");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Patient>("RIS_DBModel.FK_Appointments_Patients", "Patients", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Patient>("RIS_DB_Model.FK_Appointments_Patients", "Patients", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Appointments_Studies", "Studies")]
+        public Study Study
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Study>("RIS_DB_Model.FK_Appointments_Studies", "Studies").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Study>("RIS_DB_Model.FK_Appointments_Studies", "Studies").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Study> StudyReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Study>("RIS_DB_Model.FK_Appointments_Studies", "Studies");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Study>("RIS_DB_Model.FK_Appointments_Studies", "Studies", value);
                 }
             }
         }
@@ -880,7 +771,7 @@ namespace RIS_DBModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="aspnet_Applications")]
+    [EdmEntityTypeAttribute(NamespaceName="RIS_DB_Model", Name="aspnet_Applications")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class aspnet_Applications : EntityObject
@@ -1014,18 +905,18 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK__aspnet_Me__Appli__589C25F3", "aspnet_Membership")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK__aspnet_Me__Appli__21B6055D", "aspnet_Membership")]
         public EntityCollection<aspnet_Membership> aspnet_Membership
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<aspnet_Membership>("RIS_DBModel.FK__aspnet_Me__Appli__589C25F3", "aspnet_Membership");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<aspnet_Membership>("RIS_DB_Model.FK__aspnet_Me__Appli__21B6055D", "aspnet_Membership");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<aspnet_Membership>("RIS_DBModel.FK__aspnet_Me__Appli__589C25F3", "aspnet_Membership", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<aspnet_Membership>("RIS_DB_Model.FK__aspnet_Me__Appli__21B6055D", "aspnet_Membership", value);
                 }
             }
         }
@@ -1036,40 +927,18 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK__aspnet_Pa__Appli__11D4A34F", "aspnet_Paths")]
-        public EntityCollection<aspnet_Paths> aspnet_Paths
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<aspnet_Paths>("RIS_DBModel.FK__aspnet_Pa__Appli__11D4A34F", "aspnet_Paths");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<aspnet_Paths>("RIS_DBModel.FK__aspnet_Pa__Appli__11D4A34F", "aspnet_Paths", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK__aspnet_Ro__Appli__7AF13DF7", "aspnet_Roles")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK__aspnet_Ro__Appli__38996AB5", "aspnet_Roles")]
         public EntityCollection<aspnet_Roles> aspnet_Roles
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<aspnet_Roles>("RIS_DBModel.FK__aspnet_Ro__Appli__7AF13DF7", "aspnet_Roles");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<aspnet_Roles>("RIS_DB_Model.FK__aspnet_Ro__Appli__38996AB5", "aspnet_Roles");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<aspnet_Roles>("RIS_DBModel.FK__aspnet_Ro__Appli__7AF13DF7", "aspnet_Roles", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<aspnet_Roles>("RIS_DB_Model.FK__aspnet_Ro__Appli__38996AB5", "aspnet_Roles", value);
                 }
             }
         }
@@ -1080,18 +949,18 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK__aspnet_Us__Appli__44952D46", "aspnet_Users")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK__aspnet_Us__Appli__0DAF0CB0", "aspnet_Users")]
         public EntityCollection<aspnet_Users> aspnet_Users
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<aspnet_Users>("RIS_DBModel.FK__aspnet_Us__Appli__44952D46", "aspnet_Users");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<aspnet_Users>("RIS_DB_Model.FK__aspnet_Us__Appli__0DAF0CB0", "aspnet_Users");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<aspnet_Users>("RIS_DBModel.FK__aspnet_Us__Appli__44952D46", "aspnet_Users", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<aspnet_Users>("RIS_DB_Model.FK__aspnet_Us__Appli__0DAF0CB0", "aspnet_Users", value);
                 }
             }
         }
@@ -1102,7 +971,7 @@ namespace RIS_DBModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="aspnet_Membership")]
+    [EdmEntityTypeAttribute(NamespaceName="RIS_DB_Model", Name="aspnet_Membership")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class aspnet_Membership : EntityObject
@@ -1668,16 +1537,16 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK__aspnet_Me__Appli__589C25F3", "aspnet_Applications")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK__aspnet_Me__Appli__21B6055D", "aspnet_Applications")]
         public aspnet_Applications aspnet_Applications
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DBModel.FK__aspnet_Me__Appli__589C25F3", "aspnet_Applications").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DB_Model.FK__aspnet_Me__Appli__21B6055D", "aspnet_Applications").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DBModel.FK__aspnet_Me__Appli__589C25F3", "aspnet_Applications").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DB_Model.FK__aspnet_Me__Appli__21B6055D", "aspnet_Applications").Value = value;
             }
         }
         /// <summary>
@@ -1689,13 +1558,13 @@ namespace RIS_DBModel
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DBModel.FK__aspnet_Me__Appli__589C25F3", "aspnet_Applications");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DB_Model.FK__aspnet_Me__Appli__21B6055D", "aspnet_Applications");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Applications>("RIS_DBModel.FK__aspnet_Me__Appli__589C25F3", "aspnet_Applications", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Applications>("RIS_DB_Model.FK__aspnet_Me__Appli__21B6055D", "aspnet_Applications", value);
                 }
             }
         }
@@ -1706,16 +1575,16 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK__aspnet_Me__UserI__59904A2C", "aspnet_Users")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK__aspnet_Me__UserI__22AA2996", "aspnet_Users")]
         public aspnet_Users aspnet_Users
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DBModel.FK__aspnet_Me__UserI__59904A2C", "aspnet_Users").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DB_Model.FK__aspnet_Me__UserI__22AA2996", "aspnet_Users").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DBModel.FK__aspnet_Me__UserI__59904A2C", "aspnet_Users").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DB_Model.FK__aspnet_Me__UserI__22AA2996", "aspnet_Users").Value = value;
             }
         }
         /// <summary>
@@ -1727,13 +1596,13 @@ namespace RIS_DBModel
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DBModel.FK__aspnet_Me__UserI__59904A2C", "aspnet_Users");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DB_Model.FK__aspnet_Me__UserI__22AA2996", "aspnet_Users");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Users>("RIS_DBModel.FK__aspnet_Me__UserI__59904A2C", "aspnet_Users", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Users>("RIS_DB_Model.FK__aspnet_Me__UserI__22AA2996", "aspnet_Users", value);
                 }
             }
         }
@@ -1744,823 +1613,7 @@ namespace RIS_DBModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="aspnet_Paths")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class aspnet_Paths : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new aspnet_Paths object.
-        /// </summary>
-        /// <param name="applicationId">Initial value of the ApplicationId property.</param>
-        /// <param name="pathId">Initial value of the PathId property.</param>
-        /// <param name="path">Initial value of the Path property.</param>
-        /// <param name="loweredPath">Initial value of the LoweredPath property.</param>
-        public static aspnet_Paths Createaspnet_Paths(global::System.Guid applicationId, global::System.Guid pathId, global::System.String path, global::System.String loweredPath)
-        {
-            aspnet_Paths aspnet_Paths = new aspnet_Paths();
-            aspnet_Paths.ApplicationId = applicationId;
-            aspnet_Paths.PathId = pathId;
-            aspnet_Paths.Path = path;
-            aspnet_Paths.LoweredPath = loweredPath;
-            return aspnet_Paths;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Guid ApplicationId
-        {
-            get
-            {
-                return _ApplicationId;
-            }
-            set
-            {
-                OnApplicationIdChanging(value);
-                ReportPropertyChanging("ApplicationId");
-                _ApplicationId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ApplicationId");
-                OnApplicationIdChanged();
-            }
-        }
-        private global::System.Guid _ApplicationId;
-        partial void OnApplicationIdChanging(global::System.Guid value);
-        partial void OnApplicationIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Guid PathId
-        {
-            get
-            {
-                return _PathId;
-            }
-            set
-            {
-                if (_PathId != value)
-                {
-                    OnPathIdChanging(value);
-                    ReportPropertyChanging("PathId");
-                    _PathId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("PathId");
-                    OnPathIdChanged();
-                }
-            }
-        }
-        private global::System.Guid _PathId;
-        partial void OnPathIdChanging(global::System.Guid value);
-        partial void OnPathIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String Path
-        {
-            get
-            {
-                return _Path;
-            }
-            set
-            {
-                OnPathChanging(value);
-                ReportPropertyChanging("Path");
-                _Path = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Path");
-                OnPathChanged();
-            }
-        }
-        private global::System.String _Path;
-        partial void OnPathChanging(global::System.String value);
-        partial void OnPathChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String LoweredPath
-        {
-            get
-            {
-                return _LoweredPath;
-            }
-            set
-            {
-                OnLoweredPathChanging(value);
-                ReportPropertyChanging("LoweredPath");
-                _LoweredPath = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("LoweredPath");
-                OnLoweredPathChanged();
-            }
-        }
-        private global::System.String _LoweredPath;
-        partial void OnLoweredPathChanging(global::System.String value);
-        partial void OnLoweredPathChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK__aspnet_Pa__Appli__11D4A34F", "aspnet_Applications")]
-        public aspnet_Applications aspnet_Applications
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DBModel.FK__aspnet_Pa__Appli__11D4A34F", "aspnet_Applications").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DBModel.FK__aspnet_Pa__Appli__11D4A34F", "aspnet_Applications").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<aspnet_Applications> aspnet_ApplicationsReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DBModel.FK__aspnet_Pa__Appli__11D4A34F", "aspnet_Applications");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Applications>("RIS_DBModel.FK__aspnet_Pa__Appli__11D4A34F", "aspnet_Applications", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK__aspnet_Pe__PathI__1975C517", "aspnet_PersonalizationAllUsers")]
-        public aspnet_PersonalizationAllUsers aspnet_PersonalizationAllUsers
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_PersonalizationAllUsers>("RIS_DBModel.FK__aspnet_Pe__PathI__1975C517", "aspnet_PersonalizationAllUsers").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_PersonalizationAllUsers>("RIS_DBModel.FK__aspnet_Pe__PathI__1975C517", "aspnet_PersonalizationAllUsers").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<aspnet_PersonalizationAllUsers> aspnet_PersonalizationAllUsersReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_PersonalizationAllUsers>("RIS_DBModel.FK__aspnet_Pe__PathI__1975C517", "aspnet_PersonalizationAllUsers");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_PersonalizationAllUsers>("RIS_DBModel.FK__aspnet_Pe__PathI__1975C517", "aspnet_PersonalizationAllUsers", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK__aspnet_Pe__PathI__1F2E9E6D", "aspnet_PersonalizationPerUser")]
-        public EntityCollection<aspnet_PersonalizationPerUser> aspnet_PersonalizationPerUser
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<aspnet_PersonalizationPerUser>("RIS_DBModel.FK__aspnet_Pe__PathI__1F2E9E6D", "aspnet_PersonalizationPerUser");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<aspnet_PersonalizationPerUser>("RIS_DBModel.FK__aspnet_Pe__PathI__1F2E9E6D", "aspnet_PersonalizationPerUser", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="aspnet_PersonalizationAllUsers")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class aspnet_PersonalizationAllUsers : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new aspnet_PersonalizationAllUsers object.
-        /// </summary>
-        /// <param name="pathId">Initial value of the PathId property.</param>
-        /// <param name="pageSettings">Initial value of the PageSettings property.</param>
-        /// <param name="lastUpdatedDate">Initial value of the LastUpdatedDate property.</param>
-        public static aspnet_PersonalizationAllUsers Createaspnet_PersonalizationAllUsers(global::System.Guid pathId, global::System.Byte[] pageSettings, global::System.DateTime lastUpdatedDate)
-        {
-            aspnet_PersonalizationAllUsers aspnet_PersonalizationAllUsers = new aspnet_PersonalizationAllUsers();
-            aspnet_PersonalizationAllUsers.PathId = pathId;
-            aspnet_PersonalizationAllUsers.PageSettings = pageSettings;
-            aspnet_PersonalizationAllUsers.LastUpdatedDate = lastUpdatedDate;
-            return aspnet_PersonalizationAllUsers;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Guid PathId
-        {
-            get
-            {
-                return _PathId;
-            }
-            set
-            {
-                if (_PathId != value)
-                {
-                    OnPathIdChanging(value);
-                    ReportPropertyChanging("PathId");
-                    _PathId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("PathId");
-                    OnPathIdChanged();
-                }
-            }
-        }
-        private global::System.Guid _PathId;
-        partial void OnPathIdChanging(global::System.Guid value);
-        partial void OnPathIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Byte[] PageSettings
-        {
-            get
-            {
-                return StructuralObject.GetValidValue(_PageSettings);
-            }
-            set
-            {
-                OnPageSettingsChanging(value);
-                ReportPropertyChanging("PageSettings");
-                _PageSettings = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("PageSettings");
-                OnPageSettingsChanged();
-            }
-        }
-        private global::System.Byte[] _PageSettings;
-        partial void OnPageSettingsChanging(global::System.Byte[] value);
-        partial void OnPageSettingsChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime LastUpdatedDate
-        {
-            get
-            {
-                return _LastUpdatedDate;
-            }
-            set
-            {
-                OnLastUpdatedDateChanging(value);
-                ReportPropertyChanging("LastUpdatedDate");
-                _LastUpdatedDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("LastUpdatedDate");
-                OnLastUpdatedDateChanged();
-            }
-        }
-        private global::System.DateTime _LastUpdatedDate;
-        partial void OnLastUpdatedDateChanging(global::System.DateTime value);
-        partial void OnLastUpdatedDateChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK__aspnet_Pe__PathI__1975C517", "aspnet_Paths")]
-        public aspnet_Paths aspnet_Paths
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Paths>("RIS_DBModel.FK__aspnet_Pe__PathI__1975C517", "aspnet_Paths").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Paths>("RIS_DBModel.FK__aspnet_Pe__PathI__1975C517", "aspnet_Paths").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<aspnet_Paths> aspnet_PathsReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Paths>("RIS_DBModel.FK__aspnet_Pe__PathI__1975C517", "aspnet_Paths");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Paths>("RIS_DBModel.FK__aspnet_Pe__PathI__1975C517", "aspnet_Paths", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="aspnet_PersonalizationPerUser")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class aspnet_PersonalizationPerUser : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new aspnet_PersonalizationPerUser object.
-        /// </summary>
-        /// <param name="id">Initial value of the Id property.</param>
-        /// <param name="pageSettings">Initial value of the PageSettings property.</param>
-        /// <param name="lastUpdatedDate">Initial value of the LastUpdatedDate property.</param>
-        public static aspnet_PersonalizationPerUser Createaspnet_PersonalizationPerUser(global::System.Guid id, global::System.Byte[] pageSettings, global::System.DateTime lastUpdatedDate)
-        {
-            aspnet_PersonalizationPerUser aspnet_PersonalizationPerUser = new aspnet_PersonalizationPerUser();
-            aspnet_PersonalizationPerUser.Id = id;
-            aspnet_PersonalizationPerUser.PageSettings = pageSettings;
-            aspnet_PersonalizationPerUser.LastUpdatedDate = lastUpdatedDate;
-            return aspnet_PersonalizationPerUser;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Guid Id
-        {
-            get
-            {
-                return _Id;
-            }
-            set
-            {
-                if (_Id != value)
-                {
-                    OnIdChanging(value);
-                    ReportPropertyChanging("Id");
-                    _Id = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("Id");
-                    OnIdChanged();
-                }
-            }
-        }
-        private global::System.Guid _Id;
-        partial void OnIdChanging(global::System.Guid value);
-        partial void OnIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Guid> PathId
-        {
-            get
-            {
-                return _PathId;
-            }
-            set
-            {
-                OnPathIdChanging(value);
-                ReportPropertyChanging("PathId");
-                _PathId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("PathId");
-                OnPathIdChanged();
-            }
-        }
-        private Nullable<global::System.Guid> _PathId;
-        partial void OnPathIdChanging(Nullable<global::System.Guid> value);
-        partial void OnPathIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Guid> UserId
-        {
-            get
-            {
-                return _UserId;
-            }
-            set
-            {
-                OnUserIdChanging(value);
-                ReportPropertyChanging("UserId");
-                _UserId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("UserId");
-                OnUserIdChanged();
-            }
-        }
-        private Nullable<global::System.Guid> _UserId;
-        partial void OnUserIdChanging(Nullable<global::System.Guid> value);
-        partial void OnUserIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Byte[] PageSettings
-        {
-            get
-            {
-                return StructuralObject.GetValidValue(_PageSettings);
-            }
-            set
-            {
-                OnPageSettingsChanging(value);
-                ReportPropertyChanging("PageSettings");
-                _PageSettings = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("PageSettings");
-                OnPageSettingsChanged();
-            }
-        }
-        private global::System.Byte[] _PageSettings;
-        partial void OnPageSettingsChanging(global::System.Byte[] value);
-        partial void OnPageSettingsChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime LastUpdatedDate
-        {
-            get
-            {
-                return _LastUpdatedDate;
-            }
-            set
-            {
-                OnLastUpdatedDateChanging(value);
-                ReportPropertyChanging("LastUpdatedDate");
-                _LastUpdatedDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("LastUpdatedDate");
-                OnLastUpdatedDateChanged();
-            }
-        }
-        private global::System.DateTime _LastUpdatedDate;
-        partial void OnLastUpdatedDateChanging(global::System.DateTime value);
-        partial void OnLastUpdatedDateChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK__aspnet_Pe__PathI__1F2E9E6D", "aspnet_Paths")]
-        public aspnet_Paths aspnet_Paths
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Paths>("RIS_DBModel.FK__aspnet_Pe__PathI__1F2E9E6D", "aspnet_Paths").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Paths>("RIS_DBModel.FK__aspnet_Pe__PathI__1F2E9E6D", "aspnet_Paths").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<aspnet_Paths> aspnet_PathsReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Paths>("RIS_DBModel.FK__aspnet_Pe__PathI__1F2E9E6D", "aspnet_Paths");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Paths>("RIS_DBModel.FK__aspnet_Pe__PathI__1F2E9E6D", "aspnet_Paths", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK__aspnet_Pe__UserI__2022C2A6", "aspnet_Users")]
-        public aspnet_Users aspnet_Users
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DBModel.FK__aspnet_Pe__UserI__2022C2A6", "aspnet_Users").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DBModel.FK__aspnet_Pe__UserI__2022C2A6", "aspnet_Users").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<aspnet_Users> aspnet_UsersReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DBModel.FK__aspnet_Pe__UserI__2022C2A6", "aspnet_Users");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Users>("RIS_DBModel.FK__aspnet_Pe__UserI__2022C2A6", "aspnet_Users", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="aspnet_Profile")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class aspnet_Profile : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new aspnet_Profile object.
-        /// </summary>
-        /// <param name="userId">Initial value of the UserId property.</param>
-        /// <param name="propertyNames">Initial value of the PropertyNames property.</param>
-        /// <param name="propertyValuesString">Initial value of the PropertyValuesString property.</param>
-        /// <param name="propertyValuesBinary">Initial value of the PropertyValuesBinary property.</param>
-        /// <param name="lastUpdatedDate">Initial value of the LastUpdatedDate property.</param>
-        public static aspnet_Profile Createaspnet_Profile(global::System.Guid userId, global::System.String propertyNames, global::System.String propertyValuesString, global::System.Byte[] propertyValuesBinary, global::System.DateTime lastUpdatedDate)
-        {
-            aspnet_Profile aspnet_Profile = new aspnet_Profile();
-            aspnet_Profile.UserId = userId;
-            aspnet_Profile.PropertyNames = propertyNames;
-            aspnet_Profile.PropertyValuesString = propertyValuesString;
-            aspnet_Profile.PropertyValuesBinary = propertyValuesBinary;
-            aspnet_Profile.LastUpdatedDate = lastUpdatedDate;
-            return aspnet_Profile;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Guid UserId
-        {
-            get
-            {
-                return _UserId;
-            }
-            set
-            {
-                if (_UserId != value)
-                {
-                    OnUserIdChanging(value);
-                    ReportPropertyChanging("UserId");
-                    _UserId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("UserId");
-                    OnUserIdChanged();
-                }
-            }
-        }
-        private global::System.Guid _UserId;
-        partial void OnUserIdChanging(global::System.Guid value);
-        partial void OnUserIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String PropertyNames
-        {
-            get
-            {
-                return _PropertyNames;
-            }
-            set
-            {
-                OnPropertyNamesChanging(value);
-                ReportPropertyChanging("PropertyNames");
-                _PropertyNames = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("PropertyNames");
-                OnPropertyNamesChanged();
-            }
-        }
-        private global::System.String _PropertyNames;
-        partial void OnPropertyNamesChanging(global::System.String value);
-        partial void OnPropertyNamesChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String PropertyValuesString
-        {
-            get
-            {
-                return _PropertyValuesString;
-            }
-            set
-            {
-                OnPropertyValuesStringChanging(value);
-                ReportPropertyChanging("PropertyValuesString");
-                _PropertyValuesString = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("PropertyValuesString");
-                OnPropertyValuesStringChanged();
-            }
-        }
-        private global::System.String _PropertyValuesString;
-        partial void OnPropertyValuesStringChanging(global::System.String value);
-        partial void OnPropertyValuesStringChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Byte[] PropertyValuesBinary
-        {
-            get
-            {
-                return StructuralObject.GetValidValue(_PropertyValuesBinary);
-            }
-            set
-            {
-                OnPropertyValuesBinaryChanging(value);
-                ReportPropertyChanging("PropertyValuesBinary");
-                _PropertyValuesBinary = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("PropertyValuesBinary");
-                OnPropertyValuesBinaryChanged();
-            }
-        }
-        private global::System.Byte[] _PropertyValuesBinary;
-        partial void OnPropertyValuesBinaryChanging(global::System.Byte[] value);
-        partial void OnPropertyValuesBinaryChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime LastUpdatedDate
-        {
-            get
-            {
-                return _LastUpdatedDate;
-            }
-            set
-            {
-                OnLastUpdatedDateChanging(value);
-                ReportPropertyChanging("LastUpdatedDate");
-                _LastUpdatedDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("LastUpdatedDate");
-                OnLastUpdatedDateChanged();
-            }
-        }
-        private global::System.DateTime _LastUpdatedDate;
-        partial void OnLastUpdatedDateChanging(global::System.DateTime value);
-        partial void OnLastUpdatedDateChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK__aspnet_Pr__UserI__6F7F8B4B", "aspnet_Users")]
-        public aspnet_Users aspnet_Users
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DBModel.FK__aspnet_Pr__UserI__6F7F8B4B", "aspnet_Users").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DBModel.FK__aspnet_Pr__UserI__6F7F8B4B", "aspnet_Users").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<aspnet_Users> aspnet_UsersReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DBModel.FK__aspnet_Pr__UserI__6F7F8B4B", "aspnet_Users");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Users>("RIS_DBModel.FK__aspnet_Pr__UserI__6F7F8B4B", "aspnet_Users", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="aspnet_Roles")]
+    [EdmEntityTypeAttribute(NamespaceName="RIS_DB_Model", Name="aspnet_Roles")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class aspnet_Roles : EntityObject
@@ -2720,16 +1773,16 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK__aspnet_Ro__Appli__7AF13DF7", "aspnet_Applications")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK__aspnet_Ro__Appli__38996AB5", "aspnet_Applications")]
         public aspnet_Applications aspnet_Applications
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DBModel.FK__aspnet_Ro__Appli__7AF13DF7", "aspnet_Applications").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DB_Model.FK__aspnet_Ro__Appli__38996AB5", "aspnet_Applications").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DBModel.FK__aspnet_Ro__Appli__7AF13DF7", "aspnet_Applications").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DB_Model.FK__aspnet_Ro__Appli__38996AB5", "aspnet_Applications").Value = value;
             }
         }
         /// <summary>
@@ -2741,13 +1794,13 @@ namespace RIS_DBModel
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DBModel.FK__aspnet_Ro__Appli__7AF13DF7", "aspnet_Applications");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DB_Model.FK__aspnet_Ro__Appli__38996AB5", "aspnet_Applications");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Applications>("RIS_DBModel.FK__aspnet_Ro__Appli__7AF13DF7", "aspnet_Applications", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Applications>("RIS_DB_Model.FK__aspnet_Ro__Appli__38996AB5", "aspnet_Applications", value);
                 }
             }
         }
@@ -2758,18 +1811,18 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "aspnet_UsersInRoles", "aspnet_Users")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "aspnet_UsersInRoles", "aspnet_Users")]
         public EntityCollection<aspnet_Users> aspnet_Users
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<aspnet_Users>("RIS_DBModel.aspnet_UsersInRoles", "aspnet_Users");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<aspnet_Users>("RIS_DB_Model.aspnet_UsersInRoles", "aspnet_Users");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<aspnet_Users>("RIS_DBModel.aspnet_UsersInRoles", "aspnet_Users", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<aspnet_Users>("RIS_DB_Model.aspnet_UsersInRoles", "aspnet_Users", value);
                 }
             }
         }
@@ -2780,7 +1833,7 @@ namespace RIS_DBModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="aspnet_SchemaVersions")]
+    [EdmEntityTypeAttribute(NamespaceName="RIS_DB_Model", Name="aspnet_SchemaVersions")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class aspnet_SchemaVersions : EntityObject
@@ -2890,7 +1943,7 @@ namespace RIS_DBModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="aspnet_Users")]
+    [EdmEntityTypeAttribute(NamespaceName="RIS_DB_Model", Name="aspnet_Users")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class aspnet_Users : EntityObject
@@ -3102,16 +2155,16 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK__aspnet_Us__Appli__44952D46", "aspnet_Applications")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK__aspnet_Us__Appli__0DAF0CB0", "aspnet_Applications")]
         public aspnet_Applications aspnet_Applications
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DBModel.FK__aspnet_Us__Appli__44952D46", "aspnet_Applications").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DB_Model.FK__aspnet_Us__Appli__0DAF0CB0", "aspnet_Applications").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DBModel.FK__aspnet_Us__Appli__44952D46", "aspnet_Applications").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DB_Model.FK__aspnet_Us__Appli__0DAF0CB0", "aspnet_Applications").Value = value;
             }
         }
         /// <summary>
@@ -3123,13 +2176,13 @@ namespace RIS_DBModel
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DBModel.FK__aspnet_Us__Appli__44952D46", "aspnet_Applications");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Applications>("RIS_DB_Model.FK__aspnet_Us__Appli__0DAF0CB0", "aspnet_Applications");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Applications>("RIS_DBModel.FK__aspnet_Us__Appli__44952D46", "aspnet_Applications", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Applications>("RIS_DB_Model.FK__aspnet_Us__Appli__0DAF0CB0", "aspnet_Applications", value);
                 }
             }
         }
@@ -3140,16 +2193,16 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK__aspnet_Me__UserI__59904A2C", "aspnet_Membership")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK__aspnet_Me__UserI__22AA2996", "aspnet_Membership")]
         public aspnet_Membership aspnet_Membership
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Membership>("RIS_DBModel.FK__aspnet_Me__UserI__59904A2C", "aspnet_Membership").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Membership>("RIS_DB_Model.FK__aspnet_Me__UserI__22AA2996", "aspnet_Membership").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Membership>("RIS_DBModel.FK__aspnet_Me__UserI__59904A2C", "aspnet_Membership").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Membership>("RIS_DB_Model.FK__aspnet_Me__UserI__22AA2996", "aspnet_Membership").Value = value;
             }
         }
         /// <summary>
@@ -3161,13 +2214,13 @@ namespace RIS_DBModel
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Membership>("RIS_DBModel.FK__aspnet_Me__UserI__59904A2C", "aspnet_Membership");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Membership>("RIS_DB_Model.FK__aspnet_Me__UserI__22AA2996", "aspnet_Membership");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Membership>("RIS_DBModel.FK__aspnet_Me__UserI__59904A2C", "aspnet_Membership", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Membership>("RIS_DB_Model.FK__aspnet_Me__UserI__22AA2996", "aspnet_Membership", value);
                 }
             }
         }
@@ -3178,76 +2231,16 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK__aspnet_Pe__UserI__2022C2A6", "aspnet_PersonalizationPerUser")]
-        public EntityCollection<aspnet_PersonalizationPerUser> aspnet_PersonalizationPerUser
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<aspnet_PersonalizationPerUser>("RIS_DBModel.FK__aspnet_Pe__UserI__2022C2A6", "aspnet_PersonalizationPerUser");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<aspnet_PersonalizationPerUser>("RIS_DBModel.FK__aspnet_Pe__UserI__2022C2A6", "aspnet_PersonalizationPerUser", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK__aspnet_Pr__UserI__6F7F8B4B", "aspnet_Profile")]
-        public aspnet_Profile aspnet_Profile
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Profile>("RIS_DBModel.FK__aspnet_Pr__UserI__6F7F8B4B", "aspnet_Profile").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Profile>("RIS_DBModel.FK__aspnet_Pr__UserI__6F7F8B4B", "aspnet_Profile").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<aspnet_Profile> aspnet_ProfileReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Profile>("RIS_DBModel.FK__aspnet_Pr__UserI__6F7F8B4B", "aspnet_Profile");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Profile>("RIS_DBModel.FK__aspnet_Pr__UserI__6F7F8B4B", "aspnet_Profile", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_Patients_aspnet_Users", "Patients")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Patients_aspnet_Users", "Patients")]
         public Patient Patient
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Patient>("RIS_DBModel.FK_Patients_aspnet_Users", "Patients").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Patient>("RIS_DB_Model.FK_Patients_aspnet_Users", "Patients").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Patient>("RIS_DBModel.FK_Patients_aspnet_Users", "Patients").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Patient>("RIS_DB_Model.FK_Patients_aspnet_Users", "Patients").Value = value;
             }
         }
         /// <summary>
@@ -3259,13 +2252,13 @@ namespace RIS_DBModel
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Patient>("RIS_DBModel.FK_Patients_aspnet_Users", "Patients");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Patient>("RIS_DB_Model.FK_Patients_aspnet_Users", "Patients");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Patient>("RIS_DBModel.FK_Patients_aspnet_Users", "Patients", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Patient>("RIS_DB_Model.FK_Patients_aspnet_Users", "Patients", value);
                 }
             }
         }
@@ -3276,16 +2269,16 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_Staff_aspnet_Users", "Staff")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Staff_aspnet_Users", "Staff")]
         public Staff Staff
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Staff>("RIS_DBModel.FK_Staff_aspnet_Users", "Staff").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Staff>("RIS_DB_Model.FK_Staff_aspnet_Users", "Staff").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Staff>("RIS_DBModel.FK_Staff_aspnet_Users", "Staff").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Staff>("RIS_DB_Model.FK_Staff_aspnet_Users", "Staff").Value = value;
             }
         }
         /// <summary>
@@ -3297,13 +2290,13 @@ namespace RIS_DBModel
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Staff>("RIS_DBModel.FK_Staff_aspnet_Users", "Staff");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Staff>("RIS_DB_Model.FK_Staff_aspnet_Users", "Staff");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Staff>("RIS_DBModel.FK_Staff_aspnet_Users", "Staff", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Staff>("RIS_DB_Model.FK_Staff_aspnet_Users", "Staff", value);
                 }
             }
         }
@@ -3314,16 +2307,16 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_UserParticulars_aspnet_Users", "UserParticulars")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_UserParticulars_aspnet_Users", "UserParticulars")]
         public UserParticular UserParticular
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UserParticular>("RIS_DBModel.FK_UserParticulars_aspnet_Users", "UserParticulars").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UserParticular>("RIS_DB_Model.FK_UserParticulars_aspnet_Users", "UserParticulars").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UserParticular>("RIS_DBModel.FK_UserParticulars_aspnet_Users", "UserParticulars").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UserParticular>("RIS_DB_Model.FK_UserParticulars_aspnet_Users", "UserParticulars").Value = value;
             }
         }
         /// <summary>
@@ -3335,13 +2328,13 @@ namespace RIS_DBModel
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UserParticular>("RIS_DBModel.FK_UserParticulars_aspnet_Users", "UserParticulars");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<UserParticular>("RIS_DB_Model.FK_UserParticulars_aspnet_Users", "UserParticulars");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<UserParticular>("RIS_DBModel.FK_UserParticulars_aspnet_Users", "UserParticulars", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<UserParticular>("RIS_DB_Model.FK_UserParticulars_aspnet_Users", "UserParticulars", value);
                 }
             }
         }
@@ -3352,18 +2345,18 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "aspnet_UsersInRoles", "aspnet_Roles")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "aspnet_UsersInRoles", "aspnet_Roles")]
         public EntityCollection<aspnet_Roles> aspnet_Roles
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<aspnet_Roles>("RIS_DBModel.aspnet_UsersInRoles", "aspnet_Roles");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<aspnet_Roles>("RIS_DB_Model.aspnet_UsersInRoles", "aspnet_Roles");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<aspnet_Roles>("RIS_DBModel.aspnet_UsersInRoles", "aspnet_Roles", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<aspnet_Roles>("RIS_DB_Model.aspnet_UsersInRoles", "aspnet_Roles", value);
                 }
             }
         }
@@ -3374,414 +2367,7 @@ namespace RIS_DBModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="aspnet_WebEvent_Events")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class aspnet_WebEvent_Events : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new aspnet_WebEvent_Events object.
-        /// </summary>
-        /// <param name="eventId">Initial value of the EventId property.</param>
-        /// <param name="eventTimeUtc">Initial value of the EventTimeUtc property.</param>
-        /// <param name="eventTime">Initial value of the EventTime property.</param>
-        /// <param name="eventType">Initial value of the EventType property.</param>
-        /// <param name="eventSequence">Initial value of the EventSequence property.</param>
-        /// <param name="eventOccurrence">Initial value of the EventOccurrence property.</param>
-        /// <param name="eventCode">Initial value of the EventCode property.</param>
-        /// <param name="eventDetailCode">Initial value of the EventDetailCode property.</param>
-        /// <param name="machineName">Initial value of the MachineName property.</param>
-        public static aspnet_WebEvent_Events Createaspnet_WebEvent_Events(global::System.String eventId, global::System.DateTime eventTimeUtc, global::System.DateTime eventTime, global::System.String eventType, global::System.Decimal eventSequence, global::System.Decimal eventOccurrence, global::System.Int32 eventCode, global::System.Int32 eventDetailCode, global::System.String machineName)
-        {
-            aspnet_WebEvent_Events aspnet_WebEvent_Events = new aspnet_WebEvent_Events();
-            aspnet_WebEvent_Events.EventId = eventId;
-            aspnet_WebEvent_Events.EventTimeUtc = eventTimeUtc;
-            aspnet_WebEvent_Events.EventTime = eventTime;
-            aspnet_WebEvent_Events.EventType = eventType;
-            aspnet_WebEvent_Events.EventSequence = eventSequence;
-            aspnet_WebEvent_Events.EventOccurrence = eventOccurrence;
-            aspnet_WebEvent_Events.EventCode = eventCode;
-            aspnet_WebEvent_Events.EventDetailCode = eventDetailCode;
-            aspnet_WebEvent_Events.MachineName = machineName;
-            return aspnet_WebEvent_Events;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String EventId
-        {
-            get
-            {
-                return _EventId;
-            }
-            set
-            {
-                if (_EventId != value)
-                {
-                    OnEventIdChanging(value);
-                    ReportPropertyChanging("EventId");
-                    _EventId = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("EventId");
-                    OnEventIdChanged();
-                }
-            }
-        }
-        private global::System.String _EventId;
-        partial void OnEventIdChanging(global::System.String value);
-        partial void OnEventIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime EventTimeUtc
-        {
-            get
-            {
-                return _EventTimeUtc;
-            }
-            set
-            {
-                OnEventTimeUtcChanging(value);
-                ReportPropertyChanging("EventTimeUtc");
-                _EventTimeUtc = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("EventTimeUtc");
-                OnEventTimeUtcChanged();
-            }
-        }
-        private global::System.DateTime _EventTimeUtc;
-        partial void OnEventTimeUtcChanging(global::System.DateTime value);
-        partial void OnEventTimeUtcChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime EventTime
-        {
-            get
-            {
-                return _EventTime;
-            }
-            set
-            {
-                OnEventTimeChanging(value);
-                ReportPropertyChanging("EventTime");
-                _EventTime = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("EventTime");
-                OnEventTimeChanged();
-            }
-        }
-        private global::System.DateTime _EventTime;
-        partial void OnEventTimeChanging(global::System.DateTime value);
-        partial void OnEventTimeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String EventType
-        {
-            get
-            {
-                return _EventType;
-            }
-            set
-            {
-                OnEventTypeChanging(value);
-                ReportPropertyChanging("EventType");
-                _EventType = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("EventType");
-                OnEventTypeChanged();
-            }
-        }
-        private global::System.String _EventType;
-        partial void OnEventTypeChanging(global::System.String value);
-        partial void OnEventTypeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal EventSequence
-        {
-            get
-            {
-                return _EventSequence;
-            }
-            set
-            {
-                OnEventSequenceChanging(value);
-                ReportPropertyChanging("EventSequence");
-                _EventSequence = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("EventSequence");
-                OnEventSequenceChanged();
-            }
-        }
-        private global::System.Decimal _EventSequence;
-        partial void OnEventSequenceChanging(global::System.Decimal value);
-        partial void OnEventSequenceChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal EventOccurrence
-        {
-            get
-            {
-                return _EventOccurrence;
-            }
-            set
-            {
-                OnEventOccurrenceChanging(value);
-                ReportPropertyChanging("EventOccurrence");
-                _EventOccurrence = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("EventOccurrence");
-                OnEventOccurrenceChanged();
-            }
-        }
-        private global::System.Decimal _EventOccurrence;
-        partial void OnEventOccurrenceChanging(global::System.Decimal value);
-        partial void OnEventOccurrenceChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 EventCode
-        {
-            get
-            {
-                return _EventCode;
-            }
-            set
-            {
-                OnEventCodeChanging(value);
-                ReportPropertyChanging("EventCode");
-                _EventCode = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("EventCode");
-                OnEventCodeChanged();
-            }
-        }
-        private global::System.Int32 _EventCode;
-        partial void OnEventCodeChanging(global::System.Int32 value);
-        partial void OnEventCodeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 EventDetailCode
-        {
-            get
-            {
-                return _EventDetailCode;
-            }
-            set
-            {
-                OnEventDetailCodeChanging(value);
-                ReportPropertyChanging("EventDetailCode");
-                _EventDetailCode = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("EventDetailCode");
-                OnEventDetailCodeChanged();
-            }
-        }
-        private global::System.Int32 _EventDetailCode;
-        partial void OnEventDetailCodeChanging(global::System.Int32 value);
-        partial void OnEventDetailCodeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Message
-        {
-            get
-            {
-                return _Message;
-            }
-            set
-            {
-                OnMessageChanging(value);
-                ReportPropertyChanging("Message");
-                _Message = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Message");
-                OnMessageChanged();
-            }
-        }
-        private global::System.String _Message;
-        partial void OnMessageChanging(global::System.String value);
-        partial void OnMessageChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String ApplicationPath
-        {
-            get
-            {
-                return _ApplicationPath;
-            }
-            set
-            {
-                OnApplicationPathChanging(value);
-                ReportPropertyChanging("ApplicationPath");
-                _ApplicationPath = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("ApplicationPath");
-                OnApplicationPathChanged();
-            }
-        }
-        private global::System.String _ApplicationPath;
-        partial void OnApplicationPathChanging(global::System.String value);
-        partial void OnApplicationPathChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String ApplicationVirtualPath
-        {
-            get
-            {
-                return _ApplicationVirtualPath;
-            }
-            set
-            {
-                OnApplicationVirtualPathChanging(value);
-                ReportPropertyChanging("ApplicationVirtualPath");
-                _ApplicationVirtualPath = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("ApplicationVirtualPath");
-                OnApplicationVirtualPathChanged();
-            }
-        }
-        private global::System.String _ApplicationVirtualPath;
-        partial void OnApplicationVirtualPathChanging(global::System.String value);
-        partial void OnApplicationVirtualPathChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String MachineName
-        {
-            get
-            {
-                return _MachineName;
-            }
-            set
-            {
-                OnMachineNameChanging(value);
-                ReportPropertyChanging("MachineName");
-                _MachineName = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("MachineName");
-                OnMachineNameChanged();
-            }
-        }
-        private global::System.String _MachineName;
-        partial void OnMachineNameChanging(global::System.String value);
-        partial void OnMachineNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String RequestUrl
-        {
-            get
-            {
-                return _RequestUrl;
-            }
-            set
-            {
-                OnRequestUrlChanging(value);
-                ReportPropertyChanging("RequestUrl");
-                _RequestUrl = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("RequestUrl");
-                OnRequestUrlChanged();
-            }
-        }
-        private global::System.String _RequestUrl;
-        partial void OnRequestUrlChanging(global::System.String value);
-        partial void OnRequestUrlChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String ExceptionType
-        {
-            get
-            {
-                return _ExceptionType;
-            }
-            set
-            {
-                OnExceptionTypeChanging(value);
-                ReportPropertyChanging("ExceptionType");
-                _ExceptionType = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("ExceptionType");
-                OnExceptionTypeChanged();
-            }
-        }
-        private global::System.String _ExceptionType;
-        partial void OnExceptionTypeChanging(global::System.String value);
-        partial void OnExceptionTypeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Details
-        {
-            get
-            {
-                return _Details;
-            }
-            set
-            {
-                OnDetailsChanging(value);
-                ReportPropertyChanging("Details");
-                _Details = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Details");
-                OnDetailsChanged();
-            }
-        }
-        private global::System.String _Details;
-        partial void OnDetailsChanging(global::System.String value);
-        partial void OnDetailsChanged();
-
-        #endregion
-    
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="BloodType")]
+    [EdmEntityTypeAttribute(NamespaceName="RIS_DB_Model", Name="BloodType")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class BloodType : EntityObject
@@ -3792,12 +2378,12 @@ namespace RIS_DBModel
         /// Create a new BloodType object.
         /// </summary>
         /// <param name="bloodTypeId">Initial value of the BloodTypeId property.</param>
-        /// <param name="bloodType1">Initial value of the BloodType1 property.</param>
-        public static BloodType CreateBloodType(global::System.Int32 bloodTypeId, global::System.String bloodType1)
+        /// <param name="bloodTypeName">Initial value of the BloodTypeName property.</param>
+        public static BloodType CreateBloodType(global::System.Int32 bloodTypeId, global::System.String bloodTypeName)
         {
             BloodType bloodType = new BloodType();
             bloodType.BloodTypeId = bloodTypeId;
-            bloodType.BloodType1 = bloodType1;
+            bloodType.BloodTypeName = bloodTypeName;
             return bloodType;
         }
 
@@ -3836,24 +2422,24 @@ namespace RIS_DBModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String BloodType1
+        public global::System.String BloodTypeName
         {
             get
             {
-                return _BloodType1;
+                return _BloodTypeName;
             }
             set
             {
-                OnBloodType1Changing(value);
-                ReportPropertyChanging("BloodType1");
-                _BloodType1 = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("BloodType1");
-                OnBloodType1Changed();
+                OnBloodTypeNameChanging(value);
+                ReportPropertyChanging("BloodTypeName");
+                _BloodTypeName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("BloodTypeName");
+                OnBloodTypeNameChanged();
             }
         }
-        private global::System.String _BloodType1;
-        partial void OnBloodType1Changing(global::System.String value);
-        partial void OnBloodType1Changed();
+        private global::System.String _BloodTypeName;
+        partial void OnBloodTypeNameChanging(global::System.String value);
+        partial void OnBloodTypeNameChanged();
 
         #endregion
     
@@ -3865,18 +2451,18 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_Patients_BloodTypes", "Patients")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Patients_BloodTypes", "Patients")]
         public EntityCollection<Patient> Patients
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Patient>("RIS_DBModel.FK_Patients_BloodTypes", "Patients");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Patient>("RIS_DB_Model.FK_Patients_BloodTypes", "Patients");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Patient>("RIS_DBModel.FK_Patients_BloodTypes", "Patients", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Patient>("RIS_DB_Model.FK_Patients_BloodTypes", "Patients", value);
                 }
             }
         }
@@ -3887,7 +2473,7 @@ namespace RIS_DBModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="Country")]
+    [EdmEntityTypeAttribute(NamespaceName="RIS_DB_Model", Name="Country")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class Country : EntityObject
@@ -3971,18 +2557,18 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_Users_Countries", "UserParticulars")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_UserParticulars_Countries", "UserParticulars")]
         public EntityCollection<UserParticular> UserParticulars
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UserParticular>("RIS_DBModel.FK_Users_Countries", "UserParticulars");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UserParticular>("RIS_DB_Model.FK_UserParticulars_Countries", "UserParticulars");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UserParticular>("RIS_DBModel.FK_Users_Countries", "UserParticulars", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UserParticular>("RIS_DB_Model.FK_UserParticulars_Countries", "UserParticulars", value);
                 }
             }
         }
@@ -3993,7 +2579,7 @@ namespace RIS_DBModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="Department")]
+    [EdmEntityTypeAttribute(NamespaceName="RIS_DB_Model", Name="Department")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class Department : EntityObject
@@ -4077,18 +2663,18 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_Staff_Departments", "Staff")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Staff_Departments", "Staff")]
         public EntityCollection<Staff> Staffs
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Staff>("RIS_DBModel.FK_Staff_Departments", "Staff");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Staff>("RIS_DB_Model.FK_Staff_Departments", "Staff");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Staff>("RIS_DBModel.FK_Staff_Departments", "Staff", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Staff>("RIS_DB_Model.FK_Staff_Departments", "Staff", value);
                 }
             }
         }
@@ -4099,153 +2685,7 @@ namespace RIS_DBModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="DicomImage")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class DicomImage : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new DicomImage object.
-        /// </summary>
-        /// <param name="dicomUID">Initial value of the DicomUID property.</param>
-        /// <param name="imageId">Initial value of the ImageId property.</param>
-        public static DicomImage CreateDicomImage(global::System.Guid dicomUID, global::System.Int32 imageId)
-        {
-            DicomImage dicomImage = new DicomImage();
-            dicomImage.DicomUID = dicomUID;
-            dicomImage.ImageId = imageId;
-            return dicomImage;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Guid DicomUID
-        {
-            get
-            {
-                return _DicomUID;
-            }
-            set
-            {
-                OnDicomUIDChanging(value);
-                ReportPropertyChanging("DicomUID");
-                _DicomUID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("DicomUID");
-                OnDicomUIDChanged();
-            }
-        }
-        private global::System.Guid _DicomUID;
-        partial void OnDicomUIDChanging(global::System.Guid value);
-        partial void OnDicomUIDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.Byte[] Image
-        {
-            get
-            {
-                return StructuralObject.GetValidValue(_Image);
-            }
-            set
-            {
-                OnImageChanging(value);
-                ReportPropertyChanging("Image");
-                _Image = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Image");
-                OnImageChanged();
-            }
-        }
-        private global::System.Byte[] _Image;
-        partial void OnImageChanging(global::System.Byte[] value);
-        partial void OnImageChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 ImageId
-        {
-            get
-            {
-                return _ImageId;
-            }
-            set
-            {
-                if (_ImageId != value)
-                {
-                    OnImageIdChanging(value);
-                    ReportPropertyChanging("ImageId");
-                    _ImageId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("ImageId");
-                    OnImageIdChanged();
-                }
-            }
-        }
-        private global::System.Int32 _ImageId;
-        partial void OnImageIdChanging(global::System.Int32 value);
-        partial void OnImageIdChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_DicomImages_Images", "Images")]
-        public Image Image1
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Image>("RIS_DBModel.FK_DicomImages_Images", "Images").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Image>("RIS_DBModel.FK_DicomImages_Images", "Images").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<Image> Image1Reference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Image>("RIS_DBModel.FK_DicomImages_Images", "Images");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Image>("RIS_DBModel.FK_DicomImages_Images", "Images", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="DrugAllergy")]
+    [EdmEntityTypeAttribute(NamespaceName="RIS_DB_Model", Name="DrugAllergy")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class DrugAllergy : EntityObject
@@ -4329,18 +2769,18 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "PatientsWithDrugAllergies", "Patients")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "PatientsWithDrugAllergies", "Patients")]
         public EntityCollection<Patient> Patients
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Patient>("RIS_DBModel.PatientsWithDrugAllergies", "Patients");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Patient>("RIS_DB_Model.PatientsWithDrugAllergies", "Patients");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Patient>("RIS_DBModel.PatientsWithDrugAllergies", "Patients", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Patient>("RIS_DB_Model.PatientsWithDrugAllergies", "Patients", value);
                 }
             }
         }
@@ -4351,7 +2791,7 @@ namespace RIS_DBModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="Image")]
+    [EdmEntityTypeAttribute(NamespaceName="RIS_DB_Model", Name="Image")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class Image : EntityObject
@@ -4362,16 +2802,14 @@ namespace RIS_DBModel
         /// Create a new Image object.
         /// </summary>
         /// <param name="imageId">Initial value of the ImageId property.</param>
-        /// <param name="takenBy">Initial value of the TakenBy property.</param>
         /// <param name="seriesId">Initial value of the SeriesId property.</param>
-        /// <param name="dicomUID">Initial value of the DicomUID property.</param>
-        public static Image CreateImage(global::System.Int32 imageId, global::System.Int32 takenBy, global::System.Int32 seriesId, global::System.Guid dicomUID)
+        /// <param name="takenBy">Initial value of the TakenBy property.</param>
+        public static Image CreateImage(global::System.Int32 imageId, global::System.Int32 seriesId, global::System.Guid takenBy)
         {
             Image image = new Image();
             image.ImageId = imageId;
-            image.TakenBy = takenBy;
             image.SeriesId = seriesId;
-            image.DicomUID = dicomUID;
+            image.TakenBy = takenBy;
             return image;
         }
 
@@ -4410,30 +2848,6 @@ namespace RIS_DBModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 TakenBy
-        {
-            get
-            {
-                return _TakenBy;
-            }
-            set
-            {
-                OnTakenByChanging(value);
-                ReportPropertyChanging("TakenBy");
-                _TakenBy = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("TakenBy");
-                OnTakenByChanged();
-            }
-        }
-        private global::System.Int32 _TakenBy;
-        partial void OnTakenByChanging(global::System.Int32 value);
-        partial void OnTakenByChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
         public global::System.Int32 SeriesId
         {
             get
@@ -4458,24 +2872,24 @@ namespace RIS_DBModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Guid DicomUID
+        public global::System.Guid TakenBy
         {
             get
             {
-                return _DicomUID;
+                return _TakenBy;
             }
             set
             {
-                OnDicomUIDChanging(value);
-                ReportPropertyChanging("DicomUID");
-                _DicomUID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("DicomUID");
-                OnDicomUIDChanged();
+                OnTakenByChanging(value);
+                ReportPropertyChanging("TakenBy");
+                _TakenBy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TakenBy");
+                OnTakenByChanged();
             }
         }
-        private global::System.Guid _DicomUID;
-        partial void OnDicomUIDChanging(global::System.Guid value);
-        partial void OnDicomUIDChanged();
+        private global::System.Guid _TakenBy;
+        partial void OnTakenByChanging(global::System.Guid value);
+        partial void OnTakenByChanged();
 
         #endregion
     
@@ -4487,92 +2901,16 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_DicomImages_Images", "DicomImages")]
-        public DicomImage DicomImage
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DicomImage>("RIS_DBModel.FK_DicomImages_Images", "DicomImages").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DicomImage>("RIS_DBModel.FK_DicomImages_Images", "DicomImages").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<DicomImage> DicomImageReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<DicomImage>("RIS_DBModel.FK_DicomImages_Images", "DicomImages");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<DicomImage>("RIS_DBModel.FK_DicomImages_Images", "DicomImages", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "fk_Images_PngImages", "PngImages")]
-        public PngImage PngImage
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PngImage>("RIS_DBModel.fk_Images_PngImages", "PngImages").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PngImage>("RIS_DBModel.fk_Images_PngImages", "PngImages").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<PngImage> PngImageReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PngImage>("RIS_DBModel.fk_Images_PngImages", "PngImages");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PngImage>("RIS_DBModel.fk_Images_PngImages", "PngImages", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_Images_Series", "Series")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Images_Series", "Series")]
         public Series Series
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Series>("RIS_DBModel.FK_Images_Series", "Series").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Series>("RIS_DB_Model.FK_Images_Series", "Series").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Series>("RIS_DBModel.FK_Images_Series", "Series").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Series>("RIS_DB_Model.FK_Images_Series", "Series").Value = value;
             }
         }
         /// <summary>
@@ -4584,13 +2922,73 @@ namespace RIS_DBModel
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Series>("RIS_DBModel.FK_Images_Series", "Series");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Series>("RIS_DB_Model.FK_Images_Series", "Series");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Series>("RIS_DBModel.FK_Images_Series", "Series", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Series>("RIS_DB_Model.FK_Images_Series", "Series", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Images_Staff", "Staff")]
+        public Staff Staff
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Staff>("RIS_DB_Model.FK_Images_Staff", "Staff").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Staff>("RIS_DB_Model.FK_Images_Staff", "Staff").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Staff> StaffReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Staff>("RIS_DB_Model.FK_Images_Staff", "Staff");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Staff>("RIS_DB_Model.FK_Images_Staff", "Staff", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Notes_Images", "Notes")]
+        public EntityCollection<Note> Notes
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Note>("RIS_DB_Model.FK_Notes_Images", "Notes");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Note>("RIS_DB_Model.FK_Notes_Images", "Notes", value);
                 }
             }
         }
@@ -4601,7 +2999,7 @@ namespace RIS_DBModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="Modality")]
+    [EdmEntityTypeAttribute(NamespaceName="RIS_DB_Model", Name="Modality")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class Modality : EntityObject
@@ -4685,18 +3083,18 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_Series_Modalities", "Series")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Series_Modalities", "Series")]
         public EntityCollection<Series> Series
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Series>("RIS_DBModel.FK_Series_Modalities", "Series");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Series>("RIS_DB_Model.FK_Series_Modalities", "Series");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Series>("RIS_DBModel.FK_Series_Modalities", "Series", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Series>("RIS_DB_Model.FK_Series_Modalities", "Series", value);
                 }
             }
         }
@@ -4707,7 +3105,155 @@ namespace RIS_DBModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="Patient")]
+    [EdmEntityTypeAttribute(NamespaceName="RIS_DB_Model", Name="Note")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Note : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Note object.
+        /// </summary>
+        /// <param name="noteId">Initial value of the NoteId property.</param>
+        /// <param name="noteContent">Initial value of the NoteContent property.</param>
+        /// <param name="imageId">Initial value of the ImageId property.</param>
+        public static Note CreateNote(global::System.Int32 noteId, global::System.String noteContent, global::System.Int32 imageId)
+        {
+            Note note = new Note();
+            note.NoteId = noteId;
+            note.NoteContent = noteContent;
+            note.ImageId = imageId;
+            return note;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 NoteId
+        {
+            get
+            {
+                return _NoteId;
+            }
+            set
+            {
+                if (_NoteId != value)
+                {
+                    OnNoteIdChanging(value);
+                    ReportPropertyChanging("NoteId");
+                    _NoteId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("NoteId");
+                    OnNoteIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _NoteId;
+        partial void OnNoteIdChanging(global::System.Int32 value);
+        partial void OnNoteIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String NoteContent
+        {
+            get
+            {
+                return _NoteContent;
+            }
+            set
+            {
+                OnNoteContentChanging(value);
+                ReportPropertyChanging("NoteContent");
+                _NoteContent = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("NoteContent");
+                OnNoteContentChanged();
+            }
+        }
+        private global::System.String _NoteContent;
+        partial void OnNoteContentChanging(global::System.String value);
+        partial void OnNoteContentChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ImageId
+        {
+            get
+            {
+                return _ImageId;
+            }
+            set
+            {
+                OnImageIdChanging(value);
+                ReportPropertyChanging("ImageId");
+                _ImageId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ImageId");
+                OnImageIdChanged();
+            }
+        }
+        private global::System.Int32 _ImageId;
+        partial void OnImageIdChanging(global::System.Int32 value);
+        partial void OnImageIdChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Notes_Images", "Images")]
+        public Image Image
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Image>("RIS_DB_Model.FK_Notes_Images", "Images").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Image>("RIS_DB_Model.FK_Notes_Images", "Images").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Image> ImageReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Image>("RIS_DB_Model.FK_Notes_Images", "Images");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Image>("RIS_DB_Model.FK_Notes_Images", "Images", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="RIS_DB_Model", Name="Patient")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class Patient : EntityObject
@@ -4717,18 +3263,45 @@ namespace RIS_DBModel
         /// <summary>
         /// Create a new Patient object.
         /// </summary>
+        /// <param name="patientId">Initial value of the PatientId property.</param>
         /// <param name="bloodTypeId">Initial value of the BloodTypeId property.</param>
-        /// <param name="userId">Initial value of the UserId property.</param>
-        public static Patient CreatePatient(global::System.Int32 bloodTypeId, global::System.Guid userId)
+        public static Patient CreatePatient(global::System.Guid patientId, global::System.Int32 bloodTypeId)
         {
             Patient patient = new Patient();
+            patient.PatientId = patientId;
             patient.BloodTypeId = bloodTypeId;
-            patient.UserId = userId;
             return patient;
         }
 
         #endregion
         #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid PatientId
+        {
+            get
+            {
+                return _PatientId;
+            }
+            set
+            {
+                if (_PatientId != value)
+                {
+                    OnPatientIdChanging(value);
+                    ReportPropertyChanging("PatientId");
+                    _PatientId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PatientId");
+                    OnPatientIdChanged();
+                }
+            }
+        }
+        private global::System.Guid _PatientId;
+        partial void OnPatientIdChanging(global::System.Guid value);
+        partial void OnPatientIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -4753,33 +3326,6 @@ namespace RIS_DBModel
         private global::System.Int32 _BloodTypeId;
         partial void OnBloodTypeIdChanging(global::System.Int32 value);
         partial void OnBloodTypeIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Guid UserId
-        {
-            get
-            {
-                return _UserId;
-            }
-            set
-            {
-                if (_UserId != value)
-                {
-                    OnUserIdChanging(value);
-                    ReportPropertyChanging("UserId");
-                    _UserId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("UserId");
-                    OnUserIdChanged();
-                }
-            }
-        }
-        private global::System.Guid _UserId;
-        partial void OnUserIdChanging(global::System.Guid value);
-        partial void OnUserIdChanged();
 
         #endregion
     
@@ -4791,18 +3337,18 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_Appointments_Patients", "Appointments")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Appointments_Patients", "Appointments")]
         public EntityCollection<Appointment> Appointments
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Appointment>("RIS_DBModel.FK_Appointments_Patients", "Appointments");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Appointment>("RIS_DB_Model.FK_Appointments_Patients", "Appointments");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Appointment>("RIS_DBModel.FK_Appointments_Patients", "Appointments", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Appointment>("RIS_DB_Model.FK_Appointments_Patients", "Appointments", value);
                 }
             }
         }
@@ -4813,16 +3359,16 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_Patients_aspnet_Users", "aspnet_Users")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Patients_aspnet_Users", "aspnet_Users")]
         public aspnet_Users aspnet_Users
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DBModel.FK_Patients_aspnet_Users", "aspnet_Users").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DB_Model.FK_Patients_aspnet_Users", "aspnet_Users").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DBModel.FK_Patients_aspnet_Users", "aspnet_Users").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DB_Model.FK_Patients_aspnet_Users", "aspnet_Users").Value = value;
             }
         }
         /// <summary>
@@ -4834,13 +3380,13 @@ namespace RIS_DBModel
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DBModel.FK_Patients_aspnet_Users", "aspnet_Users");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DB_Model.FK_Patients_aspnet_Users", "aspnet_Users");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Users>("RIS_DBModel.FK_Patients_aspnet_Users", "aspnet_Users", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Users>("RIS_DB_Model.FK_Patients_aspnet_Users", "aspnet_Users", value);
                 }
             }
         }
@@ -4851,16 +3397,16 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_Patients_BloodTypes", "BloodTypes")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Patients_BloodTypes", "BloodTypes")]
         public BloodType BloodType
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<BloodType>("RIS_DBModel.FK_Patients_BloodTypes", "BloodTypes").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<BloodType>("RIS_DB_Model.FK_Patients_BloodTypes", "BloodTypes").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<BloodType>("RIS_DBModel.FK_Patients_BloodTypes", "BloodTypes").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<BloodType>("RIS_DB_Model.FK_Patients_BloodTypes", "BloodTypes").Value = value;
             }
         }
         /// <summary>
@@ -4872,13 +3418,13 @@ namespace RIS_DBModel
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<BloodType>("RIS_DBModel.FK_Patients_BloodTypes", "BloodTypes");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<BloodType>("RIS_DB_Model.FK_Patients_BloodTypes", "BloodTypes");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<BloodType>("RIS_DBModel.FK_Patients_BloodTypes", "BloodTypes", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<BloodType>("RIS_DB_Model.FK_Patients_BloodTypes", "BloodTypes", value);
                 }
             }
         }
@@ -4889,18 +3435,18 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "PatientsWithDrugAllergies", "DrugAllergies")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "PatientsWithDrugAllergies", "DrugAllergies")]
         public EntityCollection<DrugAllergy> DrugAllergies
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DrugAllergy>("RIS_DBModel.PatientsWithDrugAllergies", "DrugAllergies");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<DrugAllergy>("RIS_DB_Model.PatientsWithDrugAllergies", "DrugAllergies");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DrugAllergy>("RIS_DBModel.PatientsWithDrugAllergies", "DrugAllergies", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<DrugAllergy>("RIS_DB_Model.PatientsWithDrugAllergies", "DrugAllergies", value);
                 }
             }
         }
@@ -4911,153 +3457,7 @@ namespace RIS_DBModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="PngImage")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class PngImage : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new PngImage object.
-        /// </summary>
-        /// <param name="imageUID">Initial value of the ImageUID property.</param>
-        /// <param name="imageID">Initial value of the ImageID property.</param>
-        public static PngImage CreatePngImage(global::System.Guid imageUID, global::System.Int32 imageID)
-        {
-            PngImage pngImage = new PngImage();
-            pngImage.ImageUID = imageUID;
-            pngImage.ImageID = imageID;
-            return pngImage;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Guid ImageUID
-        {
-            get
-            {
-                return _ImageUID;
-            }
-            set
-            {
-                OnImageUIDChanging(value);
-                ReportPropertyChanging("ImageUID");
-                _ImageUID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ImageUID");
-                OnImageUIDChanged();
-            }
-        }
-        private global::System.Guid _ImageUID;
-        partial void OnImageUIDChanging(global::System.Guid value);
-        partial void OnImageUIDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 ImageID
-        {
-            get
-            {
-                return _ImageID;
-            }
-            set
-            {
-                if (_ImageID != value)
-                {
-                    OnImageIDChanging(value);
-                    ReportPropertyChanging("ImageID");
-                    _ImageID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("ImageID");
-                    OnImageIDChanged();
-                }
-            }
-        }
-        private global::System.Int32 _ImageID;
-        partial void OnImageIDChanging(global::System.Int32 value);
-        partial void OnImageIDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.Byte[] Image
-        {
-            get
-            {
-                return StructuralObject.GetValidValue(_Image);
-            }
-            set
-            {
-                OnImageChanging(value);
-                ReportPropertyChanging("Image");
-                _Image = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Image");
-                OnImageChanged();
-            }
-        }
-        private global::System.Byte[] _Image;
-        partial void OnImageChanging(global::System.Byte[] value);
-        partial void OnImageChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "fk_Images_PngImages", "Images")]
-        public Image Image1
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Image>("RIS_DBModel.fk_Images_PngImages", "Images").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Image>("RIS_DBModel.fk_Images_PngImages", "Images").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<Image> Image1Reference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Image>("RIS_DBModel.fk_Images_PngImages", "Images");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Image>("RIS_DBModel.fk_Images_PngImages", "Images", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="Series")]
+    [EdmEntityTypeAttribute(NamespaceName="RIS_DB_Model", Name="Series")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class Series : EntityObject
@@ -5068,13 +3468,13 @@ namespace RIS_DBModel
         /// Create a new Series object.
         /// </summary>
         /// <param name="seriesId">Initial value of the SeriesId property.</param>
-        /// <param name="modalityType">Initial value of the ModalityType property.</param>
+        /// <param name="modalityId">Initial value of the ModalityId property.</param>
         /// <param name="studyId">Initial value of the StudyId property.</param>
-        public static Series CreateSeries(global::System.Int32 seriesId, global::System.Int32 modalityType, global::System.Int32 studyId)
+        public static Series CreateSeries(global::System.Int32 seriesId, global::System.Int32 modalityId, global::System.Int32 studyId)
         {
             Series series = new Series();
             series.SeriesId = seriesId;
-            series.ModalityType = modalityType;
+            series.ModalityId = modalityId;
             series.StudyId = studyId;
             return series;
         }
@@ -5114,24 +3514,24 @@ namespace RIS_DBModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 ModalityType
+        public global::System.Int32 ModalityId
         {
             get
             {
-                return _ModalityType;
+                return _ModalityId;
             }
             set
             {
-                OnModalityTypeChanging(value);
-                ReportPropertyChanging("ModalityType");
-                _ModalityType = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ModalityType");
-                OnModalityTypeChanged();
+                OnModalityIdChanging(value);
+                ReportPropertyChanging("ModalityId");
+                _ModalityId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ModalityId");
+                OnModalityIdChanged();
             }
         }
-        private global::System.Int32 _ModalityType;
-        partial void OnModalityTypeChanging(global::System.Int32 value);
-        partial void OnModalityTypeChanged();
+        private global::System.Int32 _ModalityId;
+        partial void OnModalityIdChanging(global::System.Int32 value);
+        partial void OnModalityIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -5167,18 +3567,18 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_Images_Series", "Images")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Images_Series", "Images")]
         public EntityCollection<Image> Images
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Image>("RIS_DBModel.FK_Images_Series", "Images");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Image>("RIS_DB_Model.FK_Images_Series", "Images");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Image>("RIS_DBModel.FK_Images_Series", "Images", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Image>("RIS_DB_Model.FK_Images_Series", "Images", value);
                 }
             }
         }
@@ -5189,16 +3589,16 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_Series_Modalities", "Modalities")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Series_Modalities", "Modalities")]
         public Modality Modality
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Modality>("RIS_DBModel.FK_Series_Modalities", "Modalities").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Modality>("RIS_DB_Model.FK_Series_Modalities", "Modalities").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Modality>("RIS_DBModel.FK_Series_Modalities", "Modalities").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Modality>("RIS_DB_Model.FK_Series_Modalities", "Modalities").Value = value;
             }
         }
         /// <summary>
@@ -5210,13 +3610,13 @@ namespace RIS_DBModel
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Modality>("RIS_DBModel.FK_Series_Modalities", "Modalities");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Modality>("RIS_DB_Model.FK_Series_Modalities", "Modalities");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Modality>("RIS_DBModel.FK_Series_Modalities", "Modalities", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Modality>("RIS_DB_Model.FK_Series_Modalities", "Modalities", value);
                 }
             }
         }
@@ -5227,16 +3627,16 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_Series_Studies", "Studies")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Series_Studies", "Studies")]
         public Study Study
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Study>("RIS_DBModel.FK_Series_Studies", "Studies").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Study>("RIS_DB_Model.FK_Series_Studies", "Studies").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Study>("RIS_DBModel.FK_Series_Studies", "Studies").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Study>("RIS_DB_Model.FK_Series_Studies", "Studies").Value = value;
             }
         }
         /// <summary>
@@ -5248,13 +3648,13 @@ namespace RIS_DBModel
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Study>("RIS_DBModel.FK_Series_Studies", "Studies");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Study>("RIS_DB_Model.FK_Series_Studies", "Studies");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Study>("RIS_DBModel.FK_Series_Studies", "Studies", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Study>("RIS_DB_Model.FK_Series_Studies", "Studies", value);
                 }
             }
         }
@@ -5265,7 +3665,7 @@ namespace RIS_DBModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="Staff")]
+    [EdmEntityTypeAttribute(NamespaceName="RIS_DB_Model", Name="Staff")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class Staff : EntityObject
@@ -5277,15 +3677,11 @@ namespace RIS_DBModel
         /// </summary>
         /// <param name="staffId">Initial value of the StaffId property.</param>
         /// <param name="departmentId">Initial value of the DepartmentId property.</param>
-        /// <param name="isFellow">Initial value of the IsFellow property.</param>
-        /// <param name="userId">Initial value of the UserId property.</param>
-        public static Staff CreateStaff(global::System.Int32 staffId, global::System.Int32 departmentId, global::System.Boolean isFellow, global::System.Guid userId)
+        public static Staff CreateStaff(global::System.Guid staffId, global::System.Int32 departmentId)
         {
             Staff staff = new Staff();
             staff.StaffId = staffId;
             staff.DepartmentId = departmentId;
-            staff.IsFellow = isFellow;
-            staff.UserId = userId;
             return staff;
         }
 
@@ -5295,9 +3691,9 @@ namespace RIS_DBModel
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 StaffId
+        public global::System.Guid StaffId
         {
             get
             {
@@ -5305,15 +3701,18 @@ namespace RIS_DBModel
             }
             set
             {
-                OnStaffIdChanging(value);
-                ReportPropertyChanging("StaffId");
-                _StaffId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("StaffId");
-                OnStaffIdChanged();
+                if (_StaffId != value)
+                {
+                    OnStaffIdChanging(value);
+                    ReportPropertyChanging("StaffId");
+                    _StaffId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("StaffId");
+                    OnStaffIdChanged();
+                }
             }
         }
-        private global::System.Int32 _StaffId;
-        partial void OnStaffIdChanging(global::System.Int32 value);
+        private global::System.Guid _StaffId;
+        partial void OnStaffIdChanging(global::System.Guid value);
         partial void OnStaffIdChanged();
     
         /// <summary>
@@ -5339,57 +3738,6 @@ namespace RIS_DBModel
         private global::System.Int32 _DepartmentId;
         partial void OnDepartmentIdChanging(global::System.Int32 value);
         partial void OnDepartmentIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean IsFellow
-        {
-            get
-            {
-                return _IsFellow;
-            }
-            set
-            {
-                OnIsFellowChanging(value);
-                ReportPropertyChanging("IsFellow");
-                _IsFellow = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("IsFellow");
-                OnIsFellowChanged();
-            }
-        }
-        private global::System.Boolean _IsFellow;
-        partial void OnIsFellowChanging(global::System.Boolean value);
-        partial void OnIsFellowChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Guid UserId
-        {
-            get
-            {
-                return _UserId;
-            }
-            set
-            {
-                if (_UserId != value)
-                {
-                    OnUserIdChanging(value);
-                    ReportPropertyChanging("UserId");
-                    _UserId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("UserId");
-                    OnUserIdChanged();
-                }
-            }
-        }
-        private global::System.Guid _UserId;
-        partial void OnUserIdChanging(global::System.Guid value);
-        partial void OnUserIdChanged();
 
         #endregion
     
@@ -5401,16 +3749,16 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_Staff_aspnet_Users", "aspnet_Users")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Staff_aspnet_Users", "aspnet_Users")]
         public aspnet_Users aspnet_Users
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DBModel.FK_Staff_aspnet_Users", "aspnet_Users").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DB_Model.FK_Staff_aspnet_Users", "aspnet_Users").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DBModel.FK_Staff_aspnet_Users", "aspnet_Users").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DB_Model.FK_Staff_aspnet_Users", "aspnet_Users").Value = value;
             }
         }
         /// <summary>
@@ -5422,13 +3770,13 @@ namespace RIS_DBModel
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DBModel.FK_Staff_aspnet_Users", "aspnet_Users");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DB_Model.FK_Staff_aspnet_Users", "aspnet_Users");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Users>("RIS_DBModel.FK_Staff_aspnet_Users", "aspnet_Users", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Users>("RIS_DB_Model.FK_Staff_aspnet_Users", "aspnet_Users", value);
                 }
             }
         }
@@ -5439,16 +3787,16 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_Staff_Departments", "Departments")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Staff_Departments", "Departments")]
         public Department Department
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Department>("RIS_DBModel.FK_Staff_Departments", "Departments").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Department>("RIS_DB_Model.FK_Staff_Departments", "Departments").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Department>("RIS_DBModel.FK_Staff_Departments", "Departments").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Department>("RIS_DB_Model.FK_Staff_Departments", "Departments").Value = value;
             }
         }
         /// <summary>
@@ -5460,13 +3808,57 @@ namespace RIS_DBModel
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Department>("RIS_DBModel.FK_Staff_Departments", "Departments");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Department>("RIS_DB_Model.FK_Staff_Departments", "Departments");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Department>("RIS_DBModel.FK_Staff_Departments", "Departments", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Department>("RIS_DB_Model.FK_Staff_Departments", "Departments", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Images_Staff", "Images")]
+        public EntityCollection<Image> Images
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Image>("RIS_DB_Model.FK_Images_Staff", "Images");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Image>("RIS_DB_Model.FK_Images_Staff", "Images", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Studies_Staff", "Studies")]
+        public EntityCollection<Study> Studies
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Study>("RIS_DB_Model.FK_Studies_Staff", "Studies");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Study>("RIS_DB_Model.FK_Studies_Staff", "Studies", value);
                 }
             }
         }
@@ -5477,7 +3869,7 @@ namespace RIS_DBModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="Study")]
+    [EdmEntityTypeAttribute(NamespaceName="RIS_DB_Model", Name="Study")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class Study : EntityObject
@@ -5488,17 +3880,17 @@ namespace RIS_DBModel
         /// Create a new Study object.
         /// </summary>
         /// <param name="studyId">Initial value of the StudyId property.</param>
-        /// <param name="isCompleted">Initial value of the IsCompleted property.</param>
+        /// <param name="description">Initial value of the Description property.</param>
         /// <param name="dateStarted">Initial value of the DateStarted property.</param>
-        /// <param name="studyUID">Initial value of the StudyUID property.</param>
+        /// <param name="isCompleted">Initial value of the IsCompleted property.</param>
         /// <param name="referredBy">Initial value of the ReferredBy property.</param>
-        public static Study CreateStudy(global::System.Int32 studyId, global::System.Boolean isCompleted, global::System.DateTime dateStarted, global::System.Guid studyUID, global::System.Int32 referredBy)
+        public static Study CreateStudy(global::System.Int32 studyId, global::System.String description, global::System.DateTime dateStarted, global::System.Boolean isCompleted, global::System.Guid referredBy)
         {
             Study study = new Study();
             study.StudyId = studyId;
-            study.IsCompleted = isCompleted;
+            study.Description = description;
             study.DateStarted = dateStarted;
-            study.StudyUID = studyUID;
+            study.IsCompleted = isCompleted;
             study.ReferredBy = referredBy;
             return study;
         }
@@ -5538,6 +3930,54 @@ namespace RIS_DBModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
+        public global::System.String Description
+        {
+            get
+            {
+                return _Description;
+            }
+            set
+            {
+                OnDescriptionChanging(value);
+                ReportPropertyChanging("Description");
+                _Description = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Description");
+                OnDescriptionChanged();
+            }
+        }
+        private global::System.String _Description;
+        partial void OnDescriptionChanging(global::System.String value);
+        partial void OnDescriptionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime DateStarted
+        {
+            get
+            {
+                return _DateStarted;
+            }
+            set
+            {
+                OnDateStartedChanging(value);
+                ReportPropertyChanging("DateStarted");
+                _DateStarted = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DateStarted");
+                OnDateStartedChanged();
+            }
+        }
+        private global::System.DateTime _DateStarted;
+        partial void OnDateStartedChanging(global::System.DateTime value);
+        partial void OnDateStartedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
         public global::System.Boolean IsCompleted
         {
             get
@@ -5556,6 +3996,30 @@ namespace RIS_DBModel
         private global::System.Boolean _IsCompleted;
         partial void OnIsCompletedChanging(global::System.Boolean value);
         partial void OnIsCompletedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> DateCompleted
+        {
+            get
+            {
+                return _DateCompleted;
+            }
+            set
+            {
+                OnDateCompletedChanging(value);
+                ReportPropertyChanging("DateCompleted");
+                _DateCompleted = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DateCompleted");
+                OnDateCompletedChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _DateCompleted;
+        partial void OnDateCompletedChanging(Nullable<global::System.DateTime> value);
+        partial void OnDateCompletedChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -5586,103 +4050,7 @@ namespace RIS_DBModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.DateTime DateStarted
-        {
-            get
-            {
-                return _DateStarted;
-            }
-            set
-            {
-                OnDateStartedChanging(value);
-                ReportPropertyChanging("DateStarted");
-                _DateStarted = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("DateStarted");
-                OnDateStartedChanged();
-            }
-        }
-        private global::System.DateTime _DateStarted;
-        partial void OnDateStartedChanging(global::System.DateTime value);
-        partial void OnDateStartedChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Description
-        {
-            get
-            {
-                return _Description;
-            }
-            set
-            {
-                OnDescriptionChanging(value);
-                ReportPropertyChanging("Description");
-                _Description = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Description");
-                OnDescriptionChanged();
-            }
-        }
-        private global::System.String _Description;
-        partial void OnDescriptionChanging(global::System.String value);
-        partial void OnDescriptionChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Guid StudyUID
-        {
-            get
-            {
-                return _StudyUID;
-            }
-            set
-            {
-                OnStudyUIDChanging(value);
-                ReportPropertyChanging("StudyUID");
-                _StudyUID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("StudyUID");
-                OnStudyUIDChanged();
-            }
-        }
-        private global::System.Guid _StudyUID;
-        partial void OnStudyUIDChanging(global::System.Guid value);
-        partial void OnStudyUIDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> DateCompleted
-        {
-            get
-            {
-                return _DateCompleted;
-            }
-            set
-            {
-                OnDateCompletedChanging(value);
-                ReportPropertyChanging("DateCompleted");
-                _DateCompleted = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("DateCompleted");
-                OnDateCompletedChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _DateCompleted;
-        partial void OnDateCompletedChanging(Nullable<global::System.DateTime> value);
-        partial void OnDateCompletedChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 ReferredBy
+        public global::System.Guid ReferredBy
         {
             get
             {
@@ -5697,8 +4065,8 @@ namespace RIS_DBModel
                 OnReferredByChanged();
             }
         }
-        private global::System.Int32 _ReferredBy;
-        partial void OnReferredByChanging(global::System.Int32 value);
+        private global::System.Guid _ReferredBy;
+        partial void OnReferredByChanging(global::System.Guid value);
         partial void OnReferredByChanged();
 
         #endregion
@@ -5711,18 +4079,78 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_Series_Studies", "Series")]
-        public EntityCollection<Series> Series
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Appointments_Studies", "Appointments")]
+        public EntityCollection<Appointment> Appointments
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Series>("RIS_DBModel.FK_Series_Studies", "Series");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Appointment>("RIS_DB_Model.FK_Appointments_Studies", "Appointments");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Series>("RIS_DBModel.FK_Series_Studies", "Series", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Appointment>("RIS_DB_Model.FK_Appointments_Studies", "Appointments", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Series_Studies", "Series")]
+        public EntityCollection<Series> Series
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Series>("RIS_DB_Model.FK_Series_Studies", "Series");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Series>("RIS_DB_Model.FK_Series_Studies", "Series", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_Studies_Staff", "Staff")]
+        public Staff Staff
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Staff>("RIS_DB_Model.FK_Studies_Staff", "Staff").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Staff>("RIS_DB_Model.FK_Studies_Staff", "Staff").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Staff> StaffReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Staff>("RIS_DB_Model.FK_Studies_Staff", "Staff");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Staff>("RIS_DB_Model.FK_Studies_Staff", "Staff", value);
                 }
             }
         }
@@ -5733,7 +4161,7 @@ namespace RIS_DBModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="sysdiagram")]
+    [EdmEntityTypeAttribute(NamespaceName="RIS_DB_Model", Name="sysdiagram")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class sysdiagram : EntityObject
@@ -5888,7 +4316,7 @@ namespace RIS_DBModel
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RIS_DBModel", Name="UserParticular")]
+    [EdmEntityTypeAttribute(NamespaceName="RIS_DB_Model", Name="UserParticular")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class UserParticular : EntityObject
@@ -5898,6 +4326,7 @@ namespace RIS_DBModel
         /// <summary>
         /// Create a new UserParticular object.
         /// </summary>
+        /// <param name="userId">Initial value of the UserId property.</param>
         /// <param name="nRIC">Initial value of the NRIC property.</param>
         /// <param name="firstName">Initial value of the FirstName property.</param>
         /// <param name="lastName">Initial value of the LastName property.</param>
@@ -5905,14 +4334,14 @@ namespace RIS_DBModel
         /// <param name="prefix">Initial value of the Prefix property.</param>
         /// <param name="dateOfBirth">Initial value of the DateOfBirth property.</param>
         /// <param name="address">Initial value of the Address property.</param>
-        /// <param name="contactNumber">Initial value of the ContactNumber property.</param>
         /// <param name="postalCode">Initial value of the PostalCode property.</param>
+        /// <param name="contactNumber">Initial value of the ContactNumber property.</param>
         /// <param name="countryOfResidence">Initial value of the CountryOfResidence property.</param>
         /// <param name="nationality">Initial value of the Nationality property.</param>
-        /// <param name="userId">Initial value of the UserId property.</param>
-        public static UserParticular CreateUserParticular(global::System.String nRIC, global::System.String firstName, global::System.String lastName, global::System.String gender, global::System.String prefix, global::System.DateTime dateOfBirth, global::System.String address, global::System.String contactNumber, global::System.String postalCode, global::System.Int32 countryOfResidence, global::System.String nationality, global::System.Guid userId)
+        public static UserParticular CreateUserParticular(global::System.Guid userId, global::System.String nRIC, global::System.String firstName, global::System.String lastName, global::System.String gender, global::System.String prefix, global::System.DateTime dateOfBirth, global::System.String address, global::System.String postalCode, global::System.String contactNumber, global::System.Int32 countryOfResidence, global::System.String nationality)
         {
             UserParticular userParticular = new UserParticular();
+            userParticular.UserId = userId;
             userParticular.NRIC = nRIC;
             userParticular.FirstName = firstName;
             userParticular.LastName = lastName;
@@ -5920,16 +4349,42 @@ namespace RIS_DBModel
             userParticular.Prefix = prefix;
             userParticular.DateOfBirth = dateOfBirth;
             userParticular.Address = address;
-            userParticular.ContactNumber = contactNumber;
             userParticular.PostalCode = postalCode;
+            userParticular.ContactNumber = contactNumber;
             userParticular.CountryOfResidence = countryOfResidence;
             userParticular.Nationality = nationality;
-            userParticular.UserId = userId;
             return userParticular;
         }
 
         #endregion
         #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                if (_UserId != value)
+                {
+                    OnUserIdChanging(value);
+                    ReportPropertyChanging("UserId");
+                    _UserId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("UserId");
+                    OnUserIdChanged();
+                }
+            }
+        }
+        private global::System.Guid _UserId;
+        partial void OnUserIdChanging(global::System.Guid value);
+        partial void OnUserIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -6152,30 +4607,6 @@ namespace RIS_DBModel
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String ContactNumber
-        {
-            get
-            {
-                return _ContactNumber;
-            }
-            set
-            {
-                OnContactNumberChanging(value);
-                ReportPropertyChanging("ContactNumber");
-                _ContactNumber = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("ContactNumber");
-                OnContactNumberChanged();
-            }
-        }
-        private global::System.String _ContactNumber;
-        partial void OnContactNumberChanging(global::System.String value);
-        partial void OnContactNumberChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
         public global::System.String PostalCode
         {
             get
@@ -6194,6 +4625,30 @@ namespace RIS_DBModel
         private global::System.String _PostalCode;
         partial void OnPostalCodeChanging(global::System.String value);
         partial void OnPostalCodeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ContactNumber
+        {
+            get
+            {
+                return _ContactNumber;
+            }
+            set
+            {
+                OnContactNumberChanging(value);
+                ReportPropertyChanging("ContactNumber");
+                _ContactNumber = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ContactNumber");
+                OnContactNumberChanged();
+            }
+        }
+        private global::System.String _ContactNumber;
+        partial void OnContactNumberChanging(global::System.String value);
+        partial void OnContactNumberChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -6242,33 +4697,6 @@ namespace RIS_DBModel
         private global::System.String _Nationality;
         partial void OnNationalityChanging(global::System.String value);
         partial void OnNationalityChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Guid UserId
-        {
-            get
-            {
-                return _UserId;
-            }
-            set
-            {
-                if (_UserId != value)
-                {
-                    OnUserIdChanging(value);
-                    ReportPropertyChanging("UserId");
-                    _UserId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("UserId");
-                    OnUserIdChanged();
-                }
-            }
-        }
-        private global::System.Guid _UserId;
-        partial void OnUserIdChanging(global::System.Guid value);
-        partial void OnUserIdChanged();
 
         #endregion
     
@@ -6280,16 +4708,16 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_UserParticulars_aspnet_Users", "aspnet_Users")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_UserParticulars_aspnet_Users", "aspnet_Users")]
         public aspnet_Users aspnet_Users
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DBModel.FK_UserParticulars_aspnet_Users", "aspnet_Users").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DB_Model.FK_UserParticulars_aspnet_Users", "aspnet_Users").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DBModel.FK_UserParticulars_aspnet_Users", "aspnet_Users").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DB_Model.FK_UserParticulars_aspnet_Users", "aspnet_Users").Value = value;
             }
         }
         /// <summary>
@@ -6301,13 +4729,13 @@ namespace RIS_DBModel
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DBModel.FK_UserParticulars_aspnet_Users", "aspnet_Users");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<aspnet_Users>("RIS_DB_Model.FK_UserParticulars_aspnet_Users", "aspnet_Users");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Users>("RIS_DBModel.FK_UserParticulars_aspnet_Users", "aspnet_Users", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<aspnet_Users>("RIS_DB_Model.FK_UserParticulars_aspnet_Users", "aspnet_Users", value);
                 }
             }
         }
@@ -6318,16 +4746,16 @@ namespace RIS_DBModel
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RIS_DBModel", "FK_Users_Countries", "Countries")]
+        [EdmRelationshipNavigationPropertyAttribute("RIS_DB_Model", "FK_UserParticulars_Countries", "Countries")]
         public Country Country
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Country>("RIS_DBModel.FK_Users_Countries", "Countries").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Country>("RIS_DB_Model.FK_UserParticulars_Countries", "Countries").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Country>("RIS_DBModel.FK_Users_Countries", "Countries").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Country>("RIS_DB_Model.FK_UserParticulars_Countries", "Countries").Value = value;
             }
         }
         /// <summary>
@@ -6339,13 +4767,13 @@ namespace RIS_DBModel
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Country>("RIS_DBModel.FK_Users_Countries", "Countries");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Country>("RIS_DB_Model.FK_UserParticulars_Countries", "Countries");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Country>("RIS_DBModel.FK_Users_Countries", "Countries", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Country>("RIS_DB_Model.FK_UserParticulars_Countries", "Countries", value);
                 }
             }
         }
