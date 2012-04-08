@@ -6,7 +6,7 @@ namespace Account
     /// Code behind for the ~/Account/ChangePasswordSuccess.aspx page
     /// </summary>
 
-    public partial class ChangePasswordSuccess : System.Web.UI.Page
+    public partial class ChangeQuestionSuccess : System.Web.UI.Page
     {
         /// <summary>
         /// Page load event

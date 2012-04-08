@@ -3,10 +3,10 @@
 namespace Account
 {
     /// <summary>
-    /// Code behind for the ~/Account/ChangePasswordSuccess.aspx page
+    /// Code behind for the ~/Account/Default.aspx page
     /// </summary>
 
-    public partial class ChangePasswordSuccess : System.Web.UI.Page
+    public partial class Default : System.Web.UI.Page
     {
         /// <summary>
         /// Page load event

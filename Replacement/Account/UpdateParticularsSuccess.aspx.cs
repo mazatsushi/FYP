@@ -2,11 +2,12 @@
 
 namespace Account
 {
+
     /// <summary>
-    /// Code behind for the ~/Account/ChangePasswordSuccess.aspx page
+    /// Code behind for the ~/Account/UpdateParticularsSuccess.aspx page
     /// </summary>
 
-    public partial class ChangePasswordSuccess : System.Web.UI.Page
+    public partial class UpdateParticularsSuccess : System.Web.UI.Page
     {
         /// <summary>
         /// Page load event

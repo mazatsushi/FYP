@@ -1,15 +1,15 @@
 ﻿using System;
+using System.Web;
 
 namespace Account
 {
     /// <summary>
-    /// Code behind for the ~/Account/ChangePassword.aspx page
+    /// Code behind for the ~/Account/ChangeQuestion.aspx page
     /// </summary>
-
-    public partial class ChangePassword : System.Web.UI.Page
+    public partial class ChangeQuestion : System.Web.UI.Page
     {
         /// <summary>
-        /// Event that triggers user clicks on the cancel button
+        /// Event handler for when the Cancel button in this page is clicked
         /// </summary>
         /// <param name="sender">The web element that triggered the event</param>
         /// <param name="e">Event parameters</param>
@@ -39,6 +39,27 @@ namespace Account
         /// <param name="e">Event parameters</param>
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (IsPostBack)
+                return;
+
+            Question.Text = HttpUtility.HtmlDecode(DatabaseHandler.GetQuestion(User.Identity.Name));
+        }
+
+        /// <summary>
+        /// Event handler for when the update button in this page is clicked
+        /// </summary>
+        /// <param name="sender">The web element that triggered the event</param>
+        /// <param name="e">Event parameters</param>
+        protected void UpdateButtonClick(object sender, EventArgs e)
+        {
+            var password = HttpUtility.HtmlEncode(Password.Text.Trim());
+            var question = HttpUtility.HtmlEncode(Question.Text.Trim());
+            var answer = HttpUtility.HtmlEncode(Answer.Text.Trim().ToLowerInvariant());
+
+            if (!DatabaseHandler.ChangeQuestionAndAnswer(User.Identity.Name, password, question, answer))
+                return;
+
+            Response.Redirect("~/Account/ChangeQuestionSuccess.aspx");
         }
     }
 }
