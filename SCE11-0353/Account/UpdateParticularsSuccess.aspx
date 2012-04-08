@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="Update Particulars" Language="C#" MasterPageFile="~/Site.master"
-    AutoEventWireup="true" CodeFile="UpdateParticularsSuccess.aspx.cs" Inherits="Account_UpdateParticularsSuccess"
+    AutoEventWireup="true" CodeFile="UpdateParticularsSuccess.aspx.cs" Inherits="Account.UpdateParticularsSuccess"
     Culture="en-SG" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">

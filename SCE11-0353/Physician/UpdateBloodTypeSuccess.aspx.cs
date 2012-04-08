@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace Radiologist
+namespace Physician
 {
     /// <summary>
-    /// Code behind for the ~/Radiologist/Default.aspx page
+    /// Code behind for the ~/Physician/UpdateBloodSuccess.aspx page
     /// </summary>
 
-    public partial class Default : System.Web.UI.Page
+    public partial class UpdateBloodTypeSuccess : System.Web.UI.Page
     {
         /// <summary>
         /// Page load event

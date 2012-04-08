@@ -1,17 +1,20 @@
 ﻿using System;
 
-/// <summary>
-/// Code behind for the ~/Admin/AddUserSuccess.aspx page
-/// </summary>
-
-public partial class Admin_AddUserSuccess : System.Web.UI.Page
+namespace Admin
 {
     /// <summary>
-    /// Page load event
+    /// Code behind for the ~/Admin/AddUserSuccess.aspx page
     /// </summary>
-    /// <param name="sender">The web element that triggered the event</param>
-    /// <param name="e">Event parameters</param>
-    protected void Page_Load(object sender, EventArgs e)
+
+    public partial class AddUserSuccess : System.Web.UI.Page
     {
+        /// <summary>
+        /// Page load event
+        /// </summary>
+        /// <param name="sender">The web element that triggered the event</param>
+        /// <param name="e">Event parameters</param>
+        protected void Page_Load(object sender, EventArgs e)
+        {
+        }
     }
 }

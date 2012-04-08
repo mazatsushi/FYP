@@ -1,14 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
-public partial class Physician_CreateImagingOrderSuccess : System.Web.UI.Page
+namespace Physician
 {
-    protected void Page_Load(object sender, EventArgs e)
+    /// <summary>
+    /// Code behind for the ~/Physician/CreateImagingOrderSuccess.aspx page
+    /// </summary>
+
+    public partial class CreateImagingOrderSuccess : System.Web.UI.Page
     {
 
+        /// <summary>
+        /// Page load event
+        /// </summary>
+        /// <param name="sender">The web element that triggered the event</param>
+        /// <param name="e">Event parameters</param>
+        protected void Page_Load(object sender, EventArgs e)
+        {
+        }
     }
 }

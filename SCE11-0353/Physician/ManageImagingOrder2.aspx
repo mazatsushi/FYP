@@ -1,5 +1,5 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="ManageImagingOrder2.aspx.cs" Culture="en-SG"
-    Inherits="Physician_ManageImagingOrder2" Language="C#" MasterPageFile="~/Site.master"
+    Inherits="Physician.ManageImagingOrder2" Language="C#" MasterPageFile="~/Site.master"
     Title="Manage Imaging Studies" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">

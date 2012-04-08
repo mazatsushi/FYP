@@ -1,5 +1,5 @@
-﻿<%@ Page AutoEventWireup="true" CodeFile="UploadDICOMSuccess.aspx.cs" Culture="en-SG"
-    Inherits="Radiologist_UploadDICOMSuccess" Language="C#" MasterPageFile="~/Site.master"
+﻿<%@ Page AutoEventWireup="true" CodeFile="UploadDicomSuccess.aspx.cs" Culture="en-SG"
+    Inherits="Radiologist.UploadDicomSuccess" Language="C#" MasterPageFile="~/Site.master"
     Title="Upload DICOM" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">

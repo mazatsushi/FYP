@@ -1,4 +1,4 @@
-﻿<%@ Page AutoEventWireup="true" CodeFile="AddUser.aspx.cs" Culture="en-SG" Inherits="Admin_AddUser"
+﻿<%@ Page AutoEventWireup="true" CodeFile="AddUser.aspx.cs" Culture="en-SG" Inherits="Admin.AddUser"
     Language="C#" MasterPageFile="~/Site.master" Title="Add New User" %>
 
 <%@ Register Assembly="skmValidators" Namespace="skmValidators" TagPrefix="skm" %>

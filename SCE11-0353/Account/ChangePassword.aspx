@@ -1,5 +1,5 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="ChangePassword.aspx.cs" Culture="en-SG"
-    Inherits="Account_ChangePassword" Language="C#" MasterPageFile="~/Site.master"
+    Inherits="Account.ChangePassword" Language="C#" MasterPageFile="~/Site.master"
     Title="Change Password" %>
 
 <asp:Content runat="server" ContentPlaceHolderID="HeadContent">
@@ -82,7 +82,7 @@
                         <div class="submitButton">
                             <asp:Button CommandName="ChangePassword" CssClass="buttons" ID="ChangePasswordButton"
                                 runat="server" Text="Change Password" ValidationGroup="ValidationGroup" />
-                            <asp:Button CausesValidation="False" CommandName="Cancel" CssClass="buttons" OnClick="CancelButton_Click"
+                            <asp:Button CausesValidation="False" CommandName="Cancel" CssClass="buttons" OnClick="CancelButtonClick"
                                 runat="server" Text="Cancel" />
                         </div>
                     </div>

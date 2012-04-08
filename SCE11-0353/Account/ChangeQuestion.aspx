@@ -1,5 +1,5 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="ChangeQuestion.aspx.cs" Culture="en-SG"
-    Inherits="Account_ChangeQuestion" Language="C#" MasterPageFile="~/Site.master"
+    Inherits="Account.ChangeQuestion" Language="C#" MasterPageFile="~/Site.master"
     Title="Change Security Question and Answer" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">

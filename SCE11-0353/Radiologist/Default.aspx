@@ -1,4 +1,4 @@
-﻿<%@ Page AutoEventWireup="true" CodeFile="Default.aspx.cs" Culture="en-SG" Inherits="Radiologist_Home"
+﻿<%@ Page AutoEventWireup="true" CodeFile="Default.aspx.cs" Culture="en-SG" Inherits="Radiologist.Default"
     Language="C#" MasterPageFile="~/Site.master" Title="Radiologist Home" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">

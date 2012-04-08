@@ -1,5 +1,5 @@
-﻿<%@ Page AutoEventWireup="true" CodeFile="UpdatePatientBloodType.aspx.cs" Culture="en-SG"
-    Inherits="Physician_UpdatePatientBloodType" Language="C#" MasterPageFile="~/Site.master"
+﻿<%@ Page AutoEventWireup="true" CodeFile="UpdateBloodType.aspx.cs" Culture="en-SG"
+    Inherits="Physician.UpdateBloodType" Language="C#" MasterPageFile="~/Site.master"
     Title="Update Patient Blood Type" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">

@@ -1,4 +1,4 @@
-<%@ Page AutoEventWireup="true" CodeFile="Login.aspx.cs" Culture="en-SG" Inherits="Account_Login"
+<%@ Page AutoEventWireup="true" CodeFile="Login.aspx.cs" Culture="en-SG" Inherits="Guest.Login"
     Language="C#" MasterPageFile="~/Site.master" Title="Login" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server">

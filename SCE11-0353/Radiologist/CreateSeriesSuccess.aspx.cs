@@ -3,11 +3,12 @@
 namespace Radiologist
 {
     /// <summary>
-    /// Code behind for the ~/Radiologist/Default.aspx page
+    /// Code behind for the ~/Radiologist/CreateSeriesSuccess.aspx page
     /// </summary>
 
-    public partial class Default : System.Web.UI.Page
+    public partial class CreateSeriesSuccess : System.Web.UI.Page
     {
+        // TODO: Finish this class
         /// <summary>
         /// Page load event
         /// </summary>
@@ -15,6 +16,10 @@ namespace Radiologist
         /// <param name="e">Event parameters</param>
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (IsPostBack)
+                return;
+
+            Status.Text += Request.QueryString["SeriesID"];
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Data;
+﻿using System.Data;
 using System;
 using System.Collections.Generic;
 using System.Configuration.Provider;
@@ -11,7 +10,8 @@ using RIS_DB_Model;
 
 /// <summary>
 /// This class handles database queries on behalf of the entire application.
-/// It is the closest we get to a dedicated data access layer.
+/// No error checking will be performed at this level, as it is expected for all incoming data from the controllers
+/// to be fully checked and desensitized.
 /// </summary>
 
 public class DatabaseHandler
@@ -35,11 +35,10 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB_Entities())
             {
-                var drug = new DrugAllergy
-                               {
-                                   DrugName = drugName
-                               };
-                db.DrugAllergies.AddObject(drug);
+                db.DrugAllergies.AddObject(new DrugAllergy
+                {
+                    DrugName = drugName
+                });
                 db.SaveChanges();
                 added = true;
             }
@@ -61,12 +60,11 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB_Entities())
             {
-                var staff = new Staff
+                db.Staffs.AddObject(new Staff
                 {
                     DepartmentId = GetDepartmentId(department.ToLowerInvariant()),
                     StaffId = Guid.Parse(userGuid)
-                };
-                db.Staffs.AddObject(staff);
+                });
                 db.SaveChanges();
                 added = true;
             }
@@ -101,31 +99,28 @@ public class DatabaseHandler
             using (var db = new RIS_DB_Entities())
             {
                 // Insert all data into user particulars table
-                var userParticulars = new UserParticular
-                                          {
-                                              NRIC = nric,
-                                              FirstName = firstName,
-                                              MiddleName = middleName,
-                                              LastName = lastName,
-                                              Gender = gender,
-                                              Prefix = namePrefix,
-                                              Suffix = nameSuffix,
-                                              DateOfBirth = dob,
-                                              Address = address,
-                                              ContactNumber = contact,
-                                              PostalCode = postalCode,
-                                              CountryOfResidence = countryId,
-                                              Nationality = nationality,
-                                              UserId = Guid.Parse(userGuid.ToString())
-                                          };
-
-                db.UserParticulars.AddObject(userParticulars);
+                db.UserParticulars.AddObject(new UserParticular
+                {
+                    NRIC = nric,
+                    FirstName = firstName,
+                    MiddleName = middleName,
+                    LastName = lastName,
+                    Gender = gender,
+                    Prefix = namePrefix,
+                    Suffix = nameSuffix,
+                    DateOfBirth = dob,
+                    Address = address,
+                    ContactNumber = contact,
+                    PostalCode = postalCode,
+                    CountryOfResidence = countryId,
+                    Nationality = nationality,
+                    UserId = Guid.Parse(userGuid.ToString())
+                });
                 db.SaveChanges();
                 addStatus = true;
             }
         }
-        catch (OptimisticConcurrencyException)
-        { }
+        catch (OptimisticConcurrencyException) { }
         return addStatus;
     }
 
@@ -168,7 +163,7 @@ public class DatabaseHandler
     /// </summary>
     /// <param name="time">The date and time of the appointment</param>
     /// <param name="studyId">The study Id</param>
-    /// <param name="patientNric">Patient's NRIC</param>
+    /// <param name="nric">Patient's NRIC</param>
     /// <returns>True if appointment is created. False otherwise.</returns>
     public static bool CreateAppointment(DateTime time, int studyId, string nric)
     {
@@ -180,7 +175,8 @@ public class DatabaseHandler
                 var guid = GetGuidFromNric(nric.ToUpperInvariant());
                 if (!string.IsNullOrEmpty(guid))
                 {
-                    db.Appointments.AddObject(new Appointment {
+                    db.Appointments.AddObject(new Appointment
+                    {
                         AppointmentDate = time,
                         StudyId = studyId,
                         PatientId = Guid.Parse(guid)
@@ -190,6 +186,7 @@ public class DatabaseHandler
             }
             created = true;
         }
+        catch (OptimisticConcurrencyException) { }
         catch (InvalidOperationException) { }
         return created;
     }
@@ -200,7 +197,7 @@ public class DatabaseHandler
     /// <param name="desc">A description of the imaging order</param>
     /// <param name="staffId">The physician that referred the patient</param>
     /// <returns>The study ID if the imaging order was created. -1 otherwise.</returns>
-    public static int CreateImagingOrder(string desc, Guid staffId)
+    public static int CreateImagingOrder(string desc, string staffId)
     {
         var id = -1;
         try
@@ -208,13 +205,13 @@ public class DatabaseHandler
             using (var db = new RIS_DB_Entities())
             {
                 var study = new Study
-                                {
-                                    IsCompleted = false,
-                                    Diagnosis = null,
-                                    DateStarted = DateTime.Now,
-                                    Description = desc.ToLowerInvariant(),
-                                    ReferredBy = staffId
-                                };
+                {
+                    IsCompleted = false,
+                    Diagnosis = null,
+                    DateStarted = DateTime.Now,
+                    Description = desc.ToLowerInvariant(),
+                    ReferredBy = Guid.Parse(staffId)
+                };
                 db.Studies.AddObject(study);
                 db.SaveChanges();
                 id = study.StudyId;
@@ -240,12 +237,11 @@ public class DatabaseHandler
             var guid = GetGuidFromNric(nric.ToUpperInvariant());
             using (var db = new RIS_DB_Entities())
             {
-                var p = new Patient
-                            {
-                                BloodTypeId = GetBloodTypeId(bloodType.ToUpperInvariant()),
-                                PatientId = Guid.Parse(guid)
-                            };
-                db.Patients.AddObject(p);
+                db.Patients.AddObject(new Patient
+                {
+                    BloodTypeId = GetBloodTypeId(bloodType.ToUpperInvariant()),
+                    PatientId = Guid.Parse(guid)
+                });
                 db.SaveChanges();
                 created = true;
             }
@@ -307,12 +303,18 @@ public class DatabaseHandler
     public static bool DrugExists(string drugName)
     {
         var found = false;
-        using (var db = new RIS_DB_Entities())
+        try
         {
-            found = (from d in db.DrugAllergies
-                     where d.DrugName.ToLowerInvariant().Equals(drugName.ToLowerInvariant())
-                     select d).Any();
+            using (var db = new RIS_DB_Entities())
+            {
+                found = (from d in db.DrugAllergies
+                         where d.DrugName.ToLowerInvariant().Equals(drugName.ToLowerInvariant())
+                         select d).Any();
+            }
         }
+        catch (ArgumentNullException) { }
+        catch (OptimisticConcurrencyException) { }
+        catch (InvalidOperationException) { }
         return found;
     }
 
@@ -421,7 +423,7 @@ public class DatabaseHandler
     /// <returns>A string array containing the names of all the roles stored in the data source.</returns>
     public static IEnumerable<string> GetAllRoles()
     {
-        return Roles.GetAllRoles();
+        return Roles.GetAllRoles().ToList();
     }
 
     /// <summary>
@@ -516,6 +518,25 @@ public class DatabaseHandler
     }
 
     /// <summary>
+    /// Gets the user GUID given the user's name
+    /// </summary>
+    /// <param name="username">The username</param>
+    /// <returns>The user GUID if found.</returns>
+    public static string GetGuidFromUserName(string username)
+    {
+        var guid = string.Empty;
+        try
+        {
+            using (var db = new RIS_DB_Entities())
+            {
+                guid = (db.aspnet_Users.Single(u => u.UserName.ToLowerInvariant().Equals(username.ToUpperInvariant()))).UserId.ToString();
+            }
+        }
+        catch (InvalidOperationException) { }
+        return guid;
+    }
+
+    /// <summary>
     /// Gets a modality's Id given its description
     /// </summary>
     /// <param name="desc"></param>
@@ -529,34 +550,11 @@ public class DatabaseHandler
     }
 
     /// <summary>
-    /// Gets patient information given their NRIC
-    /// </summary>
-    /// <param name="nric">Patient's NRIC</param>
-    public static void GetPatientDetails(string nric)
-    {
-        // TODO: Finish method
-        using (var db = new RIS_DB_Entities())
-        {
-            var details = from u in db.UserParticulars
-                          where u.NRIC.Equals(nric.ToUpperInvariant())
-                          select new
-                                     {
-                                         u.NRIC,
-                                         u.Prefix,
-                                         u.FirstName,
-                                         u.LastName,
-                                         u.Gender,
-                                         u.DateOfBirth
-                                     };
-        }
-    }
-
-    /// <summary>
     /// Gets patient's name given their nric
     /// </summary>
     /// <param name="nric">The user NRIC</param>
     /// <returns>A string containing the user's real name if found. Null otherwise.</returns>
-    public static string GetPatientName(string nric)
+    public static string GetUserNameFromNric(string nric)
     {
         var temp = string.Empty;
         try
@@ -571,85 +569,30 @@ public class DatabaseHandler
         return temp;
     }
 
-    public static bool SaveImages(string fileNameOnly)
-    {
-        // TODO: Finish this method
-        var success = false;
-        try
-        {
-            using (var db = new RIS_DB_Entities())
-            {
-                // Save DICOM
-                //var binData = File.ReadAllBytes(WorkDirectory + fileNameOnly + DicomExtension);
-                //var dicomFile = new DicomImage
-                //                {
-                //                    Image = new Binary(binData)
-                //                };
-                //db.DicomImages.InsertOnSubmit(dicomFile);
-                //var dicomUid = dicomFile.DicomUID;
-                //// Save PNGs
-                //var files = new DirectoryInfo(WorkDirectory).GetFiles("*.png");
-                //foreach (var fileInfo in files)
-                //{
-                //    var binData2 = File.ReadAllBytes(fileInfo.FullName);
-                //    var pngFile = new PngImage
-                //                      {
-                //                          Image = new Binary(binData2)
-                //                      };
-                //    db.PngImages.InsertOnSubmit(pngFile);
-                //}
-                //db.SubmitChanges();
-
-                // Delete DICOM
-                var files = new DirectoryInfo(WorkDirectory).GetFiles("*.dcm");
-                foreach (var fileInfo in files)
-                {
-                    fileInfo.Delete();
-                }
-                // Delete PNGs
-                files = new DirectoryInfo(WorkDirectory).GetFiles("*.png");
-                foreach (var fileInfo in files)
-                {
-                    fileInfo.Delete();
-                }
-                success = true;
-            }
-        }
-        catch (Exception) { }
-        return success;
-    }
-
     /// <summary>
     /// Gets all the studies that patient has been involved in
     /// </summary>
     /// <param name="nric">Patient NRIC</param>
     /// <returns>A list of all studies patient is involved in, if any.</returns>
-    public static IEnumerable GetStudies(string nric)
+    public static IEnumerable<Study> GetStudies(string nric)
     {
-        // TODO: Finish this method
+        IEnumerable<Study> temp = null;
         try
         {
             var patientId = GetGuidFromNric(nric.ToUpperInvariant());
 
             using (var db = new RIS_DB_Entities())
             {
-                return (from s in db.Studies
+                temp = (from s in db.Studies
                         join a in db.Appointments on s.StudyId equals a.StudyId
-                        where (a.PatientId.Equals(patientId))
-                        select new
-                        {
-                            ID = s.StudyId,
-                            Description = s.Description,
-                            Date_Started = s.DateStarted,
-                            Completed = s.IsCompleted,
-                            Date_Completed = s.DateCompleted,
-                            Diagnosis = s.Diagnosis,
-                        }).ToList();
+                        where (a.PatientId.Equals(Guid.Parse(patientId)))
+                        select s).ToList();
             }
 
         }
         catch (InvalidOperationException) { }
         catch (SqlException) { }
+        return temp;
     }
 
     /// <summary>
@@ -664,28 +607,6 @@ public class DatabaseHandler
         if (user != null)
             email = user.Email;
         return email;
-    }
-
-    /// <summary>
-    /// Gets the username given a NRIC
-    /// </summary>
-    /// <param name="nric">The user's NRIC</param>
-    /// <returns>A string containing the username if NRIC exists. Null otherwise</returns>
-    public static string GetUserName(string nric)
-    {
-        // TODO: Review the use of this method
-        var username = string.Empty;
-        try
-        {
-            using (var db = new RIS_DB_Entities())
-            {
-                var userGuid = db.UserParticulars.Single(up => up.NRIC.Equals(nric)).UserId;
-                username = db.aspnet_Users.Single(u => u.UserId.Equals(userGuid)).UserName;
-            }
-        }
-        catch (OptimisticConcurrencyException) { }
-        catch (InvalidOperationException) { }
-        return username;
     }
 
     /// <summary>
@@ -730,7 +651,6 @@ public class DatabaseHandler
     /// <returns>An object reference to the MembershipUser if an account exists. Null otherwise.</returns>
     public static MembershipUser GetUser(string username)
     {
-        // TODO: Review the use of this method
         return Membership.GetUser(username.ToLowerInvariant());
     }
 
@@ -751,7 +671,6 @@ public class DatabaseHandler
     /// <returns>True if prior medical records are found. False otherwise.</returns>
     public static bool HasMedicalRecords(string nric)
     {
-        // TODO: Rewrite this method
         var found = false;
         var guid = GetGuidFromNric(nric);
         try
@@ -763,6 +682,7 @@ public class DatabaseHandler
                          select p).Any();
             }
         }
+        catch (OptimisticConcurrencyException) { }
         catch (InvalidOperationException) { }
         return found;
     }
@@ -841,7 +761,6 @@ public class DatabaseHandler
     /// <returns>True if the user is successfully removed from a role. False otherwise.</returns>
     public static bool RemoveUserFromRole(string username, string rolename)
     {
-        // TODO: Check whether user is in role before removing
         var removed = false;
         try
         {
@@ -884,6 +803,54 @@ public class DatabaseHandler
         return success;
     }
 
+    public static bool SaveImages(string fileNameOnly)
+    {
+        // TODO: Finish this method
+        var success = false;
+        try
+        {
+            using (var db = new RIS_DB_Entities())
+            {
+                // Save DICOM
+                //var binData = File.ReadAllBytes(WorkDirectory + fileNameOnly + DicomExtension);
+                //var dicomFile = new DicomImage
+                //                {
+                //                    Image = new Binary(binData)
+                //                };
+                //db.DicomImages.InsertOnSubmit(dicomFile);
+                //var dicomUid = dicomFile.DicomUID;
+                //// Save PNGs
+                //var files = new DirectoryInfo(WorkDirectory).GetFiles("*.png");
+                //foreach (var fileInfo in files)
+                //{
+                //    var binData2 = File.ReadAllBytes(fileInfo.FullName);
+                //    var pngFile = new PngImage
+                //                      {
+                //                          Image = new Binary(binData2)
+                //                      };
+                //    db.PngImages.InsertOnSubmit(pngFile);
+                //}
+                //db.SubmitChanges();
+
+                // Delete DICOM
+                var files = new DirectoryInfo(WorkDirectory).GetFiles("*.dcm");
+                foreach (var fileInfo in files)
+                {
+                    fileInfo.Delete();
+                }
+                // Delete PNGs
+                files = new DirectoryInfo(WorkDirectory).GetFiles("*.png");
+                foreach (var fileInfo in files)
+                {
+                    fileInfo.Delete();
+                }
+                success = true;
+            }
+        }
+        catch (Exception) { }
+        return success;
+    }
+
     /// <summary>
     /// Checks if a series exists
     /// </summary>
@@ -891,14 +858,19 @@ public class DatabaseHandler
     /// <returns>True if the series exists. False otherwise</returns>
     public static bool SeriesExists(int seriesId)
     {
-        // TODO: Find out use of this method
         var found = false;
-        using (var db = new RIS_DB_Entities())
+        try
         {
-            found = (from d in db.Series
-                     where d.SeriesId == seriesId
-                     select d).Any();
+            using (var db = new RIS_DB_Entities())
+            {
+                found = (from d in db.Series
+                         where d.SeriesId == seriesId
+                         select d).Any();
+            }
         }
+        catch (ArgumentNullException) { }
+        catch (InvalidOperationException) { }
+        catch (OptimisticConcurrencyException) { }
         return found;
     }
 
@@ -909,7 +881,6 @@ public class DatabaseHandler
     /// <returns></returns>
     public static bool StudyExists(int studyId)
     {
-        // TODO: Find out use of this method
         var found = false;
         try
         {

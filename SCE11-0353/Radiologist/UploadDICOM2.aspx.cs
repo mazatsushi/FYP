@@ -1,53 +1,69 @@
 ﻿using System;
 
-public partial class Radiologist_UploadDICOM2 : System.Web.UI.Page
+namespace Radiologist
 {
-    private const string RedirectBack = "~/Radiologist/UploadDICOM.aspx";
-    private const string Redirect = "~/Radiologist/UploadDICOMSuccess.aspx";
-    private const string WorkDirectory = @"E:\Temp\Projects\FYP\SCE11-0353\Uploads\";
+    /// <summary>
+    /// Code behind for the ~/Radiologist/UploadDicom2.aspx page
+    /// </summary>
 
-    protected void Page_Load(object sender, EventArgs e)
+    public partial class UploadDicom2 : System.Web.UI.Page
     {
-        if (IsPostBack)
-            return;
+        // TODO: Rewrite this class to fit in with its predecessor (most probably removing)
+        private const string Redirect = "~/Radiologist/UploadDicomSuccess.aspx";
 
-        var seriesId = Request.QueryString["SeriesID"];
-        if (string.IsNullOrEmpty(seriesId))
-            Response.Redirect(RedirectBack);
-
-        Session["SeriesID"] = seriesId;
-    }
-
-    protected void UploadButtonClick(object sender, EventArgs e)
-    {
-        if (!FileUpload.HasFile)
+        /// <summary>
+        /// Page load event
+        /// </summary>
+        /// <param name="sender">The web element that triggered the event</param>
+        /// <param name="e">Event parameters</param>
+        protected void Page_Load(object sender, EventArgs e)
         {
-            ErrorMessage.Text = "Please select a file to upload.";
-            return;
+            if (IsPostBack)
+                return;
+
+            var seriesId = Request.QueryString["SeriesID"];
+            if (string.IsNullOrEmpty(seriesId))
+                Response.Redirect("~/Radiologist/UploadDicom.aspx");
+
+            Session["SeriesID"] = seriesId;
         }
 
-        if (!DicomHandler.IsDicomFile(FileUpload.PostedFile))
+        /// <summary>
+        /// Event that triggers when the upload button is clicked.
+        /// </summary>
+        /// <param name="sender">The web element that triggered the event</param>
+        /// <param name="e">Event parameters</param>
+        protected void UploadButtonClick(object sender, EventArgs e)
         {
-            ErrorMessage.Text = "Please select a DICOM file to upload.";
-            return;
-        }
+            if (!FileUpload.HasFile)
+            {
+                ErrorMessage.Text = "Please select a file to upload.";
+                return;
+            }
 
-        // Save the DICOM file in file system
-        var dcmFileName = FileUpload.FileName;
-        FileUpload.SaveAs(WorkDirectory + dcmFileName);
+            if (!DicomHandler.IsDicomFile(FileUpload.PostedFile))
+            {
+                ErrorMessage.Text = "Please select a DICOM file to upload.";
+                return;
+            }
 
-        string fileNameOnly;
-        if (!DicomHandler.Convert(dcmFileName, out fileNameOnly))
-        {
-            ErrorMessage.Text = "The uploaded DICOM file could not be processed.";
-            return;
-        }
+            // Save the DICOM file in file system
+            var dcmFileName = FileUpload.FileName;
+            FileUpload.SaveAs(@"E:\Temp\Projects\FYP\SCE11-0353\Uploads\" + dcmFileName);
 
-        // Now save it in the database
-        if (!DatabaseHandler.SaveImages(fileNameOnly))
-        {
-            ErrorMessage.Text = "An error occured while saving the images to database.";
-            return;
+            string fileNameOnly;
+            if (!DicomHandler.Convert(dcmFileName, out fileNameOnly))
+            {
+                ErrorMessage.Text = "The uploaded DICOM file could not be processed.";
+                return;
+            }
+
+            // Now save it in the database
+            if (!DatabaseHandler.SaveImages(fileNameOnly))
+            {
+                ErrorMessage.Text = "An error occured while saving the images to database.";
+                return;
+            }
         }
     }
 }

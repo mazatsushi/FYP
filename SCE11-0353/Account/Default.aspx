@@ -1,4 +1,4 @@
-﻿<%@ Page AutoEventWireup="true" CodeFile="Default.aspx.cs" Culture="en-SG" Inherits="Account_Default"
+﻿<%@ Page AutoEventWireup="true" CodeFile="Default.aspx.cs" Culture="en-SG" Inherits="Account.Default"
     Language="C#" MasterPageFile="~/Site.master" Title="Account Management" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">

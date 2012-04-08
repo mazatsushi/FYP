@@ -1,4 +1,4 @@
-﻿<%@ Page AutoEventWireup="true" CodeFile="UpdateUser.aspx.cs" Culture="en-SG" Inherits="Admin_UpdateUser"
+﻿<%@ Page AutoEventWireup="true" CodeFile="UpdateUser.aspx.cs" Culture="en-SG" Inherits="Admin.UpdateUser"
     Language="C#" MasterPageFile="~/Site.master" Title="Manage User Roles" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">

@@ -1,31 +1,49 @@
 ﻿using System;
 using System.Web;
 
-public partial class Radiologist_UploadDICOM : System.Web.UI.Page
+namespace Radiologist
 {
-    protected void Page_Load(object sender, EventArgs e)
-    {
-    }
+    /// <summary>
+    /// Code behind for the ~/Radiologist/UploadDicom.aspx page
+    /// </summary>
 
-    protected void RetrieveButtonClick(object sender, EventArgs e)
+    public partial class UploadDicom : System.Web.UI.Page
     {
-        Validate();
-        if (!IsValid)
-            return;
-
-        var seriesId = 0;
-        if (!int.TryParse(HttpUtility.HtmlEncode(SeriesID.Text.Trim()), out seriesId))
+        // TODO: Rewrite this class to use the common NRIC search feature
+        /// <summary>
+        /// Page load event
+        /// </summary>
+        /// <param name="sender">The web element that triggered the event</param>
+        /// <param name="e">Event parameters</param>
+        protected void Page_Load(object sender, EventArgs e)
         {
-            ErrorMessage.Text = "Invalid Series ID.";
-            return;
         }
 
-        if (!DatabaseHandler.SeriesExists(seriesId))
+        /// <summary>
+        /// Event that triggers when the retrieve button is clicked.
+        /// </summary>
+        /// <param name="sender">The web element that triggered the event</param>
+        /// <param name="e">Event parameters</param>
+        protected void RetrieveButtonClick(object sender, EventArgs e)
         {
-            ErrorMessage.Text = "Series ID does not exist.";
-            return;
-        }
+            Validate();
+            if (!IsValid)
+                return;
 
-        Server.Transfer("~/Radiologist/UploadDICOM2.aspx?SeriesID=" + seriesId);
+            var seriesId = 0;
+            if (!int.TryParse(HttpUtility.HtmlEncode(SeriesID.Text.Trim()), out seriesId))
+            {
+                ErrorMessage.Text = "Invalid Series ID.";
+                return;
+            }
+
+            if (!DatabaseHandler.SeriesExists(seriesId))
+            {
+                ErrorMessage.Text = "Series ID does not exist.";
+                return;
+            }
+
+            Response.Redirect("~/Radiologist/UploadDicom2.aspx?SeriesID=" + seriesId);
+        }
     }
 }

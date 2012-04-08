@@ -1,5 +1,5 @@
-﻿<%@ Page AutoEventWireup="true" CodeFile="StartNewSeriesSuccess.aspx.cs" Culture="en-SG"
-    Inherits="Radiologist_StartNewSeriesSuccess" Language="C#" MasterPageFile="~/Site.master"
+﻿<%@ Page AutoEventWireup="true" CodeFile="CreateSeriesSuccess.aspx.cs" Culture="en-SG"
+    Inherits="Radiologist.CreateSeriesSuccess" Language="C#" MasterPageFile="~/Site.master"
     Title="Start New Series" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">

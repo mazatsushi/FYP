@@ -1,5 +1,5 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="ResetPasswordSuccess.aspx.cs" Culture="en-SG"
-    Inherits="Guest_ResetPasswordSuccess" Language="C#" MasterPageFile="~/Site.master"
+    Inherits="Guest.ResetPasswordSuccess" Language="C#" MasterPageFile="~/Site.master"
     Title="Reset Password" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">

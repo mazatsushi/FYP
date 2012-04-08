@@ -1,4 +1,4 @@
-﻿<%@ Page AutoEventWireup="true" CodeFile="Logout.aspx.cs" Culture="en-SG" Inherits="Account_Logout"
+﻿<%@ Page AutoEventWireup="true" CodeFile="Logout.aspx.cs" Culture="en-SG" Inherits="Account.Logout"
     Language="C#" MasterPageFile="~/Site.master" Title="" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">

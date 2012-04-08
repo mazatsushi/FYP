@@ -1,5 +1,5 @@
-﻿<%@ Page AutoEventWireup="true" CodeFile="UpdateUserStep2.aspx.cs" Culture="en-SG"
-    Inherits="Admin_UpdateUserStep2" Language="C#" MasterPageFile="~/Site.master"
+﻿<%@ Page AutoEventWireup="true" CodeFile="UpdateUser2.aspx.cs" Culture="en-SG"
+    Inherits="Admin.UpdateUser2" Language="C#" MasterPageFile="~/Site.master"
     Title="Manage User Roles" %>
 
 <%@ Register Assembly="skmValidators" Namespace="skmValidators" TagPrefix="skm" %>

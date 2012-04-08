@@ -1,5 +1,5 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="AccountCreated.aspx.cs" Culture="en-SG"
-    Inherits="Account_AccountCreated" Language="C#" MasterPageFile="~/Site.master"
+    Inherits="Guest.AccountCreated" Language="C#" MasterPageFile="~/Site.master"
     Title="Account Created" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
