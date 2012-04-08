@@ -39,9 +39,9 @@
                 RenderingMode="List" DynamicHoverStyle-BackColor="#465c71" DynamicHorizontalOffset="2"
                 Font-Names="Verdana" Font-Size="1em" ForeColor="#ffffff" StaticSubMenuIndent="10px"
                 BackColor="#465c71" DataSourceID="siteMap" StaticDisplayLevels="1" MaximumDynamicDisplayLevels="3">
-                <DynamicHoverStyle ForeColor="Black" BackColor="#465c71"></DynamicHoverStyle>
+                <DynamicHoverStyle ForeColor="Black" BackColor="#465c71" />
                 <DynamicMenuItemStyle HorizontalPadding="5px" />
-                <DynamicMenuStyle BackColor="#465c71"></DynamicMenuStyle>
+                <DynamicMenuStyle BackColor="#465c71" />
                 <DynamicSelectedStyle BackColor="#465c71" />
                 <StaticHoverStyle ForeColor="Black" BackColor="#465c71" />
                 <StaticMenuItemStyle HorizontalPadding="12px" />

@@ -26,7 +26,7 @@ public class DicomHandler
     /// </summary>
     private const string WorkDirectory = @"E:\Temp\Projects\FYP\SCE11-0353\Uploads";
 
-    private static readonly string[] DicomExtension = new[] { ".dcm", ".DCM" };
+    private static readonly string[] DicomExtension = new string[] { ".dcm", ".DCM" };
     
     /// <summary>
     /// The command string that we pass into dicom2 for file conversion.

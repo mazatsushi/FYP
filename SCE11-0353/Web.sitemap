@@ -16,8 +16,8 @@
 			<siteMapNode url="~/Physician/UpdatePatientBloodType.aspx" title="Update Patient's Blood Type"/>
 		</siteMapNode>
 		<siteMapNode url="~/Radiologist/Default.aspx" title="Radiologist">
-      <siteMapNode url="~/Radiologist/StartNewSeries.aspx" title="Start New Series" />
-      <siteMapNode url="~/Radiologist/UploadDICOM.aspx" title="Upload DICOM" />
+			<siteMapNode url="~/Radiologist/StartNewSeries.aspx" title="Start New Series" />
+			<siteMapNode url="~/Radiologist/UploadDICOM.aspx" title="Upload DICOM" />
 		</siteMapNode>
 		<siteMapNode url="~/Account/Default.aspx" title="Account Management">
 			<siteMapNode url="~/Account/ChangePassword.aspx" title="Change Password" />

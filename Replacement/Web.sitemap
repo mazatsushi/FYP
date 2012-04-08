@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+
+  <siteMapNode url="#" title="Menu">
+    <siteMapNode url="~/Default.aspx" title="Home" />
+    <siteMapNode url="~/Admin/Default.aspx" title="Administrator">
+      <siteMapNode url="~/Admin/AddUser.aspx" title="Add New User" />
+      <siteMapNode url="~/Admin/UpdateUser.aspx" title="Manage User Roles" />
+    </siteMapNode>
+    <siteMapNode url="~/Patient/Default.aspx" title="Patient">
+
+    </siteMapNode>
+    <siteMapNode url="~/Physician/Default.aspx" title="Physician">
+      <siteMapNode url="~/Physician/AddAllergy.aspx" title="Add New Drug Allergy" />
+      <siteMapNode url="~/Physician/CreateImagingOrder.aspx" title="Create Imaging Order" />
+      <siteMapNode url="~/Physician/UpdatePatientBloodType.aspx" title="Update Patient's Blood Type"/>
+    </siteMapNode>
+    <siteMapNode url="~/Radiologist/Default.aspx" title="Radiologist">
+      <siteMapNode url="~/Radiologist/StartNewSeries.aspx" title="Start New Series" />
+      <siteMapNode url="~/Radiologist/UploadDICOM.aspx" title="Upload DICOM" />
+    </siteMapNode>
+    <siteMapNode url="~/Account/Default.aspx" title="Account Management">
+      <siteMapNode url="~/Account/ChangePassword.aspx" title="Change Password" />
+      <siteMapNode url="~/Account/ChangeQuestion.aspx" title="Change Security Question" />
+      <siteMapNode url="~/Account/UpdateParticulars.aspx" title="Update Particulars" />
+    </siteMapNode>
+    <siteMapNode url="~/About.aspx" title="About" />
+  </siteMapNode>
+
+</siteMap>
