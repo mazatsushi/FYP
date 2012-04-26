@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Globalization;
 
-/// <summary>
-/// Code behind for the ~/Radiologist/UploadDicomSuccess.aspx page
-/// </summary>
-
 public partial class SiteMaster : System.Web.UI.MasterPage
 {
-    /// <summary>
-    /// Page load event
-    /// </summary>
-    /// <param name="sender">The web element that triggered the event</param>
-    /// <param name="e">Event parameters</param>
+    // Page load event
     protected void Page_Load(object sender, EventArgs e)
     {
         yearLabel.Text = DateTime.Now.Year.ToString(CultureInfo.CurrentCulture);

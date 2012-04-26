@@ -1,12 +1,10 @@
-﻿using System.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration.Provider;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web.Security;
-using RIS_DB_Model;
 
 /// <summary>
 /// This class handles database queries on behalf of the entire application.
@@ -35,15 +33,15 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB_Entities())
             {
-                db.DrugAllergies.AddObject(new DrugAllergy
+                db.DrugAllergies.InsertOnSubmit(new DrugAllergy
                 {
                     DrugName = drugName
                 });
-                db.SaveChanges();
+                db.SubmitChanges();
                 added = true;
             }
         }
-        catch (OptimisticConcurrencyException) { }
+        catch (InvalidOperationException) { }
         return added;
     }
 
@@ -60,16 +58,16 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB_Entities())
             {
-                db.Staffs.AddObject(new Staff
+                db.Staffs.InsertOnSubmit(new Staff
                 {
                     DepartmentId = GetDepartmentId(department.ToLowerInvariant()),
                     StaffId = Guid.Parse(userGuid)
                 });
-                db.SaveChanges();
+                db.SubmitChanges();
                 added = true;
             }
         }
-        catch (OptimisticConcurrencyException) { }
+        catch (InvalidOperationException) { }
         return added;
     }
 
@@ -99,13 +97,13 @@ public class DatabaseHandler
             using (var db = new RIS_DB_Entities())
             {
                 // Insert all data into user particulars table
-                db.UserParticulars.AddObject(new UserParticular
+                db.UserParticulars.InsertOnSubmit(new UserParticular
                 {
                     NRIC = nric,
                     FirstName = firstName,
                     MiddleName = middleName,
                     LastName = lastName,
-                    Gender = gender,
+                    Gender = Char.Parse(gender),
                     Prefix = namePrefix,
                     Suffix = nameSuffix,
                     DateOfBirth = dob,
@@ -116,11 +114,11 @@ public class DatabaseHandler
                     Nationality = nationality,
                     UserId = Guid.Parse(userGuid.ToString())
                 });
-                db.SaveChanges();
+                db.SubmitChanges();
                 addStatus = true;
             }
         }
-        catch (OptimisticConcurrencyException) { }
+        catch (InvalidOperationException) { }
         return addStatus;
     }
 
@@ -175,18 +173,17 @@ public class DatabaseHandler
                 var guid = GetGuidFromNric(nric.ToUpperInvariant());
                 if (!string.IsNullOrEmpty(guid))
                 {
-                    db.Appointments.AddObject(new Appointment
+                    db.Appointments.InsertOnSubmit(new Appointment
                     {
                         AppointmentDate = time,
                         StudyId = studyId,
                         PatientId = Guid.Parse(guid)
                     });
                 }
-                db.SaveChanges();
+                db.SubmitChanges();
             }
             created = true;
         }
-        catch (OptimisticConcurrencyException) { }
         catch (InvalidOperationException) { }
         return created;
     }
@@ -212,12 +209,11 @@ public class DatabaseHandler
                     Description = desc.ToLowerInvariant(),
                     ReferredBy = Guid.Parse(staffId)
                 };
-                db.Studies.AddObject(study);
-                db.SaveChanges();
+                db.Studies.InsertOnSubmit(study);
+                db.SubmitChanges();
                 id = study.StudyId;
             }
         }
-        catch (OptimisticConcurrencyException) { }
         catch (InvalidOperationException) { }
         return id;
     }
@@ -237,16 +233,15 @@ public class DatabaseHandler
             var guid = GetGuidFromNric(nric.ToUpperInvariant());
             using (var db = new RIS_DB_Entities())
             {
-                db.Patients.AddObject(new Patient
+                db.Patients.InsertOnSubmit(new Patient
                 {
                     BloodTypeId = GetBloodTypeId(bloodType.ToUpperInvariant()),
                     PatientId = Guid.Parse(guid)
                 });
-                db.SaveChanges();
+                db.SubmitChanges();
                 created = true;
             }
         }
-        catch (OptimisticConcurrencyException) { }
         catch (InvalidOperationException) { }
         return created;
     }
@@ -269,12 +264,11 @@ public class DatabaseHandler
                     ModalityId = modId,
                     StudyId = studyId
                 };
-                db.Series.AddObject(s);
-                db.SaveChanges();
+                db.Series.InsertOnSubmit(s);
+                db.SubmitChanges();
                 created = s.SeriesId;
             }
         }
-        catch (OptimisticConcurrencyException) { }
         catch (InvalidOperationException) { }
         return created;
     }
@@ -308,12 +302,11 @@ public class DatabaseHandler
             using (var db = new RIS_DB_Entities())
             {
                 found = (from d in db.DrugAllergies
-                         where d.DrugName.ToLowerInvariant().Equals(drugName.ToLowerInvariant())
+                         where d.DrugName.Equals(drugName.ToLowerInvariant())
                          select d).Any();
             }
         }
         catch (ArgumentNullException) { }
-        catch (OptimisticConcurrencyException) { }
         catch (InvalidOperationException) { }
         return found;
     }
@@ -438,7 +431,7 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB_Entities())
             {
-                id = db.BloodTypes.Single(b => b.BloodTypeName.ToUpperInvariant().Equals(bloodType.ToUpperInvariant())).BloodTypeId;
+                id = db.BloodTypes.Single(b => b.BloodTypeName.Equals(bloodType.ToUpperInvariant())).BloodTypeId;
             }
         }
         catch (InvalidOperationException) { }
@@ -474,7 +467,7 @@ public class DatabaseHandler
         int id;
         using (var db = new RIS_DB_Entities())
         {
-            id = (db.Countries.Single(c => c.CountryName.ToLowerInvariant().Equals(countryName.ToLowerInvariant())).CountryId);
+            id = (db.Countries.Single(c => c.CountryName.Equals(countryName.ToLowerInvariant())).CountryId);
         }
         return id;
     }
@@ -491,7 +484,7 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB_Entities())
             {
-                id = db.Departments.Single(d => d.DepartmentName.ToLowerInvariant().Equals(department.ToLowerInvariant())).DepartmentId;
+                id = db.Departments.Single(d => d.DepartmentName.Equals(department.ToLowerInvariant())).DepartmentId;
             }
         }
         catch (InvalidOperationException) { }
@@ -510,7 +503,7 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB_Entities())
             {
-                guid = (db.UserParticulars.Single(u => u.NRIC.ToUpperInvariant().Equals(nric.ToUpperInvariant()))).UserId.ToString();
+                guid = (db.UserParticulars.Single(u => u.NRIC.Equals(nric.ToUpperInvariant()))).UserId.ToString();
             }
         }
         catch (InvalidOperationException) { }
@@ -522,14 +515,14 @@ public class DatabaseHandler
     /// </summary>
     /// <param name="username">The username</param>
     /// <returns>The user GUID if found.</returns>
-    public static string GetGuidFromUserName(string username)
+    private static string GetGuidFromUserName(string username)
     {
         var guid = string.Empty;
         try
         {
             using (var db = new RIS_DB_Entities())
             {
-                guid = (db.aspnet_Users.Single(u => u.UserName.ToLowerInvariant().Equals(username.ToUpperInvariant()))).UserId.ToString();
+                guid = (db.aspnet_Users.Single(u => u.UserName.Equals(username.ToLowerInvariant()))).UserId.ToString();
             }
         }
         catch (InvalidOperationException) { }
@@ -545,28 +538,22 @@ public class DatabaseHandler
     {
         using (var db = new RIS_DB_Entities())
         {
-            return db.Modalities.Single(b => b.Description.ToLowerInvariant().Equals(desc.ToLowerInvariant())).ModalityId;
+            return db.Modalities.Single(b => b.Description.Equals(desc.ToLowerInvariant())).ModalityId;
         }
     }
 
     /// <summary>
-    /// Gets patient's name given their nric
+    /// Gets the password reset question of a user given the user name
     /// </summary>
-    /// <param name="nric">The user NRIC</param>
-    /// <returns>A string containing the user's real name if found. Null otherwise.</returns>
-    public static string GetUserNameFromNric(string nric)
+    /// <param name="username">The user name</param>
+    /// <returns>The string containing the password reset question if account exists. Null otherwise.</returns>
+    public static string GetQuestion(string username)
     {
-        var temp = string.Empty;
-        try
-        {
-            using (var db = new RIS_DB_Entities())
-            {
-                var user = (db.UserParticulars.Single(u => u.NRIC.ToUpperInvariant().Equals(nric.ToUpperInvariant())));
-                temp = user.FirstName + " " + user.LastName;
-            }
-        }
-        catch (InvalidOperationException) { }
-        return temp;
+        var question = string.Empty;
+        var membershipUser = Membership.GetUser(username.ToLowerInvariant());
+        if (membershipUser != null)
+            question = membershipUser.PasswordQuestion;
+        return question;
     }
 
     /// <summary>
@@ -610,48 +597,42 @@ public class DatabaseHandler
     }
 
     /// <summary>
-    /// Gets all of a user particulars given their user id
+    /// Gets patient's name given their nric
     /// </summary>
-    /// <param name="userGuid">User Id</param>
-    /// <returns>A class representing a tuple in the UserParticulars table</returns>
-    public static UserParticular GetUserParticulars(string userGuid)
+    /// <param name="nric">The user NRIC</param>
+    /// <returns>A string containing the user's real name if found. Null otherwise.</returns>
+    public static string GetUserNameFromNric(string nric)
     {
-        // TODO: Review the use of this method
-        UserParticular temp = null;
+        var temp = string.Empty;
         try
         {
             using (var db = new RIS_DB_Entities())
             {
-                temp = db.UserParticulars.Single(u => u.UserId.Equals(Guid.Parse(userGuid)));
+                var user = (db.UserParticulars.Single(u => u.NRIC.Equals(nric.ToUpperInvariant())));
+                temp = user.FirstName + " " + user.LastName;
             }
         }
-        catch (OptimisticConcurrencyException) { }
         catch (InvalidOperationException) { }
         return temp;
     }
 
     /// <summary>
-    /// Gets the password reset question of a user given the user name
+    /// Gets all of a user particulars given their user id
     /// </summary>
-    /// <param name="username">The user name</param>
-    /// <returns>The string containing the password reset question if account exists. Null otherwise.</returns>
-    public static string GetQuestion(string username)
+    /// <param name="username">Username</param>
+    /// <returns>A class representing a tuple in the UserParticulars table</returns>
+    public static UserParticular GetUserParticulars(string username)
     {
-        var question = string.Empty;
-        var membershipUser = Membership.GetUser(username.ToLowerInvariant());
-        if (membershipUser != null)
-            question = membershipUser.PasswordQuestion;
-        return question;
-    }
-
-    /// <summary>
-    /// Gets the MembershipUser object given the username
-    /// </summary>
-    /// <param name="username">The user name</param>
-    /// <returns>An object reference to the MembershipUser if an account exists. Null otherwise.</returns>
-    public static MembershipUser GetUser(string username)
-    {
-        return Membership.GetUser(username.ToLowerInvariant());
+        UserParticular temp = null;
+        try
+        {
+            using (var db = new RIS_DB_Entities())
+            {
+                temp = db.UserParticulars.Single(u => u.UserId.Equals(Guid.Parse(GetGuidFromUserName(username))));
+            }
+        }
+        catch (InvalidOperationException) { }
+        return temp;
     }
 
     /// <summary>
@@ -682,7 +663,6 @@ public class DatabaseHandler
                          select p).Any();
             }
         }
-        catch (OptimisticConcurrencyException) { }
         catch (InvalidOperationException) { }
         return found;
     }
@@ -870,7 +850,6 @@ public class DatabaseHandler
         }
         catch (ArgumentNullException) { }
         catch (InvalidOperationException) { }
-        catch (OptimisticConcurrencyException) { }
         return found;
     }
 
@@ -898,18 +877,20 @@ public class DatabaseHandler
     /// <summary>
     /// Updates the account information of a user
     /// </summary>
-    /// <param name="u">The MembershipUser object reference to the user account</param>
+    /// <param name="username">Username</param>
+    /// /// <param name="email">User's new email address</param>
     /// <returns>True if update is successful. False otherwise.</returns>
-    public static bool UpdateAccount(MembershipUser u)
+    public static bool UpdateAccount(string username, string email)
     {
         var update = false;
         try
         {
-            Membership.UpdateUser(u);
+            var user = Membership.GetUser(username);
+            user.Email = email;
+            Membership.UpdateUser(user);
             update = true;
         }
-        catch (ProviderException)
-        { }
+        catch (ProviderException) { }
         return update;
     }
 
@@ -928,7 +909,7 @@ public class DatabaseHandler
             {
                 var patient = db.Patients.Single(p => p.PatientId.Equals(Guid.Parse(GetGuidFromNric(nric.ToUpperInvariant()))));
                 patient.BloodTypeId = GetBloodTypeId(bloodType);
-                db.SaveChanges();
+                db.SubmitChanges();
             }
             updated = true;
         }
@@ -939,7 +920,7 @@ public class DatabaseHandler
     /// <summary>
     /// Updates the personal information of a user
     /// </summary>
-    /// <param name="userGuid">User ID</param>
+    /// <param name="username">The username</param>
     /// <param name="firstName">User's first name</param>
     /// <param name="middleName">User's middle name</param>
     /// <param name="lastName">User's last name</param>
@@ -951,14 +932,14 @@ public class DatabaseHandler
     /// <param name="countryId">The country ID</param>
     /// <param name="nationality">The user's nationality</param>
     /// <returns>True if the update is successful. False otherwise.</returns>
-    public static bool UpdateParticulars(object userGuid, string firstName, string middleName, string lastName, string namePrefix, string nameSuffix, string address, string contact, string postalCode, int countryId, string nationality)
+    public static bool UpdateParticulars(string username, string firstName, string middleName, string lastName, string namePrefix, string nameSuffix, string address, string contact, string postalCode, int countryId, string nationality)
     {
         var success = false;
         try
         {
             using (var db = new RIS_DB_Entities())
             {
-                var user = db.UserParticulars.Single(u => u.UserId.Equals(Guid.Parse(userGuid.ToString())));
+                var user = db.UserParticulars.Single(u => u.UserId.Equals(Guid.Parse(GetGuidFromUserName(username))));
                 user.FirstName = firstName;
                 user.MiddleName = middleName;
                 user.LastName = lastName;
@@ -969,11 +950,10 @@ public class DatabaseHandler
                 user.PostalCode = postalCode;
                 user.CountryOfResidence = countryId;
                 user.Nationality = nationality;
-                db.SaveChanges();
+                db.SubmitChanges();
             }
             success = true;
         }
-        catch (OptimisticConcurrencyException) { }
         catch (InvalidOperationException) { }
         return success;
     }

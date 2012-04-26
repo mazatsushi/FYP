@@ -266,8 +266,8 @@ body
     border-radius: 4px 0px 0px 0px;
     min-height: 720px;
     padding: 1px 10px 1px 10px;
-    -webkit-border-radius: 4px 0 0 0;
-    -moz-border-radius: 4px 0 0 0;
+    -webkit-border-radius: 4px 0px 0px 0px;
+    -moz-border-radius: 4px 0px 0px 0px;
 }
 
 /* Miscellaneous
@@ -366,7 +366,7 @@ div.menu ul
 div.menu ul li a, div.menu ul li a:visited
 {
     background-color: #465c71;
-    border: 1px #4e667d solid;
+    border: 0px #4e667d solid;
     color: #dde4ec;
     display: block;
     line-height: 1.35em;

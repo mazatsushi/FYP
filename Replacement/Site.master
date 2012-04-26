@@ -1,10 +1,10 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="SiteMaster" %>
+﻿<%@ Master AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="SiteMaster" Language="C#" %>
 
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head runat="server">
-    <link href="~/Styles/StyleSheet.css" rel="Stylesheet" type="text/css" />
-    <title />
+    <link rel="Stylesheet" type="text/css" href="~/Styles/StyleSheet.css" />
+    <title></title>
     <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>
 <body>
@@ -35,10 +35,10 @@
             <%--The data source of the navigation menu.--%>
             <asp:SiteMapDataSource ID="siteMap" runat="server" ShowStartingNode="False" />
             <%--The navigation menu of the application.--%>
-            <asp:Menu BackColor="#465c71" CssClass="menu" DataSourceID="siteMap" DynamicHorizontalOffset="2"
-                DynamicHoverStyle-BackColor="#465c71" Font-Names="Verdana" Font-Size="1em" ForeColor="#ffffff"
-                ItemWrap="True" MaximumDynamicDisplayLevels="3" Orientation="Horizontal" RenderingMode="List"
-                runat="server" StaticDisplayLevels="1" StaticSubMenuIndent="10px">
+            <asp:Menu runat="server" CssClass="menu" ItemWrap="True" Orientation="Horizontal"
+                RenderingMode="List" DynamicHoverStyle-BackColor="#465c71" DynamicHorizontalOffset="2"
+                Font-Names="Verdana" Font-Size="1em" ForeColor="#ffffff" StaticSubMenuIndent="10px"
+                BackColor="#465c71" DataSourceID="siteMap" StaticDisplayLevels="1" MaximumDynamicDisplayLevels="3">
                 <DynamicHoverStyle ForeColor="Black" BackColor="#465c71" />
                 <DynamicMenuItemStyle HorizontalPadding="5px" />
                 <DynamicMenuStyle BackColor="#465c71" />

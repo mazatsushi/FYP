@@ -12,34 +12,27 @@ namespace Account
     public partial class UpdateParticulars : System.Web.UI.Page
     {
         /// <summary>
-        /// Page load event
+        /// Event handler for when the Cancel button in this page is clicked
         /// </summary>
         /// <param name="sender">The web element that triggered the event</param>
         /// <param name="e">Event parameters</param>
-        protected void Page_Load(object sender, EventArgs e)
+        protected void CancelButtonClick(object sender, EventArgs e)
         {
-            if (IsPostBack)
-                return;
-
-            // Fill in account information fields
-            var user = DatabaseHandler.GetUser(User.Identity.Name);
-            Email.Text = user.Email;
-
-            // Fill in personal information fields
-            var particulars = DatabaseHandler.GetUserParticulars(user.ProviderUserKey.ToString());
-            if (null == particulars)
-                return;
-
-            FirstName.Text = particulars.FirstName;
-            MiddleName.Text = particulars.MiddleName;
-            LastName.Text = particulars.LastName;
-            Prefix.SelectedValue = particulars.Prefix.ToString(CultureInfo.InvariantCulture);
-            Suffix.SelectedValue = particulars.Suffix;
-            Address.Text = particulars.Address;
-            ContactNumber.Text = particulars.ContactNumber;
-            PostalCode.Text = particulars.PostalCode;
-            Nationality.Text = particulars.Nationality;
-            Country.SelectedValue = DatabaseHandler.GetCountryName(particulars.CountryOfResidence);
+            switch (DatabaseHandler.FindMostPrivilegedRole(User.Identity.Name))
+            {
+                case 0:
+                    Response.Redirect("~/Admin/Default.aspx");
+                    break;
+                case 1:
+                    Response.Redirect("~/Patient/Default.aspx");
+                    break;
+                case 2:
+                    Response.Redirect("~/Physician/Default.aspx");
+                    break;
+                case 3:
+                    Response.Redirect("~/Radiologist/Default.aspx");
+                    break;
+            }
         }
 
         /// <summary>
@@ -173,6 +166,36 @@ namespace Account
         }
 
         /// <summary>
+        /// Page load event
+        /// </summary>
+        /// <param name="sender">The web element that triggered the event</param>
+        /// <param name="e">Event parameters</param>
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (IsPostBack)
+                return;
+
+            // Fill in account information fields
+            Email.Text = DatabaseHandler.GetUserEmail(User.Identity.Name);
+
+            // Fill in personal information fields
+            var particulars = DatabaseHandler.GetUserParticulars(User.Identity.Name);
+            if (null == particulars)
+                return;
+
+            FirstName.Text = particulars.FirstName;
+            MiddleName.Text = particulars.MiddleName;
+            LastName.Text = particulars.LastName;
+            Prefix.SelectedValue = particulars.Prefix.ToString(CultureInfo.InvariantCulture);
+            Suffix.SelectedValue = particulars.Suffix;
+            Address.Text = particulars.Address;
+            ContactNumber.Text = particulars.ContactNumber;
+            PostalCode.Text = particulars.PostalCode;
+            Nationality.Text = particulars.Nationality;
+            Country.SelectedValue = DatabaseHandler.GetCountryName(particulars.CountryOfResidence);
+        }
+
+        /// <summary>
         /// Event that triggers when the update button is clicked.
         /// </summary>
         /// <param name="sender">The web element that triggered the event</param>
@@ -181,24 +204,19 @@ namespace Account
         {
             if (!IsValid)
                 return;
-
             /*
-         * At this point, all user entered information has been verified.
-         * We shall now perform two critical actions:
-         * 1) Programmatically update account information via Membership
-         *  1.1) Note that since we manually checked whether email is unique,
-         *  it is 100% guaranteed that it is valid as well.
-         * 2) Call DatabaseHandler to handle the updates for us.
-         */
-            var user = DatabaseHandler.GetUser(User.Identity.Name);
-
-            // Fetch account information and update
-            var email = HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant());
+             * At this point, all user entered information has been verified.
+             * We shall now perform two critical actions:
+             * 1) Programmatically update account information via Membership
+             * 2) Call DatabaseHandler to handle the updates for us.
+             */
+            // Step 1
+            var username = User.Identity.Name;
+            var email = HttpUtility.HtmlEncode(DatabaseHandler.GetUserEmail(username).Trim().ToLowerInvariant());
             if (String.IsNullOrEmpty(email))
                 return;
 
-            user.Email = email;
-            if (!DatabaseHandler.UpdateAccount(user))
+            if (!DatabaseHandler.UpdateAccount(User.Identity.Name, email))
             {
                 ErrorMessage.Text += HttpUtility.HtmlDecode("<ul>");
                 ErrorMessage.Text = HttpUtility.HtmlDecode("<li>An error occured while trying to update your account information</li>");
@@ -206,6 +224,7 @@ namespace Account
                 return;
             }
 
+            // Step 2
             var firstName = HttpUtility.HtmlEncode(FirstName.Text.Trim());
             string middleName = null;
             if (!String.IsNullOrEmpty(MiddleName.Text))
@@ -221,7 +240,7 @@ namespace Account
             var nationality = HttpUtility.HtmlEncode(Nationality.Text.Trim());
             var countryId = DatabaseHandler.GetCountryId(HttpUtility.HtmlEncode(Country.Text.Trim()));
 
-            if (!DatabaseHandler.UpdateParticulars(user.ProviderUserKey, firstName, middleName, lastName, namePrefix, nameSuffix, address, contact, postalCode, countryId, nationality))
+            if (!DatabaseHandler.UpdateParticulars(username, firstName, middleName, lastName, namePrefix, nameSuffix, address, contact, postalCode, countryId, nationality))
             {
                 ErrorMessage.Text += HttpUtility.HtmlDecode("<ul>");
                 ErrorMessage.Text += HttpUtility.HtmlDecode("<li>An error occured while updating your particulars. Please contact the system administrator.</li>");
@@ -230,33 +249,6 @@ namespace Account
             }
 
             Response.Redirect("~/Account/UpdateParticularsSuccess.aspx");
-        }
-
-        /// <summary>
-        /// Event handler for when the Cancel button in this page is clicked
-        /// </summary>
-        /// <param name="sender">The web element that triggered the event</param>
-        /// <param name="e">Event parameters</param>
-        protected void CancelButtonClick(object sender, EventArgs e)
-        {
-            switch (DatabaseHandler.FindMostPrivilegedRole(User.Identity.Name))
-            {
-                case 0:
-                    Response.Redirect("~/Admin/Default.aspx");
-                    break;
-                case 1:
-                    Response.Redirect("~/Physician/Default.aspx");
-                    break;
-                case 2:
-                    Response.Redirect("~/Radiologist/Default.aspx");
-                    break;
-                case 3:
-                    Response.Redirect("~/Staff/Default.aspx");
-                    break;
-                case 4:
-                    Response.Redirect("~/Patient/Default.aspx");
-                    break;
-            }
         }
     }
 }
