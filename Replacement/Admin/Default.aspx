@@ -1,9 +1,9 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="Default.aspx.cs" Culture="en-SG" Inherits="Admin.Default"
     Language="C#" MasterPageFile="~/Site.master" Title="Admin Homepage" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
+<asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
+<asp:Content ContentPlaceHolderID="MainContent" runat="Server">
     <h2>
         Admin Homepage
     </h2>
@@ -14,7 +14,7 @@
                     runat="server" />
             </td>
             <td>
-                <asp:ImageButton ID="ImageButton2" CausesValidation="False" ImageUrl="~/Images/Manage.png" PostBackUrl="~/Admin/UpdateUser.aspx"
+                <asp:ImageButton ID="ImageButton2" CausesValidation="False" ImageUrl="~/Images/Manage.png" PostBackUrl="~/Admin/ManageUser.aspx"
                     runat="server" />
             </td>
         </tr>

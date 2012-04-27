@@ -2,9 +2,9 @@
     Inherits="Admin.AddUserSuccess" Language="C#" MasterPageFile="~/Site.master"
     Title="Add New User" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="Server">
+<asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="Server">
+<asp:Content ContentPlaceHolderID="MainContent" runat="Server">
     <h2>
         Add New User
     </h2>

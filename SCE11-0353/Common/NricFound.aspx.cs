@@ -1,9 +1,11 @@
 ﻿using System;
 
-public partial class Common_NricFound : System.Web.UI.Page
+namespace Common
 {
-    protected void Page_Load(object sender, EventArgs e)
+    public partial class NricFound : System.Web.UI.Page
     {
-
-    }
+        protected void Page_Load(object sender, EventArgs e)
+        {
+        }
+    } 
 }

@@ -23,29 +23,6 @@ namespace Admin
         private const bool IsApproved = true;
 
         /// <summary>
-        /// Page load event
-        /// </summary>
-        /// <param name="sender">The web element that triggered the event</param>
-        /// <param name="e">Event parameters</param>
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (IsPostBack)
-                return;
-
-            DateRangeCheck.MinimumValue = "1/1/1900";
-            DateRangeCheck.MaximumValue = DateTime.Today.ToShortDateString();
-
-            Country.DataSource = DatabaseHandler.GetAllCountries();
-            Country.DataBind();
-
-            Role.DataSource = DatabaseHandler.GetAllRoles();
-            Role.DataBind();
-
-            Department.DataSource = DatabaseHandler.GetAllDepartments();
-            Department.DataBind();
-        }
-
-        /// <summary>
         /// Checks whether email address is already in use
         /// </summary>
         /// <param name="sender">The web element that triggered the event</param>
@@ -235,6 +212,29 @@ namespace Admin
          * Step 2: Check for existing NRIC
          */
             args.IsValid = !DatabaseHandler.NricExists(HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant()));
+        }
+
+        /// <summary>
+        /// Page load event
+        /// </summary>
+        /// <param name="sender">The web element that triggered the event</param>
+        /// <param name="e">Event parameters</param>
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (IsPostBack)
+                return;
+
+            DateRangeCheck.MinimumValue = "1/1/1900";
+            DateRangeCheck.MaximumValue = DateTime.Today.ToShortDateString();
+
+            Country.DataSource = DatabaseHandler.GetAllCountries();
+            Country.DataBind();
+
+            Role.DataSource = DatabaseHandler.GetAllRoles();
+            Role.DataBind();
+
+            Department.DataSource = DatabaseHandler.GetAllDepartments();
+            Department.DataBind();
         }
 
         /// <summary>

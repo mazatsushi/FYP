@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration.Provider;
 using System.Data.SqlClient;
@@ -543,6 +544,54 @@ public class DatabaseHandler
     }
 
     /// <summary>
+    /// Gets all of a user particulars given their user id
+    /// </summary>
+    /// <param name="username">Username</param>
+    /// <returns>A class representing a tuple in the UserParticulars table</returns>
+    public static UserParticular GetParticularsFromUsername(string username)
+    {
+        UserParticular temp = null;
+        try
+        {
+            using (var db = new RIS_DB_Entities())
+            {
+                temp = db.UserParticulars.Single(u => u.UserId.Equals(Guid.Parse(GetGuidFromUserName(username))));
+            }
+        }
+        catch (InvalidOperationException) { }
+        return temp;
+    }
+
+    /// <summary>
+    /// Gets all of a user particulars given their NRIC
+    /// </summary>
+    /// <param name="nric">User's NRIC</param>
+    /// <returns>A class representing a tuple in the UserParticulars table</returns>
+    public static IEnumerable GetParticularsFromNric(string nric)
+    {
+        try
+        {
+            using (var db = new RIS_DB_Entities())
+            {
+                return (from p in db.UserParticulars
+                        where p.NRIC.Equals(nric.ToUpperInvariant())
+                        select new
+                        {
+                            p.NRIC,
+                            p.Prefix,
+                            p.FirstName,
+                            p.LastName,
+                            p.Gender,
+                        }).ToList();
+            }
+        }
+        catch (InvalidOperationException)
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
     /// Gets the password reset question of a user given the user name
     /// </summary>
     /// <param name="username">The user name</param>
@@ -582,6 +631,7 @@ public class DatabaseHandler
         return temp;
     }
 
+
     /// <summary>
     /// Queries the Membership API to get the user email via the username
     /// </summary>
@@ -597,7 +647,7 @@ public class DatabaseHandler
     }
 
     /// <summary>
-    /// Gets patient's name given their nric
+    /// Gets patient's username given their nric
     /// </summary>
     /// <param name="nric">The user NRIC</param>
     /// <returns>A string containing the user's real name if found. Null otherwise.</returns>
@@ -608,27 +658,7 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB_Entities())
             {
-                var user = (db.UserParticulars.Single(u => u.NRIC.Equals(nric.ToUpperInvariant())));
-                temp = user.FirstName + " " + user.LastName;
-            }
-        }
-        catch (InvalidOperationException) { }
-        return temp;
-    }
-
-    /// <summary>
-    /// Gets all of a user particulars given their user id
-    /// </summary>
-    /// <param name="username">Username</param>
-    /// <returns>A class representing a tuple in the UserParticulars table</returns>
-    public static UserParticular GetUserParticulars(string username)
-    {
-        UserParticular temp = null;
-        try
-        {
-            using (var db = new RIS_DB_Entities())
-            {
-                temp = db.UserParticulars.Single(u => u.UserId.Equals(Guid.Parse(GetGuidFromUserName(username))));
+                temp = db.aspnet_Users.Single(u => u.UserId.Equals(Guid.Parse(GetGuidFromNric(nric)))).UserName;
             }
         }
         catch (InvalidOperationException) { }
@@ -786,6 +816,7 @@ public class DatabaseHandler
     public static bool SaveImages(string fileNameOnly)
     {
         // TODO: Finish this method
+        throw new NotImplementedException();
         var success = false;
         try
         {

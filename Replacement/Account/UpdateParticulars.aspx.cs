@@ -179,7 +179,7 @@ namespace Account
             Email.Text = DatabaseHandler.GetUserEmail(User.Identity.Name);
 
             // Fill in personal information fields
-            var particulars = DatabaseHandler.GetUserParticulars(User.Identity.Name);
+            var particulars = DatabaseHandler.GetParticularsFromUsername(User.Identity.Name);
             if (null == particulars)
                 return;
 
@@ -192,6 +192,9 @@ namespace Account
             ContactNumber.Text = particulars.ContactNumber;
             PostalCode.Text = particulars.PostalCode;
             Nationality.Text = particulars.Nationality;
+
+            Country.DataSource = DatabaseHandler.GetAllCountries();
+            Country.DataBind();
             Country.SelectedValue = DatabaseHandler.GetCountryName(particulars.CountryOfResidence);
         }
 
@@ -212,9 +215,14 @@ namespace Account
              */
             // Step 1
             var username = User.Identity.Name;
-            var email = HttpUtility.HtmlEncode(DatabaseHandler.GetUserEmail(username).Trim().ToLowerInvariant());
+            var email = HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant());
             if (String.IsNullOrEmpty(email))
+            {
+                ErrorMessage.Text += HttpUtility.HtmlDecode("<ul>");
+                ErrorMessage.Text = HttpUtility.HtmlDecode("<li>Please provide an email address</li>");
+                ErrorMessage.Text += HttpUtility.HtmlDecode("</ul>");
                 return;
+            }
 
             if (!DatabaseHandler.UpdateAccount(User.Identity.Name, email))
             {

@@ -1,11 +1,11 @@
-﻿<%@ Page AutoEventWireup="true" CodeFile="NricFound.aspx.cs" Culture="en-SG" Inherits="Common_NricFound"
+﻿<%@ Page AutoEventWireup="true" CodeFile="NricFound.aspx.cs" Culture="en-SG" Inherits="Common.NricFound"
     Language="C#" MasterPageFile="~/Site.master" Title="Search By NRIC Found" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
 <asp:Content ContentPlaceHolderID="MainContent" runat="Server">
     <asp:DetailsView CellPadding="4" ForeColor="#333333" GridLines="None" Height="50px"
-        ID="NricDetails" runat="server" Width="125px">
+        runat="server" Width="125px">
         <AlternatingRowStyle BackColor="White" ForeColor="#284775" />
         <CommandRowStyle BackColor="#E2DED6" Font-Bold="True" />
         <EditRowStyle BackColor="#999999" />

@@ -5,7 +5,7 @@
     <siteMapNode url="~/Default.aspx" title="Home" />
     <siteMapNode url="~/Admin/Default.aspx" title="Administrator">
       <siteMapNode url="~/Admin/AddUser.aspx" title="Add New User" />
-      <siteMapNode url="~/Admin/UpdateUser.aspx" title="Manage User Roles" />
+      <siteMapNode url="~/Admin/ManageUser.aspx" title="Manage User Roles" />
     </siteMapNode>
     <siteMapNode url="~/Patient/Default.aspx" title="Patient">
 

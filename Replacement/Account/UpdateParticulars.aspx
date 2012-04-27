@@ -168,11 +168,8 @@
                     <%-- Country --%>
                     <div class="topPadding">
                         <asp:Label AssociatedControlID="Country" runat="server" Text="* Country of Residence: " />
-                        <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" CssClass="float" DataSourceID="CountryListing"
-                            DataTextField="CountryName" DataValueField="CountryName" DropDownStyle="DropDownList"
-                            ID="Country" MaxLength="0" runat="server" />
-                        <asp:SqlDataSource ConnectionString="<%$ ConnectionStrings:ApplicationServices %>"
-                            ID="CountryListing" runat="server" SelectCommand="SELECT DISTINCT [CountryName] FROM [Countries] ORDER BY [CountryName]" />
+                        <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" CssClass="float" DropDownStyle="DropDownList"
+                            ID="Country" runat="server" />
                         <asp:RequiredFieldValidator ControlToValidate="Country" CssClass="failureNotification"
                             Display="Dynamic" ErrorMessage="Please specify your country of residence." runat="server"
                             ToolTip="Please specify your country of residence." ValidationGroup="ValidationGroup">
