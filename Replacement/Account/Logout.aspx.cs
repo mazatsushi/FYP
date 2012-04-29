@@ -16,10 +16,13 @@ namespace Account
         /// <param name="e">Event parameters</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            Session.Clear(); // Clear all sessions so as to preserve security and privacy
+            // Clear all session states and remove all associated cookies
+            Session.Clear();
             Roles.DeleteCookie();
-            FormsAuthentication.SignOut(); // The actual sign out action
-            Response.Redirect("~/Default.aspx"); // Redirect user back to the landing page
+
+            // Sign the user out and redirect to application landing page
+            FormsAuthentication.SignOut();
+            Response.Redirect("~/Default.aspx");
         }
     }
 }

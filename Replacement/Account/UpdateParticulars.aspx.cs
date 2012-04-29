@@ -11,6 +11,8 @@ namespace Account
     /// </summary>
     public partial class UpdateParticulars : System.Web.UI.Page
     {
+        private const string SuccessRedirect = "~/Account/UpdateParticularsSuccess.aspx";
+
         /// <summary>
         /// Event handler for when the Cancel button in this page is clicked
         /// </summary>
@@ -43,9 +45,9 @@ namespace Account
         protected void IsFirstNameValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for numeric characters
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for numeric characters
+             */
             var firstName = (HttpUtility.HtmlEncode(FirstName.Text.Trim().ToCharArray()));
             args.IsValid = !firstName.Any(Char.IsDigit);
         }
@@ -58,10 +60,10 @@ namespace Account
         protected void IsMiddleNameValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for null or empty value
-         * Step 3: Check for numeric characters
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for null or empty value
+             * Step 3: Check for numeric characters
+             */
             var temp = HttpUtility.HtmlEncode(MiddleName.Text);
             if (string.IsNullOrEmpty(temp))
                 return;
@@ -78,9 +80,9 @@ namespace Account
         protected void IsLastNameValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for numeric characters
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for numeric characters
+             */
             var lastName = (HttpUtility.HtmlEncode(LastName.Text.Trim().ToCharArray()));
             args.IsValid = !lastName.Any(Char.IsDigit);
         }
@@ -93,17 +95,10 @@ namespace Account
         protected void IsPrefixValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for valid input range
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for valid input range
+             */
             var prefix = HttpUtility.HtmlEncode(Prefix.Text.Trim().ToLowerInvariant());
-
-            /*
-         * We utilize the implicit fall through feature of the switch statement as
-         * more than one value is valid.
-         * For more information, please refer to:
-         * http://msdn.microsoft.com/en-us/library/06tc147t.aspx
-         */
             switch (prefix)
             {
                 // True iff prefix == "dr." || prefix == "mdm." || prefix == "mr." || prefix == "ms." || prefix == "prof."
@@ -128,10 +123,10 @@ namespace Account
         protected void IsSuffixValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for null or empty input
-         * Step 3: Check for valid input range
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for null or empty input
+             * Step 3: Check for valid input range
+             */
             var temp = HttpUtility.HtmlEncode(Suffix.SelectedValue);
             if (String.IsNullOrEmpty(temp))
                 return;
@@ -158,9 +153,9 @@ namespace Account
         protected void IsNationalityValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for numeric characters
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for numeric characters
+             */
             var lastName = (HttpUtility.HtmlEncode(LastName.Text.Trim().ToCharArray()));
             args.IsValid = !lastName.Any(Char.IsDigit);
         }
@@ -255,8 +250,7 @@ namespace Account
                 ErrorMessage.Text += HttpUtility.HtmlDecode("</ul>");
                 return;
             }
-
-            Response.Redirect("~/Account/UpdateParticularsSuccess.aspx");
+            Response.Redirect(SuccessRedirect);
         }
     }
 }

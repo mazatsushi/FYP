@@ -6,12 +6,12 @@
 <asp:Content ContentPlaceHolderID="MainContent" runat="Server">
     <div id="errorMsg">
         <h1>
-            The NRIC provided is suspected to have been compromised. Please contact the system
-            administrator for assistance.
+            Your attempt to hack into the system has been recorded and forwarded to the relevant authorities.
+            Have a nice day.
         </h1>
     </div>
     <br />
     <div id="errorImg">
-        <asp:Image ImageUrl="~/Images/Error.png" runat="server" />
+        <asp:Image ImageUrl="~/Images/niceday.jpg" runat="server" />
     </div>
 </asp:Content>

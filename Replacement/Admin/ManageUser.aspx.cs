@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Globalization;
+using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
 
@@ -11,6 +11,10 @@ namespace Admin
 
     public partial class ManageUser : System.Web.UI.Page
     {
+        private const string FailureRedirect = "~/Common/SearchByNric.aspx";
+        private const string HashFailure = "~/Error/HashFailure.aspx";
+        private const string SuccessRedirect = "~/Common/NricFound.aspx";
+
         /// <summary>
         /// Page load event
         /// </summary>
@@ -23,16 +27,14 @@ namespace Admin
 
             // We must have a NRIC to work with
             var nric = Request.QueryString["Nric"];
-            if (String.IsNullOrEmpty(nric))
-                Server.Transfer("~/Common/SearchByNric.aspx?ReturnUrl=" + HttpUtility.HtmlEncode(Request.Url));
+            if (String.IsNullOrWhiteSpace(nric))
+                Server.Transfer(FailureRedirect + "?ReturnUrl=" + Request.Url + "&Checksum=" + CryptoHandler.GetHash(Request.Url.ToString()));
 
-            // Check that the query string has not been tampered with
-            var checkSum = Request.QueryString["Checksum"];
-            if (String.IsNullOrEmpty(checkSum))
-                Server.Transfer("~/Error/HashFailure.aspx");
-            if (!CryptoHandler.CheckHash(nric, checkSum))
-                Server.Transfer("~/Error/HashFailure.aspx");
-
+            // Ensure query string has not been illegaly modified
+            var checksum = Request.QueryString["Checksum"];
+            if (String.IsNullOrWhiteSpace(checksum) || !CryptoHandler.IsHashValid(checksum, nric))
+                Server.Transfer(HashFailure);
+            
             // Get the patient's user name in system and save to session state
             var targetUserName = DatabaseHandler.GetUserNameFromNric(nric);
             Session["TargetUserName"] = targetUserName;
@@ -68,12 +70,11 @@ namespace Admin
                 DatabaseHandler.RemoveUserFromRole(targetUserName, roleName);
 
             // Step 2
-            foreach (ListItem role in Roles.Items)
+            foreach (var role in Roles.Items.Cast<ListItem>().Where(role => role.Selected))
             {
-                if (role.Selected)
-                    DatabaseHandler.AddUserToRole(targetUserName, role.ToString());
+                DatabaseHandler.AddUserToRole(targetUserName, role.ToString());
             }
-            Server.Transfer("~/Admin/ManageUserSuccess.aspx");
+            Server.Transfer(SuccessRedirect);
         }
     }
 }

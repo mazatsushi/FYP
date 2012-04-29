@@ -9,6 +9,9 @@ namespace Common
     /// </summary>
     public partial class SearchByNric : System.Web.UI.Page
     {
+        private const string HashFailure = "~/Error/HashFailure.aspx";
+        private const string SuccessRedirect = "~/Common/NricFound.aspx";
+
         /// <summary>
         /// Checks whether NRIC already exists
         /// </summary>
@@ -16,7 +19,7 @@ namespace Common
         /// <param name="args">Event parameters</param>
         protected void NricExists(object source, ServerValidateEventArgs args)
         {
-            args.IsValid = DatabaseHandler.NricExists(HttpUtility.HtmlEncode(Nric.Text.Trim().ToUpperInvariant()));
+            args.IsValid = DatabaseHandler.NricExists(Nric.Text.Trim().ToUpperInvariant());
         }
 
         /// <summary>
@@ -29,9 +32,13 @@ namespace Common
             if (IsPostBack)
                 return;
 
-            // Do not allow users to directly access this page, due to potentially sensitive information
-            if (String.IsNullOrEmpty(Request.QueryString["ReturnUrl"]))
+            // Make sure query string has not been illegaly modified
+            var checksum = Request.QueryString["Checksum"];
+            var returnUrl = Request.QueryString["ReturnUrl"];
+            if (String.IsNullOrWhiteSpace(checksum) || String.IsNullOrWhiteSpace(returnUrl))
                 TransferToHome(User.Identity.Name);
+            if (!CryptoHandler.IsHashValid(checksum, returnUrl))
+                Server.Transfer(HashFailure);
         }
 
         /// <summary>
@@ -45,8 +52,9 @@ namespace Common
                 return;
 
             var nric = HttpUtility.HtmlEncode(Nric.Text.Trim().ToUpperInvariant());
-            Response.Redirect("~/Common/NricFound.aspx?ReturnUrl=" + Request.QueryString["ReturnUrl"] +
-                "&Nric=" + nric + "&Checksum=" + CryptoHandler.GetHash(nric));
+            var returnUrl = Request.QueryString["ReturnUrl"];
+            Response.Redirect(SuccessRedirect + "?ReturnUrl=" + returnUrl + "&Nric=" + nric + "&Checksum=" +
+                CryptoHandler.GetHash(returnUrl, nric));
         }
 
         /// <summary>

@@ -8,6 +8,8 @@ namespace Account
     /// </summary>
     public partial class ChangeQuestion : System.Web.UI.Page
     {
+        private const string SuccessRedirect = "~/Account/ChangeQuestionSuccess.aspx";
+
         /// <summary>
         /// Event handler for when the Cancel button in this page is clicked
         /// </summary>
@@ -59,7 +61,7 @@ namespace Account
             if (!DatabaseHandler.ChangeQuestionAndAnswer(User.Identity.Name, password, question, answer))
                 return;
 
-            Response.Redirect("~/Account/ChangeQuestionSuccess.aspx");
+            Response.Redirect(SuccessRedirect);
         }
     }
 }

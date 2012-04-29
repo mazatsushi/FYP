@@ -8,19 +8,13 @@ namespace Admin
 {
     /// <summary>
     /// Code behind for the ~/Admin/AddUser.aspx page
-    /// 
-    /// Note:
-    /// 1) All user input are first desensitized by calling the HttpUtility.HTMLEncode() method.
-    /// For more information, please refer to: http://msdn.microsoft.com/en-us/library/73z22y6h.aspx
-    /// 
-    /// 2) We let the compiler determine at run-time the data type of local variables.
-    /// Hence the use of the new C# keyword 'var'. For more information, please refer to:
-    /// http://msdn.microsoft.com/en-us/library/bb384061.aspx
     /// </summary>
 
     public partial class AddUser : System.Web.UI.Page
     {
-        private const bool IsApproved = true;
+        private const string MailTemplateUri = "~/MailTemplates/AccountCreated.txt";
+        private const bool PreapprovedAccounts = true;
+        private const string SuccessRedirect = "~/Admin/AddUserSuccess.aspx";
 
         /// <summary>
         /// Checks whether email address is already in use
@@ -40,9 +34,9 @@ namespace Admin
         protected void IsFirstNameValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for numeric characters
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for numeric characters
+             */
             var firstName = (HttpUtility.HtmlEncode(FirstName.Text.Trim().ToCharArray()));
             args.IsValid = !firstName.Any(Char.IsDigit);
         }
@@ -55,9 +49,9 @@ namespace Admin
         protected void IsGenderValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for valid input range
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for valid input range
+             */
             char gender;
             var parse = Char.TryParse(HttpUtility.HtmlEncode(Gender.SelectedValue.Trim().ToLowerInvariant()), out gender);
             if (!parse)
@@ -67,11 +61,11 @@ namespace Admin
             }
 
             /*
-         * We utilize the implicit fall through feature of the switch statement as
-         * more than one value is valid.
-         * For more information, please refer to:
-         * http://msdn.microsoft.com/en-us/library/06tc147t.aspx
-         */
+             * We utilize the implicit fall through feature of the switch statement as
+             * more than one value is valid.
+             * For more information, please refer to:
+             * http://msdn.microsoft.com/en-us/library/06tc147t.aspx
+             */
             switch (gender)
             {
                 // True iff gender == 'm' || gender == 'f'
@@ -93,8 +87,8 @@ namespace Admin
         protected void IsLastNameValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for numeric characters
+             * Step 1: Desensitize the input
+             * Step 2: Check for numeric characters
          */
             var lastName = (HttpUtility.HtmlEncode(LastName.Text.Trim().ToCharArray()));
             args.IsValid = !lastName.Any(Char.IsDigit);
@@ -108,10 +102,10 @@ namespace Admin
         protected void IsMiddleNameValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for null or empty value
-         * Step 3: Check for numeric characters
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for null or empty value
+             * Step 3: Check for numeric characters
+             */
             var temp = HttpUtility.HtmlEncode(MiddleName.Text);
             if (string.IsNullOrEmpty(temp))
                 return;
@@ -128,9 +122,9 @@ namespace Admin
         protected void IsNationalityValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for numeric characters
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for numeric characters
+             */
             var lastName = (HttpUtility.HtmlEncode(LastName.Text.Trim().ToCharArray()));
             args.IsValid = !lastName.Any(Char.IsDigit);
         }
@@ -143,17 +137,10 @@ namespace Admin
         protected void IsPrefixValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for valid input range
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for valid input range
+             */
             var prefix = HttpUtility.HtmlEncode(Prefix.Text.Trim().ToLowerInvariant());
-
-            /*
-         * We utilize the implicit fall through feature of the switch statement as
-         * more than one value is valid.
-         * For more information, please refer to:
-         * http://msdn.microsoft.com/en-us/library/06tc147t.aspx
-         */
             switch (prefix)
             {
                 // True iff prefix == "dr." || prefix == "mdm." || prefix == "mr." || prefix == "ms." || prefix == "prof."
@@ -178,10 +165,10 @@ namespace Admin
         protected void IsSuffixValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for null or empty input
-         * Step 3: Check for valid input range
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for null or empty input
+             * Step 3: Check for valid input range
+             */
             var temp = HttpUtility.HtmlEncode(Suffix.SelectedValue);
             if (String.IsNullOrEmpty(temp))
                 return;
@@ -208,9 +195,9 @@ namespace Admin
         protected void NricNotExists(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for existing NRIC
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for existing NRIC
+             */
             args.IsValid = !DatabaseHandler.NricExists(HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant()));
         }
 
@@ -263,7 +250,7 @@ namespace Admin
 
             // Create new account in Membership
             MembershipCreateStatus status;
-            var user = DatabaseHandler.CreateUser(username, password, email, question, answer, IsApproved, out status);
+            var user = DatabaseHandler.CreateUser(username, password, email, question, answer, PreapprovedAccounts, out status);
 
             // Return and show error message if account creation unsuccessful
             if (user == null)
@@ -358,8 +345,8 @@ namespace Admin
             }
 
             // Send an email containing the password to user's inbox
-            MailHandler.SendNewPassword(email, password);
-            Response.Redirect("~/Admin/AddUserSuccess.aspx");
+            MailHandler.AccountCreated(email, firstName, lastName, username, password, email, Server.MapPath(MailTemplateUri));
+            Response.Redirect(SuccessRedirect);
         }
 
         /// <summary>

@@ -12,6 +12,8 @@ namespace Guest
 
     public partial class Register : System.Web.UI.Page
     {
+        private const string SuccessRedirect = "~/Guest/AccountCreated.aspx";
+
         /// <summary>
         /// Private constants used for ASP.NET Membership user creation
         /// </summary>
@@ -36,9 +38,9 @@ namespace Guest
         protected void IsFirstNameValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for numeric characters
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for numeric characters
+             */
             var firstName = (HttpUtility.HtmlEncode(FirstName.Text.Trim().ToCharArray()));
             args.IsValid = !firstName.Any(Char.IsDigit);
         }
@@ -51,9 +53,9 @@ namespace Guest
         protected void IsGenderValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for valid input range
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for valid input range
+             */
             char gender;
             var parse = Char.TryParse(HttpUtility.HtmlEncode(Gender.SelectedValue.Trim().ToLowerInvariant()), out gender);
             if (!parse)
@@ -61,13 +63,6 @@ namespace Guest
                 args.IsValid = false;
                 return;
             }
-
-            /*
-         * We utilize the implicit fall through feature of the switch statement as
-         * more than one value is valid.
-         * For more information, please refer to:
-         * http://msdn.microsoft.com/en-us/library/06tc147t.aspx
-         */
             switch (gender)
             {
                 // True iff gender == 'm' || gender == 'f'
@@ -89,9 +84,9 @@ namespace Guest
         protected void IsLastNameValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for numeric characters
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for numeric characters
+             */
             var lastName = (HttpUtility.HtmlEncode(LastName.Text.Trim().ToCharArray()));
             args.IsValid = !lastName.Any(Char.IsDigit);
         }
@@ -104,10 +99,10 @@ namespace Guest
         protected void IsMiddleNameValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for null or empty value
-         * Step 3: Check for numeric characters
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for null or empty value
+             * Step 3: Check for numeric characters
+             */
             var temp = HttpUtility.HtmlEncode(MiddleName.Text);
             if (string.IsNullOrEmpty(temp))
                 return;
@@ -124,9 +119,9 @@ namespace Guest
         protected void IsNationalityValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for numeric characters
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for numeric characters
+             */
             var lastName = (HttpUtility.HtmlEncode(LastName.Text.Trim().ToCharArray()));
             args.IsValid = !lastName.Any(Char.IsDigit);
         }
@@ -139,17 +134,10 @@ namespace Guest
         protected void IsPrefixValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for valid input range
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for valid input range
+             */
             var prefix = HttpUtility.HtmlEncode(Prefix.Text.Trim().ToLowerInvariant());
-
-            /*
-         * We utilize the implicit fall through feature of the switch statement as
-         * more than one value is valid.
-         * For more information, please refer to:
-         * http://msdn.microsoft.com/en-us/library/06tc147t.aspx
-         */
             switch (prefix)
             {
                 // True iff prefix == "dr." || prefix == "mdm." || prefix == "mr." || prefix == "ms." || prefix == "prof."
@@ -174,10 +162,10 @@ namespace Guest
         protected void IsSuffixValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for null or empty input
-         * Step 3: Check for valid input range
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for null or empty input
+             * Step 3: Check for valid input range
+             */
             var temp = HttpUtility.HtmlEncode(Suffix.SelectedValue);
             if (String.IsNullOrEmpty(temp))
                 return;
@@ -204,9 +192,9 @@ namespace Guest
         protected void NricNotExists(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for existing NRIC
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for existing NRIC
+             */
             args.IsValid = !DatabaseHandler.NricExists(HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant()));
         }
 
@@ -246,14 +234,12 @@ namespace Guest
                 return;
 
             /*
-         * At this point, all user entered information has been verified.
-         * We shall now perform two critical actions:
-         * 1) Programmatically add account information to the Membership provider
-         *  1.1) Note that since we manually checked whether the username and email are unique,
-         *  it is 100% guaranteed that Membership information is valid as well.
-         * 2) Programmatically insert personal particulars into the associated table.
-         * 3) Programmatically add the newly created user to the 'Patient' role.
-         */
+             * At this point, all user entered information has been verified.
+             * We shall now perform two critical actions:
+             * 1) Programmatically add account information to the Membership provider
+             * 2) Programmatically insert personal particulars into the associated table.
+             * 3) Programmatically add the newly created user to the 'Patient' role.
+             */
 
             // Fetch information that is needed for creating a new account
             var username = HttpUtility.HtmlEncode(UserName.Text.Trim());
@@ -350,7 +336,7 @@ namespace Guest
                 return;
             }
 
-            Response.Redirect("~/Guest/AccountCreated.aspx");
+            Response.Redirect(SuccessRedirect);
         }
 
         /// <summary>

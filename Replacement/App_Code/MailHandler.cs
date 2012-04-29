@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net.Mail;
 
 /// <summary>
@@ -6,17 +7,61 @@ using System.Net.Mail;
 /// </summary>
 public class MailHandler
 {
-    private const string From = "admin@yourdomain.com";
-    private const string Subject = "Your password has been reset";
+    private const string FromAddress = "admin@ris.com";
+    private const string FromName = "RIS Administrator";
 
-    public static void SendNewPassword(string to, string newPassword)
+    public static void AccountCreated(string to, string firstName, string lastName, string username, string password,
+                                      string email,
+                                      string mailContentUri)
     {
-        var body = "The new password for your account is " + newPassword;
-        var mail = new MailMessage(new MailAddress(From), new MailAddress(to))
+        var fullName = firstName + " " + lastName;
+
+        // Create message body
+        var mailBody = File.ReadAllText(mailContentUri);
+        mailBody = mailBody.Replace("##Fullname##", fullName);
+        mailBody = mailBody.Replace("##Username##", username);
+        mailBody = mailBody.Replace("##Password##", password);
+
+        // Create mail
+        var mail = new MailMessage
         {
-            Body = body,
-            Subject = Subject
+            Subject = "Account Created",
+            From = new MailAddress(FromAddress, FromName),
+            Body = mailBody
         };
+        mail.To.Add(new MailAddress(email, fullName));
+
+        // Send mail
+        try
+        {
+            using (var mailServer = new SmtpClient())
+            {
+                mailServer.Send(mail);
+            }
+        }
+        catch (ArgumentNullException) { }
+        catch (ObjectDisposedException) { }
+        catch (InvalidOperationException) { }
+        catch (SmtpFailedRecipientsException) { }
+        catch (SmtpException) { }
+    }
+
+    public static void NewPassword(string username, string to, string newPassword, string mailContentUri)
+    {
+        // Create message body
+        var mailBody = File.ReadAllText(mailContentUri);
+        mailBody = mailBody.Replace("##Username##", username);
+        mailBody = mailBody.Replace("##Password##", newPassword);
+
+        // Create mail
+        var mail = new MailMessage
+        {
+            Subject = "Password Has Been Reset",
+            From = new MailAddress(FromAddress, FromName),
+            Body = mailBody
+        };
+        mail.To.Add(new MailAddress(to, username));
+
         try
         {
             using (var mailServer = new SmtpClient())

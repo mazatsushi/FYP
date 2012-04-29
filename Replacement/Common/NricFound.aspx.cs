@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 
 namespace Common
 {
@@ -7,6 +8,9 @@ namespace Common
     /// </summary>
     public partial class NricFound : System.Web.UI.Page
     {
+        private const string FailureRedirect = "~/Common/SearchByNric.aspx";
+        private const string HashFailure = "~/Error/HashFailure.aspx";
+
         /// <summary>
         /// Event that triggers when the search again button is clicked.
         /// </summary>
@@ -14,7 +18,7 @@ namespace Common
         /// <param name="e">Event parameters</param>
         protected void CancelButtonClick(object sender, EventArgs e)
         {
-            Server.Transfer("~/Common/SearchByNric.aspx?ReturnUrl=" + Request.QueryString["ReturnUrl"]);
+            Server.Transfer(FailureRedirect + "?ReturnUrl=" + HttpUtility.HtmlEncode(Request.QueryString["ReturnUrl"]));
         }
 
         /// <summary>
@@ -27,10 +31,15 @@ namespace Common
             if (IsPostBack)
                 return;
 
+            // Check that user did not modify the return URL
+            var checksum = Request.QueryString["Checksum"];
             var nric = Request.QueryString["Nric"];
-            if (String.IsNullOrEmpty(nric))
-                Server.Transfer("~/Common/SearchByNric.aspx?ReturnUrl=" + Request.QueryString["ReturnUrl"]);
-
+            var returnUrl = Request.QueryString["ReturnUrl"];
+            if (String.IsNullOrWhiteSpace(returnUrl) || String.IsNullOrWhiteSpace(nric) || String.IsNullOrWhiteSpace(checksum))
+                Server.Transfer(FailureRedirect);
+            if (!CryptoHandler.IsHashValid(checksum, returnUrl, nric))
+                Server.Transfer(HashFailure);
+            
             NricDetails.DataSource = DatabaseHandler.GetParticularsFromNric(nric);
             NricDetails.DataBind();
         }
@@ -45,8 +54,8 @@ namespace Common
             if (!IsValid)
                 return;
 
-            var nric = Request.QueryString["Nric"];
-            Response.Redirect(Request.QueryString["ReturnUrl"] + "?Nric=" + nric + "&Checksum=" + CryptoHandler.GetHash(nric));
+            Response.Redirect(HttpUtility.HtmlEncode(Request.QueryString["ReturnUrl"]) + "?Nric=" + Request.QueryString["Nric"]
+                + "&Checksum=" + CryptoHandler.GetHash(Request.QueryString["Nric"]));
         }
     }
 }
