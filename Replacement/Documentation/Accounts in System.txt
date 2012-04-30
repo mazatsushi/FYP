@@ -4,7 +4,7 @@ reset: admin
 role: Admin
 
 username: physician
-password: )_L-(p
+password: 11111!
 reset: physician
 role: Physician
 

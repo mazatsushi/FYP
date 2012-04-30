@@ -1,3 +1,0 @@
-﻿Chapter 2 -
-Continue with introduction to ASP.NET, SQL, and software tools
-Include your survey on other people's work - sytems and publications

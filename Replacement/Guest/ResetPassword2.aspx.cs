@@ -9,6 +9,7 @@ namespace Guest
 
     public partial class ResetPassword2 : System.Web.UI.Page
     {
+        private const string Beginning = "~/Guest/ResetPassword.aspx";
         private const string MailTemplateUri = "~/MailTemplates/PasswordReset.txt";
         private const string SuccessRedirect = "~/Guest/ResetPasswordSuccess.aspx";
 

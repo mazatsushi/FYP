@@ -34,6 +34,7 @@
     <div class="clear topPadding">
         <asp:Button CssClass="buttons" runat="server" Text="Update User Role(s)" ValidationGroup="ValidationGroup"
             OnClick="UpdateButtonClick" />
+        <asp:Button CssClass="buttons" runat="server" Text="New User" OnClick="NewUserButtonClick" />
         <asp:Button CssClass="buttons" PostBackUrl="~/Admin/Default.aspx" runat="server"
             Text="Cancel" />
     </div>

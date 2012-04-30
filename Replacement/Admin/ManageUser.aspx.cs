@@ -12,7 +12,6 @@ namespace Admin
     public partial class ManageUser : System.Web.UI.Page
     {
         private const string FailureRedirect = "~/Common/SearchByNric.aspx";
-        private const string HashFailure = "~/Error/HashFailure.aspx";
         private const string SuccessRedirect = "~/Common/NricFound.aspx";
 
         /// <summary>
@@ -26,16 +25,11 @@ namespace Admin
                 return;
 
             // We must have a NRIC to work with
-            var nric = Request.QueryString["Nric"];
-            if (String.IsNullOrWhiteSpace(nric))
+            if (Session["Nric"] == null)
                 Server.Transfer(FailureRedirect + "?ReturnUrl=" + Request.Url + "&Checksum=" + CryptoHandler.GetHash(Request.Url.ToString()));
 
-            // Ensure query string has not been illegaly modified
-            var checksum = Request.QueryString["Checksum"];
-            if (String.IsNullOrWhiteSpace(checksum) || !CryptoHandler.IsHashValid(checksum, nric))
-                Server.Transfer(HashFailure);
-            
             // Get the patient's user name in system and save to session state
+            var nric = Session["Nric"].ToString();
             var targetUserName = DatabaseHandler.GetUserNameFromNric(nric);
             Session["TargetUserName"] = targetUserName;
 
@@ -50,6 +44,18 @@ namespace Admin
             var roleList = Roles.Items;
             foreach (var userRole in DatabaseHandler.GetUserRoles(targetUserName))
                 roleList.FindByText(userRole).Selected = true;
+        }
+
+        /// <summary>
+        /// Event handler for when the new user button in this page is clicked
+        /// </summary>
+        /// <param name="sender">The web element that triggered the event</param>
+        /// <param name="e">Event parameters</param>
+        protected void NewUserButtonClick(object sender, EventArgs e)
+        {
+            Session["TargetUserName"] = null;
+            Session["Nric"] = null;
+            Server.Transfer(FailureRedirect + "?ReturnUrl=" + Request.Url + "&Checksum=" + CryptoHandler.GetHash(Request.Url.ToString()));
         }
 
         /// <summary>
@@ -74,6 +80,7 @@ namespace Admin
             {
                 DatabaseHandler.AddUserToRole(targetUserName, role.ToString());
             }
+            Session["TargetUserName"] = null;
             Server.Transfer(SuccessRedirect);
         }
     }

@@ -39,9 +39,6 @@ namespace Common
                 Server.Transfer(FailureRedirect);
             if (!CryptoHandler.IsHashValid(checksum, returnUrl, nric))
                 Server.Transfer(HashFailure);
-            
-            NricDetails.DataSource = DatabaseHandler.GetParticularsFromNric(nric);
-            NricDetails.DataBind();
         }
 
         /// <summary>
@@ -54,8 +51,8 @@ namespace Common
             if (!IsValid)
                 return;
 
-            Response.Redirect(HttpUtility.HtmlEncode(Request.QueryString["ReturnUrl"]) + "?Nric=" + Request.QueryString["Nric"]
-                + "&Checksum=" + CryptoHandler.GetHash(Request.QueryString["Nric"]));
+            Session["Nric"] = Request.QueryString["Nric"];
+            Response.Redirect(HttpUtility.HtmlEncode(Request.QueryString["ReturnUrl"]));
         }
     }
 }

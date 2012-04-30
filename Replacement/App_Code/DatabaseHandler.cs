@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Configuration.Provider;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web.Security;
+using BusinessObjects;
 
 /// <summary>
 /// This class handles database queries on behalf of the entire application.
@@ -223,21 +223,20 @@ public class DatabaseHandler
     /// Creates a new medical record tied to a patient's account.
     /// This only happens once per patient.
     /// </summary>
-    /// <param name="nric">The patient's NRIC</param>
+    /// <param name="patientId">The patient's Guid</param>
     /// <param name="bloodType">The name of the patient's blood type</param>
     /// <returns>True if the record was created. False otherwise.</returns>
-    public static bool CreateMedicalRecord(string nric, string bloodType)
+    private static bool CreateMedicalRecord(string patientId, string bloodType)
     {
         var created = false;
         try
         {
-            var guid = GetGuidFromNric(nric.ToUpperInvariant());
             using (var db = new RIS_DB_Entities())
             {
                 db.Patients.InsertOnSubmit(new Patient
                 {
-                    BloodTypeId = GetBloodTypeId(bloodType.ToUpperInvariant()),
-                    PatientId = Guid.Parse(guid)
+                    BloodTypeId = GetBloodTypeIdFromName(bloodType.ToUpperInvariant()),
+                    PatientId = Guid.Parse(patientId)
                 });
                 db.SubmitChanges();
                 created = true;
@@ -359,7 +358,7 @@ public class DatabaseHandler
     /// Gets a list of all blood types
     /// </summary>
     /// <returns>A string array containing the names of all blood types stored in the database.</returns>
-    public static IEnumerable<string> GetAllBloodTypes()
+    public static List<string> GetAllBloodTypes()
     {
         using (var db = new RIS_DB_Entities())
         {
@@ -373,7 +372,7 @@ public class DatabaseHandler
     /// Gets a list of all countries
     /// </summary>
     /// <returns>A string array containing the names of all countries stored in the database.</returns>
-    public static IEnumerable<string> GetAllCountries()
+    public static List<string> GetAllCountries()
     {
         using (var db = new RIS_DB_Entities())
         {
@@ -387,7 +386,7 @@ public class DatabaseHandler
     /// Gets a list of all departments
     /// </summary>
     /// <returns>A string array containing the names of all departments stored in the database.</returns>
-    public static IEnumerable<string> GetAllDepartments()
+    public static List<string> GetAllDepartments()
     {
         using (var db = new RIS_DB_Entities())
         {
@@ -398,7 +397,7 @@ public class DatabaseHandler
     }
 
     /// <summary>
-    /// Gets a list of all departments
+    /// Gets a list of all modalities
     /// </summary>
     /// <returns>A string array containing the names of all departments stored in the database.</returns>
     public static IEnumerable<string> GetAllModalities()
@@ -425,7 +424,7 @@ public class DatabaseHandler
     /// </summary>
     /// <param name="bloodType">The blood type name</param>
     /// <returns>A foreign key value of the specified blood type</returns>
-    private static int GetBloodTypeId(string bloodType)
+    private static int GetBloodTypeIdFromName(string bloodType)
     {
         var id = -1;
         try
@@ -567,28 +566,41 @@ public class DatabaseHandler
     /// </summary>
     /// <param name="nric">User's NRIC</param>
     /// <returns>A class representing a tuple in the UserParticulars table</returns>
-    public static IEnumerable GetParticularsFromNric(string nric)
+    public static UserParticularsBO GetParticularsFromNric(string nric)
     {
+        var particulars = new UserParticularsBO();
         try
         {
             using (var db = new RIS_DB_Entities())
             {
-                return (from p in db.UserParticulars
-                        where p.NRIC.Equals(nric.ToUpperInvariant())
-                        select new
-                        {
-                            p.NRIC,
-                            p.Prefix,
-                            p.FirstName,
-                            p.LastName,
-                            p.Gender,
-                        }).ToList();
+                var temp = (db.UserParticulars.Single(p => p.NRIC.Equals(nric.ToUpperInvariant())));
+                particulars.FirstName = temp.FirstName;
+                particulars.LastName = temp.LastName;
+                particulars.Prefix = temp.Prefix;
             }
         }
-        catch (InvalidOperationException)
+        catch (InvalidOperationException) { }
+        return particulars;
+    }
+
+    /// <summary>
+    /// Gets the blood type of an user via their patient ID
+    /// </summary>
+    /// <param name="nric">The patient's NRIC</param>
+    /// <returns>A string representation of their blood type</returns>
+    public static string GetBloodType(string nric)
+    {
+        var bloodType = string.Empty;
+        try
         {
-            return null;
+            using (var db = new RIS_DB_Entities())
+            {
+                bloodType = db.BloodTypes.Single(b => b.BloodTypeId ==
+                    db.Patients.Single(p => p.PatientId.Equals(Guid.Parse(GetGuidFromNric(nric)))).BloodTypeId).BloodTypeName;
+            }
         }
+        catch (InvalidOperationException) { }
+        return bloodType;
     }
 
     /// <summary>
@@ -938,11 +950,21 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB_Entities())
             {
-                var patient = db.Patients.Single(p => p.PatientId.Equals(Guid.Parse(GetGuidFromNric(nric.ToUpperInvariant()))));
-                patient.BloodTypeId = GetBloodTypeId(bloodType);
-                db.SubmitChanges();
+                var patientId = GetGuidFromNric(nric);
+                if (!HasMedicalRecords(nric))
+                {
+                    // No prior medical records, create one
+                    updated = CreateMedicalRecord(patientId, bloodType);
+                }
+                else
+                {
+                    // Update existing medical records
+                    var patient = db.Patients.Single(p => p.PatientId.Equals(Guid.Parse(patientId)));
+                    patient.BloodTypeId = GetBloodTypeIdFromName(bloodType);
+                    db.SubmitChanges();
+                    updated = true;
+                }
             }
-            updated = true;
         }
         catch (InvalidOperationException) { }
         return updated;

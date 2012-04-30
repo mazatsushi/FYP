@@ -214,13 +214,17 @@ namespace Admin
             DateRangeCheck.MinimumValue = "1/1/1900";
             DateRangeCheck.MaximumValue = DateTime.Today.ToShortDateString();
 
-            Country.DataSource = DatabaseHandler.GetAllCountries();
+            var countries = DatabaseHandler.GetAllCountries();
+            countries.Insert(0, "");
+            Country.DataSource = countries;
             Country.DataBind();
 
             Role.DataSource = DatabaseHandler.GetAllRoles();
             Role.DataBind();
 
-            Department.DataSource = DatabaseHandler.GetAllDepartments();
+            var depts = DatabaseHandler.GetAllDepartments();
+            depts.Insert(0, "");
+            Department.DataSource = depts;
             Department.DataBind();
         }
 
@@ -232,6 +236,27 @@ namespace Admin
         /// <param name="e">Event parameters</param>
         protected void RegisterButtonClick(object sender, EventArgs e)
         {
+            if (!IsValid)
+                return;
+
+            if (String.IsNullOrWhiteSpace(Prefix.Text.Trim()))
+            {
+                ErrorMessage.Text = HttpUtility.HtmlDecode("Please specify the salutation of the user.");
+                return;
+            }
+
+            if (String.IsNullOrWhiteSpace(Country.Text.Trim()))
+            {
+                ErrorMessage.Text = HttpUtility.HtmlDecode("Please specify the country of residence of the user.");
+                return;
+            }
+
+            if (String.IsNullOrWhiteSpace(Department.Text.Trim()))
+            {
+                ErrorMessage.Text = HttpUtility.HtmlDecode("Please specify the department of the user.");
+                return;
+            }
+
             /*
              * At this point, all user entered information has been verified.
              * We shall now perform two critical actions:

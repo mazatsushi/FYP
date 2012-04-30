@@ -217,7 +217,9 @@ namespace Guest
             DateRangeCheck.MinimumValue = "1/1/1900";
             DateRangeCheck.MaximumValue = DateTime.Today.ToShortDateString();
 
-            Country.DataSource = DatabaseHandler.GetAllCountries();
+            var countries = DatabaseHandler.GetAllCountries();
+            countries.Insert(0, "");
+            Country.DataSource = countries;
             Country.DataBind();
         }
 
@@ -232,6 +234,18 @@ namespace Guest
         {
             if (!IsValid)
                 return;
+
+            if (String.IsNullOrWhiteSpace(Prefix.Text.Trim()))
+            {
+                ErrorMessage.Text = HttpUtility.HtmlDecode("Please specify the salutation of the user.");
+                return;
+            }
+
+            if (String.IsNullOrWhiteSpace(Country.Text.Trim()))
+            {
+                ErrorMessage.Text = HttpUtility.HtmlDecode("Please specify the country of residence of the user.");
+                return;
+            }
 
             /*
              * At this point, all user entered information has been verified.

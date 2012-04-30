@@ -134,6 +134,7 @@
                         <asp:Label AssociatedControlID="Prefix" runat="server" Text="* Salutation: " />
                         <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" DropDownStyle="DropDownList" ID="Prefix"
                             runat="server">
+                            <asp:ListItem Text="" Value="" />
                             <asp:ListItem Text="Dr." Value="Dr." />
                             <asp:ListItem Text="Mdm." Value="Mdm." />
                             <asp:ListItem Text="Mr." Value="Mr." />
