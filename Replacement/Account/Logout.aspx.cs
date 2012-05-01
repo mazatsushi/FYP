@@ -22,7 +22,7 @@ namespace Account
 
             // Sign the user out and redirect to application landing page
             FormsAuthentication.SignOut();
-            Response.Redirect("~/Default.aspx");
+            Response.Redirect(ResolveUrl("~/Default.aspx"));
         }
     }
 }

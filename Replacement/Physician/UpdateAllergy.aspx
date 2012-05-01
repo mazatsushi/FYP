@@ -1,5 +1,5 @@
-﻿<%@ Page AddValidationGroup="" AutoEventWireup="true" CodeFile="UpdateAllergy.aspx.cs"
-    Culture="en-SG" Inherits="Physician.UpdateAllergy" Language="C#" MasterPageFile="~/Site.master"
+﻿<%@ Page AutoEventWireup="true" CodeFile="UpdateAllergy.aspx.cs" Culture="en-SG"
+    Inherits="Physician.UpdateAllergy" Language="C#" MasterPageFile="~/Site.master"
     Title="Update Patient Allergies" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
@@ -44,17 +44,17 @@
                         <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                         Please specify the drug name.
                     </asp:RequiredFieldValidator>
-                    <asp:CustomValidator ControlToValidate="Addable" CssClass="failureNotification"
-                        Display="Dynamic" ErrorMessage="Drug name not found in the system." OnServerValidate="DrugExists"
+                    <asp:CustomValidator ControlToValidate="Addable" CssClass="failureNotification" Display="Dynamic"
+                        ErrorMessage="Drug name not found in the system." OnServerValidate="DrugExists"
                         runat="server" ToolTip="Drug name not found in the system." ValidationGroup="AddValidationGroup">
                         <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                         Drug name not found in the system.
                     </asp:CustomValidator>
-                    <asp:CustomValidator ControlToValidate="Addable" CssClass="failureNotification"
-                        Display="Dynamic" ErrorMessage="Patient already has that allergy." OnServerValidate="PatientHasAllergy"
-                        runat="server" ToolTip="Patient already has that allergy." ValidationGroup="AddValidationGroup">
+                    <asp:CustomValidator ControlToValidate="Addable" CssClass="failureNotification" Display="Dynamic"
+                        ErrorMessage="Patient already has that drug allergy." OnServerValidate="HasNoAllergy"
+                        runat="server" ToolTip="Patient already has that drug allergy." ValidationGroup="AddValidationGroup">
                         <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
-                        Patient already has that allergy.
+                        Patient already has that drug allergy.
                     </asp:CustomValidator>
                 </div>
                 <div class="topPadding">
@@ -71,16 +71,22 @@
                     <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" DropDownStyle="DropDownList" ID="Removable"
                         runat="server" />
                     <asp:RequiredFieldValidator ControlToValidate="Removable" CssClass="failureNotification"
-                        Display="Dynamic" ErrorMessage="Please specify the drug name." runat="server"
-                        ToolTip="Please specify the drug name." ValidationGroup="RemoveValidationGroup">
+                        Display="Dynamic" ErrorMessage="Please select the drug allergy to remove." runat="server"
+                        ToolTip="Please select the drug allergy to remove." ValidationGroup="RemoveValidationGroup">
                         <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
-                        Please specify the drug name.
+                        Please select the drug allergy to remove.
                     </asp:RequiredFieldValidator>
                     <asp:CustomValidator ControlToValidate="Removable" CssClass="failureNotification"
                         Display="Dynamic" ErrorMessage="Drug name not found in the system." OnServerValidate="DrugExists"
                         runat="server" ToolTip="Drug name not found in the system." ValidationGroup="RemoveValidationGroup">
                         <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                         Drug name not found in the system.
+                    </asp:CustomValidator>
+                    <asp:CustomValidator ControlToValidate="Removable" CssClass="failureNotification" Display="Dynamic"
+                        ErrorMessage="Patient does not have that drug allergy." OnServerValidate="HasAllergy"
+                        runat="server" ToolTip="Patient does not have that drug allergy." ValidationGroup="RemoveValidationGroup">
+                        <asp:Image ID="Image1" ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                        Patient does not have that drug allergy.
                     </asp:CustomValidator>
                 </div>
                 <div class="topPadding">
@@ -92,7 +98,8 @@
             <div class="topPadding">
                 <asp:Button CssClass="buttons" PostBackUrl="~/Physician/ManagePatient.aspx" Text="Return to Previous Page"
                     runat="server" />
-                <asp:Button CssClass="buttons" OnClick="ResetButtonClick" runat="server" Text="Return to Physician Homepage" />
+                <asp:Button CssClass="buttons" OnClick="ResetButtonClick" PostBackUrl="~/Physician/Default.aspx"
+                    runat="server" Text="Return to Physician Homepage" />
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>

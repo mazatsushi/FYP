@@ -18,7 +18,7 @@ namespace Common
         /// <param name="e">Event parameters</param>
         protected void CancelButtonClick(object sender, EventArgs e)
         {
-            Server.Transfer(FailureRedirect + "?ReturnUrl=" + HttpUtility.HtmlEncode(Request.QueryString["ReturnUrl"]));
+            Server.Transfer(ResolveUrl(FailureRedirect + "?ReturnUrl=" + HttpUtility.HtmlEncode(Request.QueryString["ReturnUrl"])));
         }
 
         /// <summary>
@@ -36,9 +36,9 @@ namespace Common
             var nric = Request.QueryString["Nric"];
             var returnUrl = Request.QueryString["ReturnUrl"];
             if (String.IsNullOrWhiteSpace(returnUrl) || String.IsNullOrWhiteSpace(nric) || String.IsNullOrWhiteSpace(checksum))
-                Server.Transfer(FailureRedirect);
+                Server.Transfer(ResolveUrl(FailureRedirect));
             if (!CryptoHandler.IsHashValid(checksum, returnUrl, nric))
-                Server.Transfer(HashFailure);
+                Server.Transfer(ResolveUrl(HashFailure));
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Common
                 return;
 
             Session["Nric"] = Request.QueryString["Nric"];
-            Response.Redirect(HttpUtility.HtmlEncode(Request.QueryString["ReturnUrl"]));
+            Response.Redirect(ResolveUrl(HttpUtility.HtmlEncode(Request.QueryString["ReturnUrl"])));
         }
     }
 }

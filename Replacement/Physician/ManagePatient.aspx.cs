@@ -50,7 +50,7 @@ namespace Physician
                                                            " Please contact the administrator for assistance.");
                 return;
             }
-            Response.Redirect(UpdateSuccessRedirect);
+            Response.Redirect(ResolveUrl(UpdateSuccessRedirect));
         }
 
         /// <summary>
@@ -131,7 +131,8 @@ namespace Physician
 
             // We need patient's NRIC to be able to display data and prompt for actions
             if (Session["Nric"] == null)
-                Server.Transfer(FailureRedirect + "?ReturnUrl=" + Request.Url + "&Checksum=" + CryptoHandler.GetHash(Request.Url.ToString()));
+                Server.Transfer(ResolveUrl(FailureRedirect + "?ReturnUrl=" + Request.Url + "&Checksum=" +
+                    CryptoHandler.GetHash(Request.Url.ToString())));
 
             Initialize();
         }
@@ -145,7 +146,7 @@ namespace Physician
         {
             Session["Allergies"] = null;
             Session["Nric"] = null;
-            Response.Redirect(PhysicianHome);
+            Response.Redirect(ResolveUrl(PhysicianHome));
         }
 
         /// <summary>

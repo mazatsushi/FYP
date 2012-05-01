@@ -15,6 +15,7 @@
     <div class="topPadding">
         <asp:Button CssClass="buttons" PostBackUrl="~/Physician/ManagePatient.aspx" Text="Return to Previous Page"
             runat="server" />
-        <asp:Button CssClass="buttons" OnClick="ResetButtonClick" runat="server" Text="Return to Physician Homepage" />
+        <asp:Button CssClass="buttons" OnClick="ResetButtonClick" PostBackUrl="~/Physician/Default.aspx"
+            runat="server" Text="Return to Physician Homepage" />
     </div>
 </asp:Content>

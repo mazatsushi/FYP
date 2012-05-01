@@ -14,7 +14,6 @@ namespace Physician
     {
         private const string FailureRedirect = "~/Physician/NoBloodType.aspx";
         private const string Previous = "~/Physician/ManagePatient.aspx";
-        private const string PhysicianHome = "~/Physician/Default.aspx";
         private const string SuccessRedirect = "~/Physician/UpdateAllergySuccess.aspx";
 
         /// <summary>
@@ -24,7 +23,7 @@ namespace Physician
         /// <param name="e">Event parameters</param>
         protected void AddButtonClick(object sender, EventArgs e)
         {
-            Validate();
+            Validate("AddValidationGroup");
             if (!IsValid)
                 return;
 
@@ -36,7 +35,8 @@ namespace Physician
                                                            " Please contact the administrator for assistance.");
                 return;
             }
-            Response.Redirect(SuccessRedirect);
+            Session["Allergies"] = null;
+            Response.Redirect(ResolveUrl(SuccessRedirect));
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Physician
         /// <param name="args">Event parameters</param>
         protected void DrugExists(object source, ServerValidateEventArgs args)
         {
-            args.IsValid = DatabaseHandler.DrugExists(new CultureInfo("en-SG").TextInfo.ToTitleCase(Addable.SelectedValue.Trim()));
+            args.IsValid = DatabaseHandler.DrugExists(new CultureInfo("en-SG").TextInfo.ToTitleCase(args.Value.Trim()));
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Physician
 
             // Check if patient has any prior medical records in system
             if (!DatabaseHandler.HasMedicalRecords(nric))
-                Server.Transfer(FailureRedirect);
+                Server.Transfer(ResolveUrl(FailureRedirect));
 
             ShowAddableDrugs();
             var list = DatabaseHandler.GetPatientAllergies(nric);
@@ -82,11 +82,11 @@ namespace Physician
                 return;
 
             // Show all of the patient's drug allergies if found
-            ShowAllergyList(nric, list);
+            ShowAllergyList(list);
             Session["Allergies"] = list;
 
             // Show all drugs that can be removed from patient's drug allergies, provided that s/he has existing allergies
-            ShowRemovableDrugs(nric, list.ToList());
+            ShowRemovableDrugs(list.ToList());
         }
 
         /// <summary>
@@ -101,25 +101,43 @@ namespace Physician
 
             // We need patient's NRIC to be able to display data and prompt for actions
             if (Session["Nric"] == null)
-                Server.Transfer(Previous);
+                Server.Transfer(ResolveUrl(Previous));
 
             Initialize();
         }
 
         /// <summary>
-        /// Checks whether patient already has an existing allergy that user is adding
+        /// Checks that patient already has an existing allergy that user is removing
         /// </summary>
         /// <param name="source">The web element that triggered the event</param>
         /// <param name="args">Event parameters</param>
-        protected void PatientHasAllergy(object source, ServerValidateEventArgs args)
+        protected void HasAllergy(object source, ServerValidateEventArgs args)
         {
-            var list = (List<string>)Session["Allergies"];
+            var list = (IList<string>)Session["Allergies"];
+            if (list == null)
+            {
+                args.IsValid = false;
+                return;
+            }
+            args.IsValid = (from drug in list
+                             where drug.Equals(new CultureInfo("en-SG").TextInfo.ToTitleCase(Addable.SelectedValue.Trim()))
+                             select drug).Any();
+        }
+
+        /// <summary>
+        /// Checks that patient has no existing allergy that user is adding
+        /// </summary>
+        /// <param name="source">The web element that triggered the event</param>
+        /// <param name="args">Event parameters</param>
+        protected void HasNoAllergy(object source, ServerValidateEventArgs args)
+        {
+            var list = (IList<string>)Session["Allergies"];
             if (list == null)
             {
                 args.IsValid = true;
                 return;
             }
-            args.IsValid = (from drug in list
+            args.IsValid = !(from drug in list
                             where drug.Equals(new CultureInfo("en-SG").TextInfo.ToTitleCase(Addable.SelectedValue.Trim()))
                             select drug).Any();
         }
@@ -133,7 +151,6 @@ namespace Physician
         {
             Session["Allergies"] = null;
             Session["Nric"] = null;
-            Response.Redirect(PhysicianHome);
         }
 
         /// <summary>
@@ -151,9 +168,8 @@ namespace Physician
         /// <summary>
         /// Shows the list of current allergies that patient might have.
         /// </summary>
-        /// <param name="nric">The patient's NRIC</param>
         /// <param name="list">A list of the patient's current allergies</param>
-        private void ShowAllergyList(string nric, List<string> list)
+        private void ShowAllergyList(IList<string> list)
         {
             // Set the list of patient allergies
             AllergyList.DataSource = list;
@@ -168,9 +184,8 @@ namespace Physician
         /// <summary>
         /// Displays HTML elements that allow physician to remove any existing drug allergies
         /// </summary>
-        /// <param name="nric">The patient's NRIC</param>
         /// <param name="list">The list of patient's current drug allergies</param>
-        private void ShowRemovableDrugs(string nric, IList<string> list)
+        private void ShowRemovableDrugs(IList<string> list)
         {
             Removal.Visible = true;
             list.Insert(0, "");
@@ -185,7 +200,20 @@ namespace Physician
         /// <param name="e">Event parameters</param>
         protected void RemoveButtonClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Validate("RemoveValidationGroup");
+            if (!IsValid)
+                return;
+
+            // Remove the select drug allergy from patient records
+            if (!DatabaseHandler.RemoveAllergy(Session["Nric"].ToString(),
+                new CultureInfo("en-SG").TextInfo.ToTitleCase(Removable.SelectedValue.Trim())))
+            {
+                ErrorMessage.Text = HttpUtility.HtmlDecode("There was an error updating the patient's drug allergies." +
+                                                           " Please contact the administrator for assistance.");
+                return;
+            }
+            Session["Allergies"] = null;
+            Response.Redirect(ResolveUrl(SuccessRedirect));
         }
     }
 }

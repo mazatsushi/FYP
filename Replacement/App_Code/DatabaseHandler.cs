@@ -397,7 +397,7 @@ public class DatabaseHandler
     /// Gets a list of all blood types
     /// </summary>
     /// <returns>A string array containing the names of all blood types stored in the database.</returns>
-    public static List<string> GetAllBloodTypes()
+    public static IList<string> GetAllBloodTypes()
     {
         using (var db = new RIS_DB_Entities())
         {
@@ -411,7 +411,7 @@ public class DatabaseHandler
     /// Gets a list of all countries
     /// </summary>
     /// <returns>A string array containing the names of all countries stored in the database.</returns>
-    public static List<string> GetAllCountries()
+    public static IList<string> GetAllCountries()
     {
         using (var db = new RIS_DB_Entities())
         {
@@ -425,7 +425,7 @@ public class DatabaseHandler
     /// Gets a list of all departments
     /// </summary>
     /// <returns>A string array containing the names of all departments stored in the database.</returns>
-    public static List<string> GetAllDepartments()
+    public static IList<string> GetAllDepartments()
     {
         using (var db = new RIS_DB_Entities())
         {
@@ -439,7 +439,7 @@ public class DatabaseHandler
     /// Gets a list of all medical drugs
     /// </summary>
     /// <returns>A string array containing the names of medical drugs stored in the database.</returns>
-    public static List<string> GetAllDrugs()
+    public static IList<string> GetAllDrugs()
     {
         using (var db = new RIS_DB_Entities())
         {
@@ -660,7 +660,7 @@ public class DatabaseHandler
     /// </summary>
     /// <param name="nric">The patient's NRIC</param>
     /// <returns>A list of strings containing the patient's allergies.</returns>
-    public static List<string> GetPatientAllergies(string nric)
+    public static IList<string> GetPatientAllergies(string nric)
     {
         var allergies = new List<string>();
         if (!AllergyExists(nric))
@@ -870,6 +870,30 @@ public class DatabaseHandler
         }
         catch (InvalidOperationException) { }
         return exists;
+    }
+
+    /// <summary>
+    /// Removes the drug allergy from the patient's medical records.
+    /// </summary>
+    /// <param name="nric">The patient's NRIC.</param>
+    /// <param name="drugName">The drug name.</param>
+    /// <returns>True if the drug allergy is successfully removed. False otherwise.</returns>
+    public static bool RemoveAllergy(string nric, string drugName)
+    {
+        var removed = false;
+        try
+        {
+            using (var db = new RIS_DB_Entities())
+            {
+                db.PatientsWithDrugAllergies.DeleteOnSubmit(db.PatientsWithDrugAllergies.Single(p =>
+                    p.DrugAllergyId == GetDrugId(drugName) &&
+                    p.PatientId.Equals(GetGuidFromNric(nric))));
+                db.SubmitChanges();
+            }
+            removed = true;
+        }
+        catch (InvalidOperationException) { }
+        return removed;
     }
 
     /// <summary>

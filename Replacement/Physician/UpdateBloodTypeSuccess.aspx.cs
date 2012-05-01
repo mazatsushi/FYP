@@ -7,8 +7,6 @@ namespace Physician
     /// </summary>
     public partial class UpdateBloodTypeSuccess : System.Web.UI.Page
     {
-        private const string PhysicianHome = "~/Physician/Default.aspx";
-        
         /// <summary>
         /// Page load event
         /// </summary>

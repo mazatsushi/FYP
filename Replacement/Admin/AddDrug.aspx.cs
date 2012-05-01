@@ -29,7 +29,7 @@ namespace Admin
             if (!DatabaseHandler.AddNewDrug(new CultureInfo("en-SG").TextInfo.ToTitleCase(HttpUtility.HtmlEncode(DrugName.Text.Trim()))))
                 return;
 
-            Server.Transfer(SuccessRedirect);
+            Server.Transfer(ResolveUrl(SuccessRedirect));
         }
 
         /// <summary>

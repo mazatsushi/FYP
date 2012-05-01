@@ -354,7 +354,7 @@ namespace Guest
                 return;
             }
 
-            Response.Redirect(SuccessRedirect);
+            Response.Redirect(ResolveUrl(SuccessRedirect));
         }
 
         /// <summary>

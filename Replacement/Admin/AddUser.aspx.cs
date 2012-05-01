@@ -375,7 +375,7 @@ namespace Admin
 
             // Send an email containing the password to user's inbox
             MailHandler.AccountCreated(email, firstName, lastName, username, password, email, Server.MapPath(MailTemplateUri));
-            Response.Redirect(SuccessRedirect);
+            Response.Redirect(ResolveUrl(SuccessRedirect));
         }
 
         /// <summary>

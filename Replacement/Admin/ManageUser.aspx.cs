@@ -49,7 +49,8 @@ namespace Admin
 
             // We must have a NRIC to work with
             if (Session["Nric"] == null)
-                Server.Transfer(FailureRedirect + "?ReturnUrl=" + Request.Url + "&Checksum=" + CryptoHandler.GetHash(Request.Url.ToString()));
+                Server.Transfer(ResolveUrl(FailureRedirect + "?ReturnUrl=" + Request.Url + "&Checksum=" +
+                    CryptoHandler.GetHash(Request.Url.ToString())));
 
             Initialize();
         }
@@ -63,7 +64,8 @@ namespace Admin
         {
             Session["TargetUserName"] = null;
             Session["Nric"] = null;
-            Server.Transfer(FailureRedirect + "?ReturnUrl=" + Request.Url + "&Checksum=" + CryptoHandler.GetHash(Request.Url.ToString()));
+            Server.Transfer(ResolveUrl(FailureRedirect + "?ReturnUrl=" + Request.Url + "&Checksum=" +
+                CryptoHandler.GetHash(Request.Url.ToString())));
         }
 
         /// <summary>
@@ -92,7 +94,7 @@ namespace Admin
                 DatabaseHandler.AddUserToRole(targetUserName, role.ToString());
             }
             Session["TargetUserName"] = null;
-            Server.Transfer(SuccessRedirect);
+            Server.Transfer(ResolveUrl(SuccessRedirect));
         }
     }
 }

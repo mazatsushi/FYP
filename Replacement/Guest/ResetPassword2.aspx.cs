@@ -31,7 +31,7 @@ namespace Guest
 
             // We must have a username to work with here
             if (String.IsNullOrWhiteSpace(username))
-                Server.Transfer("~/Guest/ResetPassword.aspx");
+                Server.Transfer(ResolveUrl("~/Guest/ResetPassword.aspx"));
 
             var text = new CultureInfo("en-SG").TextInfo;
             Question.Text = text.ToTitleCase(HttpUtility.HtmlDecode("Security Question: " + DatabaseHandler.GetQuestion(username)));
@@ -70,7 +70,7 @@ namespace Guest
             // Send an email containing the new password to user's inbox
             MailHandler.NewPassword(username, userEmail, newPassword, Server.MapPath(MailTemplateUri));
 
-            Response.Redirect(SuccessRedirect);
+            Response.Redirect(ResolveUrl(SuccessRedirect));
         }
 
         /// <summary>
@@ -82,16 +82,16 @@ namespace Guest
             switch (DatabaseHandler.FindMostPrivilegedRole(username))
             {
                 case 0:
-                    Response.Redirect("~/Admin/Default.aspx");
+                    Response.Redirect(ResolveUrl("~/Admin/Default.aspx"));
                     break;
                 case 1:
-                    Response.Redirect("~/Patient/Default.aspx");
+                    Response.Redirect(ResolveUrl("~/Patient/Default.aspx"));
                     break;
                 case 2:
-                    Response.Redirect("~/Physician/Default.aspx");
+                    Response.Redirect(ResolveUrl("~/Physician/Default.aspx"));
                     break;
                 case 3:
-                    Response.Redirect("~/Radiologist/Default.aspx");
+                    Response.Redirect(ResolveUrl("~/Radiologist/Default.aspx"));
                     break;
             }
         }

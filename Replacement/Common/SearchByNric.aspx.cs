@@ -38,7 +38,7 @@ namespace Common
             if (String.IsNullOrWhiteSpace(checksum) || String.IsNullOrWhiteSpace(returnUrl))
                 TransferToHome(User.Identity.Name);
             if (!CryptoHandler.IsHashValid(checksum, returnUrl))
-                Server.Transfer(HashFailure);
+                Server.Transfer(ResolveUrl(HashFailure));
         }
 
         /// <summary>
@@ -54,8 +54,8 @@ namespace Common
 
             var nric = HttpUtility.HtmlEncode(Nric.Text.Trim().ToUpperInvariant());
             var returnUrl = Request.QueryString["ReturnUrl"];
-            Response.Redirect(SuccessRedirect + "?ReturnUrl=" + returnUrl + "&Nric=" + nric + "&Checksum=" +
-                CryptoHandler.GetHash(returnUrl, nric));
+            Response.Redirect(ResolveUrl(SuccessRedirect + "?ReturnUrl=" + returnUrl + "&Nric=" + nric + "&Checksum=" +
+                CryptoHandler.GetHash(returnUrl, nric)));
         }
 
         /// <summary>
@@ -67,16 +67,16 @@ namespace Common
             switch (DatabaseHandler.FindMostPrivilegedRole(username))
             {
                 case 0:
-                    Server.Transfer("~/Admin/Default.aspx");
+                    Server.Transfer(ResolveUrl("~/Admin/Default.aspx"));
                     break;
                 case 1:
-                    Server.Transfer("~/Patient/Default.aspx");
+                    Server.Transfer(ResolveUrl("~/Patient/Default.aspx"));
                     break;
                 case 2:
-                    Server.Transfer("~/Physician/Default.aspx");
+                    Server.Transfer(ResolveUrl("~/Physician/Default.aspx"));
                     break;
                 case 3:
-                    Server.Transfer("~/Radiologist/Default.aspx");
+                    Server.Transfer(ResolveUrl("~/Radiologist/Default.aspx"));
                     break;
             }
         }
