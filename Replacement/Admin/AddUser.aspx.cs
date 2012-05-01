@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
@@ -236,6 +237,7 @@ namespace Admin
         /// <param name="e">Event parameters</param>
         protected void RegisterButtonClick(object sender, EventArgs e)
         {
+            Validate();
             if (!IsValid)
                 return;
 
@@ -261,16 +263,18 @@ namespace Admin
              * At this point, all user entered information has been verified.
              * We shall now perform two critical actions:
              * 1) Programmatically add account information to the Membership provider
-             * 1.1) Note that since we manually checked whether the username and email are unique,
-             * it is 100% guaranteed that Membership information is valid as well.
              * 2) Programmatically insert personal particulars into the associated table.
              * 3) Programmatically add the newly created user to the selected role(s).
              */
+
+            // Reference to title case converter
+            var text = new CultureInfo("en-SG").TextInfo;
+            
             // Fetch information that is needed for creating a new account
             var username = HttpUtility.HtmlEncode(UserName.Text.Trim());
             var password = HttpUtility.HtmlEncode(DatabaseHandler.GeneratePassword());
             var email = HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant());
-            var question = HttpUtility.HtmlEncode(Question.Text.Trim());
+            var question = text.ToTitleCase(HttpUtility.HtmlEncode(Question.Text.Trim()));
             var answer = HttpUtility.HtmlEncode(Answer.Text.Trim().ToLowerInvariant());
 
             // Create new account in Membership
@@ -324,28 +328,28 @@ namespace Admin
                 }
                 return;
             }
-
             // Fetch information that is needed for storing personal information
             var nric = HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant());
-            var firstName = HttpUtility.HtmlEncode(FirstName.Text.Trim());
+            var firstName = text.ToTitleCase(HttpUtility.HtmlEncode(FirstName.Text.Trim()));
             string middleName = null;
             if (!String.IsNullOrEmpty(MiddleName.Text))
-                middleName = HttpUtility.HtmlEncode(MiddleName.Text.Trim());
-            var lastName = HttpUtility.HtmlEncode(LastName.Text.Trim());
-            var gender = HttpUtility.HtmlEncode(Gender.SelectedValue.Trim());
-            var namePrefix = HttpUtility.HtmlEncode(Prefix.Text.Trim());
+                text.ToTitleCase(middleName = HttpUtility.HtmlEncode(MiddleName.Text.Trim()));
+            var lastName = text.ToTitleCase(HttpUtility.HtmlEncode(LastName.Text.Trim()));
+            var gender = text.ToTitleCase(HttpUtility.HtmlEncode(Gender.SelectedValue.Trim()));
+            var namePrefix = text.ToTitleCase(HttpUtility.HtmlEncode(Prefix.Text.Trim()));
             string nameSuffix = null;
             if (!String.IsNullOrEmpty(Suffix.Text))
-                nameSuffix = HttpUtility.HtmlEncode(Suffix.Text.Trim());
+                nameSuffix = text.ToTitleCase(HttpUtility.HtmlEncode(Suffix.Text.Trim()));
             var dob = DateTime.Parse(HttpUtility.HtmlEncode(DateOfBirth.Text.Trim()));
-            var address = HttpUtility.HtmlEncode(Address.Text.Trim());
+            var address = text.ToTitleCase(HttpUtility.HtmlEncode(Address.Text.Trim()));
             var contact = HttpUtility.HtmlEncode(ContactNumber.Text.Trim());
             var postalCode = HttpUtility.HtmlEncode(PostalCode.Text.Trim());
-            var nationality = HttpUtility.HtmlEncode(Nationality.Text.Trim());
+            var nationality = text.ToTitleCase(HttpUtility.HtmlEncode(Nationality.Text.Trim()));
             var countryId = DatabaseHandler.GetCountryId(HttpUtility.HtmlEncode(Country.Text.Trim()));
 
             // Add user personal information into the UserParticulars table
-            var addStatus = DatabaseHandler.AddUserParticulars(user.ProviderUserKey, nric, firstName, middleName, lastName, gender, namePrefix, nameSuffix, dob, address, contact, postalCode, countryId, nationality);
+            var guid = Guid.Parse(user.ProviderUserKey.ToString());
+            var addStatus = DatabaseHandler.AddUserParticulars(guid, nric, firstName, middleName, lastName, gender, namePrefix, nameSuffix, dob, address, contact, postalCode, countryId, nationality);
 
             if (!addStatus)
             {
@@ -363,7 +367,7 @@ namespace Admin
             var department = HttpUtility.HtmlEncode(Department.Text.Trim());
 
             // Add staff information into the Staff table
-            if (!DatabaseHandler.AddStaff(user.ProviderUserKey.ToString(), department))
+            if (!DatabaseHandler.AddStaff(guid, department))
             {
                 ErrorMessage.Text = HttpUtility.HtmlDecode("An error occured while adding staff information. Please contact the system administrator.");
                 return;

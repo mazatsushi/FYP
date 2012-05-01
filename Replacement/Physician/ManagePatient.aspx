@@ -35,6 +35,12 @@
                     <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                     Please specify the patient's blood type.
                     </asp:RequiredFieldValidator>
+                    <asp:CustomValidator ControlToValidate="BloodType" CssClass="failureNotification"
+                        Display="Dynamic" ErrorMessage="Blood type does not exist in the system." OnServerValidate="BloodTypeExists"
+                        runat="server" ToolTip="Blood type does not exist in the system." ValidationGroup="ValidationGroup">
+                        <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                        Blood type does not exist in the system.
+                    </asp:CustomValidator>
                     <div class="topPadding">
                         <asp:Button CssClass="buttons" runat="server" Text="Update Blood Type" ValidationGroup="ValidationGroup"
                             OnClick="BloodButtonClick" />

@@ -3,12 +3,10 @@
 namespace Physician
 {
     /// <summary>
-    /// Code behind for the ~/Physician/UpdateBloodTypeSuccess.aspx page
+    /// Code behind for the ~/Physician/UpdateAllergy.aspx page
     /// </summary>
-    public partial class UpdateBloodTypeSuccess : System.Web.UI.Page
+    public partial class UpdateAllergySuccess : System.Web.UI.Page
     {
-        private const string PhysicianHome = "~/Physician/Default.aspx";
-        
         /// <summary>
         /// Page load event
         /// </summary>

@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Globalization;
 using System.Web;
 using System.Web.UI.WebControls;
 
-namespace Physician
+namespace Admin
 {
     /// <summary>
     /// Code behind for the ~/Physician/AddDrug.aspx page
@@ -18,14 +19,14 @@ namespace Physician
         /// <param name="e">Event parameters</param>
         protected void AddButtonClick(object sender, EventArgs e)
         {
+            Validate();
             if (!IsValid)
                 return;
             /*
              * At this point, all user entered information has been verified.
              * We shall now programmatically insert the new drug allergy to database
              */
-            // The line should be removable
-            if (!DatabaseHandler.AddNewDrug(HttpUtility.HtmlEncode(DrugName.Text.Trim().ToLowerInvariant())))
+            if (!DatabaseHandler.AddNewDrug(new CultureInfo("en-SG").TextInfo.ToTitleCase(HttpUtility.HtmlEncode(DrugName.Text.Trim()))))
                 return;
 
             Server.Transfer(SuccessRedirect);

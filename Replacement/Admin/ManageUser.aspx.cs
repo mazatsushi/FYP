@@ -15,19 +15,10 @@ namespace Admin
         private const string SuccessRedirect = "~/Common/NricFound.aspx";
 
         /// <summary>
-        /// Page load event
+        /// Method for initializing the various data controls in the page on first load
         /// </summary>
-        /// <param name="sender">The web element that triggered the event</param>
-        /// <param name="e">Event parameters</param>
-        protected void Page_Load(object sender, EventArgs e)
+        private void Initialize()
         {
-            if (IsPostBack)
-                return;
-
-            // We must have a NRIC to work with
-            if (Session["Nric"] == null)
-                Server.Transfer(FailureRedirect + "?ReturnUrl=" + Request.Url + "&Checksum=" + CryptoHandler.GetHash(Request.Url.ToString()));
-
             // Get the patient's user name in system and save to session state
             var nric = Session["Nric"].ToString();
             var targetUserName = DatabaseHandler.GetUserNameFromNric(nric);
@@ -44,6 +35,23 @@ namespace Admin
             var roleList = Roles.Items;
             foreach (var userRole in DatabaseHandler.GetUserRoles(targetUserName))
                 roleList.FindByText(userRole).Selected = true;
+        }
+
+        /// <summary>
+        /// Page load event
+        /// </summary>
+        /// <param name="sender">The web element that triggered the event</param>
+        /// <param name="e">Event parameters</param>
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (IsPostBack)
+                return;
+
+            // We must have a NRIC to work with
+            if (Session["Nric"] == null)
+                Server.Transfer(FailureRedirect + "?ReturnUrl=" + Request.Url + "&Checksum=" + CryptoHandler.GetHash(Request.Url.ToString()));
+
+            Initialize();
         }
 
         /// <summary>
@@ -65,11 +73,14 @@ namespace Admin
         /// <param name="e">Event parameters</param>
         protected void UpdateButtonClick(object sender, EventArgs e)
         {
+            Validate();
+            if (!IsValid)
+                return;
+
             /*
              * Step 1: Remove user from all existing roles
              * Step 2: Add user to selected roles
              */
-
             // Step 1
             var targetUserName = Session["TargetUserName"].ToString();
             foreach (var roleName in DatabaseHandler.GetUserRoles(targetUserName))

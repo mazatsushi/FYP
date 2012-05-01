@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Web;
 
 namespace Account
@@ -44,7 +45,8 @@ namespace Account
             if (IsPostBack)
                 return;
 
-            Question.Text = HttpUtility.HtmlDecode(DatabaseHandler.GetQuestion(User.Identity.Name));
+            var text = new CultureInfo("en-SG").TextInfo;
+            Question.Text = text.ToTitleCase(HttpUtility.HtmlDecode(DatabaseHandler.GetQuestion(User.Identity.Name)));
         }
 
         /// <summary>
@@ -54,8 +56,13 @@ namespace Account
         /// <param name="e">Event parameters</param>
         protected void UpdateButtonClick(object sender, EventArgs e)
         {
+            Validate();
+            if (!IsValid)
+                return;
+
+            var text = new CultureInfo("en-SG").TextInfo;
             var password = HttpUtility.HtmlEncode(Password.Text.Trim());
-            var question = HttpUtility.HtmlEncode(Question.Text.Trim());
+            var question = text.ToTitleCase(HttpUtility.HtmlEncode(Question.Text.Trim()));
             var answer = HttpUtility.HtmlEncode(Answer.Text.Trim().ToLowerInvariant());
 
             if (!DatabaseHandler.ChangeQuestionAndAnswer(User.Identity.Name, password, question, answer))

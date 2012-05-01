@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Physician
+namespace Admin
 {
     /// <summary>
     /// Code behind for the ~/Physician/AddDrugSuccess.aspx page

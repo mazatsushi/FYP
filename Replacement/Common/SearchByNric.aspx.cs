@@ -48,6 +48,7 @@ namespace Common
         /// <param name="e">Event parameters</param>
         protected void SearchButtonClick(object sender, EventArgs e)
         {
+            Validate();
             if (!IsValid)
                 return;
 

@@ -178,15 +178,19 @@ namespace Account
             if (null == particulars)
                 return;
 
-            FirstName.Text = particulars.FirstName;
-            MiddleName.Text = particulars.MiddleName;
-            LastName.Text = particulars.LastName;
+            // Convenience class for beautifying the output
+            var text = new CultureInfo("en-SG").TextInfo;
+
+            FirstName.Text = text.ToTitleCase(particulars.FirstName);
+            if (!String.IsNullOrEmpty(particulars.MiddleName))
+                MiddleName.Text = text.ToTitleCase(particulars.MiddleName);
+            LastName.Text = text.ToTitleCase(particulars.LastName);
             Prefix.SelectedValue = particulars.Prefix.ToString(CultureInfo.InvariantCulture);
             Suffix.SelectedValue = particulars.Suffix;
-            Address.Text = particulars.Address;
+            Address.Text = text.ToTitleCase(particulars.Address);
             ContactNumber.Text = particulars.ContactNumber;
             PostalCode.Text = particulars.PostalCode;
-            Nationality.Text = particulars.Nationality;
+            Nationality.Text = text.ToTitleCase(particulars.Nationality);
 
             Country.DataSource = DatabaseHandler.GetAllCountries();
             Country.DataBind();
@@ -200,6 +204,7 @@ namespace Account
         /// <param name="e">Event parameters</param>
         protected void UpdateButtonClick(object sender, EventArgs e)
         {
+            Validate();
             if (!IsValid)
                 return;
             /*
@@ -227,20 +232,23 @@ namespace Account
                 return;
             }
 
+            // Reference to title case converter
+            var text = new CultureInfo("en-SG").TextInfo;
+
             // Step 2
-            var firstName = HttpUtility.HtmlEncode(FirstName.Text.Trim());
+            var firstName = text.ToTitleCase(HttpUtility.HtmlEncode(FirstName.Text.Trim()));
             string middleName = null;
             if (!String.IsNullOrEmpty(MiddleName.Text))
-                middleName = HttpUtility.HtmlEncode(MiddleName.Text.Trim());
-            var lastName = HttpUtility.HtmlEncode(LastName.Text.Trim());
-            var namePrefix = HttpUtility.HtmlEncode(Prefix.Text.Trim());
+                text.ToTitleCase(middleName = HttpUtility.HtmlEncode(MiddleName.Text.Trim()));
+            var lastName = text.ToTitleCase(HttpUtility.HtmlEncode(LastName.Text.Trim()));
+            var namePrefix = text.ToTitleCase(HttpUtility.HtmlEncode(Prefix.Text.Trim()));
             string nameSuffix = null;
             if (!String.IsNullOrEmpty(Suffix.Text))
-                nameSuffix = HttpUtility.HtmlEncode(Suffix.Text.Trim());
-            var address = HttpUtility.HtmlEncode(Address.Text.Trim());
+                nameSuffix = text.ToTitleCase(HttpUtility.HtmlEncode(Suffix.Text.Trim()));
+            var address = text.ToTitleCase(HttpUtility.HtmlEncode(Address.Text.Trim()));
             var contact = HttpUtility.HtmlEncode(ContactNumber.Text.Trim());
             var postalCode = HttpUtility.HtmlEncode(PostalCode.Text.Trim());
-            var nationality = HttpUtility.HtmlEncode(Nationality.Text.Trim());
+            var nationality = text.ToTitleCase(HttpUtility.HtmlEncode(Nationality.Text.Trim()));
             var countryId = DatabaseHandler.GetCountryId(HttpUtility.HtmlEncode(Country.Text.Trim()));
 
             if (!DatabaseHandler.UpdateParticulars(username, firstName, middleName, lastName, namePrefix, nameSuffix, address, contact, postalCode, countryId, nationality))

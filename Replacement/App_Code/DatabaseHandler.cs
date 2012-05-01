@@ -49,10 +49,10 @@ public class DatabaseHandler
     /// <summary>
     /// Adds a staff member to the database
     /// </summary>
-    /// <param name="userGuid">The user guid</param>
+    /// <param name="userId">The user ID</param>
     /// <param name="department">The department name</param>
     /// <returns>True if the staff was added. False otherwise.</returns>
-    public static bool AddStaff(string userGuid, string department)
+    public static bool AddStaff(Guid userId, string department)
     {
         var added = false;
         try
@@ -62,7 +62,7 @@ public class DatabaseHandler
                 db.Staffs.InsertOnSubmit(new Staff
                 {
                     DepartmentId = GetDepartmentId(department.ToLowerInvariant()),
-                    StaffId = Guid.Parse(userGuid)
+                    StaffId = userId
                 });
                 db.SubmitChanges();
                 added = true;
@@ -75,7 +75,7 @@ public class DatabaseHandler
     /// <summary>
     /// Adds user particulars to database
     /// </summary>
-    /// <param name="userGuid">The Guid of the user in Membership</param>
+    /// <param name="userId">The user ID</param>
     /// <param name="nric">The NRIC</param>
     /// <param name="firstName">The first name</param>
     /// <param name="middleName">The middle name</param>
@@ -90,7 +90,7 @@ public class DatabaseHandler
     /// <param name="countryId">The country ID</param>
     /// <param name="nationality">The nationality</param>
     /// <returns>True if the insert is successful. False otherwise.</returns>
-    public static bool AddUserParticulars(object userGuid, string nric, string firstName, string middleName, string lastName, string gender, string namePrefix, string nameSuffix, DateTime dob, string address, string contact, string postalCode, int countryId, string nationality)
+    public static bool AddUserParticulars(Guid userId, string nric, string firstName, string middleName, string lastName, string gender, string namePrefix, string nameSuffix, DateTime dob, string address, string contact, string postalCode, int countryId, string nationality)
     {
         var addStatus = false;
         try
@@ -113,7 +113,7 @@ public class DatabaseHandler
                     PostalCode = postalCode,
                     CountryOfResidence = countryId,
                     Nationality = nationality,
-                    UserId = Guid.Parse(userGuid.ToString())
+                    UserId = userId
                 });
                 db.SubmitChanges();
                 addStatus = true;
@@ -141,6 +141,46 @@ public class DatabaseHandler
         catch (ArgumentException) { }
         catch (ProviderException) { }
         return addStatus;
+    }
+
+    /// <summary>
+    /// Checks whether the patient has any known drug allergies.
+    /// </summary>
+    /// <param name="nric">The patient's NRIC</param>
+    /// <returns>True if the patient has any known existing allergies. False otherwise.</returns>
+    private static bool AllergyExists(string nric)
+    {
+        var found = false;
+        try
+        {
+            using (var db = new RIS_DB_Entities())
+            {
+                found = (from d in db.PatientsWithDrugAllergies
+                         where d.PatientId.Equals(GetGuidFromNric(nric))
+                         select d.DrugAllergyId).Any();
+            }
+        }
+        catch (InvalidOperationException) { }
+        return found;
+    }
+
+    /// <summary>
+    /// Checks whether the blood type exists.
+    /// </summary>
+    /// <param name="bloodName">The name of the blood type</param>
+    /// <returns>True if the blood type is found. False otherwise.</returns>
+    public static bool BloodTypeExists(string bloodName)
+    {
+        var found = false;
+        try
+        {
+            using (var db = new RIS_DB_Entities())
+            {
+                found = (db.BloodTypes.Any(b => b.BloodTypeName.Equals(bloodName.ToUpperInvariant())));
+            }
+        }
+        catch (InvalidOperationException) { }
+        return found;
     }
 
     /// <summary>
@@ -172,13 +212,13 @@ public class DatabaseHandler
             using (var db = new RIS_DB_Entities())
             {
                 var guid = GetGuidFromNric(nric.ToUpperInvariant());
-                if (!string.IsNullOrEmpty(guid))
+                if (guid != Guid.Empty)
                 {
                     db.Appointments.InsertOnSubmit(new Appointment
                     {
                         AppointmentDate = time,
                         StudyId = studyId,
-                        PatientId = Guid.Parse(guid)
+                        PatientId = guid
                     });
                 }
                 db.SubmitChanges();
@@ -195,8 +235,9 @@ public class DatabaseHandler
     /// <param name="desc">A description of the imaging order</param>
     /// <param name="staffId">The physician that referred the patient</param>
     /// <returns>The study ID if the imaging order was created. -1 otherwise.</returns>
-    public static int CreateImagingOrder(string desc, string staffId)
+    public static int CreateImagingOrder(string desc, Guid staffId)
     {
+        // TODO: Change Guid
         var id = -1;
         try
         {
@@ -208,7 +249,7 @@ public class DatabaseHandler
                     Diagnosis = null,
                     DateStarted = DateTime.Now,
                     Description = desc.ToLowerInvariant(),
-                    ReferredBy = Guid.Parse(staffId)
+                    ReferredBy = staffId
                 };
                 db.Studies.InsertOnSubmit(study);
                 db.SubmitChanges();
@@ -226,7 +267,7 @@ public class DatabaseHandler
     /// <param name="patientId">The patient's Guid</param>
     /// <param name="bloodType">The name of the patient's blood type</param>
     /// <returns>True if the record was created. False otherwise.</returns>
-    private static bool CreateMedicalRecord(string patientId, string bloodType)
+    private static bool CreateMedicalRecord(Guid patientId, string bloodType)
     {
         var created = false;
         try
@@ -236,7 +277,7 @@ public class DatabaseHandler
                 db.Patients.InsertOnSubmit(new Patient
                 {
                     BloodTypeId = GetBloodTypeIdFromName(bloodType.ToUpperInvariant()),
-                    PatientId = Guid.Parse(patientId)
+                    PatientId = patientId
                 });
                 db.SubmitChanges();
                 created = true;
@@ -301,9 +342,7 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB_Entities())
             {
-                found = (from d in db.DrugAllergies
-                         where d.DrugName.Equals(drugName.ToLowerInvariant())
-                         select d).Any();
+                found = (db.DrugAllergies.Any(d => d.DrugName.Equals(drugName)));
             }
         }
         catch (ArgumentNullException) { }
@@ -393,6 +432,20 @@ public class DatabaseHandler
             return (from d in db.Departments
                     orderby d.DepartmentName ascending
                     select d.DepartmentName).ToList();
+        }
+    }
+
+    /// <summary>
+    /// Gets a list of all medical drugs
+    /// </summary>
+    /// <returns>A string array containing the names of medical drugs stored in the database.</returns>
+    public static List<string> GetAllDrugs()
+    {
+        using (var db = new RIS_DB_Entities())
+        {
+            return (from d in db.DrugAllergies
+                    orderby d.DrugName ascending
+                    select d.DrugName).ToList();
         }
     }
 
@@ -492,18 +545,59 @@ public class DatabaseHandler
     }
 
     /// <summary>
-    /// Gets the user GUID given the nric
+    /// Gets the ID of a drug given its name
     /// </summary>
-    /// <param name="nric">The username</param>
-    /// <returns>The user GUID if found.</returns>
-    private static string GetGuidFromNric(string nric)
+    /// <param name="drugName">The drug name</param>
+    /// <returns>The drug ID</returns>
+    private static int GetDrugId(string drugName)
     {
-        var guid = string.Empty;
+        var id = -1;
         try
         {
             using (var db = new RIS_DB_Entities())
             {
-                guid = (db.UserParticulars.Single(u => u.NRIC.Equals(nric.ToUpperInvariant()))).UserId.ToString();
+                id = (db.DrugAllergies.Single(d => d.DrugName.Equals(drugName)).DrugAllergyId);
+            }
+        }
+        catch (InvalidOperationException) { }
+        return id;
+    }
+
+    /// <summary>
+    /// Gets all of a user particulars given their NRIC
+    /// </summary>
+    /// <param name="nric">User's NRIC</param>
+    /// <returns>A class representing a tuple in the UserParticulars table</returns>
+    public static UserParticularsBO GetFullName(string nric)
+    {
+        var particulars = new UserParticularsBO();
+        try
+        {
+            using (var db = new RIS_DB_Entities())
+            {
+                var temp = (db.UserParticulars.Single(p => p.NRIC.Equals(nric.ToUpperInvariant())));
+                particulars.FirstName = temp.FirstName;
+                particulars.LastName = temp.LastName;
+                particulars.Prefix = temp.Prefix;
+            }
+        }
+        catch (InvalidOperationException) { }
+        return particulars;
+    }
+
+    /// <summary>
+    /// Gets the user GUID given the nric
+    /// </summary>
+    /// <param name="nric">The username</param>
+    /// <returns>The user GUID if found.</returns>
+    private static Guid GetGuidFromNric(string nric)
+    {
+        var guid = new Guid(new byte[16]);
+        try
+        {
+            using (var db = new RIS_DB_Entities())
+            {
+                guid = (db.UserParticulars.Single(u => u.NRIC.Equals(nric.ToUpperInvariant()))).UserId;
             }
         }
         catch (InvalidOperationException) { }
@@ -515,14 +609,14 @@ public class DatabaseHandler
     /// </summary>
     /// <param name="username">The username</param>
     /// <returns>The user GUID if found.</returns>
-    private static string GetGuidFromUserName(string username)
+    private static Guid GetGuidFromUserName(string username)
     {
-        var guid = string.Empty;
+        var guid = new Guid(new byte[16]);
         try
         {
             using (var db = new RIS_DB_Entities())
             {
-                guid = (db.aspnet_Users.Single(u => u.UserName.Equals(username.ToLowerInvariant()))).UserId.ToString();
+                guid = (db.aspnet_Users.Single(u => u.UserName.Equals(username.ToLowerInvariant()))).UserId;
             }
         }
         catch (InvalidOperationException) { }
@@ -554,7 +648,7 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB_Entities())
             {
-                temp = db.UserParticulars.Single(u => u.UserId.Equals(Guid.Parse(GetGuidFromUserName(username))));
+                temp = db.UserParticulars.Single(u => u.UserId.Equals(GetGuidFromUserName(username)));
             }
         }
         catch (InvalidOperationException) { }
@@ -562,25 +656,28 @@ public class DatabaseHandler
     }
 
     /// <summary>
-    /// Gets all of a user particulars given their NRIC
+    /// Gets of all a patient's allergies
     /// </summary>
-    /// <param name="nric">User's NRIC</param>
-    /// <returns>A class representing a tuple in the UserParticulars table</returns>
-    public static UserParticularsBO GetParticularsFromNric(string nric)
+    /// <param name="nric">The patient's NRIC</param>
+    /// <returns>A list of strings containing the patient's allergies.</returns>
+    public static List<string> GetPatientAllergies(string nric)
     {
-        var particulars = new UserParticularsBO();
+        var allergies = new List<string>();
+        if (!AllergyExists(nric))
+            return allergies;
+
         try
         {
             using (var db = new RIS_DB_Entities())
             {
-                var temp = (db.UserParticulars.Single(p => p.NRIC.Equals(nric.ToUpperInvariant())));
-                particulars.FirstName = temp.FirstName;
-                particulars.LastName = temp.LastName;
-                particulars.Prefix = temp.Prefix;
+                var allergyIds = (from a in db.PatientsWithDrugAllergies
+                                  where a.PatientId.Equals(GetGuidFromNric(nric))
+                                  select a.DrugAllergyId);
+                allergies.AddRange(allergyIds.Select(allergyId => db.DrugAllergies.Single(a => a.DrugAllergyId == allergyId).DrugName));
             }
         }
         catch (InvalidOperationException) { }
-        return particulars;
+        return allergies;
     }
 
     /// <summary>
@@ -588,7 +685,7 @@ public class DatabaseHandler
     /// </summary>
     /// <param name="nric">The patient's NRIC</param>
     /// <returns>A string representation of their blood type</returns>
-    public static string GetBloodType(string nric)
+    public static string GetPatientBloodType(string nric)
     {
         var bloodType = string.Empty;
         try
@@ -596,7 +693,7 @@ public class DatabaseHandler
             using (var db = new RIS_DB_Entities())
             {
                 bloodType = db.BloodTypes.Single(b => b.BloodTypeId ==
-                    db.Patients.Single(p => p.PatientId.Equals(Guid.Parse(GetGuidFromNric(nric)))).BloodTypeId).BloodTypeName;
+                    db.Patients.Single(p => p.PatientId.Equals(GetGuidFromNric(nric))).BloodTypeId).BloodTypeName;
             }
         }
         catch (InvalidOperationException) { }
@@ -633,7 +730,7 @@ public class DatabaseHandler
             {
                 temp = (from s in db.Studies
                         join a in db.Appointments on s.StudyId equals a.StudyId
-                        where (a.PatientId.Equals(Guid.Parse(patientId)))
+                        where (a.PatientId.Equals(patientId))
                         select s).ToList();
             }
 
@@ -670,7 +767,7 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB_Entities())
             {
-                temp = db.aspnet_Users.Single(u => u.UserId.Equals(Guid.Parse(GetGuidFromNric(nric)))).UserName;
+                temp = db.aspnet_Users.Single(u => u.UserId.Equals(GetGuidFromNric(nric))).UserName;
             }
         }
         catch (InvalidOperationException) { }
@@ -701,7 +798,7 @@ public class DatabaseHandler
             using (var db = new RIS_DB_Entities())
             {
                 found = (from p in db.Patients
-                         where p.PatientId.Equals(Guid.Parse(guid))
+                         where p.PatientId.Equals(guid)
                          select p).Any();
             }
         }
@@ -724,7 +821,7 @@ public class DatabaseHandler
             {
                 found = (from s in db.Studies
                          join a in db.Appointments on s.StudyId equals a.StudyId
-                         where (a.PatientId.Equals(Guid.Parse(guid)) && s.IsCompleted == false)
+                         where (a.PatientId.Equals(guid) && s.IsCompleted == false)
                          select s.StudyId).Any();
             }
         }
@@ -746,7 +843,7 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB_Entities())
             {
-                var username = db.aspnet_Users.Single(u => u.UserId.Equals(Guid.Parse(userGuid))).UserName;
+                var username = db.aspnet_Users.Single(u => u.UserId.Equals(userGuid)).UserName;
                 isInRole = Roles.IsUserInRole(username, role);
             }
         }
@@ -938,6 +1035,46 @@ public class DatabaseHandler
     }
 
     /// <summary>
+    /// Updates the drug allergies of a patient.
+    /// </summary>
+    /// <param name="nric">The patient's NRIC</param>
+    /// <param name="drugName">The drug name</param>
+    /// <param name="toRemove">True to indicate remove allergy. False to indicate add allergy.</param>
+    /// <returns>True if the allergy has been added/removed. False otherwise.</returns>
+    public static bool UpdateAllergy(string nric, string drugName, bool toRemove)
+    {
+        var update = false;
+        try
+        {
+            using (var db = new RIS_DB_Entities())
+            {
+                var patientId = GetGuidFromNric(nric);
+                var drugId = GetDrugId(drugName);
+                switch (toRemove)
+                {
+                    case true:
+                        // Removing an allergy
+                        db.PatientsWithDrugAllergies.DeleteOnSubmit(db.PatientsWithDrugAllergies.Single(a => a.DrugAllergyId == drugId
+                            && a.PatientId.Equals(patientId)));
+                        break;
+                    case false:
+                        // Adding an allergy
+                        db.PatientsWithDrugAllergies.InsertOnSubmit(new PatientsWithDrugAllergy
+                        {
+                            PatientId = patientId,
+                            DrugAllergyId = drugId
+                        });
+                        break;
+                }
+                db.SubmitChanges();
+            }
+            update = true;
+        }
+        catch (InvalidOperationException) { }
+        return update;
+    }
+
+    /// <summary>
     /// Updates a patient's blood type
     /// </summary>
     /// <param name="nric">The username</param>
@@ -959,7 +1096,7 @@ public class DatabaseHandler
                 else
                 {
                     // Update existing medical records
-                    var patient = db.Patients.Single(p => p.PatientId.Equals(Guid.Parse(patientId)));
+                    var patient = db.Patients.Single(p => p.PatientId.Equals(patientId));
                     patient.BloodTypeId = GetBloodTypeIdFromName(bloodType);
                     db.SubmitChanges();
                     updated = true;
@@ -992,7 +1129,7 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB_Entities())
             {
-                var user = db.UserParticulars.Single(u => u.UserId.Equals(Guid.Parse(GetGuidFromUserName(username))));
+                var user = db.UserParticulars.Single(u => u.UserId.Equals(GetGuidFromUserName(username)));
                 user.FirstName = firstName;
                 user.MiddleName = middleName;
                 user.LastName = lastName;

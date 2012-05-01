@@ -48,6 +48,7 @@ namespace Common
         /// <param name="e">Event parameters</param>
         protected void ProceedButtonClick(object sender, EventArgs e)
         {
+            Validate();
             if (!IsValid)
                 return;
 

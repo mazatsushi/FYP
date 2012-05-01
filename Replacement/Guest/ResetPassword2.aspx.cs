@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Web;
 
 namespace Guest
@@ -9,7 +10,6 @@ namespace Guest
 
     public partial class ResetPassword2 : System.Web.UI.Page
     {
-        private const string Beginning = "~/Guest/ResetPassword.aspx";
         private const string MailTemplateUri = "~/MailTemplates/PasswordReset.txt";
         private const string SuccessRedirect = "~/Guest/ResetPasswordSuccess.aspx";
 
@@ -33,7 +33,8 @@ namespace Guest
             if (String.IsNullOrWhiteSpace(username))
                 Server.Transfer("~/Guest/ResetPassword.aspx");
 
-            Question.Text = HttpUtility.HtmlDecode("Security Question: " + DatabaseHandler.GetQuestion(username));
+            var text = new CultureInfo("en-SG").TextInfo;
+            Question.Text = text.ToTitleCase(HttpUtility.HtmlDecode("Security Question: " + DatabaseHandler.GetQuestion(username)));
         }
 
         /// <summary>
@@ -43,6 +44,7 @@ namespace Guest
         /// <param name="e">Event parameters</param>
         protected void ResetButtonClick(object sender, EventArgs e)
         {
+            Validate();
             if (!IsValid)
                 return;
 

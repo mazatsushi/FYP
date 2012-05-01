@@ -19,6 +19,7 @@ namespace Guest
         /// <param name="e">Event parameters</param>
         protected void NextButtonClick(object sender, EventArgs e)
         {
+            Validate();
             if (!IsValid)
                 return;
 

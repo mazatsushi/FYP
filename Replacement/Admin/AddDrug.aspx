@@ -1,4 +1,4 @@
-﻿<%@ Page AutoEventWireup="true" CodeFile="AddDrug.aspx.cs" Culture="en-SG" Inherits="Physician.AddDrug"
+﻿<%@ Page AutoEventWireup="true" CodeFile="AddDrug.aspx.cs" Culture="en-SG" Inherits="Admin.AddDrug"
     Language="C#" MasterPageFile="~/Site.master" Title="Add Drug Allergy" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">

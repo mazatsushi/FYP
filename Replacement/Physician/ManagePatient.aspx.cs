@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using System.Web;
+using System.Web.UI.WebControls;
 
 namespace Physician
 {
@@ -11,46 +13,6 @@ namespace Physician
         private const string FailureRedirect = "~/Common/SearchByNric.aspx";
         private const string PhysicianHome = "~/Physician/Default.aspx";
         private const string UpdateSuccessRedirect = "~/Physician/UpdateBloodTypeSuccess.aspx";
-
-        /// <summary>
-        /// Page load event
-        /// </summary>
-        /// <param name="sender">The web element that triggered the event</param>
-        /// <param name="e">Event parameters</param>
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (IsPostBack)
-                return;
-
-            NewPatient.PostBackUrl = FailureRedirect + "?ReturnUrl=" + Request.Url + "&Checksum=" +
-                CryptoHandler.GetHash(Request.Url.ToString());
-
-            // We need patient's NRIC to be able to display data and prompt for actions
-            if (Session["Nric"] == null)
-                Server.Transfer(FailureRedirect + "?ReturnUrl=" + Request.Url + "&Checksum=" + CryptoHandler.GetHash(Request.Url.ToString()));
-
-            // Let physician know which patient is currently being referenced
-            var nric = Session["Nric"].ToString();
-            var patientParticulars = DatabaseHandler.GetParticularsFromNric(nric);
-            PatientName.Text = patientParticulars.Prefix + " " + patientParticulars.FirstName + " " + patientParticulars.LastName;
-
-            // Initialize blood types
-            var bloodTypes = DatabaseHandler.GetAllBloodTypes();
-            bloodTypes.Insert(0, "");
-            BloodType.DataSource = bloodTypes;
-            BloodType.DataBind();
-
-            if (DatabaseHandler.HasMedicalRecords(nric))
-            {
-                // Preselect patient's blood type
-                BloodType.SelectedValue = DatabaseHandler.GetBloodType(nric);
-            }
-            else
-            {
-                AllergyList.Visible = false;
-                None.Visible = true;
-            }
-        }
 
         /// <summary>
         /// Event that triggers when the 'Update Allergies' button is clicked.
@@ -72,13 +34,14 @@ namespace Physician
             if (!IsValid)
                 return;
 
-            var bloodName = BloodType.Text.Trim();
-            var nric = Session["Nric"].ToString();
-            if (String.IsNullOrWhiteSpace(bloodName))
+            if (String.IsNullOrWhiteSpace(BloodType.Text))
             {
                 ErrorMessage.Text = HttpUtility.HtmlDecode("Please specify the patient's blood type.");
                 return;
             }
+
+            var bloodName = BloodType.Text.Trim().ToUpperInvariant();
+            var nric = Session["Nric"].ToString().ToUpperInvariant();
 
             // Proceed to update patient's blood type in database
             if (!DatabaseHandler.UpdateBloodType(nric, bloodName))
@@ -88,6 +51,29 @@ namespace Physician
                 return;
             }
             Response.Redirect(UpdateSuccessRedirect);
+        }
+
+        /// <summary>
+        /// Checks whether blood type already exists
+        /// </summary>
+        /// <param name="source">The web element that triggered the event</param>
+        /// <param name="args">Event parameters</param>
+        protected void BloodTypeExists(object source, ServerValidateEventArgs args)
+        {
+            /*
+             * Step 1: Desensitize the input
+             * Step 2: Check for existing blood type
+             */
+            args.IsValid = DatabaseHandler.BloodTypeExists(HttpUtility.HtmlEncode(BloodType.Text.Trim().ToUpperInvariant()));
+        }
+
+        /// <summary>
+        /// Hides the list of allergies that patient might have
+        /// </summary>
+        private void HideAllergyList()
+        {
+            AllergyList.Visible = false;
+            None.Visible = true;
         }
 
         /// <summary>
@@ -101,14 +87,85 @@ namespace Physician
         }
 
         /// <summary>
+        /// Method for initializing the various data controls in the page on first load
+        /// </summary>
+        private void Initialize()
+        {
+            // Set the postback URL of the "New Patient" button
+            NewPatient.PostBackUrl = FailureRedirect + "?ReturnUrl=" + Request.Url + "&Checksum=" +
+                CryptoHandler.GetHash(Request.Url.ToString());
+
+            // Let physician know which patient is currently being managed
+            var nric = Session["Nric"].ToString();
+            var patientParticulars = DatabaseHandler.GetFullName(nric);
+            PatientName.Text = patientParticulars.Prefix + " " + patientParticulars.FirstName + " " + patientParticulars.LastName;
+
+            // Initialize the list of blood types
+            var bloodTypes = DatabaseHandler.GetAllBloodTypes();
+            bloodTypes.Insert(0, "");
+            BloodType.DataSource = bloodTypes;
+            BloodType.DataBind();
+
+            HideAllergyList();
+
+            // Check if patient has any prior medical records in system
+            if (!DatabaseHandler.HasMedicalRecords(nric))
+                return;
+
+            // If exist, we must pre-select the patient's blood type
+            BloodType.SelectedValue = DatabaseHandler.GetPatientBloodType(nric);
+
+            // Show all of the patient's drug allergies if found
+            ShowAllergyList(nric);
+        }
+
+        /// <summary>
+        /// Page load event
+        /// </summary>
+        /// <param name="sender">The web element that triggered the event</param>
+        /// <param name="e">Event parameters</param>
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (IsPostBack)
+                return;
+
+            // We need patient's NRIC to be able to display data and prompt for actions
+            if (Session["Nric"] == null)
+                Server.Transfer(FailureRedirect + "?ReturnUrl=" + Request.Url + "&Checksum=" + CryptoHandler.GetHash(Request.Url.ToString()));
+
+            Initialize();
+        }
+
+        /// <summary>
         /// Event that triggers when the return button is clicked.
         /// </summary>
         /// <param name="sender">The web element that triggered the event</param>
         /// <param name="e">Event parameters</param>
         protected void ReturnButtonClick(object sender, EventArgs e)
         {
+            Session["Allergies"] = null;
             Session["Nric"] = null;
             Response.Redirect(PhysicianHome);
+        }
+
+        /// <summary>
+        /// Hides the list of allergies that patient might have
+        /// </summary>
+        /// <param name="nric">The patient's NRIC</param>
+        private void ShowAllergyList(string nric)
+        {
+            var list = DatabaseHandler.GetPatientAllergies(nric);
+            if (list.Count == 0)
+                return;
+
+            // Set the list of patient allergies
+            AllergyList.DataSource = list;
+            AllergyList.DataBind();
+            Session["Allergies"] = list;
+
+            // Set the visibility of the appropriate components
+            AllergyList.Visible = true;
+            None.Visible = false;
         }
     }
 }

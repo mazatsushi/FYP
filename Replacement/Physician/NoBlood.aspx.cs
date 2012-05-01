@@ -3,12 +3,12 @@
 namespace Physician
 {
     /// <summary>
-    /// Code behind for the ~/Physician/UpdateBloodTypeSuccess.aspx page
+    /// Code behind for the ~/Physician/NoBlood.aspx page
     /// </summary>
-    public partial class UpdateBloodTypeSuccess : System.Web.UI.Page
+    public partial class NoBlood : System.Web.UI.Page
     {
         private const string PhysicianHome = "~/Physician/Default.aspx";
-        
+
         /// <summary>
         /// Page load event
         /// </summary>
@@ -27,6 +27,7 @@ namespace Physician
         {
             Session["Allergies"] = null;
             Session["Nric"] = null;
+            Response.Redirect(PhysicianHome);
         }
-    }
+    } 
 }
