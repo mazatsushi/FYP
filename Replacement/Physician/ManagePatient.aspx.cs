@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Web;
 using System.Web.UI.WebControls;
 
@@ -13,16 +12,6 @@ namespace Physician
         private const string FailureRedirect = "~/Common/SearchByNric.aspx";
         private const string PhysicianHome = "~/Physician/Default.aspx";
         private const string UpdateSuccessRedirect = "~/Physician/UpdateBloodTypeSuccess.aspx";
-
-        /// <summary>
-        /// Event that triggers when the 'Update Allergies' button is clicked.
-        /// </summary>
-        /// <param name="sender">The web element that triggered the event</param>
-        /// <param name="e">Event parameters</param>
-        protected void AllergyButtonClick(object sender, EventArgs e)
-        {
-            ;
-        }
 
         /// <summary>
         /// Event that triggers when the 'Update Blood Type' button is clicked.
@@ -77,16 +66,6 @@ namespace Physician
         }
 
         /// <summary>
-        /// Event that triggers when the 'View Imaging History' button is clicked.
-        /// </summary>
-        /// <param name="sender">The web element that triggered the event</param>
-        /// <param name="e">Event parameters</param>
-        protected void ImagingButtonClick(object sender, EventArgs e)
-        {
-            ;
-        }
-
-        /// <summary>
         /// Method for initializing the various data controls in the page on first load
         /// </summary>
         private void Initialize()
@@ -99,6 +78,7 @@ namespace Physician
             var nric = Session["Nric"].ToString();
             var patientParticulars = DatabaseHandler.GetFullName(nric);
             PatientName.Text = patientParticulars.Prefix + " " + patientParticulars.FirstName + " " + patientParticulars.LastName;
+            Session["PatientName"] = PatientName.Text;
 
             // Initialize the list of blood types
             var bloodTypes = DatabaseHandler.GetAllBloodTypes();
@@ -144,8 +124,7 @@ namespace Physician
         /// <param name="e">Event parameters</param>
         protected void ReturnButtonClick(object sender, EventArgs e)
         {
-            Session["Allergies"] = null;
-            Session["Nric"] = null;
+            Session.Clear();
             Response.Redirect(ResolveUrl(PhysicianHome));
         }
 

@@ -53,10 +53,10 @@
                 <legend>Drug Allergies</legend>
                 <div>
                     <asp:Label ID="None" runat="server" Text="No Known Drug Allergies" Visible="False" />
-                    <asp:ListBox Enabled="False" Height="180px" ID="AllergyList" runat="server" Width="120px" />
+                    <asp:ListBox Enabled="False" Height="100px" ID="AllergyList" runat="server" Width="140px" />
                 </div>
                 <div class="topPadding">
-                    <asp:Button CssClass="buttons" runat="server" Text="Update Allergies" OnClick="AllergyButtonClick" />
+                    <asp:Button CssClass="buttons" runat="server" Text="Update Allergies" PostBackUrl="~/Physician/UpdateAllergy.aspx" />
                 </div>
             </fieldset>
             <%-- / Drug Allergies --%>
@@ -66,7 +66,7 @@
                 <div>
                 </div>
                 <div>
-                    <asp:Button CssClass="buttons" runat="server" Text="View Imaging History" OnClick="ImagingButtonClick" />
+                    <asp:Button CssClass="buttons" runat="server" Text="View Imaging History" PostBackUrl="~/Physician/ManageImaging.aspx" />
                 </div>
             </fieldset>
             <%-- / Medical Imaging History --%>

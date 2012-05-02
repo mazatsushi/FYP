@@ -349,7 +349,7 @@ namespace Admin
 
             // Add user personal information into the UserParticulars table
             var guid = Guid.Parse(user.ProviderUserKey.ToString());
-            var addStatus = DatabaseHandler.AddUserParticulars(guid, nric, firstName, middleName, lastName, gender, namePrefix, nameSuffix, dob, address, contact, postalCode, countryId, nationality);
+            var addStatus = DatabaseHandler.UpdateParticulars(guid, nric, firstName, middleName, lastName, gender, namePrefix, nameSuffix, dob, address, contact, postalCode, countryId, nationality);
 
             if (!addStatus)
             {

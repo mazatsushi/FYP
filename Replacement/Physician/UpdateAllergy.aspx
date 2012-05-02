@@ -30,8 +30,8 @@
                     <asp:Label ID="NoneLabel" runat="server" Text="No Known Drug Allergies" />
                     <asp:Label ID="SomeLabel" runat="server" Text="Current Drug Allergies" />
                     <div class="topPadding">
-                        <asp:ListBox Enabled="False" Height="140px" ID="AllergyList" runat="server" SelectionMode="Multiple"
-                            Width="160px" />
+                        <asp:ListBox Enabled="False" Height="100px" ID="AllergyList" runat="server" SelectionMode="Multiple"
+                            Width="140px" />
                     </div>
                 </div>
                 <div class="topPadding">

@@ -338,7 +338,7 @@ namespace Guest
             var countryId = DatabaseHandler.GetCountryId(HttpUtility.HtmlEncode(Country.Text.Trim()));
 
             // Add user personal information into the UserParticulars table
-            var addStatus = DatabaseHandler.AddUserParticulars(Guid.Parse(user.ProviderUserKey.ToString()), nric, firstName, middleName, lastName, gender, namePrefix, nameSuffix, dob, address, contact, postalCode, countryId, nationality);
+            var addStatus = DatabaseHandler.UpdateParticulars(Guid.Parse(user.ProviderUserKey.ToString()), nric, firstName, middleName, lastName, gender, namePrefix, nameSuffix, dob, address, contact, postalCode, countryId, nationality);
 
             if (!addStatus)
             {

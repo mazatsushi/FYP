@@ -15,6 +15,9 @@ public partial class SiteMaster : System.Web.UI.MasterPage
     /// <param name="e">Event parameters</param>
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (IsPostBack)
+            return;
+
         yearLabel.Text = DateTime.Now.Year.ToString(CultureInfo.CurrentCulture);
     }
 }

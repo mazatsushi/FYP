@@ -10,15 +10,15 @@
     <table class="table">
         <tr>
             <td>
-                <asp:ImageButton CausesValidation="False" ImageUrl="~/Images/Keys.png" PostBackUrl="~/Account/ChangePassword.aspx"
+                <asp:ImageButton CausesValidation="False" ImageUrl="~/Images/key.png" PostBackUrl="~/Account/ChangePassword.aspx"
                     runat="server" />
             </td>
             <td>
-                <asp:ImageButton CausesValidation="False" ImageUrl="~/Images/Lock.png" PostBackUrl="~/Account/ChangeQuestion.aspx"
+                <asp:ImageButton CausesValidation="False" ImageUrl="~/Images/lock.png" PostBackUrl="~/Account/ChangeQuestion.aspx"
                     runat="server" />
             </td>
             <td>
-                <asp:ImageButton CausesValidation="False" ImageUrl="~/Images/Folder.png" PostBackUrl="~/Account/UpdateParticulars.aspx"
+                <asp:ImageButton CausesValidation="False" ImageUrl="~/Images/folder.png" PostBackUrl="~/Account/UpdateParticulars.aspx"
                     runat="server" />
             </td>
         </tr>

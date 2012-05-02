@@ -67,8 +67,7 @@ namespace Physician
         {
             // Let physician know which patient is currently being managed
             var nric = Session["Nric"].ToString();
-            var patientParticulars = DatabaseHandler.GetFullName(nric);
-            PatientName.Text = patientParticulars.Prefix + " " + patientParticulars.FirstName + " " + patientParticulars.LastName;
+            PatientName.Text = Session["PatientName"].ToString();
 
             HideAllergyList();
 
@@ -99,8 +98,8 @@ namespace Physician
             if (IsPostBack)
                 return;
 
-            // We need patient's NRIC to be able to display data and prompt for actions
-            if (Session["Nric"] == null)
+            // We need patient's NRIC and name to be able to display data and prompt for actions
+            if (Session["Nric"] == null || Session["PatientName"] == null)
                 Server.Transfer(ResolveUrl(Previous));
 
             Initialize();
@@ -149,8 +148,7 @@ namespace Physician
         /// <param name="e">Event parameters</param>
         protected void ResetButtonClick(object sender, EventArgs e)
         {
-            Session["Allergies"] = null;
-            Session["Nric"] = null;
+            Session.Clear();
         }
 
         /// <summary>
@@ -205,8 +203,8 @@ namespace Physician
                 return;
 
             // Remove the select drug allergy from patient records
-            if (!DatabaseHandler.RemoveAllergy(Session["Nric"].ToString(),
-                new CultureInfo("en-SG").TextInfo.ToTitleCase(Removable.SelectedValue.Trim())))
+            if (!DatabaseHandler.UpdateAllergy(Session["Nric"].ToString(),
+                new CultureInfo("en-SG").TextInfo.ToTitleCase(Removable.SelectedValue.Trim()), false))
             {
                 ErrorMessage.Text = HttpUtility.HtmlDecode("There was an error updating the patient's drug allergies." +
                                                            " Please contact the administrator for assistance.");

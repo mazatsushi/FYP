@@ -23,7 +23,7 @@ public class DatabaseHandler
     private const string DicomExtension = ".dcm";
 
     /// <summary>
-    /// Adds a new drug allergy to the database
+    /// Adds a new drug to the database
     /// </summary>
     /// <param name="drugName">The drug name</param>
     /// <returns>True if the drug was added. False otherwise.</returns>
@@ -73,57 +73,6 @@ public class DatabaseHandler
     }
 
     /// <summary>
-    /// Adds user particulars to database
-    /// </summary>
-    /// <param name="userId">The user ID</param>
-    /// <param name="nric">The NRIC</param>
-    /// <param name="firstName">The first name</param>
-    /// <param name="middleName">The middle name</param>
-    /// <param name="lastName">The last name</param>
-    /// <param name="gender">The gender</param>
-    /// <param name="namePrefix">The salutation</param>
-    /// <param name="nameSuffix">The name suffix</param>
-    /// <param name="dob">The date of birth</param>
-    /// <param name="address">The address</param>
-    /// <param name="contact">The contact number</param>
-    /// <param name="postalCode">The postal code</param>
-    /// <param name="countryId">The country ID</param>
-    /// <param name="nationality">The nationality</param>
-    /// <returns>True if the insert is successful. False otherwise.</returns>
-    public static bool AddUserParticulars(Guid userId, string nric, string firstName, string middleName, string lastName, string gender, string namePrefix, string nameSuffix, DateTime dob, string address, string contact, string postalCode, int countryId, string nationality)
-    {
-        var addStatus = false;
-        try
-        {
-            using (var db = new RIS_DB_Entities())
-            {
-                // Insert all data into user particulars table
-                db.UserParticulars.InsertOnSubmit(new UserParticular
-                {
-                    NRIC = nric,
-                    FirstName = firstName,
-                    MiddleName = middleName,
-                    LastName = lastName,
-                    Gender = Char.Parse(gender),
-                    Prefix = namePrefix,
-                    Suffix = nameSuffix,
-                    DateOfBirth = dob,
-                    Address = address,
-                    ContactNumber = contact,
-                    PostalCode = postalCode,
-                    CountryOfResidence = countryId,
-                    Nationality = nationality,
-                    UserId = userId
-                });
-                db.SubmitChanges();
-                addStatus = true;
-            }
-        }
-        catch (InvalidOperationException) { }
-        return addStatus;
-    }
-
-    /// <summary>
     /// Adds a user to a role
     /// </summary>
     /// <param name="username">The user name</param>
@@ -155,9 +104,7 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB_Entities())
             {
-                found = (from d in db.PatientsWithDrugAllergies
-                         where d.PatientId.Equals(GetGuidFromNric(nric))
-                         select d.DrugAllergyId).Any();
+                found = (db.PatientsWithDrugAllergies.Any(d => d.PatientId.Equals(GetGuidFromNric(nric))));
             }
         }
         catch (InvalidOperationException) { }
@@ -237,7 +184,7 @@ public class DatabaseHandler
     /// <returns>The study ID if the imaging order was created. -1 otherwise.</returns>
     public static int CreateImagingOrder(string desc, Guid staffId)
     {
-        // TODO: Change Guid
+        // TODO: Change Guid & review method
         var id = -1;
         try
         {
@@ -276,7 +223,7 @@ public class DatabaseHandler
             {
                 db.Patients.InsertOnSubmit(new Patient
                 {
-                    BloodTypeId = GetBloodTypeIdFromName(bloodType.ToUpperInvariant()),
+                    BloodTypeId = GetBloodTypeId(bloodType.ToUpperInvariant()),
                     PatientId = patientId
                 });
                 db.SubmitChanges();
@@ -308,6 +255,38 @@ public class DatabaseHandler
                 db.Series.InsertOnSubmit(s);
                 db.SubmitChanges();
                 created = s.SeriesId;
+            }
+        }
+        catch (InvalidOperationException) { }
+        return created;
+    }
+
+    /// <summary>
+    /// Creates a new study
+    /// </summary>
+    /// <param name="desc">Description of the study (purpose etc.)</param>
+    /// <param name="start">Date of first appointment to commence study</param>
+    /// <param name="staffUserName">Staff's account username</param>
+    /// <returns>True if the record was created. False otherwise.</returns>
+    public static int CreateNewStudy(string desc, DateTime start, string staffUserName)
+    {
+        var created = -1;
+        try
+        {
+            using (var db = new RIS_DB_Entities())
+            {
+                var s = new Study
+                {
+                    Description = desc,
+                    DateStarted = start,
+                    IsCompleted = false,
+                    DateCompleted = null,
+                    Diagnosis = null,
+                    ReferredBy = GetGuidFromUserName(staffUserName)
+                };
+                db.Studies.InsertOnSubmit(s);
+                db.SubmitChanges();
+                created = s.StudyId;
             }
         }
         catch (InvalidOperationException) { }
@@ -453,7 +432,7 @@ public class DatabaseHandler
     /// Gets a list of all modalities
     /// </summary>
     /// <returns>A string array containing the names of all departments stored in the database.</returns>
-    public static IEnumerable<string> GetAllModalities()
+    public static IList<string> GetAllModalities()
     {
         using (var db = new RIS_DB_Entities())
         {
@@ -467,7 +446,7 @@ public class DatabaseHandler
     /// Gets a list of all roles for RIS
     /// </summary>
     /// <returns>A string array containing the names of all the roles stored in the data source.</returns>
-    public static IEnumerable<string> GetAllRoles()
+    public static IList<string> GetAllRoles()
     {
         return Roles.GetAllRoles().ToList();
     }
@@ -477,7 +456,7 @@ public class DatabaseHandler
     /// </summary>
     /// <param name="bloodType">The blood type name</param>
     /// <returns>A foreign key value of the specified blood type</returns>
-    private static int GetBloodTypeIdFromName(string bloodType)
+    private static int GetBloodTypeId(string bloodType)
     {
         var id = -1;
         try
@@ -637,6 +616,31 @@ public class DatabaseHandler
     }
 
     /// <summary>
+    /// Gets all open studies of a patient
+    /// </summary>
+    /// <param name="nric">Patient NRIC</param>
+    /// <returns>A list of oprn studies patient is involved in, if any.</returns>
+    public static IList<int> GetOpenStudies(string nric)
+    {
+        var temp = new List<int>();
+        try
+        {
+            var patientId = GetGuidFromNric(nric.ToUpperInvariant());
+            using (var db = new RIS_DB_Entities())
+            {
+                temp = (from s in db.Studies
+                        join a in db.Appointments on s.StudyId equals a.StudyId
+                        where (a.PatientId.Equals(patientId) && s.IsCompleted == false)
+                        orderby s.StudyId
+                        select s.StudyId).ToList();
+            }
+
+        }
+        catch (InvalidOperationException) { }
+        return temp;
+    }
+
+    /// <summary>
     /// Gets all of a user particulars given their user id
     /// </summary>
     /// <param name="username">Username</param>
@@ -719,13 +723,12 @@ public class DatabaseHandler
     /// </summary>
     /// <param name="nric">Patient NRIC</param>
     /// <returns>A list of all studies patient is involved in, if any.</returns>
-    public static IEnumerable<Study> GetStudies(string nric)
+    public static IList<Study> GetStudies(string nric)
     {
-        IEnumerable<Study> temp = null;
+        var temp = new List<Study>();
         try
         {
             var patientId = GetGuidFromNric(nric.ToUpperInvariant());
-
             using (var db = new RIS_DB_Entities())
             {
                 temp = (from s in db.Studies
@@ -736,10 +739,8 @@ public class DatabaseHandler
 
         }
         catch (InvalidOperationException) { }
-        catch (SqlException) { }
         return temp;
     }
-
 
     /// <summary>
     /// Queries the Membership API to get the user email via the username
@@ -779,7 +780,7 @@ public class DatabaseHandler
     /// </summary>
     /// <param name="username">The user to return a list of roles for.</param>
     /// <returns>A string array containing the names of all the roles that the specified user is in.</returns>
-    public static IEnumerable<string> GetUserRoles(string username)
+    public static IList<string> GetUserRoles(string username)
     {
         return Roles.GetRolesForUser(username);
     }
@@ -792,37 +793,11 @@ public class DatabaseHandler
     public static bool HasMedicalRecords(string nric)
     {
         var found = false;
-        var guid = GetGuidFromNric(nric);
         try
         {
             using (var db = new RIS_DB_Entities())
             {
-                found = (from p in db.Patients
-                         where p.PatientId.Equals(guid)
-                         select p).Any();
-            }
-        }
-        catch (InvalidOperationException) { }
-        return found;
-    }
-
-    /// <summary>
-    /// Checks whether the patient has any open studies in the database.
-    /// </summary>
-    /// <param name="nric">The patient NRIC.</param>
-    /// <returns>True if existing appointment is found. False otherwise.</returns>
-    public static bool HasOpenStudies(string nric)
-    {
-        var found = false;
-        try
-        {
-            var guid = GetGuidFromNric(nric);
-            using (var db = new RIS_DB_Entities())
-            {
-                found = (from s in db.Studies
-                         join a in db.Appointments on s.StudyId equals a.StudyId
-                         where (a.PatientId.Equals(guid) && s.IsCompleted == false)
-                         select s.StudyId).Any();
+                found = (db.Patients.Any(p => p.PatientId.Equals(GetGuidFromNric(nric))));
             }
         }
         catch (InvalidOperationException) { }
@@ -863,37 +838,11 @@ public class DatabaseHandler
         {
             using (var db = new RIS_DB_Entities())
             {
-                exists = (from user in db.UserParticulars
-                          where user.NRIC.Equals(nric)
-                          select user).Any();
+                exists = (db.UserParticulars.Any(u => u.NRIC.Equals(nric)));
             }
         }
         catch (InvalidOperationException) { }
         return exists;
-    }
-
-    /// <summary>
-    /// Removes the drug allergy from the patient's medical records.
-    /// </summary>
-    /// <param name="nric">The patient's NRIC.</param>
-    /// <param name="drugName">The drug name.</param>
-    /// <returns>True if the drug allergy is successfully removed. False otherwise.</returns>
-    public static bool RemoveAllergy(string nric, string drugName)
-    {
-        var removed = false;
-        try
-        {
-            using (var db = new RIS_DB_Entities())
-            {
-                db.PatientsWithDrugAllergies.DeleteOnSubmit(db.PatientsWithDrugAllergies.Single(p =>
-                    p.DrugAllergyId == GetDrugId(drugName) &&
-                    p.PatientId.Equals(GetGuidFromNric(nric))));
-                db.SubmitChanges();
-            }
-            removed = true;
-        }
-        catch (InvalidOperationException) { }
-        return removed;
     }
 
     /// <summary>
@@ -1002,6 +951,7 @@ public class DatabaseHandler
     /// <returns>True if the series exists. False otherwise</returns>
     public static bool SeriesExists(int seriesId)
     {
+        // TODO: Review this method
         var found = false;
         try
         {
@@ -1013,27 +963,6 @@ public class DatabaseHandler
             }
         }
         catch (ArgumentNullException) { }
-        catch (InvalidOperationException) { }
-        return found;
-    }
-
-    /// <summary>
-    /// Checks whether a study of the specified Id exists
-    /// </summary>
-    /// <param name="studyId">The study Id</param>
-    /// <returns></returns>
-    public static bool StudyExists(int studyId)
-    {
-        var found = false;
-        try
-        {
-            using (var db = new RIS_DB_Entities())
-            {
-                found = (from s in db.Studies
-                         where s.StudyId == studyId
-                         select s).Any();
-            }
-        }
         catch (InvalidOperationException) { }
         return found;
     }
@@ -1121,7 +1050,7 @@ public class DatabaseHandler
                 {
                     // Update existing medical records
                     var patient = db.Patients.Single(p => p.PatientId.Equals(patientId));
-                    patient.BloodTypeId = GetBloodTypeIdFromName(bloodType);
+                    patient.BloodTypeId = GetBloodTypeId(bloodType);
                     db.SubmitChanges();
                     updated = true;
                 }
@@ -1170,6 +1099,57 @@ public class DatabaseHandler
         }
         catch (InvalidOperationException) { }
         return success;
+    }
+
+    /// <summary>
+    /// Adds user particulars to database
+    /// </summary>
+    /// <param name="userId">The user ID</param>
+    /// <param name="nric">The NRIC</param>
+    /// <param name="firstName">The first name</param>
+    /// <param name="middleName">The middle name</param>
+    /// <param name="lastName">The last name</param>
+    /// <param name="gender">The gender</param>
+    /// <param name="namePrefix">The salutation</param>
+    /// <param name="nameSuffix">The name suffix</param>
+    /// <param name="dob">The date of birth</param>
+    /// <param name="address">The address</param>
+    /// <param name="contact">The contact number</param>
+    /// <param name="postalCode">The postal code</param>
+    /// <param name="countryId">The country ID</param>
+    /// <param name="nationality">The nationality</param>
+    /// <returns>True if the insert is successful. False otherwise.</returns>
+    public static bool UpdateParticulars(Guid userId, string nric, string firstName, string middleName, string lastName, string gender, string namePrefix, string nameSuffix, DateTime dob, string address, string contact, string postalCode, int countryId, string nationality)
+    {
+        var addStatus = false;
+        try
+        {
+            using (var db = new RIS_DB_Entities())
+            {
+                // Insert all data into user particulars table
+                db.UserParticulars.InsertOnSubmit(new UserParticular
+                {
+                    NRIC = nric,
+                    FirstName = firstName,
+                    MiddleName = middleName,
+                    LastName = lastName,
+                    Gender = Char.Parse(gender),
+                    Prefix = namePrefix,
+                    Suffix = nameSuffix,
+                    DateOfBirth = dob,
+                    Address = address,
+                    ContactNumber = contact,
+                    PostalCode = postalCode,
+                    CountryOfResidence = countryId,
+                    Nationality = nationality,
+                    UserId = userId
+                });
+                db.SubmitChanges();
+                addStatus = true;
+            }
+        }
+        catch (InvalidOperationException) { }
+        return addStatus;
     }
 
     /// <summary>

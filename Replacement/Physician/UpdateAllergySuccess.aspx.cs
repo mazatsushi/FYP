@@ -23,8 +23,7 @@ namespace Physician
         /// <param name="e">Event parameters</param>
         protected void ResetButtonClick(object sender, EventArgs e)
         {
-            Session["Allergies"] = null;
-            Session["Nric"] = null;
+            Session.Clear();
         }
     }
 }
