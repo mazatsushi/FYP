@@ -200,7 +200,7 @@
                             ValidationGroup="ValidationGroup" />
                         <asp:RangeValidator ControlToValidate="DateOfBirth" CssClass="failureNotification"
                             ErrorMessage="Please specify a valid date of birth." ID="DateRangeCheck" runat="server"
-                            Type="Date" ValidationGroup="ValidationGroup">
+                            Type="Date" ValidationGroup="ValidationGroup" >
                             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                             Please specify a valid date of birth.
                         </asp:RangeValidator>
@@ -313,7 +313,7 @@
                     </div>
                     <%-- / Username --%>
                     <%-- Email --%>
-                    <div cssclass="topPadding" runat="server">
+                    <div class="topPadding" runat="server">
                         <asp:Label AssociatedControlID="Email" runat="server" Text="* E-mail:" />
                         <asp:TextBox CssClass="textEntry" ID="Email" runat="server" />
                         <asp:RequiredFieldValidator ControlToValidate="Email" CssClass="failureNotification"
@@ -341,7 +341,7 @@
                     </div>
                     <%-- / Email --%>
                     <%-- Password --%>
-                    <div cssclass="topPadding" runat="server">
+                    <div class="topPadding" runat="server">
                         <asp:Label AssociatedControlID="Password" runat="server" Text="* Password:" />
                         <asp:TextBox CssClass="passwordEntry" ID="Password" runat="server" TextMode="Password" />
                         <asp:RequiredFieldValidator ControlToValidate="Password" CssClass="failureNotification"
@@ -359,7 +359,7 @@
                     </div>
                     <%-- / Password --%>
                     <%-- Confirm Password --%>
-                    <div cssclass="topPadding" runat="server">
+                    <div class="topPadding" runat="server">
                         <asp:Label AssociatedControlID="ConfirmPassword" runat="server" Text="* Confirm Password:" />
                         <asp:TextBox CssClass="passwordEntry" ID="ConfirmPassword" runat="server" TextMode="Password" />
                         <asp:RequiredFieldValidator ControlToValidate="ConfirmPassword" CssClass="failureNotification"
@@ -377,7 +377,7 @@
                     </div>
                     <%-- / Confirm Password --%>
                     <%-- Security Question --%>
-                    <div cssclass="topPadding" runat="server">
+                    <div class="topPadding" runat="server">
                         <asp:Label AssociatedControlID="Question" runat="server" Text="* Security Question:" />
                         <asp:TextBox CssClass="textEntry" ID="Question" runat="server" />
                         <asp:RequiredFieldValidator ControlToValidate="Question" CssClass="failureNotification"
@@ -389,7 +389,7 @@
                     </div>
                     <%-- / Security Question --%>
                     <%-- Security Answer --%>
-                    <div cssclass="topPadding" runat="server">
+                    <div class="topPadding" runat="server">
                         <asp:Label AssociatedControlID="Answer" runat="server" Text="* Security Answer:" />
                         <asp:TextBox CssClass="textEntry" ID="Answer" runat="server" />
                         <asp:RequiredFieldValidator ControlToValidate="Answer" CssClass="failureNotification"

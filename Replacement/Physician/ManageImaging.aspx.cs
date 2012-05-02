@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
 
@@ -26,21 +29,31 @@ namespace Physician
 
             // Check that the user is not creating an appointment for a completed study
 
-            // Case 1) No existing study
-            if (Session["list"] == null)
+            var studyId = -1;
+            if (Session["OpenStudy"] == null)
             {
-                ;
+                // Get study ID from new record insertion
+                var desc = Description.Text.Trim();
+                var date = DatePicker.SelectedDate;
             }
-            // Case 2) With existing study
-            
+            else
+                // Get study ID from session state
+                studyId = int.Parse(Session["OpenStudy"].ToString());
+
             /*
-             * Steps to create a new entry in database
-             * 1) Create new study in database (remember to get current staff ID)
-             * 2) Create new appointment
-             * 3) Link appointment via foreign key to study
-             */
-            
-            Response.Redirect(ResolveUrl(SuccessRedirect));
+                 * Scenario 1 - No history or no open studies
+                 * Step 1) Create new study in database (remember to get current staff ID)
+                 * Step 2) Create new appointment
+                 * Step 3) Link appointment via foreign key to study
+                 */
+            /*
+                 * Case 2 - Has existing study
+                 * Step 1) Create new appointment
+                 * Step 2) Link appointment via foreign key to study
+                 */
+            //Session["AllStudies"] = null;
+            //Session["OpenStudy"] = null;
+            //Response.Redirect(ResolveUrl(SuccessRedirect));
         }
 
         /// <summary>
@@ -50,20 +63,8 @@ namespace Physician
         /// <param name="args">Event parameters</param>
         protected void DateTimeCheck(object sender, ServerValidateEventArgs args)
         {
-            var proposed = DateTime.Parse(HttpUtility.HtmlEncode(DatePicker.Text.Trim()));
+            var proposed = DatePicker.SelectedDate;
             args.IsValid = proposed > DateTime.Now;
-        }
-
-        /// <summary>
-        /// Displays & hides appropriate elements if patient does not have any medical imaging history
-        /// </summary>
-        private void HideApplicable()
-        {
-            AllStudies.Visible = false;
-            Some.Visible = false;
-            newStudyDiv.Visible = true;
-            None.Visible = true;
-            existingStudyDiv.Visible = false;
         }
 
         /// <summary>
@@ -71,21 +72,18 @@ namespace Physician
         /// </summary>
         private void Initialize()
         {
+            DatePicker.MinValidDate = DateTime.Now;
+            DatePicker.MaxValidDate = DateTime.Now.AddYears(10);
+
             // Let physician know which patient is currently being managed
             var nric = Session["Nric"].ToString();
             PatientName.Text = Session["PatientName"].ToString();
 
             // Determine if patient has existing studies first
-            var list = DatabaseHandler.GetStudies(nric);
-            if (list.Count == 0)
-            {
-                // No existing studies
-                HideApplicable();
-                return;
-            }
-            // Has existing studies
-            ShowApplicable(nric);
-            Session["Studies"] = list;
+            var history = DatabaseHandler.GetStudies(nric);
+            var open = DatabaseHandler.GetOpenStudy(nric);
+            ToggleAllStudies(history.Count > 0, history.ToList());
+            ToggleExistingStudies(open > -1, open);
         }
 
         /// <summary>
@@ -117,26 +115,38 @@ namespace Physician
         }
 
         /// <summary>
-        /// Displays & hides appropriate elements if patient has any medical imaging history
+        /// Displays / hides elements in the newStudyDiv based upon the value of show
         /// </summary>
-        private void ShowApplicable(string nric)
+        /// <param name="show">True to show elements. False to hide elements.</param>
+        /// <param name="list">A list of the patient's medical imaging history.</param>
+        private void ToggleAllStudies(bool show, IList<Study> list)
         {
-            AllStudies.Visible = true;
-            Some.Visible = true;
-            newStudyDiv.Visible = false;
-            None.Visible = false;
-            existingStudyDiv.Visible = true;
+            Session["AllStudies"] = list;
+            AllStudies.Visible = show;
+            Some.Visible = show;
+            None.Visible = !show;
 
-            // No point displaying what study to associate with if no studies open
-            var openStudies = DatabaseHandler.GetOpenStudies(nric);
-            Session["Studies"] = openStudies;
-            var val = openStudies.Count > 0;
-            Associate.Visible = val;
-            if (!val)
-                return;
+            // Show history if true
+            if (show)
+            {
+                // TODO: Complete this portion
+                ;
+            }
+        }
 
-            Associate.DataSource = openStudies;
-            Associate.DataBind();
+        /// <summary>
+        /// Displays / hides elements in the existingStudyDiv based upon the value of show
+        /// </summary>
+        /// <param name="show">True to show elements. False to hide elements.</param>
+        /// <param name="openId">The study ID of the open study.</param>
+        private void ToggleExistingStudies(bool show, int openId)
+        {
+            Session["OpenStudy"] = openId;
+            existingStudyDiv.Visible = show;
+
+            // Show open study ID if true
+            if (show)
+                ExistingId.Text = openId.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

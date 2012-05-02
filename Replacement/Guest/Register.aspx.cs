@@ -215,7 +215,7 @@ namespace Guest
             if (IsPostBack)
                 return;
 
-            DateRangeCheck.MinimumValue = "1/1/1900";
+            DateRangeCheck.MinimumValue = DateTime.Parse("1/1/1900").ToShortDateString();
             DateRangeCheck.MaximumValue = DateTime.Today.ToShortDateString();
 
             var countries = DatabaseHandler.GetAllCountries();

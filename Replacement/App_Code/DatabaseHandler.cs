@@ -620,9 +620,9 @@ public class DatabaseHandler
     /// </summary>
     /// <param name="nric">Patient NRIC</param>
     /// <returns>A list of oprn studies patient is involved in, if any.</returns>
-    public static IList<int> GetOpenStudies(string nric)
+    public static int GetOpenStudy(string nric)
     {
-        var temp = new List<int>();
+        var temp = -1;
         try
         {
             var patientId = GetGuidFromNric(nric.ToUpperInvariant());
@@ -632,7 +632,7 @@ public class DatabaseHandler
                         join a in db.Appointments on s.StudyId equals a.StudyId
                         where (a.PatientId.Equals(patientId) && s.IsCompleted == false)
                         orderby s.StudyId
-                        select s.StudyId).ToList();
+                        select s.StudyId).Single();
             }
 
         }

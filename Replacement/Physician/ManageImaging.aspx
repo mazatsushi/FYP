@@ -2,6 +2,7 @@
     Inherits="Physician.ManageImaging" Language="C#" MasterPageFile="~/Site.master"
     Title="Manage Imaging" %>
 
+<%@ Register Assembly="EO.Web" Namespace="EO.Web" TagPrefix="eo" %>
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
 <asp:Content ContentPlaceHolderID="MainContent" runat="Server">
@@ -51,39 +52,46 @@
                     <legend>Schedule a New Imaging Appointment</legend>
                     <div>
                         <asp:Label AssociatedControlID="DatePicker" runat="server" Text="* Date & Time (24H): " />
-                        <asp:TextBox CssClass="textEntry" ID="DatePicker" runat="server" />
-                        <asp:ImageButton ID="DOB_Cal" ImageUrl="~/Images/icons/calendar.png" runat="server" />
-                        <ajaxToolkit:CalendarExtender ClearTime="True" DaysModeTitleFormat="MM/yyyy" Enabled="True"
-                            FirstDayOfWeek="Monday" Format="dd/MM/yyyy HH:mm" PopupButtonID="DOB_Cal" runat="server"
-                            TargetControlID="DatePicker" TodaysDateFormat="dd/MM/yyyy" PopupPosition="TopLeft" />
-                        <ajaxToolkit:MaskedEditExtender AutoComplete="False" Century="2000" ClearTextOnInvalid="False"
-                            ClipboardEnabled="False" CultureName="en-SG" Enabled="True" ID="DOB_Input" Mask="99/99/9999 99:99"
-                            MaskType="DateTime" runat="server" TargetControlID="DatePicker" />
-                        <ajaxToolkit:MaskedEditValidator ControlExtender="DOB_Input" ControlToValidate="DatePicker"
-                            CssClass="failureNotification" Display="Dynamic" EmptyValueBlurredText="<img src='../Images/icons/error.png'> Please specify a date and time."
-                            EmptyValueMessage="Please specify a date and time." InvalidValueBlurredMessage="<img src='../Images/icons/error.png'> Please specify a valid date and time."
-                            InvalidValueMessage="Please specify a valid date and time." IsValidEmpty="False"
-                            runat="server" ValidationExpression="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](20)\d\d\s((([0]?[1-9]|1[0-2])(:|\.)[0-5][0-9]((:|\.)[0-5][0-9])?( )?(AM|am|aM|Am|PM|pm|pM|Pm))|(([0]?[0-9]|1[0-9]|2[0-3])(:|\.)[0-5][0-9]((:|\.)[0-5][0-9])?))$"
-                            ValidationGroup="AddValidationGroup" />
-                        <asp:CustomValidator ControlToValidate="DatePicker" CssClass="failureNotification"
-                            Display="Dynamic" ErrorMessage="Please specify a valid date and time." OnServerValidate="DateTimeCheck"
-                            runat="server" ToolTip="Please specify a valid date and time." ValidationGroup="AddValidationGroup">
-                            <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
-                            Please specify a valid date and time.
-                        </asp:CustomValidator>
+                        <eo:DatePicker ID="DatePicker" runat="server" ControlSkinID="None" DayCellHeight="15"
+                            DayCellWidth="31" DayHeaderFormat="Short" FirstMonth="2012-01-01" MinValidDate="2012-01-01"
+                            OtherMonthDayVisible="True" PickerFormat="MM/dd/yyyy HH:mm" TitleLeftArrowImageUrl="DefaultSubMenuIconRTL"
+                            TitleRightArrowImageUrl="DefaultSubMenuIcon" VisibleDate="2012-05-01">
+                            <CalendarStyle CssText="background-color:white;border-bottom-color:Silver;border-bottom-style:solid;border-bottom-width:1px;border-left-color:Silver;border-left-style:solid;border-left-width:1px;border-right-color:Silver;border-right-style:solid;border-right-width:1px;border-top-color:Silver;border-top-style:solid;border-top-width:1px;color:#2C0B1E;padding-bottom:5px;padding-left:5px;padding-right:5px;padding-top:5px;" />
+                            <TitleStyle CssText="font-family:Verdana;font-size:8.75pt;padding-bottom:5px;padding-left:5px;padding-right:5px;padding-top:5px;" />
+                            <TitleArrowStyle CssText="cursor: hand" />
+                            <MonthStyle CssText="cursor:hand;margin-bottom:0px;margin-left:4px;margin-right:4px;margin-top:0px;" />
+                            <DayHeaderStyle CssText="font-family:Verdana;font-size:8pt;border-bottom: #f5f5f5 1px solid" />
+                            <DayStyle CssText="font-family:Verdana;font-size:8pt;" />
+                            <DayHoverStyle CssText="font-family:Verdana;font-size:8pt;background-image:url('00040402');color:#1c7cdc;" />
+                            <TodayStyle CssText="font-family:Verdana;font-size:8pt;background-image:url('00040401');color:#1176db;" />
+                            <SelectedDayStyle CssText="font-family:Verdana;font-size:8pt;background-image:url('00040403');color:Brown;" />
+                            <DisabledDayStyle CssText="font-family:Verdana;font-size:8pt;color: gray" />
+                            <FooterTemplate>
+                                <table border="0" cellpadding="0" cellspacing="5" style="font-size: 11px; font-family: Verdana">
+                                    <tr>
+                                        <td width="30">
+                                        </td>
+                                        <td valign="center">
+                                            <img src="{img:00040401}" />
+                                        </td>
+                                        <td valign="center">
+                                            Today: {var:today:dd/MM/yyyy}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </FooterTemplate>
+                        </eo:DatePicker>
                     </div>
                     <div class="topPadding" id="newStudyDiv" runat="server">
-                        <div>
-                            <asp:Label AssociatedControlID="Description" runat="server" Text="* Description / Purpose of Study: " />
-                        </div>
+                        <asp:Label AssociatedControlID="Description" runat="server" Text="* Description / Purpose of Study: " />
                         <div>
                             <asp:TextBox CssClass="textEntry" Height="180" ID="Description" runat="server" TextMode="MultiLine"
                                 Width="250" />
                         </div>
                     </div>
                     <div class="topPadding" id="existingStudyDiv" runat="server">
-                        <asp:Label AssociatedControlID="Associate" runat="server" Text="* Associated Study ID: " />
-                        <ajaxToolkit:ComboBox DropDownStyle="DropDownList" ID="Associate" runat="server" />
+                        <asp:Label AssociatedControlID="ExistingId" runat="server" Text="* ID of Current Open Study: " />
+                        <asp:TextBox CssClass="textEntry" Enabled="False" ID="ExistingId" runat="server" />
                     </div>
                     <div class="topPadding">
                         <asp:Button CssClass="buttons" runat="server" Text="Schedule Appointment" OnClick="AddButtonClick"
