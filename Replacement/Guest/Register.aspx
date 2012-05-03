@@ -186,9 +186,9 @@
                         <asp:TextBox CssClass="textEntry" ID="DateOfBirth" runat="server" />
                         <asp:ImageButton ID="DOB_Cal" ImageUrl="~/Images/icons/calendar.png" runat="server" />
                         <ajaxToolkit:CalendarExtender ClearTime="True" DaysModeTitleFormat="dd/MM/yyyy" Enabled="True"
-                            FirstDayOfWeek="Monday" Format="dd/MM/yyyy" PopupButtonID="DOB_Cal" runat="server"
-                            StartDate="1/1/1940" TargetControlID="DateOfBirth" TodaysDateFormat="dd/MM/yyyy"
-                            PopupPosition="TopLeft" />
+                            FirstDayOfWeek="Monday" Format="dd/MM/yyyy" ID="CalendarExtender" PopupButtonID="DOB_Cal"
+                            PopupPosition="TopLeft" runat="server" StartDate="1/1/1940" TargetControlID="DateOfBirth"
+                            TodaysDateFormat="dd/MM/yyyy" />
                         <ajaxToolkit:MaskedEditExtender AutoComplete="False" ClearTextOnInvalid="False" ClipboardEnabled="False"
                             CultureName="en-SG" Enabled="True" ID="DOB_Input" Mask="99/99/9999" MaskType="Date"
                             runat="server" TargetControlID="DateOfBirth" />
@@ -200,7 +200,7 @@
                             ValidationGroup="ValidationGroup" />
                         <asp:RangeValidator ControlToValidate="DateOfBirth" CssClass="failureNotification"
                             ErrorMessage="Please specify a valid date of birth." ID="DateRangeCheck" runat="server"
-                            Type="Date" ValidationGroup="ValidationGroup" >
+                            Type="Date" ValidationGroup="ValidationGroup">
                             <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
                             Please specify a valid date of birth.
                         </asp:RangeValidator>

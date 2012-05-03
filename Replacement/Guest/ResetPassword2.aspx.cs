@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Web;
+using DB_Handlers;
 
 namespace Guest
 {
@@ -34,7 +35,7 @@ namespace Guest
                 Server.Transfer(ResolveUrl("~/Guest/ResetPassword.aspx"));
 
             var text = new CultureInfo("en-SG").TextInfo;
-            Question.Text = text.ToTitleCase(HttpUtility.HtmlDecode("Security Question: " + DatabaseHandler.GetQuestion(username)));
+            Question.Text = text.ToTitleCase(HttpUtility.HtmlDecode("Security Question: " + MembershipHandler.GetQuestion(username)));
         }
 
         /// <summary>
@@ -53,14 +54,14 @@ namespace Guest
             var newPassword = string.Empty;
 
             // Attempt to reset the password
-            if (!DatabaseHandler.ResetPassword(username, answer, out newPassword))
+            if (!MembershipHandler.ResetPassword(username, answer, out newPassword))
             {
                 ErrorMessage.Text = newPassword;
                 return;
             }
 
             // Get the user email address
-            var userEmail = DatabaseHandler.GetUserEmail(username);
+            var userEmail = MembershipHandler.GetUserEmail(username);
             if (string.IsNullOrWhiteSpace(userEmail))
             {
                 ErrorMessage.Text = "Unable to find your email address in the system.";
@@ -79,7 +80,7 @@ namespace Guest
         /// <param name="username">The user name</param>
         private void TransferToHome(string username)
         {
-            switch (DatabaseHandler.FindMostPrivilegedRole(username))
+            switch (MembershipHandler.FindMostPrivilegedRole(username))
             {
                 case 0:
                     Response.Redirect(ResolveUrl("~/Admin/Default.aspx"));

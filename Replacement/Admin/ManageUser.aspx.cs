@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
+using DB_Handlers;
 
 namespace Admin
 {
@@ -21,19 +22,19 @@ namespace Admin
         {
             // Get the patient's user name in system and save to session state
             var nric = Session["Nric"].ToString();
-            var targetUserName = DatabaseHandler.GetUserNameFromNric(nric);
+            var targetUserName = MembershipHandler.GetUserNameFromNric(nric);
             Session["TargetUserName"] = targetUserName;
 
             // Let administrator know which user is currently being referenced
             Label.Text = HttpUtility.HtmlDecode("Current role(s) for: " + nric);
 
             // Get all the roles existing within system and display them
-            Roles.DataSource = DatabaseHandler.GetAllRoles();
+            Roles.DataSource = MembershipHandler.GetAllRoles();
             Roles.DataBind();
 
             // Get all existing role(s) user is assigned to and display them
             var roleList = Roles.Items;
-            foreach (var userRole in DatabaseHandler.GetUserRoles(targetUserName))
+            foreach (var userRole in MembershipHandler.GetUserRoles(targetUserName))
                 roleList.FindByText(userRole).Selected = true;
         }
 
@@ -85,14 +86,12 @@ namespace Admin
              */
             // Step 1
             var targetUserName = Session["TargetUserName"].ToString();
-            foreach (var roleName in DatabaseHandler.GetUserRoles(targetUserName))
-                DatabaseHandler.RemoveUserFromRole(targetUserName, roleName);
+            foreach (var roleName in MembershipHandler.GetUserRoles(targetUserName))
+                MembershipHandler.RemoveUserFromRole(targetUserName, roleName);
 
             // Step 2
             foreach (var role in Roles.Items.Cast<ListItem>().Where(role => role.Selected))
-            {
-                DatabaseHandler.AddUserToRole(targetUserName, role.ToString());
-            }
+                MembershipHandler.AddUserToRole(targetUserName, role.ToString());
             Session["TargetUserName"] = null;
             Server.Transfer(ResolveUrl(SuccessRedirect));
         }

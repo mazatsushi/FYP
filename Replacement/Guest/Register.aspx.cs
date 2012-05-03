@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI.WebControls;
+using DB_Handlers;
 
 namespace Guest
 {
@@ -28,7 +29,7 @@ namespace Guest
         /// <param name="args">Event parameters</param>
         protected void EmailNotInUse(object sender, ServerValidateEventArgs args)
         {
-            args.IsValid = !DatabaseHandler.EmailInUse(HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant()));
+            args.IsValid = !MembershipHandler.EmailInUse(HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant()));
         }
 
         /// <summary>
@@ -196,7 +197,7 @@ namespace Guest
              * Step 1: Desensitize the input
              * Step 2: Check for existing NRIC
              */
-            args.IsValid = !DatabaseHandler.NricExists(HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant()));
+            args.IsValid = !UserParticularsHandler.NricExists(HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant()));
         }
 
         /// <summary>
@@ -215,10 +216,11 @@ namespace Guest
             if (IsPostBack)
                 return;
 
+            CalendarExtender.EndDate = DateTime.Today;
             DateRangeCheck.MinimumValue = DateTime.Parse("1/1/1900").ToShortDateString();
             DateRangeCheck.MaximumValue = DateTime.Today.ToShortDateString();
 
-            var countries = DatabaseHandler.GetAllCountries();
+            var countries = CountryHandler.GetAllCountries();
             countries.Insert(0, "");
             Country.DataSource = countries;
             Country.DataBind();
@@ -269,7 +271,7 @@ namespace Guest
 
             // Create new account in Membership
             MembershipCreateStatus status;
-            var user = DatabaseHandler.CreateUser(username, password, email, question, answer, IsApproved, out status);
+            var user = MembershipHandler.CreateUser(username, password, email, question, answer, IsApproved, out status);
 
             // Return and show error message if account creation unsuccessful
             if (user == null)
@@ -335,10 +337,10 @@ namespace Guest
             var contact = HttpUtility.HtmlEncode(ContactNumber.Text.Trim());
             var postalCode = HttpUtility.HtmlEncode(PostalCode.Text.Trim());
             var nationality = text.ToTitleCase(HttpUtility.HtmlEncode(Nationality.Text.Trim()));
-            var countryId = DatabaseHandler.GetCountryId(HttpUtility.HtmlEncode(Country.Text.Trim()));
+            var countryId = CountryHandler.GetCountryId(HttpUtility.HtmlEncode(Country.Text.Trim()));
 
             // Add user personal information into the UserParticulars table
-            var addStatus = DatabaseHandler.UpdateParticulars(Guid.Parse(user.ProviderUserKey.ToString()), nric, firstName, middleName, lastName, gender, namePrefix, nameSuffix, dob, address, contact, postalCode, countryId, nationality);
+            var addStatus = UserParticularsHandler.UpdateParticulars(Guid.Parse(user.ProviderUserKey.ToString()), nric, firstName, middleName, lastName, gender, namePrefix, nameSuffix, dob, address, contact, postalCode, countryId, nationality);
 
             if (!addStatus)
             {
@@ -347,7 +349,7 @@ namespace Guest
             }
 
             // Add user to the patient role then redirect as appropriate
-            addStatus = DatabaseHandler.AddUserToRole(username, RoleName);
+            addStatus = MembershipHandler.AddUserToRole(username, RoleName);
             if (!addStatus)
             {
                 ErrorMessage.Text = HttpUtility.HtmlDecode("An error occured while adding your role. Please contact the system administrator.");
@@ -364,7 +366,7 @@ namespace Guest
         /// <param name="args">Event parameters</param>
         protected void UserNameNotExists(object sender, ServerValidateEventArgs args)
         {
-            args.IsValid = !DatabaseHandler.UserNameExists(HttpUtility.HtmlEncode(UserName.Text.Trim()));
+            args.IsValid = !MembershipHandler.UserNameExists(HttpUtility.HtmlEncode(UserName.Text.Trim()));
         }
 
         /// <summary>
@@ -373,7 +375,7 @@ namespace Guest
         /// <param name="username">The user name</param>
         private void TransferToHome(string username)
         {
-            switch (DatabaseHandler.FindMostPrivilegedRole(username))
+            switch (MembershipHandler.FindMostPrivilegedRole(username))
             {
                 case 0:
                     Response.Redirect("~/Admin/Default.aspx");

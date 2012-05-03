@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web;
 using System.Web.UI.WebControls;
+using DB_Handlers;
 
 namespace Common
 {
@@ -19,7 +20,7 @@ namespace Common
         /// <param name="args">Event parameters</param>
         protected void NricExists(object source, ServerValidateEventArgs args)
         {
-            args.IsValid = DatabaseHandler.NricExists(Nric.Text.Trim().ToUpperInvariant());
+            args.IsValid = UserParticularsHandler.NricExists(Nric.Text.Trim().ToUpperInvariant());
         }
 
         /// <summary>
@@ -52,7 +53,7 @@ namespace Common
             if (!IsValid)
                 return;
 
-            var nric = HttpUtility.HtmlEncode(Nric.Text.Trim().ToUpperInvariant());
+            var nric = HttpUtility.HtmlEncode(Nric.Text.Trim()).ToUpperInvariant();
             var returnUrl = Request.QueryString["ReturnUrl"];
             Response.Redirect(ResolveUrl(SuccessRedirect + "?ReturnUrl=" + returnUrl + "&Nric=" + nric + "&Checksum=" +
                 CryptoHandler.GetHash(returnUrl, nric)));
@@ -64,7 +65,7 @@ namespace Common
         /// <param name="username">The user name</param>
         private void TransferToHome(string username)
         {
-            switch (DatabaseHandler.FindMostPrivilegedRole(username))
+            switch (MembershipHandler.FindMostPrivilegedRole(username))
             {
                 case 0:
                     Server.Transfer(ResolveUrl("~/Admin/Default.aspx"));

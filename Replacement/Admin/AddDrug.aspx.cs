@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Web;
 using System.Web.UI.WebControls;
+using DB_Handlers;
 
 namespace Admin
 {
@@ -26,7 +27,7 @@ namespace Admin
              * At this point, all user entered information has been verified.
              * We shall now programmatically insert the new drug allergy to database
              */
-            if (!DatabaseHandler.AddNewDrug(new CultureInfo("en-SG").TextInfo.ToTitleCase(HttpUtility.HtmlEncode(DrugName.Text.Trim()))))
+            if (!DrugHandler.AddNewDrug(new CultureInfo("en-SG").TextInfo.ToTitleCase(HttpUtility.HtmlEncode(DrugName.Text.Trim()))))
                 return;
 
             Server.Transfer(ResolveUrl(SuccessRedirect));
@@ -39,7 +40,7 @@ namespace Admin
         /// <param name="args">Event parameters</param>
         protected void DrugNotExists(object source, ServerValidateEventArgs args)
         {
-            args.IsValid = !DatabaseHandler.DrugExists(HttpUtility.HtmlEncode(DrugName.Text.Trim().ToLowerInvariant()));
+            args.IsValid = !DrugHandler.DrugExists(HttpUtility.HtmlEncode(new CultureInfo("en-SG").TextInfo.ToTitleCase(DrugName.Text.Trim())));
         }
 
         /// <summary>

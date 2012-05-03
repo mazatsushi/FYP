@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
+using DB_Handlers;
 
 namespace Account
 {
@@ -20,7 +21,7 @@ namespace Account
         /// <param name="e">Event parameters</param>
         protected void CancelButtonClick(object sender, EventArgs e)
         {
-            switch (DatabaseHandler.FindMostPrivilegedRole(User.Identity.Name))
+            switch (MembershipHandler.FindMostPrivilegedRole(User.Identity.Name))
             {
                 case 0:
                     Response.Redirect(ResolveUrl("~/Admin/Default.aspx"));
@@ -171,10 +172,10 @@ namespace Account
                 return;
 
             // Fill in account information fields
-            Email.Text = DatabaseHandler.GetUserEmail(User.Identity.Name);
+            Email.Text = MembershipHandler.GetUserEmail(User.Identity.Name);
 
             // Fill in personal information fields
-            var particulars = DatabaseHandler.GetParticularsFromUsername(User.Identity.Name);
+            var particulars = UserParticularsHandler.GetParticularsFromUsername(User.Identity.Name);
             if (null == particulars)
                 return;
 
@@ -192,9 +193,9 @@ namespace Account
             PostalCode.Text = particulars.PostalCode;
             Nationality.Text = text.ToTitleCase(particulars.Nationality);
 
-            Country.DataSource = DatabaseHandler.GetAllCountries();
+            Country.DataSource = CountryHandler.GetAllCountries();
             Country.DataBind();
-            Country.SelectedValue = DatabaseHandler.GetCountryName(particulars.CountryOfResidence);
+            Country.SelectedValue = CountryHandler.GetCountryName(particulars.CountryOfResidence);
         }
 
         /// <summary>
@@ -224,7 +225,7 @@ namespace Account
                 return;
             }
 
-            if (!DatabaseHandler.UpdateAccount(User.Identity.Name, email))
+            if (!MembershipHandler.UpdateAccount(User.Identity.Name, email))
             {
                 ErrorMessage.Text += HttpUtility.HtmlDecode("<ul>");
                 ErrorMessage.Text = HttpUtility.HtmlDecode("<li>An error occured while trying to update your account information</li>");
@@ -249,9 +250,9 @@ namespace Account
             var contact = HttpUtility.HtmlEncode(ContactNumber.Text.Trim());
             var postalCode = HttpUtility.HtmlEncode(PostalCode.Text.Trim());
             var nationality = text.ToTitleCase(HttpUtility.HtmlEncode(Nationality.Text.Trim()));
-            var countryId = DatabaseHandler.GetCountryId(HttpUtility.HtmlEncode(Country.Text.Trim()));
+            var countryId = CountryHandler.GetCountryId(HttpUtility.HtmlEncode(Country.Text.Trim()));
 
-            if (!DatabaseHandler.UpdateParticulars(username, firstName, middleName, lastName, namePrefix, nameSuffix, address, contact, postalCode, countryId, nationality))
+            if (!UserParticularsHandler.UpdateParticulars(username, firstName, middleName, lastName, namePrefix, nameSuffix, address, contact, postalCode, countryId, nationality))
             {
                 ErrorMessage.Text += HttpUtility.HtmlDecode("<ul>");
                 ErrorMessage.Text += HttpUtility.HtmlDecode("<li>An error occured while updating your particulars. Please contact the system administrator.</li>");

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
+using DB_Handlers;
 
 namespace Physician
 {
@@ -28,7 +29,7 @@ namespace Physician
                 return;
 
             // Update patient records with selected drug allergy
-            if (!DatabaseHandler.UpdateAllergy(Session["Nric"].ToString(),
+            if (!AllergyHandler.UpdateAllergy(Session["Nric"].ToString(),
                 new CultureInfo("en-SG").TextInfo.ToTitleCase(Addable.SelectedValue.Trim()), false))
             {
                 ErrorMessage.Text = HttpUtility.HtmlDecode("There was an error updating the patient's drug allergies." +
@@ -46,7 +47,7 @@ namespace Physician
         /// <param name="args">Event parameters</param>
         protected void DrugExists(object source, ServerValidateEventArgs args)
         {
-            args.IsValid = DatabaseHandler.DrugExists(new CultureInfo("en-SG").TextInfo.ToTitleCase(args.Value.Trim()));
+            args.IsValid = DrugHandler.DrugExists(new CultureInfo("en-SG").TextInfo.ToTitleCase(args.Value.Trim()));
         }
 
         /// <summary>
@@ -72,11 +73,11 @@ namespace Physician
             HideAllergyList();
 
             // Check if patient has any prior medical records in system
-            if (!DatabaseHandler.HasMedicalRecords(nric))
+            if (!PatientHandler.HasMedicalRecords(nric))
                 Server.Transfer(ResolveUrl(FailureRedirect));
 
             ShowAddableDrugs();
-            var list = DatabaseHandler.GetPatientAllergies(nric);
+            var list = AllergyHandler.GetPatientAllergies(nric);
             if (list.Count == 0)
                 return;
 
@@ -157,7 +158,7 @@ namespace Physician
         private void ShowAddableDrugs()
         {
             // Display list of all medical drugs that can be added
-            var drugList = DatabaseHandler.GetAllDrugs();
+            var drugList = DrugHandler.GetAllDrugs();
             drugList.Insert(0, "");
             Addable.DataSource = drugList;
             Addable.DataBind();
@@ -203,7 +204,7 @@ namespace Physician
                 return;
 
             // Remove the select drug allergy from patient records
-            if (!DatabaseHandler.UpdateAllergy(Session["Nric"].ToString(),
+            if (!AllergyHandler.UpdateAllergy(Session["Nric"].ToString(),
                 new CultureInfo("en-SG").TextInfo.ToTitleCase(Removable.SelectedValue.Trim()), false))
             {
                 ErrorMessage.Text = HttpUtility.HtmlDecode("There was an error updating the patient's drug allergies." +

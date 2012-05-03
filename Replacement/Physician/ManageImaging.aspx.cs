@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
+using DB_Handlers;
 
 namespace Physician
 {
@@ -30,30 +31,30 @@ namespace Physician
             // Check that the user is not creating an appointment for a completed study
 
             var studyId = -1;
+            var date = new DateTime();
             if (Session["OpenStudy"] == null)
             {
                 // Get study ID from new record insertion
                 var desc = Description.Text.Trim();
-                var date = DatePicker.SelectedDate;
+                date = DateTime.Parse(DatePicker.Text.Trim());
+                studyId = StudyHandler.CreateStudy(desc, date, User.Identity.Name);
             }
             else
+            {
                 // Get study ID from session state
                 studyId = int.Parse(Session["OpenStudy"].ToString());
+            }
 
-            /*
-                 * Scenario 1 - No history or no open studies
-                 * Step 1) Create new study in database (remember to get current staff ID)
-                 * Step 2) Create new appointment
-                 * Step 3) Link appointment via foreign key to study
-                 */
-            /*
-                 * Case 2 - Has existing study
-                 * Step 1) Create new appointment
-                 * Step 2) Link appointment via foreign key to study
-                 */
-            //Session["AllStudies"] = null;
-            //Session["OpenStudy"] = null;
-            //Response.Redirect(ResolveUrl(SuccessRedirect));
+            // Perform a simple check before proceeding
+            if (studyId == -1 || !AppointmentHandler.CreateAppointment(date, studyId, Session["Nric"].ToString()))
+            {
+                ErrorMessage.Text = HttpUtility.HtmlDecode("Unable to create a new appointment. Please contact the administrator for assistance.");
+                return;
+            }
+
+            Session["AllStudies"] = null;
+            Session["OpenStudy"] = null;
+            Response.Redirect(ResolveUrl(SuccessRedirect));
         }
 
         /// <summary>
@@ -61,10 +62,9 @@ namespace Physician
         /// </summary>
         /// <param name="sender">The web element that triggered the event</param>
         /// <param name="args">Event parameters</param>
-        protected void DateTimeCheck(object sender, ServerValidateEventArgs args)
+        protected void DateRangeCheck(object sender, ServerValidateEventArgs args)
         {
-            var proposed = DatePicker.SelectedDate;
-            args.IsValid = proposed > DateTime.Now;
+            args.IsValid = DateTime.Parse(DatePicker.Text.Trim()) > DateTime.Now;
         }
 
         /// <summary>
@@ -72,18 +72,19 @@ namespace Physician
         /// </summary>
         private void Initialize()
         {
-            DatePicker.MinValidDate = DateTime.Now;
-            DatePicker.MaxValidDate = DateTime.Now.AddYears(10);
+            //DatePicker.MinValidDate = DateTime.Now;
+            //DatePicker.MaxValidDate = DateTime.Now.AddYears(10);
+            CalendarExtender.StartDate = DateTime.Today;
 
             // Let physician know which patient is currently being managed
             var nric = Session["Nric"].ToString();
             PatientName.Text = Session["PatientName"].ToString();
 
             // Determine if patient has existing studies first
-            var history = DatabaseHandler.GetStudies(nric);
-            var open = DatabaseHandler.GetOpenStudy(nric);
+            var history = StudyHandler.GetStudyHistory(nric);
+            var open = StudyHandler.GetOpenStudy(nric);
             ToggleAllStudies(history.Count > 0, history.ToList());
-            ToggleExistingStudies(open > -1, open);
+            ToggleExistingStudies(open > 0, open);
         }
 
         /// <summary>
@@ -141,12 +142,15 @@ namespace Physician
         /// <param name="openId">The study ID of the open study.</param>
         private void ToggleExistingStudies(bool show, int openId)
         {
-            Session["OpenStudy"] = openId;
             existingStudyDiv.Visible = show;
+            Session["OpenStudy"] = null;
 
             // Show open study ID if true
             if (show)
+            {
                 ExistingId.Text = openId.ToString(CultureInfo.InvariantCulture);
+                Session["OpenStudy"] = openId;
+            }
         }
     }
 }

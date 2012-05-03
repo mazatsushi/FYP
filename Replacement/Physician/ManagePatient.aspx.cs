@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web;
 using System.Web.UI.WebControls;
+using DB_Handlers;
 
 namespace Physician
 {
@@ -33,7 +34,7 @@ namespace Physician
             var nric = Session["Nric"].ToString().ToUpperInvariant();
 
             // Proceed to update patient's blood type in database
-            if (!DatabaseHandler.UpdateBloodType(nric, bloodName))
+            if (!BloodHandler.UpdateBloodType(nric, bloodName))
             {
                 ErrorMessage.Text = HttpUtility.HtmlDecode("There was an error updating the patient's blood type." +
                                                            " Please contact the administrator for assistance.");
@@ -53,7 +54,7 @@ namespace Physician
              * Step 1: Desensitize the input
              * Step 2: Check for existing blood type
              */
-            args.IsValid = DatabaseHandler.BloodTypeExists(HttpUtility.HtmlEncode(BloodType.Text.Trim().ToUpperInvariant()));
+            args.IsValid = BloodHandler.BloodTypeExists(HttpUtility.HtmlEncode(BloodType.Text.Trim().ToUpperInvariant()));
         }
 
         /// <summary>
@@ -76,12 +77,11 @@ namespace Physician
 
             // Let physician know which patient is currently being managed
             var nric = Session["Nric"].ToString();
-            var patientParticulars = DatabaseHandler.GetFullName(nric);
-            PatientName.Text = patientParticulars.Prefix + " " + patientParticulars.FirstName + " " + patientParticulars.LastName;
+            PatientName.Text = UserParticularsHandler.GetFullName(nric);
             Session["PatientName"] = PatientName.Text;
 
             // Initialize the list of blood types
-            var bloodTypes = DatabaseHandler.GetAllBloodTypes();
+            var bloodTypes = BloodHandler.GetAllBloodTypes();
             bloodTypes.Insert(0, "");
             BloodType.DataSource = bloodTypes;
             BloodType.DataBind();
@@ -89,11 +89,11 @@ namespace Physician
             HideAllergyList();
 
             // Check if patient has any prior medical records in system
-            if (!DatabaseHandler.HasMedicalRecords(nric))
+            if (!PatientHandler.HasMedicalRecords(nric))
                 return;
 
             // If exist, we must pre-select the patient's blood type
-            BloodType.SelectedValue = DatabaseHandler.GetPatientBloodType(nric);
+            BloodType.SelectedValue = BloodHandler.GetPatientBloodType(nric);
 
             // Show all of the patient's drug allergies if found
             ShowAllergyList(nric);
@@ -134,7 +134,7 @@ namespace Physician
         /// <param name="nric">The patient's NRIC</param>
         private void ShowAllergyList(string nric)
         {
-            var list = DatabaseHandler.GetPatientAllergies(nric);
+            var list = AllergyHandler.GetPatientAllergies(nric);
             if (list.Count == 0)
                 return;
 

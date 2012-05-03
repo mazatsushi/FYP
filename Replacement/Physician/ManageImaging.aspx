@@ -2,7 +2,6 @@
     Inherits="Physician.ManageImaging" Language="C#" MasterPageFile="~/Site.master"
     Title="Manage Imaging" %>
 
-<%@ Register Assembly="EO.Web" Namespace="EO.Web" TagPrefix="eo" %>
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
 <asp:Content ContentPlaceHolderID="MainContent" runat="Server">
@@ -52,35 +51,33 @@
                     <legend>Schedule a New Imaging Appointment</legend>
                     <div>
                         <asp:Label AssociatedControlID="DatePicker" runat="server" Text="* Date & Time (24H): " />
-                        <eo:DatePicker ID="DatePicker" runat="server" ControlSkinID="None" DayCellHeight="15"
-                            DayCellWidth="31" DayHeaderFormat="Short" FirstMonth="2012-01-01" MinValidDate="2012-01-01"
-                            OtherMonthDayVisible="True" PickerFormat="MM/dd/yyyy HH:mm" TitleLeftArrowImageUrl="DefaultSubMenuIconRTL"
-                            TitleRightArrowImageUrl="DefaultSubMenuIcon" VisibleDate="2012-05-01">
-                            <CalendarStyle CssText="background-color:white;border-bottom-color:Silver;border-bottom-style:solid;border-bottom-width:1px;border-left-color:Silver;border-left-style:solid;border-left-width:1px;border-right-color:Silver;border-right-style:solid;border-right-width:1px;border-top-color:Silver;border-top-style:solid;border-top-width:1px;color:#2C0B1E;padding-bottom:5px;padding-left:5px;padding-right:5px;padding-top:5px;" />
-                            <TitleStyle CssText="font-family:Verdana;font-size:8.75pt;padding-bottom:5px;padding-left:5px;padding-right:5px;padding-top:5px;" />
-                            <TitleArrowStyle CssText="cursor: hand" />
-                            <MonthStyle CssText="cursor:hand;margin-bottom:0px;margin-left:4px;margin-right:4px;margin-top:0px;" />
-                            <DayHeaderStyle CssText="font-family:Verdana;font-size:8pt;border-bottom: #f5f5f5 1px solid" />
-                            <DayStyle CssText="font-family:Verdana;font-size:8pt;" />
-                            <DayHoverStyle CssText="font-family:Verdana;font-size:8pt;background-image:url('00040402');color:#1c7cdc;" />
-                            <TodayStyle CssText="font-family:Verdana;font-size:8pt;background-image:url('00040401');color:#1176db;" />
-                            <SelectedDayStyle CssText="font-family:Verdana;font-size:8pt;background-image:url('00040403');color:Brown;" />
-                            <DisabledDayStyle CssText="font-family:Verdana;font-size:8pt;color: gray" />
-                            <FooterTemplate>
-                                <table border="0" cellpadding="0" cellspacing="5" style="font-size: 11px; font-family: Verdana">
-                                    <tr>
-                                        <td width="30">
-                                        </td>
-                                        <td valign="center">
-                                            <img src="{img:00040401}" />
-                                        </td>
-                                        <td valign="center">
-                                            Today: {var:today:dd/MM/yyyy}
-                                        </td>
-                                    </tr>
-                                </table>
-                            </FooterTemplate>
-                        </eo:DatePicker>
+                        <asp:TextBox CssClass="textEntry" ID="DatePicker" runat="server" />
+                        <asp:ImageButton ID="DOB_Cal" ImageUrl="~/Images/icons/calendar.png" runat="server" />
+                        <ajaxToolkit:CalendarExtender ClearTime="True" DaysModeTitleFormat="d MMM yyyy" Enabled="True"
+                            FirstDayOfWeek="Monday" Format="dd/MM/yyyy HH:mm" ID="CalendarExtender" PopupButtonID="DOB_Cal"
+                            PopupPosition="TopLeft" runat="server" TargetControlID="DatePicker" TodaysDateFormat="d MMM yyyy" />
+                        <ajaxToolkit:MaskedEditExtender AutoComplete="False" ClearTextOnInvalid="False" ClipboardEnabled="False"
+                            CultureName="en-SG" Enabled="True" ID="DOB_Input" Mask="99/99/9999 99:99" MaskType="DateTime"
+                            runat="server" TargetControlID="DatePicker" />
+                        <asp:RequiredFieldValidator ControlToValidate="DatePicker" CssClass="failureNotification"
+                            Display="Dynamic" ErrorMessage="Please specify a date and time." runat="server"
+                            ToolTip="Please specify a date and time." ValidationGroup="AddValidationGroup">
+                            <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                            Please specify a date and time.
+                        </asp:RequiredFieldValidator>
+                        <asp:RegularExpressionValidator ControlToValidate="DatePicker" CssClass="failureNotification"
+                            Display="Dynamic" ErrorMessage="Please specify a valid date and time." runat="server"
+                            ToolTip="Please specify a valid date and time." ValidationExpression="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](20\d\d)\s(([0-9])|([0-1][0-9])|([2][0-3])):(([0-9])|([0-5][0-9]))$"
+                            ValidationGroup="AddValidationGroup">
+                            <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                            Please specify a valid date and time.
+                        </asp:RegularExpressionValidator>
+                        <asp:CustomValidator ControlToValidate="DatePicker" CssClass="failureNotification"
+                            Display="Dynamic" ErrorMessage="Please specify a valid date and time." OnServerValidate="DateRangeCheck"
+                            runat="server" ToolTip="Please specify a valid date and time." ValidationGroup="AddValidationGroup">
+                            <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                            Please specify a valid date and time.
+                        </asp:CustomValidator>
                     </div>
                     <div class="topPadding" id="newStudyDiv" runat="server">
                         <asp:Label AssociatedControlID="Description" runat="server" Text="* Description / Purpose of Study: " />

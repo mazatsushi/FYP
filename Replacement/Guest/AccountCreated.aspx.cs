@@ -1,4 +1,5 @@
 ﻿using System;
+using DB_Handlers;
 
 namespace Guest
 {
@@ -26,7 +27,7 @@ namespace Guest
         /// <param name="username">The user name</param>
         private void TransferToHome(string username)
         {
-            switch (DatabaseHandler.FindMostPrivilegedRole(username))
+            switch (MembershipHandler.FindMostPrivilegedRole(username))
             {
                 case 0:
                     Response.Redirect("~/Admin/Default.aspx");

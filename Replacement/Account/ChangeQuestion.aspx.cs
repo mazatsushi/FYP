@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Web;
+using DB_Handlers;
 
 namespace Account
 {
@@ -18,7 +19,7 @@ namespace Account
         /// <param name="e">Event parameters</param>
         protected void CancelButtonClick(object sender, EventArgs e)
         {
-            switch (DatabaseHandler.FindMostPrivilegedRole(User.Identity.Name))
+            switch (MembershipHandler.FindMostPrivilegedRole(User.Identity.Name))
             {
                 case 0:
                     Response.Redirect(ResolveUrl("~/Admin/Default.aspx"));
@@ -45,8 +46,7 @@ namespace Account
             if (IsPostBack)
                 return;
 
-            var text = new CultureInfo("en-SG").TextInfo;
-            Question.Text = text.ToTitleCase(HttpUtility.HtmlDecode(DatabaseHandler.GetQuestion(User.Identity.Name)));
+            Question.Text = new CultureInfo("en-SG").TextInfo.ToTitleCase(HttpUtility.HtmlDecode(MembershipHandler.GetQuestion(User.Identity.Name)));
         }
 
         /// <summary>
@@ -60,12 +60,11 @@ namespace Account
             if (!IsValid)
                 return;
 
-            var text = new CultureInfo("en-SG").TextInfo;
             var password = HttpUtility.HtmlEncode(Password.Text.Trim());
-            var question = text.ToTitleCase(HttpUtility.HtmlEncode(Question.Text.Trim()));
-            var answer = HttpUtility.HtmlEncode(Answer.Text.Trim().ToLowerInvariant());
+            var question = new CultureInfo("en-SG").TextInfo.ToTitleCase(HttpUtility.HtmlEncode(Question.Text.Trim()));
+            var answer = HttpUtility.HtmlEncode(Answer.Text.Trim()).ToLowerInvariant();
 
-            if (!DatabaseHandler.ChangeQuestionAndAnswer(User.Identity.Name, password, question, answer))
+            if (!MembershipHandler.ChangeQuestionAndAnswer(User.Identity.Name, password, question, answer))
                 return;
 
             Response.Redirect(ResolveUrl(SuccessRedirect));

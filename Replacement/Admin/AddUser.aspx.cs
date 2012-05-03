@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI.WebControls;
+using DB_Handlers;
 
 namespace Admin
 {
@@ -24,7 +25,7 @@ namespace Admin
         /// <param name="args">Event parameters</param>
         protected void EmailNotInUse(object sender, ServerValidateEventArgs args)
         {
-            args.IsValid = !DatabaseHandler.EmailInUse(HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant()));
+            args.IsValid = !MembershipHandler.EmailInUse(HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant()));
         }
 
         /// <summary>
@@ -199,7 +200,7 @@ namespace Admin
              * Step 1: Desensitize the input
              * Step 2: Check for existing NRIC
              */
-            args.IsValid = !DatabaseHandler.NricExists(HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant()));
+            args.IsValid = !UserParticularsHandler.NricExists(HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant()));
         }
 
         /// <summary>
@@ -212,18 +213,19 @@ namespace Admin
             if (IsPostBack)
                 return;
 
+            CalendarExtender.EndDate = DateTime.Today;
             DateRangeCheck.MinimumValue = "1/1/1900";
             DateRangeCheck.MaximumValue = DateTime.Today.ToShortDateString();
 
-            var countries = DatabaseHandler.GetAllCountries();
+            var countries = CountryHandler.GetAllCountries();
             countries.Insert(0, "");
             Country.DataSource = countries;
             Country.DataBind();
 
-            Role.DataSource = DatabaseHandler.GetAllRoles();
+            Role.DataSource = MembershipHandler.GetAllRoles();
             Role.DataBind();
 
-            var depts = DatabaseHandler.GetAllDepartments();
+            var depts = DepartmentHandler.GetAllDepartments();
             depts.Insert(0, "");
             Department.DataSource = depts;
             Department.DataBind();
@@ -272,14 +274,14 @@ namespace Admin
             
             // Fetch information that is needed for creating a new account
             var username = HttpUtility.HtmlEncode(UserName.Text.Trim());
-            var password = HttpUtility.HtmlEncode(DatabaseHandler.GeneratePassword());
+            var password = HttpUtility.HtmlEncode(MembershipHandler.GeneratePassword());
             var email = HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant());
             var question = text.ToTitleCase(HttpUtility.HtmlEncode(Question.Text.Trim()));
-            var answer = HttpUtility.HtmlEncode(Answer.Text.Trim().ToLowerInvariant());
+            var answer = HttpUtility.HtmlEncode(Answer.Text.Trim()).ToLowerInvariant();
 
             // Create new account in Membership
             MembershipCreateStatus status;
-            var user = DatabaseHandler.CreateUser(username, password, email, question, answer, PreapprovedAccounts, out status);
+            var user = MembershipHandler.CreateUser(username, password, email, question, answer, PreapprovedAccounts, out status);
 
             // Return and show error message if account creation unsuccessful
             if (user == null)
@@ -345,11 +347,11 @@ namespace Admin
             var contact = HttpUtility.HtmlEncode(ContactNumber.Text.Trim());
             var postalCode = HttpUtility.HtmlEncode(PostalCode.Text.Trim());
             var nationality = text.ToTitleCase(HttpUtility.HtmlEncode(Nationality.Text.Trim()));
-            var countryId = DatabaseHandler.GetCountryId(HttpUtility.HtmlEncode(Country.Text.Trim()));
+            var countryId = CountryHandler.GetCountryId(HttpUtility.HtmlEncode(Country.Text.Trim()));
 
             // Add user personal information into the UserParticulars table
             var guid = Guid.Parse(user.ProviderUserKey.ToString());
-            var addStatus = DatabaseHandler.UpdateParticulars(guid, nric, firstName, middleName, lastName, gender, namePrefix, nameSuffix, dob, address, contact, postalCode, countryId, nationality);
+            var addStatus = UserParticularsHandler.UpdateParticulars(guid, nric, firstName, middleName, lastName, gender, namePrefix, nameSuffix, dob, address, contact, postalCode, countryId, nationality);
 
             if (!addStatus)
             {
@@ -358,7 +360,7 @@ namespace Admin
             }
 
             // Loop through the roles selected, adding user to each selected role
-            if ((from ListItem r in Role.Items where r.Selected select r).Any(r => !DatabaseHandler.AddUserToRole(username, r.Text)))
+            if ((from ListItem r in Role.Items where r.Selected select r).Any(r => !MembershipHandler.AddUserToRole(username, r.Text)))
             {
                 ErrorMessage.Text = HttpUtility.HtmlDecode("An error occured while adding staff role(s). Please contact the system administrator.");
                 return;
@@ -367,7 +369,7 @@ namespace Admin
             var department = HttpUtility.HtmlEncode(Department.Text.Trim());
 
             // Add staff information into the Staff table
-            if (!DatabaseHandler.AddStaff(guid, department))
+            if (!StaffHandler.AddStaff(guid, department))
             {
                 ErrorMessage.Text = HttpUtility.HtmlDecode("An error occured while adding staff information. Please contact the system administrator.");
                 return;
@@ -385,7 +387,7 @@ namespace Admin
         /// <param name="args">Event parameters</param>
         protected void UserNameNotExists(object sender, ServerValidateEventArgs args)
         {
-            args.IsValid = !DatabaseHandler.UserNameExists(HttpUtility.HtmlEncode(UserName.Text.Trim()));
+            args.IsValid = !MembershipHandler.UserNameExists(HttpUtility.HtmlEncode(UserName.Text.Trim()));
         }
     }
 }

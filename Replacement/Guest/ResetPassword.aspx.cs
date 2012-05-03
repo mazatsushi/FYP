@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web;
 using System.Web.UI.WebControls;
+using DB_Handlers;
 
 namespace Guest
 {
@@ -45,7 +46,7 @@ namespace Guest
         /// <param name="username">The user name</param>
         private void TransferToHome(string username)
         {
-            switch (DatabaseHandler.FindMostPrivilegedRole(username))
+            switch (MembershipHandler.FindMostPrivilegedRole(username))
             {
                 case 0:
                     Response.Redirect(ResolveUrl("~/Admin/Default.aspx"));
@@ -69,7 +70,7 @@ namespace Guest
         /// <param name="args">Event parameters</param>
         protected void UserNameExists(object source, ServerValidateEventArgs args)
         {
-            args.IsValid = DatabaseHandler.UserNameExists(HttpUtility.HtmlEncode(UserName.Text.Trim()));
+            args.IsValid = MembershipHandler.UserNameExists(HttpUtility.HtmlEncode(UserName.Text.Trim()));
         }
     }
 }

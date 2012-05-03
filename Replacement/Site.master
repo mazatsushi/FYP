@@ -31,8 +31,9 @@
             </asp:LoginView>
         </div>
         <div id="menucontainer">
-            <ajaxToolkit:ToolkitScriptManager ID="ScriptManager" runat="server" EnableCdn="False"
-                EnableViewState="False" />
+            <ajaxToolkit:ToolkitScriptManager AllowCustomErrorsRedirect="True" EnableCdn="False"
+                EnablePartialRendering="True" EnableScriptGlobalization="True" EnableScriptLocalization="True"
+                EnableViewState="False" ID="ScriptManager" runat="server" />
             <%--The data source of the navigation menu.--%>
             <asp:SiteMapDataSource ID="siteMap" runat="server" ShowStartingNode="False" />
             <%--The navigation menu of the application.--%>
