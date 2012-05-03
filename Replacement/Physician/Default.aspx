@@ -5,7 +5,7 @@
 </asp:Content>
 <asp:Content ContentPlaceHolderID="MainContent" runat="Server">
     <h2>
-        Admin Homepage
+        Physician Homepage
     </h2>
     <table class="table">
         <tr>

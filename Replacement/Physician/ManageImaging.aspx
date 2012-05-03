@@ -66,11 +66,11 @@
                                         <asp:TextBox Enabled="False" runat="server" Text='<%# Eval("Diagnosis") %>' TextMode="MultiLine" />
                                     </ItemTemplate>
                                 </asp:TemplateField>
-                                <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="50" HeaderText="Details"
-                                    ItemStyle-HorizontalAlign="Center" ItemStyle-Width="50">
+                                <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="50" ItemStyle-HorizontalAlign="Center"
+                                    ItemStyle-Width="50">
                                     <ItemTemplate>
-                                        <asp:HyperLink NavigateUrl='<%# "~/Physician/ManageStudy.aspx?Id=" + Eval("StudyId") %>'
-                                            runat="server">Link</asp:HyperLink>
+                                        <asp:HyperLink NavigateUrl='<%# "~/Physician/ManageStudy.aspx?StudyId=" + Eval("StudyId") %>'
+                                            runat="server">Details</asp:HyperLink>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
@@ -152,7 +152,7 @@
                     </div>
                 </fieldset>
             </div>
-            <div class="topPadding" id="closeStudyDiv" runat="server">
+            <div class="topPadding">
                 <asp:Button CssClass="buttons" PostBackUrl="~/Physician/ManagePatient.aspx" Text="Return to Previous Page"
                     runat="server" />
                 <asp:Button CssClass="buttons" OnClick="ResetButtonClick" PostBackUrl="~/Physician/Default.aspx"

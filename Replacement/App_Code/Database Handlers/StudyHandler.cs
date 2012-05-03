@@ -43,6 +43,28 @@ namespace DB_Handlers
         }
 
         /// <summary>
+        /// Gets all studies in system.
+        /// </summary>
+        /// <returns>A list of all studies in system.</returns>
+        public static IList<Study> GetAllStudies()
+        {
+            var list = new List<Study>();
+            try
+            {
+                using (var db = new RIS_DB_Entities())
+                {
+                    list = (from s in db.Studies
+                            orderby s.StudyId
+                            select s).ToList();
+                }
+
+            }
+            catch (ArgumentException) { }
+            catch (InvalidOperationException) { }
+            return list;
+        }
+
+        /// <summary>
         /// Gets all open studies of a patient.
         /// </summary>
         /// <param name="nric">Patient NRIC.</param>

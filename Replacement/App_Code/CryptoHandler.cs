@@ -17,7 +17,7 @@ public class CryptoHandler
     /// <returns>The string hashed with the secret salt</returns>
     public static string GetHash(params string[] data)
     {
-        using (var hashFunction = MD5.Create())
+        using (var hashFunction = new MD5CryptoServiceProvider())
         {
             // Simply concatenate all the strings together
             var toEncode = new StringBuilder();
@@ -27,7 +27,7 @@ public class CryptoHandler
             // Then calculate a salted MD5 hash using the data
             var hash = new StringBuilder();
             foreach (int i in hashFunction.ComputeHash(Encoding.UTF8.GetBytes(Salt + data + Salt)))
-                hash.Append(i.ToString("x2"));
+                hash.Append(i.ToString("x"));
             return hash.ToString();
         }
     }

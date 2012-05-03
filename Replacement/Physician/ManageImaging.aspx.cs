@@ -19,6 +19,7 @@ namespace Physician
 
         /// <summary>
         /// Event that triggers when the 'Add Allergy' button is clicked.
+        /// TODO: Check that new appointments are not scheduled earlier than previous related appointments.
         /// </summary>
         /// <param name="sender">The web element that triggered the event</param>
         /// <param name="e">Event parameters</param>

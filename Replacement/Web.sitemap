@@ -12,7 +12,6 @@
 
     </siteMapNode>
     <siteMapNode url="~/Physician/Default.aspx" title="Physician">      
-      <siteMapNode url="~/Physician/CreateImagingOrder.aspx" title="Create Imaging Order" />
       <siteMapNode url="~/Physician/ManagePatient.aspx" title="Manage Patient Medical Information"/>
     </siteMapNode>
     <siteMapNode url="~/Radiologist/Default.aspx" title="Radiologist">
