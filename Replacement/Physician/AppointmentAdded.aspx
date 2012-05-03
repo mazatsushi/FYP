@@ -5,6 +5,9 @@
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
 <asp:Content ContentPlaceHolderID="MainContent" runat="Server">
+    <h2>
+        Manage Medical Imaging History
+    </h2>
     <h3>
         New imaging appointment added on behalf of patient.
     </h3>

@@ -72,15 +72,13 @@ namespace Physician
         /// </summary>
         private void Initialize()
         {
-            //DatePicker.MinValidDate = DateTime.Now;
-            //DatePicker.MaxValidDate = DateTime.Now.AddYears(10);
             CalendarExtender.StartDate = DateTime.Today;
 
             // Let physician know which patient is currently being managed
             var nric = Session["Nric"].ToString();
             PatientName.Text = Session["PatientName"].ToString();
 
-            // Determine if patient has existing studies first
+            // Determine if patient has existing and open studies
             var history = StudyHandler.GetStudyHistory(nric);
             var open = StudyHandler.GetOpenStudy(nric);
             ToggleAllStudies(history.Count > 0, history.ToList());
@@ -116,7 +114,7 @@ namespace Physician
         }
 
         /// <summary>
-        /// Displays / hides elements in the newStudyDiv based upon the value of show
+        /// Displays / hides patient's imaging history based upon the value of show
         /// </summary>
         /// <param name="show">True to show elements. False to hide elements.</param>
         /// <param name="list">A list of the patient's medical imaging history.</param>
@@ -124,32 +122,36 @@ namespace Physician
         {
             Session["AllStudies"] = list;
             AllStudies.Visible = show;
-            Some.Visible = show;
             None.Visible = !show;
 
             // Show history if true
             if (show)
             {
-                // TODO: Complete this portion
-                ;
+                AllStudies.DataSource = list;
+                AllStudies.DataBind();
             }
         }
 
         /// <summary>
-        /// Displays / hides elements in the existingStudyDiv based upon the value of show
+        /// Displays / hides existing open studies based upon the value of show
         /// </summary>
         /// <param name="show">True to show elements. False to hide elements.</param>
         /// <param name="openId">The study ID of the open study.</param>
         private void ToggleExistingStudies(bool show, int openId)
         {
             existingStudyDiv.Visible = show;
+            newStudyDiv.Visible = !show;
             Session["OpenStudy"] = null;
-
-            // Show open study ID if true
             if (show)
             {
+                // If there are existing studies to show
                 ExistingId.Text = openId.ToString(CultureInfo.InvariantCulture);
+                DescVal.Enabled = false;
                 Session["OpenStudy"] = openId;
+            }
+            else
+            {
+                DescVal.Enabled = true;
             }
         }
     }
