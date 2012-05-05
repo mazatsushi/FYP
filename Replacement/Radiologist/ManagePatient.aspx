@@ -51,7 +51,8 @@
                                 <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="50" ItemStyle-HorizontalAlign="Center"
                                     ItemStyle-Width="50">
                                     <ItemTemplate>
-                                        <asp:HyperLink NavigateUrl='<%# "~/Radiologist/ManageStudy.aspx?StudyId=" + Eval("StudyId") %>'
+                                        <asp:HyperLink NavigateUrl='<%# "~/Radiologist/ManageStudy.aspx?StudyId=" + Eval("StudyId") +
+                                        "&Checksum=" + CryptoHandler.GetHash(Eval("StudyId").ToString()) %>'
                                             runat="server">Manage</asp:HyperLink>
                                     </ItemTemplate>
                                 </asp:TemplateField>

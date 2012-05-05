@@ -50,5 +50,25 @@ namespace DB_Handlers
             catch (InvalidOperationException) { }
             return id;
         }
+
+        /// <summary>
+        /// Gets a modality's name given its ID.
+        /// </summary>
+        /// <param name="modalityId">Modality ID.</param>
+        /// <returns>Modality name.</returns>
+        public static string GetModality(int modalityId)
+        {
+            var name = string.Empty;
+            try
+            {
+                using (var db = new RIS_DB_Entities())
+                {
+                    name = db.Modalities.Single(b => b.ModalityId == modalityId).Description;
+                }
+            }
+            catch (ArgumentException) { }
+            catch (InvalidOperationException) { }
+            return name;
+        }
     }
 }

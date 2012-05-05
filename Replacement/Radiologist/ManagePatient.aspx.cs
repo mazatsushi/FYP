@@ -21,8 +21,9 @@ namespace Radiologist
                 CryptoHandler.GetHash(Request.Url.ToString());
 
             // Display all studies of the patient
-            PatientName.Text = UserParticularsHandler.GetFullName(nric);
-            Session["PatientName"] = PatientName;
+            var patientName = UserParticularsHandler.GetFullName(nric);
+            PatientName.Text = patientName;
+            Session["PatientName"] = patientName;
             var openStudyId = StudyHandler.GetOpenStudy(nric);
             
             if (openStudyId> 0)
