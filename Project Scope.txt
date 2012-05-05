@@ -1,1 +1,0 @@
-Allow radiologist to operate on the RIS database, retrive the imaging orders, enter the imaging data (including image files), and access the OPIS database.

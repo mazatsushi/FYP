@@ -15,8 +15,6 @@ namespace Physician
         /// <param name="e">Event parameters</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            // This is here to make you beautify the physician homepage
-            //throw new NotImplementedException();
         }
     }
 }

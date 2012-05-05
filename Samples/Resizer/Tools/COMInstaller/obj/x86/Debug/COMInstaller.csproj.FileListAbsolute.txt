@@ -1,0 +1,9 @@
+C:\Users\Administrator\Documents\resizer\dlls\release\COMInstaller.exe
+C:\Users\Administrator\Documents\resizer\dlls\release\COMInstaller.pdb
+C:\Users\Administrator\Documents\resizer\Tools\COMInstaller\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Administrator\Documents\resizer\Tools\COMInstaller\obj\x86\Debug\COMInstaller.Main.resources
+C:\Users\Administrator\Documents\resizer\Tools\COMInstaller\obj\x86\Debug\COMInstaller.Properties.Resources.resources
+C:\Users\Administrator\Documents\resizer\Tools\COMInstaller\obj\x86\Debug\GenerateResource-ResGen.read.1.tlog
+C:\Users\Administrator\Documents\resizer\Tools\COMInstaller\obj\x86\Debug\GenerateResource-ResGen.write.1.tlog
+C:\Users\Administrator\Documents\resizer\Tools\COMInstaller\obj\x86\Debug\COMInstaller.exe
+C:\Users\Administrator\Documents\resizer\Tools\COMInstaller\obj\x86\Debug\COMInstaller.pdb

@@ -1,192 +1,194 @@
 ﻿/* ACCOUNT MANAGEMENT TABLE
 ----------------------------------------------------------*/
-.table {
-	border: 0px;
-	padding: 0px 0px 0px 0px;
+.table
+{
+    border: 0px;
+    padding: 0px 0px 0px 0px;
 }
 
-.table td {
-	text-align: center;
+.table td
+{
+    text-align: center;
 }
 
 /* COLLAPSIBLE PANEL   
 ----------------------------------------------------------*/
 .collapsePanel
 {
-	padding: 5px 5px 5px 5px;
-	width: 60%;
+    padding: 5px 5px 5px 5px;
+    width: 60%;
 }
 
 .collapsePanelHeader
 {
-	height: 20px;
-	color: white;
-	background-color: #5c87b2;
-	font-weight: bold;
-	padding: 5px 5px 5px 5px;
-	vertical-align: middle;
-	width: 60%;
+    height: 20px;
+    color: white;
+    background-color: #5c87b2;
+    font-weight: bold;
+    padding: 5px 5px 5px 5px;
+    vertical-align: middle;
+    width: 60%;
 }
 
 /* FORM ELEMENTS   
 ----------------------------------------------------------*/
 .buttons
 {
-	background-color: #F7F6F3;
-	border-color: #E6E2D8;
-	border-width: 1px;
-	border-style: Solid;
-	font-family: Verdana;
-	font-size: 1em;
+    background-color: #F7F6F3;
+    border-color: #E6E2D8;
+    border-width: 1px;
+    border-style: Solid;
+    font-family: Verdana;
+    font-size: 1em;
 }
 
 .autocomplete_completionListElement
 {
-	margin: 0px !important;
-	background-color: inherit;
-	color: windowtext;
-	border: buttonshadow;
-	border-width: 1px;
-	border-style: solid;
-	overflow: auto;
-	height: 200px;
-	text-align: left;
-	list-style-type: none;
+    margin: 0px !important;
+    background-color: inherit;
+    color: windowtext;
+    border: buttonshadow;
+    border-width: 1px;
+    border-style: solid;
+    overflow: auto;
+    height: 200px;
+    text-align: left;
+    list-style-type: none;
 }
 
 .autocomplete_highlightedListItem
 {
-	background-color: #ffff99;
-	color: black;
-	padding: 1px;
+    background-color: #ffff99;
+    color: black;
+    padding: 1px;
 }
 
 .autocomplete_listItem
 {
-	background-color: window;
-	color: windowtext;
-	padding: 1px;
+    background-color: window;
+    color: windowtext;
+    padding: 1px;
 }
 
 .float
 {
-	float: left;
+    float: left;
 }
 
 .formDivs
 {
-	padding: 10px 0px 10px 0px;
+    padding: 10px 0px 10px 0px;
 }
 
 .handle
 {
-	width: 16px;
-	height: 16px;
-	background-image: url(~/images/icons/arrow_inout.png);
-	overflow: scroll;
+    width: 16px;
+    height: 16px;
+    background-image: url(~/images/icons/arrow_inout.png);
+    overflow: scroll;
 }
 
 div.accountInfo
 {
-	width: 60%;
+    width: 60%;
 }
 
 fieldset
 {
-	display: block;
-	margin: 1em 0px;
-	padding: 1em;
-	border: 1px solid #ccc;
+    display: block;
+    margin: 1em 0px;
+    padding: 1em;
+    border: 1px solid #ccc;
 }
 
 fieldset p
 {
-	margin: 2px 12px 10px 10px;
+    margin: 2px 12px 10px 10px;
 }
 
 fieldset.login label, fieldset.register label, fieldset.changePassword label
 {
-	display: block;
+    display: block;
 }
 
 fieldset label.inline
 {
-	display: inline;
+    display: inline;
 }
 
 legend
 {
-	font-size: 1.1em;
-	font-weight: 600;
-	padding: 2px 4px 8px 4px;
+    font-size: 1.1em;
+    font-weight: 600;
+    padding: 2px 4px 8px 4px;
 }
 
 input.textEntry
 {
-	width: 320px;
-	border: 1px solid #ccc;
+    width: 320px;
+    border: 1px solid #ccc;
 }
 
 input.passwordEntry
 {
-	width: 320px;
-	border: 1px solid #ccc;
+    width: 320px;
+    border: 1px solid #ccc;
 }
 
 /* Header
 ----------------------------------------------------------*/
 #header
 {
-	background: #4b6c9e;
-	position: relative;
-	margin-bottom: 0px;
-	color: #000;
+    background: #4b6c9e;
+    position: relative;
+    margin-bottom: 0px;
+    color: #000;
 }
 
 #title
 {
-	display: block;
-	float: left;
-	text-align: left;
+    display: block;
+    float: left;
+    text-align: left;
 }
 
 #header h1
 {
-	font-weight: bold;
-	padding: 0px 0px 0px 10px;
-	margin: 0;
-	color: #fff;
-	border: none;
-	line-height: 2em;
-	font-size: 32px !important;
+    font-weight: bold;
+    padding: 0px 0px 0px 10px;
+    margin: 0;
+    color: #fff;
+    border: none;
+    line-height: 2em;
+    font-size: 32px !important;
 }
 
 #logindisplay
 {
-	font-size: 1.1em;
-	display: block;
-	text-align: right;
-	margin: 0px 0px 10px 0px;
-	color: White;
-	padding: 10px;
+    font-size: 1.1em;
+    display: block;
+    text-align: right;
+    margin: 0px 0px 10px 0px;
+    color: White;
+    padding: 10px;
 }
 
 #logindisplay a:link
 {
-	color: white;
-	text-decoration: underline;
+    color: white;
+    text-decoration: underline;
 }
 
 #logindisplay a:visited
 {
-	color: white;
-	text-decoration: underline;
+    color: white;
+    text-decoration: underline;
 }
 
 #logindisplay a:hover
 {
-	color: white;
-	text-decoration: none;
+    color: white;
+    text-decoration: none;
 }
 
 /* Headings
@@ -194,151 +196,151 @@ input.passwordEntry
 
 h1, h2, h3, h4, h5, h6
 {
-	font-size: 1.5em;
-	color: #000;
+    font-size: 1.5em;
+    color: #000;
 }
 
 h1
 {
-	font-size: 2em;
-	padding-bottom: 0;
-	margin-bottom: 0;
+    font-size: 2em;
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
 
 h2
 {
-	padding: 0 0 10px 0;
+    padding: 0 0 10px 0;
 }
 
 h3
 {
-	font-size: 1.2em;
+    font-size: 1.2em;
 }
 
 h4
 {
-	font-size: 1.1em;
+    font-size: 1.1em;
 }
 
 h5, h6
 {
-	font-size: 1em;
+    font-size: 1em;
 }
 
 /* Hyperlinks
 ----------------------------------------------------------*/
 a:link
 {
-	color: #034af3;
-	text-decoration: underline;
+    color: #034af3;
+    text-decoration: underline;
 }
 
 a:visited
 {
-	color: #505abc;
+    color: #505abc;
 }
 
 a:hover
 {
-	color: #1d60ff;
-	text-decoration: none;
+    color: #1d60ff;
+    text-decoration: none;
 }
 
 a:active
 {
-	color: #12eb87;
+    color: #12eb87;
 }
 
 /* Main content area
 ----------------------------------------------------------*/
 body
 {
-	background-color: #5c87b2;
-	font-size: .85em;
-	font-family: "Trebuchet MS" , Verdana, Helvetica, Sans-Serif;
-	margin: 0;
-	color: #696969;
+    background-color: #5c87b2;
+    font-size: .85em;
+    font-family: "Trebuchet MS" , Verdana, Helvetica, Sans-Serif;
+    margin: 0;
+    color: #696969;
 }
 
 #main
 {
-	background-color: #F5F5F5;
-	border-radius: 4px 0px 0px 0px;
-	min-height: 720px;
-	padding: 1px 10px 1px 10px;
-	-webkit-border-radius: 4px 0px 0px 0px;
-	-moz-border-radius: 4px 0px 0px 0px;
+    background-color: #F5F5F5;
+    border-radius: 4px 0px 0px 0px;
+    min-height: 720px;
+    padding: 1px 10px 1px 10px;
+    -webkit-border-radius: 4px 0px 0px 0px;
+    -moz-border-radius: 4px 0px 0px 0px;
 }
 
 /* Miscellaneous
 ----------------------------------------------------------*/
 .clear
 {
-	clear: both;
+    clear: both;
 }
 
 .error
 {
-	color: Red;
+    color: Red;
 }
 
 .sidePadding
 {
-	padding-left: 10px;
-	padding-right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .topPadding
 {
-	padding-top: 10px;
+    padding-top: 10px;
 }
 
 #errorMsg
 {
-	margin-left: auto;
-	margin-right: auto;
-	width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
 }
 
 #errorImg
 {
-	margin-left: auto;
-	margin-right: auto;
-	width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
 }
 
 footer, nav, section
 {
-	display: block;
+    display: block;
 }
 
 #footer
 {
-	background-color: #F5FFFA;
-	color: #999;
-	padding: 10px 0;
-	text-align: center;
-	line-height: normal;
-	margin: 0 0 30px 0;
-	font-size: .9em;
-	border-radius: 0 0 4px 4px;
-	-webkit-border-radius: 0 0 4px 4px;
-	-moz-border-radius: 0 0 4px 4px;
+    background-color: #F5FFFA;
+    color: #999;
+    padding: 10px 0;
+    text-align: center;
+    line-height: normal;
+    margin: 0 0 30px 0;
+    font-size: .9em;
+    border-radius: 0 0 4px 4px;
+    -webkit-border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
 }
 
 .submitButton
 {
-	text-align: right;
-	padding-right: 10px;
+    text-align: right;
+    padding-right: 10px;
 }
 
 /* Navigation menu
 ----------------------------------------------------------*/
 nav, #menucontainer
 {
-	background: #465c71;
-	margin-top: 5px;
-	padding: 0px 0px 15px 0px;
+    background: #465c71;
+    margin-top: 5px;
+    padding: 0px 0px 15px 0px;
 }
 
 /* TAB MENU   
@@ -346,65 +348,76 @@ nav, #menucontainer
 
 div.hideSkiplink
 {
-	background-color:#3a4f63;
-	width:100%;
+    background-color: #3a4f63;
+    width: 100%;
 }
 
 div.menu
 {
-	padding: 4px 0px 4px 8px;
+    padding: 4px 0px 4px 8px;
 }
 
 div.menu ul
 {
-	list-style: none;
-	margin: 0px;
-	padding: 0px;
-	width: auto;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    width: auto;
 }
 
 div.menu ul li a, div.menu ul li a:visited
 {
-	background-color: #465c71;
-	border: 0px #4e667d solid;
-	color: #dde4ec;
-	display: block;
-	line-height: 1.35em;
-	padding: 4px 20px;
-	text-decoration: none;
-	white-space: nowrap;
+    background-color: #465c71;
+    border: 0px #4e667d solid;
+    color: #dde4ec;
+    display: block;
+    line-height: 1.35em;
+    padding: 4px 20px;
+    text-decoration: none;
+    white-space: nowrap;
 }
 
 div.menu ul li a:hover
 {
-	background-color: #bfcbd6;
-	color: #465c71;
-	text-decoration: none;
+    background-color: #bfcbd6;
+    color: #465c71;
+    text-decoration: none;
 }
 
 div.menu ul li a:active
 {
-	background-color: #465c71;
-	color: #cfdbe6;
-	text-decoration: none;
+    background-color: #465c71;
+    color: #cfdbe6;
+    text-decoration: none;
+}
+
+/* Textbox Watewrmark
+-----------------------------------------------------------*/
+
+.watermarked
+{
+    padding: 2px 0 0 2px;
+    border: 1px solid #BEBEBE;
+    background-color: #F0F8FF;
+    color: gray;
 }
 
 /* Validation helpers
 -----------------------------------------------------------*/
 .BarBorder
 {
-	border-style: solid;
-	border-width: 1px;
-	width: 180px;
+    border-style: solid;
+    border-width: 1px;
+    width: 180px;
 }
 
 .BarIndicator
 {
-	background-color: green;
+    background-color: green;
 }
 
 .failureNotification
 {
-	color: red;
-	font-size: 1.2em;
+    color: red;
+    font-size: 1.2em;
 }

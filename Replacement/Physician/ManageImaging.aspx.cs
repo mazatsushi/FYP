@@ -19,7 +19,7 @@ namespace Physician
 
         /// <summary>
         /// Event that triggers when the 'Add Allergy' button is clicked.
-        /// TODO: Check that new appointments are not scheduled earlier than previous related appointments.
+        /// Improvement: Check that new appointments are not scheduled earlier than previous related appointments.
         /// </summary>
         /// <param name="sender">The web element that triggered the event</param>
         /// <param name="e">Event parameters</param>
@@ -28,8 +28,6 @@ namespace Physician
             Validate("AddValidationGroup");
             if (!IsValid)
                 return;
-
-            // Check that the user is not creating an appointment for a completed study
 
             var studyId = -1;
             var date = new DateTime();
@@ -46,8 +44,8 @@ namespace Physician
                 studyId = int.Parse(Session["OpenStudy"].ToString());
             }
 
-            // Perform a simple check before proceeding
-            if (studyId == -1 || !AppointmentHandler.CreateAppointment(date, studyId, Session["Nric"].ToString()))
+            // Check that the user is not creating an appointment for a completed study
+            if (studyId == -1 || !StudyHandler.IsStudyOpen(studyId) || !AppointmentHandler.CreateAppointment(date, studyId, Session["Nric"].ToString()))
             {
                 ErrorMessage.Text = HttpUtility.HtmlDecode("Unable to create a new appointment. Please contact the administrator for assistance.");
                 return;

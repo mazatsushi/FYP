@@ -14,7 +14,7 @@
                 Patient's blood type has been updated.
             </h3>
             <div class="topPadding">
-                <asp:Button CssClass="buttons" PostBackUrl="~/Physician/ManagePatient.aspx" Text="Return to Previous Page"
+                <asp:Button CssClass="buttons" PostBackUrl="~/Physician/ManagePatient.aspx" Text="Return to Patient Management"
                     runat="server" />
                 <asp:Button CssClass="buttons" OnClick="ResetButtonClick" PostBackUrl="~/Physician/Default.aspx"
                     runat="server" Text="Return to Physician Homepage" />

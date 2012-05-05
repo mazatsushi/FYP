@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net.Mail;
+using System.Web;
 
 /// <summary>
 /// This class handles SMTP operations on behalf of the application.
@@ -18,16 +19,16 @@ public class MailHandler
 
         // Create message body
         var mailBody = File.ReadAllText(mailContentUri);
-        mailBody = mailBody.Replace("##Fullname##", fullName);
-        mailBody = mailBody.Replace("##Username##", username);
-        mailBody = mailBody.Replace("##Password##", password);
+        mailBody = mailBody.Replace("##Fullname##", HttpUtility.HtmlDecode(fullName));
+        mailBody = mailBody.Replace("##Username##", HttpUtility.HtmlDecode(username));
+        mailBody = mailBody.Replace("##Password##", HttpUtility.HtmlDecode(password));
 
         // Create mail
         var mail = new MailMessage
         {
             Subject = "Account Created",
             From = new MailAddress(FromAddress, FromName),
-            Body = mailBody
+            Body = HttpUtility.HtmlDecode(mailBody)
         };
         mail.To.Add(new MailAddress(email, fullName));
 
