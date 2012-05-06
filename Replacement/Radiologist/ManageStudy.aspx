@@ -2,6 +2,7 @@
     Language="C#" MasterPageFile="~/Site.master" Title="Manage Study" %>
 
 <%@ Import Namespace="DB_Handlers" %>
+<%@ Import Namespace="Radiologist" %>
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
 <asp:Content ContentPlaceHolderID="MainContent" runat="Server">
@@ -20,7 +21,6 @@
                 <h3>
                     Patient Name:
                     <asp:Label ID="PatientName" runat="server" />
-                </h3>
             </div>
             <div>
                 <h3>
@@ -51,8 +51,8 @@
                                 <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="60" ItemStyle-HorizontalAlign="Center"
                                     ItemStyle-Width="60">
                                     <ItemTemplate>
-                                        <asp:HyperLink NavigateUrl='<%# "~/Radiologist/ManageSeries.aspx?SeriesId=" + Eval("SeriesId") +
-                                        "&Checksum=" + CryptoHandler.GetHash(Eval("SeriesId").ToString()) %>' runat="server">Manage</asp:HyperLink>
+                                        <asp:HyperLink NavigateUrl='<%# "~/Radiologist/ManageSeries.aspx?ReturnUrl=" + Request.Url + "&SeriesId=" + Eval("SeriesId") %>'
+                                            runat="server">Manage</asp:HyperLink>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
@@ -92,7 +92,8 @@
                 </fieldset>
             </div>
             <div class="topPadding">
-                <asp:Button CssClass="buttons" ID="NewButton" Text="New Patient" runat="server" />
+                <asp:Button CssClass="buttons" ID="NewButton" OnClick="StartOver" runat="server"
+                    Text="New Patient" />
                 <asp:Button CssClass="buttons" OnClick="ResetButtonClick" PostBackUrl="~/Physician/Default.aspx"
                     runat="server" Text="Return to Physician Homepage" />
             </div>

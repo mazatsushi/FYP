@@ -1,5 +1,0 @@
-E:\Temp\Projects\FYP\Samples\CommandLine\CommandLine\bin\Debug\CommandLine.exe
-E:\Temp\Projects\FYP\Samples\CommandLine\CommandLine\bin\Debug\CommandLine.pdb
-E:\Temp\Projects\FYP\Samples\CommandLine\CommandLine\obj\x86\Debug\ResolveAssemblyReference.cache
-E:\Temp\Projects\FYP\Samples\CommandLine\CommandLine\obj\x86\Debug\CommandLine.exe
-E:\Temp\Projects\FYP\Samples\CommandLine\CommandLine\obj\x86\Debug\CommandLine.pdb

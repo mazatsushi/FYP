@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Globalization;
-using System.Web;
 using DB_Handlers;
 
 namespace Radiologist
@@ -10,15 +8,15 @@ namespace Radiologist
     /// </summary>
     public partial class ManagePatient : System.Web.UI.Page
     {
-        private const string FailureRedirect = "~/Common/SearchByNric.aspx";
+        private const string Beginning = "~/Common/SearchByNric.aspx";
+        private const string Home = "~/Radiologist/ManagePatient.aspx";
         
         /// <summary>
         /// Method for initializing the various data controls in the page on first load
         /// </summary>
         private void Initialize(string nric)
         {
-            NewButton.PostBackUrl = FailureRedirect + "?ReturnUrl=" + Request.Url + "&Checksum=" +
-                CryptoHandler.GetHash(Request.Url.ToString());
+            NewButton.PostBackUrl = ResolveUrl(Beginning + "?ReturnUrl=" + Home + "&Checksum=" + CryptoHandler.GetHash(Home));
 
             // Display all studies of the patient
             var patientName = UserParticularsHandler.GetFullName(nric);
@@ -52,8 +50,7 @@ namespace Radiologist
 
             // We need a Patient ID before proceeding
             if (Session["Nric"] == null)
-                Server.Transfer(ResolveUrl(FailureRedirect + "?ReturnUrl=" + Request.Url + "&Checksum=" +
-                    CryptoHandler.GetHash(Request.Url.ToString())));
+                Server.Transfer(ResolveUrl(Beginning + "?ReturnUrl=" + Home + "&Checksum=" + CryptoHandler.GetHash(Home)));
 
             var nric = Session["Nric"].ToString();
 

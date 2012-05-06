@@ -59,5 +59,25 @@ namespace DB_Handlers
             catch (InvalidOperationException) { }
             return list;
         }
+
+        /// <summary>
+        /// Checks whether a series exists.
+        /// </summary>
+        /// <param name="seriesId">Series ID.</param>
+        /// <returns>True if series is found. False otherwise.</returns>
+        public static bool SeriesExists(int seriesId)
+        {
+            var exist = false;
+            try
+            {
+                using (var db = new RIS_DB_Entities())
+                {
+                    exist = (db.Series.Any(s => s.SeriesId == seriesId));
+                }
+            }
+            catch (ArgumentException) { }
+            catch (InvalidOperationException) { }
+            return exist;
+        }
     }
 }
