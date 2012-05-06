@@ -94,8 +94,8 @@
             <div class="topPadding">
                 <asp:Button CssClass="buttons" ID="NewButton" OnClick="StartOver" runat="server"
                     Text="New Patient" />
-                <asp:Button CssClass="buttons" OnClick="ResetButtonClick" PostBackUrl="~/Physician/Default.aspx"
-                    runat="server" Text="Return to Physician Homepage" />
+                <asp:Button CssClass="buttons" OnClick="ResetButtonClick" PostBackUrl="~/Radiologist/Default.aspx"
+                    runat="server" Text="Return to Radiologist Homepage" />
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>

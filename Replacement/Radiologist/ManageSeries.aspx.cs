@@ -15,8 +15,9 @@ namespace Radiologist
         private const string DicomFileExt = ".dcm";
         private const string HashFailure = "~/Error/HashFailure.aspx";
         private const string HoldingArea = @"E:/Temp/Projects/FYP/Replacement/Holding/";
-        private const string Home = "~/Radiologist/ManagePatient.aspx";
-        private const string SuccessRedirect = "~/Radiologist/ImageAdded.aspx";
+        private const string Home = @"~/Radiologist/ManagePatient.aspx";
+        private const string SuccessRedirect = @"~/Radiologist/ImageAdded.aspx";
+        private const string ThisPage = @"~/Radiologist/ManageSeries.aspx";
 
         /// <summary>
         /// Event that triggers when the DICOM file has been uploaded.
@@ -25,13 +26,23 @@ namespace Radiologist
         /// <param name="e">Event parameters</param>
         protected void FileUploaded(object sender, EventArgs e)
         {
-            // Only 1 file can be uploaded at a time so don't worry
-            foreach (var file in Uploader.PostedFiles)
-            {
-                var finalFileName = Path.Combine(HoldingArea, Guid.NewGuid() + DicomFileExt);
-                File.Move(file.TempFileName, finalFileName);
-            }
-            //Server.Transfer(ResolveUrl(SuccessRedirect));
+            //var fileName = string.Empty;
+            //// Only 1 file can be uploaded at a time so don't worry
+            //foreach (var file in Uploader.PostedFiles)
+            //{
+            //    fileName = Path.Combine(HoldingArea, Guid.NewGuid() + DicomFileExt);
+            //    File.Move(file.TempFileName, fileName);
+            //}
+
+            //// Handover to specialized class for conversion and other necessary work
+            //if (!DicomHandler.Convert(fileName, int.Parse(Request.QueryString["SeriesId"]), User.Identity.Name))
+            //{
+            //    ErrorMessage.Text = HttpUtility.HtmlDecode("The DICOM file uploaded is incompatible with the system. " +
+            //                                               "Please contact the administrator for assistance.");
+            //    return;
+            //}
+            Response.Redirect(ResolveUrl(SuccessRedirect + "?ReturnUrl=" + ThisPage + "&SeriesId=" + Request.QueryString["SeriesId"] +
+                "&Checksum=" + CryptoHandler.GetHash(Request.QueryString["SeriesId"])));
         }
 
         /// <summary>
@@ -45,6 +56,7 @@ namespace Radiologist
             None.Visible = ImageHandler.HasImages(seriesId);
 
             // Code to fetch thumbnails and display in page
+            // TODO
         }
 
         /// <summary>

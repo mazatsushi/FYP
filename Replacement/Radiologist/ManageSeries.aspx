@@ -1,5 +1,5 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="ManageSeries.aspx.cs" Culture="en-SG" Inherits="Radiologist.ManageSeries"
-    Language="C#" MasterPageFile="~/Site.master" Title="Manage Study" %>
+    Language="C#" MasterPageFile="~/Site.master" Title="Manage Series" %>
 
 <%@ Register Assembly="EO.Web" Namespace="EO.Web" TagPrefix="eo" %>
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
@@ -13,6 +13,9 @@
     <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <div>
+                <h2>
+                    Manage Series
+                </h2>
                 <h3>
                     Series ID:
                     <asp:Label ID="SeriesID" runat="server" />

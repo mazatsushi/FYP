@@ -1,6 +1,6 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="ManagePatient.aspx.cs" Culture="en-SG"
     Inherits="Radiologist.ManagePatient" Language="C#" MasterPageFile="~/Site.master"
-    Title="Manage Study" %>
+    Title="Manage Patient" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>

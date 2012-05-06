@@ -139,16 +139,6 @@
       <Association Name="DrugAllergy_PatientsWithDrugAllergy" Member="PatientsWithDrugAllergies" ThisKey="DrugAllergyId" OtherKey="DrugAllergyId" Type="PatientsWithDrugAllergy" />
     </Type>
   </Table>
-  <Table Name="dbo.Images" Member="Images">
-    <Type Name="Image">
-      <Column Name="ImageId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="SeriesId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="TakenBy" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Association Name="Image_Note" Member="Notes" ThisKey="ImageId" OtherKey="ImageId" Type="Note" />
-      <Association Name="Series_Image" Member="Series" ThisKey="SeriesId" OtherKey="SeriesId" Type="Series" IsForeignKey="true" />
-      <Association Name="Staff_Image" Member="Staff" ThisKey="TakenBy" OtherKey="StaffId" Type="Staff" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Modalities" Member="Modalities">
     <Type Name="Modality">
       <Column Name="ModalityId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -161,7 +151,7 @@
       <Column Name="NoteId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="NoteContent" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="ImageId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Image_Note" Member="Image" ThisKey="ImageId" OtherKey="ImageId" Type="Image" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="Image1_Note" Member="Image" ThisKey="ImageId" OtherKey="ImageId" Type="Image" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.Patients" Member="Patients">
@@ -187,7 +177,7 @@
       <Column Name="SeriesId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ModalityId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="StudyId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Series_Image" Member="Images" ThisKey="SeriesId" OtherKey="SeriesId" Type="Image" />
+      <Association Name="Series_Image1" Member="Images" ThisKey="SeriesId" OtherKey="SeriesId" Type="Image" />
       <Association Name="Modality_Series" Member="Modality" ThisKey="ModalityId" OtherKey="ModalityId" Type="Modality" IsForeignKey="true" />
       <Association Name="Study_Series" Member="Study" ThisKey="StudyId" OtherKey="StudyId" Type="Study" IsForeignKey="true" />
     </Type>
@@ -196,8 +186,8 @@
     <Type Name="Staff">
       <Column Name="StaffId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="DepartmentId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Staff_Image" Member="Images" ThisKey="StaffId" OtherKey="TakenBy" Type="Image" />
       <Association Name="Staff_Study" Member="Studies" ThisKey="StaffId" OtherKey="ReferredBy" Type="Study" />
+      <Association Name="Staff_Image1" Member="Images" ThisKey="StaffId" OtherKey="TakenBy" Type="Image" />
       <Association Name="aspnet_User_Staff" Member="aspnet_User" ThisKey="StaffId" OtherKey="UserId" Type="aspnet_User" IsForeignKey="true" />
       <Association Name="Department_Staff" Member="Department" ThisKey="DepartmentId" OtherKey="DepartmentId" Type="Department" IsForeignKey="true" />
     </Type>
@@ -214,6 +204,34 @@
       <Association Name="Study_Appointment" Member="Appointments" ThisKey="StudyId" OtherKey="StudyId" Type="Appointment" />
       <Association Name="Study_Series" Member="Series" ThisKey="StudyId" OtherKey="StudyId" Type="Series" />
       <Association Name="Staff_Study" Member="Staff" ThisKey="ReferredBy" OtherKey="StaffId" Type="Staff" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DicomImages" Member="DicomImages">
+    <Type Name="DicomImage">
+      <Column Name="ImageId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="DicomUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="DicomImage" Member="DicomImage1" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Association Name="Image1_DicomImage" Member="Image" ThisKey="ImageId" OtherKey="ImageId" Type="Image" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Images" Member="Images">
+    <Type Name="Image">
+      <Column Name="ImageId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SeriesId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TakenBy" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="Image1_Note" Member="Notes" ThisKey="ImageId" OtherKey="ImageId" Type="Note" />
+      <Association Name="Image1_DicomImage" Member="DicomImage" ThisKey="ImageId" OtherKey="ImageId" Type="DicomImage" Cardinality="One" />
+      <Association Name="Image_JpegImage" Member="JpegImages" ThisKey="ImageId" OtherKey="ImageID" Type="JpegImage" />
+      <Association Name="Series_Image1" Member="Series" ThisKey="SeriesId" OtherKey="SeriesId" Type="Series" IsForeignKey="true" />
+      <Association Name="Staff_Image1" Member="Staff" ThisKey="TakenBy" OtherKey="StaffId" Type="Staff" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.JpegImages" Member="JpegImages">
+    <Type Name="JpegImage">
+      <Column Name="ImageID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ImageUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Link" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="Image_JpegImage" Member="Image" ThisKey="ImageID" OtherKey="ImageId" Type="Image" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
