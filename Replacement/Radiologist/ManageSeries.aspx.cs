@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Web;
 using DB_Handlers;
 
@@ -16,6 +16,8 @@ namespace Radiologist
         private const string HashFailure = "~/Error/HashFailure.aspx";
         private const string HoldingArea = @"E:/Temp/Projects/FYP/Replacement/Holding/";
         private const string Home = @"~/Radiologist/ManagePatient.aspx";
+        private const string ImageDir = @"E:/Temp/Projects/Replacement/";
+        private const string ResizeString = @"?maxwidth=200&maxheight=200";
         private const string SuccessRedirect = @"~/Radiologist/ImageAdded.aspx";
         private const string ThisPage = @"~/Radiologist/ManageSeries.aspx";
 
@@ -26,21 +28,21 @@ namespace Radiologist
         /// <param name="e">Event parameters</param>
         protected void FileUploaded(object sender, EventArgs e)
         {
-            //var fileName = string.Empty;
-            //// Only 1 file can be uploaded at a time so don't worry
-            //foreach (var file in Uploader.PostedFiles)
-            //{
-            //    fileName = Path.Combine(HoldingArea, Guid.NewGuid() + DicomFileExt);
-            //    File.Move(file.TempFileName, fileName);
-            //}
+            var fileName = string.Empty;
+            // Only 1 file can be uploaded at a time so don't worry
+            foreach (var file in Uploader.PostedFiles)
+            {
+                fileName = Path.Combine(HoldingArea, Guid.NewGuid() + DicomFileExt);
+                File.Move(file.TempFileName, fileName);
+            }
 
-            //// Handover to specialized class for conversion and other necessary work
-            //if (!DicomHandler.Convert(fileName, int.Parse(Request.QueryString["SeriesId"]), User.Identity.Name))
-            //{
-            //    ErrorMessage.Text = HttpUtility.HtmlDecode("The DICOM file uploaded is incompatible with the system. " +
-            //                                               "Please contact the administrator for assistance.");
-            //    return;
-            //}
+            // Handover to specialized class for conversion and other necessary work
+            if (!DicomHandler.Convert(fileName, int.Parse(Request.QueryString["SeriesId"]), User.Identity.Name))
+            {
+                ErrorMessage.Text = HttpUtility.HtmlDecode("The DICOM file uploaded is incompatible with the system. " +
+                                                           "Please contact the administrator for assistance.");
+                return;
+            }
             Response.Redirect(ResolveUrl(SuccessRedirect + "?ReturnUrl=" + ThisPage + "&SeriesId=" + Request.QueryString["SeriesId"] +
                 "&Checksum=" + CryptoHandler.GetHash(Request.QueryString["SeriesId"])));
         }
@@ -53,10 +55,32 @@ namespace Radiologist
             NewButton.PostBackUrl = ResolveUrl(Beginning + "?ReturnUrl=" + Home + "&Checksum=" + CryptoHandler.GetHash(Home));
 
             // Hide/display the text label
-            None.Visible = ImageHandler.HasImages(seriesId);
+            var hasImages = ImageHandler.HasImages(seriesId);
+            None.Visible = !hasImages;
 
             // Code to fetch thumbnails and display in page
-            // TODO
+            if (!hasImages)
+                return;
+            
+            var container = Images.Controls;
+            foreach (var link in ImageHandler.GetLinkedImageId(seriesId).SelectMany(JpegImageHandler.GetLinks).ToList())
+            {
+                // Build the image
+                var img = new System.Web.UI.WebControls.Image
+                {
+                    AlternateText = "Something went wrong here",
+                    ImageUrl = ResolveUrl("~/" + new Uri(new DirectoryInfo(link).Parent.Parent.FullName).MakeRelativeUri(new Uri(link)) + ResizeString)
+                };
+
+                // Build a panel
+                var panel = new System.Web.UI.WebControls.Panel();
+
+                // Add image to panel
+                container.Add(img);
+
+                // Add panel to container
+                ;
+            }
         }
 
         /// <summary>

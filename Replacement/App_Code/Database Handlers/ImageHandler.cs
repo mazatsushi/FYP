@@ -56,5 +56,28 @@ namespace DB_Handlers
             catch (InvalidOperationException) { }
             return saved;
         }
+
+        /// <summary>
+        /// Gets the image IDs linked to a series ID.
+        /// </summary>
+        /// <param name="seriesId">Series ID.</param>
+        /// <returns>The Image ID if save is successful. -1 otherwise.</returns>
+        public static IList<int> GetLinkedImageId(int seriesId)
+        {
+            var saved = new List<int>();
+            try
+            {
+                using (var db = new RIS_DB_Entities())
+                {
+                    saved = (from i in db.Images
+                         where i.SeriesId == seriesId
+                         orderby i.SeriesId
+                         select i.ImageId).ToList();
+                }
+            }
+            catch (ArgumentException) { }
+            catch (InvalidOperationException) { }
+            return saved;
+        }
     }
 }

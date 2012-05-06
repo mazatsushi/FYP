@@ -255,6 +255,7 @@ a:active
 ----------------------------------------------------------*/
 .ThumbDiv
 {
+    float: left;
     height: 210px;
     padding: 4px 4px 4px 4px;
     width: 210;
