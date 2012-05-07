@@ -253,12 +253,10 @@ a:active
 
 /* Images
 ----------------------------------------------------------*/
-.ThumbDiv
+.Thumbnail
 {
-    float: left;
-    height: 210px;
-    padding: 4px 4px 4px 4px;
-    width: 210;
+    height: 200px;
+    width: 200px;
 }
 
 /* Main content area

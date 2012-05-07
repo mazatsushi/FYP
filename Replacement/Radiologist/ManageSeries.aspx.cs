@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.UI.WebControls;
 using DB_Handlers;
 
 namespace Radiologist
@@ -61,25 +62,28 @@ namespace Radiologist
             // Code to fetch thumbnails and display in page
             if (!hasImages)
                 return;
-            
-            var container = Images.Controls;
+
             foreach (var link in ImageHandler.GetLinkedImageId(seriesId).SelectMany(JpegImageHandler.GetLinks).ToList())
             {
-                // Build the image
-                var img = new System.Web.UI.WebControls.Image
+                // Build a relative URL for the image (it will be referenced twice)
+                var relativeLink = ResolveUrl("~/" + new Uri(new DirectoryInfo(link).Parent.Parent.FullName).MakeRelativeUri(new Uri(link)));
+
+                // Build a panel to hold the image
+                var panel = new Panel();
+
+                // Build a hyperlink
+                var hyperlink = new HyperLink
                 {
-                    AlternateText = "Something went wrong here",
-                    ImageUrl = ResolveUrl("~/" + new Uri(new DirectoryInfo(link).Parent.Parent.FullName).MakeRelativeUri(new Uri(link)) + ResizeString)
+                    CssClass = "Thumbnail",
+                    ImageUrl = ResolveUrl(relativeLink + ResizeString),
+                    NavigateUrl = ResolveUrl(relativeLink),
                 };
 
-                // Build a panel
-                var panel = new System.Web.UI.WebControls.Panel();
-
                 // Add image to panel
-                container.Add(img);
-
+                panel.Controls.Add(hyperlink);
+                
                 // Add panel to container
-                ;
+                Images.Controls.Add(panel);
             }
         }
 
