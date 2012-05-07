@@ -12,8 +12,7 @@
 
     </siteMapNode>
     <siteMapNode url="~/Physician/Default.aspx" title="Physician">      
-      <siteMapNode url="~/Physician/ManagePatient.aspx" title="Manage Patient Medical Information"/>
-      <siteMapNode url="~/Physician/ManageStudy.aspx" title="Manage Medical Studies"/>
+      <siteMapNode url="~/Physician/ManagePatient.aspx" title="Manage Patient"/>
     </siteMapNode>
     <siteMapNode url="~/Radiologist/Default.aspx" title="Radiologist">
       <siteMapNode url="~/Radiologist/ManagePatient.aspx" title="Manage Patient" />

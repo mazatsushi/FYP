@@ -1,5 +1,5 @@
-﻿<%@ Page AutoEventWireup="true" CodeFile="ManageImaging.aspx.cs" Culture="en-SG"
-    Inherits="Physician.ManageImaging" Language="C#" MasterPageFile="~/Site.master"
+﻿<%@ Page AutoEventWireup="true" CodeFile="ManageImagingHistory.aspx.cs" Culture="en-SG"
+    Inherits="Physician.ManageImagingHistory" Language="C#" MasterPageFile="~/Site.master"
     Title="Manage Imaging" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
@@ -69,8 +69,8 @@
                                 <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="50" ItemStyle-HorizontalAlign="Center"
                                     ItemStyle-Width="50">
                                     <ItemTemplate>
-                                        <asp:HyperLink NavigateUrl='<%# "~/Physician/ManageStudy.aspx?StudyId=" + Eval("StudyId") %>'
-                                            runat="server">Details</asp:HyperLink>
+                                        <asp:HyperLink NavigateUrl='<%# "~/Physician/ManageStudy.aspx?StudyId=" + Eval("StudyId") +
+                                        "&Checksum=" + CryptoHandler.GetHash(Eval("StudyId").ToString()) %>' runat="server">Details</asp:HyperLink>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

@@ -12,7 +12,7 @@ namespace Physician
     /// Code behind for the ~/Physician/ManageImaging.aspx page
     /// It is assumed that every patient can have at most 1 unresolved study at any time
     /// </summary>
-    public partial class ManageImaging : System.Web.UI.Page
+    public partial class ManageImagingHistory : System.Web.UI.Page
     {
         private const string FailureRedirect = "~/Physician/ManagePatient.aspx";
         private const string SuccessRedirect = "~/Physician/AppointmentAdded.aspx";

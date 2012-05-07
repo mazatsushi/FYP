@@ -66,7 +66,7 @@
                 <div>
                 </div>
                 <div>
-                    <asp:Button CssClass="buttons" runat="server" Text="View Imaging History" PostBackUrl="~/Physician/ManageImaging.aspx" />
+                    <asp:Button CssClass="buttons" runat="server" Text="View Imaging History" PostBackUrl="~/Physician/ManageImagingHistory.aspx" />
                 </div>
             </fieldset>
             <%-- / Medical Imaging History --%>

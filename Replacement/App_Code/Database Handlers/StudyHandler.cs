@@ -203,7 +203,7 @@ namespace DB_Handlers
             }
             catch (ArgumentException) { }
             catch (InvalidOperationException) { }
-            return temp;
+            return !temp;
         }
 
         /// <summary>

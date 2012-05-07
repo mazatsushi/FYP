@@ -17,7 +17,6 @@ namespace Radiologist
         private const string HashFailure = "~/Error/HashFailure.aspx";
         private const string HoldingArea = @"E:/Temp/Projects/FYP/Replacement/Holding/";
         private const string Home = @"~/Radiologist/ManagePatient.aspx";
-        private const string ImageDir = @"E:/Temp/Projects/Replacement/";
         private const string ResizeString = @"?maxwidth=200&maxheight=200";
         private const string SuccessRedirect = @"~/Radiologist/ImageAdded.aspx";
         private const string ThisPage = @"~/Radiologist/ManageSeries.aspx";

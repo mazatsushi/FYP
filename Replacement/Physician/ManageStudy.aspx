@@ -20,9 +20,9 @@
                     <asp:Label ID="StudyIdLabel" runat="server" />
                 </h3>
             </div>
-            <div id="toggle" runat="server">
+            <div id="Details" runat="server">
                 <fieldset>
-                    <legend>Study Details</legend>
+                    <legend>Details</legend>
                     <div>
                         <asp:DetailsView CellPadding="4" ForeColor="#333333" GridLines="None" ID="StudyDetails"
                             runat="server" Width="400px" AutoGenerateRows="False">
@@ -79,31 +79,33 @@
                             <PagerStyle BackColor="#284775" ForeColor="White" HorizontalAlign="Center" />
                             <RowStyle BackColor="#F7F6F3" ForeColor="#333333" />
                         </asp:DetailsView>
-                        <div class="topPadding" id="closeStudy" runat="server">
-                            <div>
-                                <asp:TextBox CssClass="textEntry" ID="Diagnosis" runat="server" Height="100px" TextMode="MultiLine"
-                                    Width="300px" />
-                            </div>
-                            <ajaxToolkit:TextBoxWatermarkExtender runat="server" TargetControlID="Diagnosis"
-                                WatermarkText="Enter diagnosis here" WatermarkCssClass="watermarked" />
-                            <asp:RequiredFieldValidator ControlToValidate="Diagnosis" CssClass="failureNotification"
-                                Display="Dynamic" ErrorMessage="Please provide a diagnosis." ID="DiagValidate"
-                                runat="server" ToolTip="Please provide a diagnosis." ValidationGroup="Group">
-                                <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
-                                Please provide a diagnosis.
-                            </asp:RequiredFieldValidator>
-                            <asp:Button CssClass="buttons" Text="Close this Study" OnClick="CloseButtonClick"
-                                runat="server" ValidationGroup="Group" />
-                        </div>
                     </div>
                 </fieldset>
             </div>
-            <div class="topPadding">
+            <div id="Images" runat="server">
                 <fieldset>
-                    <legend>Images</legend>This here to use grid view to display the DICOM images. Or
-                    to link to yet another page to view the images. Okay we should be able to show jpeg
-                    thumbnails after implementing a database hack.
-                    <asp:Label ID="NoImageLabel" Text="No images found" runat="server" />
+                    <legend>Images</legend>
+                    <asp:Panel ID="ImagesDiv" runat="server" />
+                    <asp:Label ID="None" Text="No images found" runat="server" />
+                </fieldset>
+            </div>
+            <div id="CloseStudy" runat="server">
+                <fieldset>
+                    <legend>Diagnosis</legend>
+                    <div>
+                        <asp:TextBox CssClass="textEntry" ID="Diagnosis" runat="server" Height="100px" TextMode="MultiLine"
+                            Width="300px" />
+                    </div>
+                    <ajaxToolkit:TextBoxWatermarkExtender runat="server" TargetControlID="Diagnosis"
+                        WatermarkText="Enter diagnosis here" WatermarkCssClass="watermarked" />
+                    <asp:RequiredFieldValidator ControlToValidate="Diagnosis" CssClass="failureNotification"
+                        Display="Dynamic" ErrorMessage="Please provide a diagnosis." ID="DiagValidate"
+                        runat="server" ToolTip="Please provide a diagnosis." ValidationGroup="Group">
+                    <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                    Please provide a diagnosis.
+                    </asp:RequiredFieldValidator>
+                    <asp:Button CssClass="buttons" Text="Close this Study" OnClick="CloseButtonClick"
+                        runat="server" ValidationGroup="Group" />
                 </fieldset>
             </div>
             <div class="topPadding">
