@@ -2,48 +2,20 @@
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.UI.WebControls;
 using DB_Handlers;
 
-namespace Physician
+namespace Patients
 {
     /// <summary>
-    /// Code behind for the ~/Physician/ManageStudy.aspx page
+    /// Code behind for the ~/Patients/ViewSeries.aspx page
     /// It is assumed that every patient can have at most 1 unresolved study at any time
     /// </summary>
-    public partial class ManageStudy : System.Web.UI.Page
+    public partial class ViewSeries : System.Web.UI.Page
     {
         private const string HashFailure = @"~/Error/HashFailure.aspx";
         private const string PreviousRedirect = @"~/Physician/ManageImagingHistory.aspx";
         private const string ResizeString = @"?maxwidth=200&maxheight=200";
-        private const string SuccessRedirect = @"~/Physician/StudyClosed.aspx";
-
-        /// <summary>
-        /// Event that triggers when the close study button is clicked.
-        /// </summary>
-        /// <param name="sender">The web element that triggered the event</param>
-        /// <param name="e">Event parameters</param>
-        protected void CloseButtonClick(object sender, EventArgs e)
-        {
-            Validate();
-            if (!IsValid)
-                return;
-
-            var studyId = int.Parse(Session["StudyId"].ToString());
-            var diag = HttpUtility.HtmlEncode(Diagnosis.Text.Trim());
-            var date = DateTime.Now;
-
-            // Check that the user is not closing a completed study
-            if (studyId == -1 || !StudyHandler.IsStudyOpen(studyId) || !StudyHandler.CloseStudy(studyId, date, diag))
-            {
-                ErrorMessage.Text = HttpUtility.HtmlDecode("Unable to create a new appointment. Please contact the administrator for assistance.");
-                return;
-            }
-
-            Session["StudyId"] = null;
-            Response.Redirect(ResolveUrl(SuccessRedirect));
-        }
 
         /// <summary>
         /// Method for initializing the various data controls in the page on first load
@@ -65,7 +37,6 @@ namespace Physician
                     Details.Visible = false;
                     break;
             }
-            ToggleClose(studyId);
             ToggleImages(studyId);
             Session["StudyId"] = studyId;
         }
@@ -102,24 +73,6 @@ namespace Physician
         protected void ResetButtonClick(object sender, EventArgs e)
         {
             Session.Clear();
-        }
-
-        /// <summary>
-        /// Method for toggling the visibiliy of the CloseStudy div
-        /// </summary>
-        private void ToggleClose(int studyId)
-        {
-            switch (StudyHandler.IsStudyOpen(studyId))
-            {
-                case true:
-                    CloseStudy.Visible = true;
-                    DiagValidate.Enabled = true;
-                    break;
-                case false:
-                    CloseStudy.Visible = false;
-                    DiagValidate.Enabled = false;
-                    break;
-            }
         }
 
         /// <summary>

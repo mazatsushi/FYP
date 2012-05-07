@@ -8,6 +8,7 @@
         Manage Study
     </h2>
     <h3>
+        The study has been closed.
     </h3>
     <div class="topPadding">
         <asp:Button CssClass="buttons" PostBackUrl="~/Physician/ManagePatient.aspx" Text="Return to Patient Management"

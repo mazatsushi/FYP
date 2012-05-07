@@ -8,10 +8,10 @@
       <siteMapNode url="~/Admin/AddUser.aspx" title="Add New User" />
       <siteMapNode url="~/Admin/ManageUser.aspx" title="Manage User Roles" />
     </siteMapNode>
-    <siteMapNode url="~/Patient/Default.aspx" title="Patient">
-
+    <siteMapNode url="~/Patients/Default.aspx" title="Patient">
+      <siteMapNode url="~/Patients/ViewStudies.aspx" title="View Medical History"/>
     </siteMapNode>
-    <siteMapNode url="~/Physician/Default.aspx" title="Physician">      
+    <siteMapNode url="~/Physician/Default.aspx" title="Physician">
       <siteMapNode url="~/Physician/ManagePatient.aspx" title="Manage Patient"/>
     </siteMapNode>
     <siteMapNode url="~/Radiologist/Default.aspx" title="Radiologist">

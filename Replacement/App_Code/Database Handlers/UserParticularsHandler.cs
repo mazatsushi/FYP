@@ -56,6 +56,26 @@ namespace DB_Handlers
         }
 
         /// <summary>
+        /// Gets user NRIC given their GUID.
+        /// </summary>
+        /// <param name="userId">User ID.</param>
+        /// <returns>User NRIC if found.</returns>
+        public static string GetNricFromGuid(Guid userId)
+        {
+            var nric = string.Empty;
+            try
+            {
+                using (var db = new RIS_DB_Entities())
+                {
+                    nric = (db.UserParticulars.Single(u => u.UserId.Equals(userId))).NRIC;
+                }
+            }
+            catch (ArgumentException) { }
+            catch (InvalidOperationException) { }
+            return nric;
+        }
+
+        /// <summary>
         /// Gets user particulars given their username.
         /// </summary>
         /// <param name="username">Username.</param>
