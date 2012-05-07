@@ -1,4 +1,5 @@
 ﻿using System;
+using DB_Handlers;
 
 namespace Account
 {
@@ -15,7 +16,7 @@ namespace Account
         /// <param name="e">Event parameters</param>
         protected void CancelButtonClick(object sender, EventArgs e)
         {
-            switch (DatabaseHandler.FindMostPrivilegedRole(User.Identity.Name))
+            switch (MembershipHandler.FindMostPrivilegedRole(User.Identity.Name))
             {
                 case 0:
                     Response.Redirect("~/Admin/Default.aspx");

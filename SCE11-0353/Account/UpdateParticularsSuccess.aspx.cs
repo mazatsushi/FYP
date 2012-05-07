@@ -6,7 +6,7 @@ namespace Account
     /// <summary>
     /// Code behind for the ~/Account/UpdateParticularsSuccess.aspx page
     /// </summary>
-    
+
     public partial class UpdateParticularsSuccess : System.Web.UI.Page
     {
         /// <summary>

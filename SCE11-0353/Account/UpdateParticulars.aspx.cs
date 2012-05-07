@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI.WebControls;
+using DB_Handlers;
 
 namespace Account
 {
@@ -11,35 +12,30 @@ namespace Account
     /// </summary>
     public partial class UpdateParticulars : System.Web.UI.Page
     {
+        private const string SuccessRedirect = "~/Account/UpdateParticularsSuccess.aspx";
+
         /// <summary>
-        /// Page load event
+        /// Event handler for when the Cancel button in this page is clicked
         /// </summary>
         /// <param name="sender">The web element that triggered the event</param>
         /// <param name="e">Event parameters</param>
-        protected void Page_Load(object sender, EventArgs e)
+        protected void CancelButtonClick(object sender, EventArgs e)
         {
-            if (IsPostBack)
-                return;
-
-            // Fill in account information fields
-            var user = DatabaseHandler.GetUser(User.Identity.Name);
-            Email.Text = user.Email;
-
-            // Fill in personal information fields
-            var particulars = DatabaseHandler.GetUserParticulars(user.ProviderUserKey.ToString());
-            if (null == particulars)
-                return;
-
-            FirstName.Text = particulars.FirstName;
-            MiddleName.Text = particulars.MiddleName;
-            LastName.Text = particulars.LastName;
-            Prefix.SelectedValue = particulars.Prefix.ToString(CultureInfo.InvariantCulture);
-            Suffix.SelectedValue = particulars.Suffix;
-            Address.Text = particulars.Address;
-            ContactNumber.Text = particulars.ContactNumber;
-            PostalCode.Text = particulars.PostalCode;
-            Nationality.Text = particulars.Nationality;
-            Country.SelectedValue = DatabaseHandler.GetCountryName(particulars.CountryOfResidence);
+            switch (MembershipHandler.FindMostPrivilegedRole(User.Identity.Name))
+            {
+                case 0:
+                    Response.Redirect(ResolveUrl("~/Admin/Default.aspx"));
+                    break;
+                case 1:
+                    Response.Redirect(ResolveUrl("~/Patient/Default.aspx"));
+                    break;
+                case 2:
+                    Response.Redirect(ResolveUrl("~/Physician/Default.aspx"));
+                    break;
+                case 3:
+                    Response.Redirect(ResolveUrl("~/Radiologist/Default.aspx"));
+                    break;
+            }
         }
 
         /// <summary>
@@ -50,9 +46,9 @@ namespace Account
         protected void IsFirstNameValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for numeric characters
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for numeric characters
+             */
             var firstName = (HttpUtility.HtmlEncode(FirstName.Text.Trim().ToCharArray()));
             args.IsValid = !firstName.Any(Char.IsDigit);
         }
@@ -65,10 +61,10 @@ namespace Account
         protected void IsMiddleNameValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for null or empty value
-         * Step 3: Check for numeric characters
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for null or empty value
+             * Step 3: Check for numeric characters
+             */
             var temp = HttpUtility.HtmlEncode(MiddleName.Text);
             if (string.IsNullOrEmpty(temp))
                 return;
@@ -85,9 +81,9 @@ namespace Account
         protected void IsLastNameValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for numeric characters
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for numeric characters
+             */
             var lastName = (HttpUtility.HtmlEncode(LastName.Text.Trim().ToCharArray()));
             args.IsValid = !lastName.Any(Char.IsDigit);
         }
@@ -100,20 +96,13 @@ namespace Account
         protected void IsPrefixValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for valid input range
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for valid input range
+             */
             var prefix = HttpUtility.HtmlEncode(Prefix.Text.Trim().ToLowerInvariant());
-
-            /*
-         * We utilize the implicit fall through feature of the switch statement as
-         * more than one value is valid.
-         * For more information, please refer to:
-         * http://msdn.microsoft.com/en-us/library/06tc147t.aspx
-         */
             switch (prefix)
             {
-                    // True iff prefix == "dr." || prefix == "mdm." || prefix == "mr." || prefix == "ms." || prefix == "prof."
+                // True iff prefix == "dr." || prefix == "mdm." || prefix == "mr." || prefix == "ms." || prefix == "prof."
                 case "dr.":
                 case "mdm.":
                 case "mr.":
@@ -135,10 +124,10 @@ namespace Account
         protected void IsSuffixValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for null or empty input
-         * Step 3: Check for valid input range
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for null or empty input
+             * Step 3: Check for valid input range
+             */
             var temp = HttpUtility.HtmlEncode(Suffix.SelectedValue);
             if (String.IsNullOrEmpty(temp))
                 return;
@@ -146,7 +135,7 @@ namespace Account
             var suffix = (temp.Trim().ToLowerInvariant());
             switch (suffix)
             {
-                    // True iff suffix == "jr." || suffix == "sr."
+                // True iff suffix == "jr." || suffix == "sr."
                 case "jr.":
                 case "sr.":
                     args.IsValid = true;
@@ -165,11 +154,48 @@ namespace Account
         protected void IsNationalityValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for numeric characters
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for numeric characters
+             */
             var lastName = (HttpUtility.HtmlEncode(LastName.Text.Trim().ToCharArray()));
             args.IsValid = !lastName.Any(Char.IsDigit);
+        }
+
+        /// <summary>
+        /// Page load event
+        /// </summary>
+        /// <param name="sender">The web element that triggered the event</param>
+        /// <param name="e">Event parameters</param>
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (IsPostBack)
+                return;
+
+            // Fill in account information fields
+            Email.Text = MembershipHandler.GetUserEmail(User.Identity.Name);
+
+            // Fill in personal information fields
+            var particulars = UserParticularsHandler.GetParticularsFromUsername(User.Identity.Name);
+            if (null == particulars)
+                return;
+
+            // Convenience class for beautifying the output
+            var text = new CultureInfo("en-SG").TextInfo;
+
+            FirstName.Text = text.ToTitleCase(particulars.FirstName);
+            if (!String.IsNullOrEmpty(particulars.MiddleName))
+                MiddleName.Text = text.ToTitleCase(particulars.MiddleName);
+            LastName.Text = text.ToTitleCase(particulars.LastName);
+            Prefix.SelectedValue = particulars.Prefix.ToString(CultureInfo.InvariantCulture);
+            Suffix.SelectedValue = particulars.Suffix;
+            Address.Text = text.ToTitleCase(particulars.Address);
+            ContactNumber.Text = particulars.ContactNumber;
+            PostalCode.Text = particulars.PostalCode;
+            Nationality.Text = text.ToTitleCase(particulars.Nationality);
+
+            Country.DataSource = CountryHandler.GetAllCountries();
+            Country.DataBind();
+            Country.SelectedValue = CountryHandler.GetCountryName(particulars.CountryOfResidence);
         }
 
         /// <summary>
@@ -179,26 +205,27 @@ namespace Account
         /// <param name="e">Event parameters</param>
         protected void UpdateButtonClick(object sender, EventArgs e)
         {
+            Validate();
             if (!IsValid)
                 return;
-
             /*
-         * At this point, all user entered information has been verified.
-         * We shall now perform two critical actions:
-         * 1) Programmatically update account information via Membership
-         *  1.1) Note that since we manually checked whether email is unique,
-         *  it is 100% guaranteed that it is valid as well.
-         * 2) Call DatabaseHandler to handle the updates for us.
-         */
-            var user = DatabaseHandler.GetUser(User.Identity.Name);
-
-            // Fetch account information and update
+             * At this point, all user entered information has been verified.
+             * We shall now perform two critical actions:
+             * 1) Programmatically update account information via Membership
+             * 2) Call DatabaseHandler to handle the updates for us.
+             */
+            // Step 1
+            var username = User.Identity.Name;
             var email = HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant());
             if (String.IsNullOrEmpty(email))
+            {
+                ErrorMessage.Text += HttpUtility.HtmlDecode("<ul>");
+                ErrorMessage.Text = HttpUtility.HtmlDecode("<li>Please provide an email address</li>");
+                ErrorMessage.Text += HttpUtility.HtmlDecode("</ul>");
                 return;
+            }
 
-            user.Email = email;
-            if (!DatabaseHandler.UpdateAccount(user))
+            if (!MembershipHandler.UpdateAccount(User.Identity.Name, email))
             {
                 ErrorMessage.Text += HttpUtility.HtmlDecode("<ul>");
                 ErrorMessage.Text = HttpUtility.HtmlDecode("<li>An error occured while trying to update your account information</li>");
@@ -206,57 +233,33 @@ namespace Account
                 return;
             }
 
-            var firstName = HttpUtility.HtmlEncode(FirstName.Text.Trim());
+            // Reference to title case converter
+            var text = new CultureInfo("en-SG").TextInfo;
+
+            // Step 2
+            var firstName = text.ToTitleCase(HttpUtility.HtmlEncode(FirstName.Text.Trim()));
             string middleName = null;
             if (!String.IsNullOrEmpty(MiddleName.Text))
-                middleName = HttpUtility.HtmlEncode(MiddleName.Text.Trim());
-            var lastName = HttpUtility.HtmlEncode(LastName.Text.Trim());
-            var namePrefix = HttpUtility.HtmlEncode(Prefix.Text.Trim());
+                text.ToTitleCase(middleName = HttpUtility.HtmlEncode(MiddleName.Text.Trim()));
+            var lastName = text.ToTitleCase(HttpUtility.HtmlEncode(LastName.Text.Trim()));
+            var namePrefix = text.ToTitleCase(HttpUtility.HtmlEncode(Prefix.Text.Trim()));
             string nameSuffix = null;
             if (!String.IsNullOrEmpty(Suffix.Text))
-                nameSuffix = HttpUtility.HtmlEncode(Suffix.Text.Trim());
-            var address = HttpUtility.HtmlEncode(Address.Text.Trim());
+                nameSuffix = text.ToTitleCase(HttpUtility.HtmlEncode(Suffix.Text.Trim()));
+            var address = text.ToTitleCase(HttpUtility.HtmlEncode(Address.Text.Trim()));
             var contact = HttpUtility.HtmlEncode(ContactNumber.Text.Trim());
             var postalCode = HttpUtility.HtmlEncode(PostalCode.Text.Trim());
-            var nationality = HttpUtility.HtmlEncode(Nationality.Text.Trim());
-            var countryId = DatabaseHandler.GetCountryId(HttpUtility.HtmlEncode(Country.Text.Trim()));
+            var nationality = text.ToTitleCase(HttpUtility.HtmlEncode(Nationality.Text.Trim()));
+            var countryId = CountryHandler.GetCountryId(HttpUtility.HtmlEncode(Country.Text.Trim()));
 
-            if (!DatabaseHandler.UpdateParticulars(user.ProviderUserKey, firstName, middleName, lastName, namePrefix, nameSuffix, address, contact, postalCode, countryId, nationality))
+            if (!UserParticularsHandler.UpdateParticulars(username, firstName, middleName, lastName, namePrefix, nameSuffix, address, contact, postalCode, countryId, nationality))
             {
                 ErrorMessage.Text += HttpUtility.HtmlDecode("<ul>");
                 ErrorMessage.Text += HttpUtility.HtmlDecode("<li>An error occured while updating your particulars. Please contact the system administrator.</li>");
                 ErrorMessage.Text += HttpUtility.HtmlDecode("</ul>");
                 return;
             }
-
-            Response.Redirect("~/Account/UpdateParticularsSuccess.aspx");
-        }
-
-        /// <summary>
-        /// Event handler for when the Cancel button in this page is clicked
-        /// </summary>
-        /// <param name="sender">The web element that triggered the event</param>
-        /// <param name="e">Event parameters</param>
-        protected void CancelButtonClick(object sender, EventArgs e)
-        {
-            switch (DatabaseHandler.FindMostPrivilegedRole(User.Identity.Name))
-            {
-                case 0:
-                    Response.Redirect("~/Admin/Default.aspx");
-                    break;
-                case 1:
-                    Response.Redirect("~/Physician/Default.aspx");
-                    break;
-                case 2:
-                    Response.Redirect("~/Radiologist/Default.aspx");
-                    break;
-                case 3:
-                    Response.Redirect("~/Staff/Default.aspx");
-                    break;
-                case 4:
-                    Response.Redirect("~/Patient/Default.aspx");
-                    break;
-            }
+            Response.Redirect(ResolveUrl(SuccessRedirect));
         }
     }
 }

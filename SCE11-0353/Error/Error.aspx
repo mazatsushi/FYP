@@ -1,16 +1,16 @@
-﻿<%@ Page AutoEventWireup="true" CodeFile="Error.aspx.cs" Culture="en-SG" Inherits="Error_Error"
-    Language="C#" MasterPageFile="~/Site.master" Title="Error" %>
+﻿<%@ Page Title="Error" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
+    CodeFile="Error.aspx.cs" Inherits="Error.Error" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
 <asp:Content ContentPlaceHolderID="MainContent" runat="Server">
     <div id="errorMsg">
         <h1>
-            Oops! An error just occured. Please contact the system administrator for troubleshooting.
+            Oops! An error just occured. Please contact the system administrator for assistance.
         </h1>
     </div>
     <br />
     <div id="errorImg">
-        <asp:Image runat="server" ImageUrl="~/Images/Error.png" />
+        <asp:Image ImageUrl="~/Images/Error.png" runat="server" />
     </div>
 </asp:Content>

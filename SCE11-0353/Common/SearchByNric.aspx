@@ -1,4 +1,4 @@
-﻿<%@ Page AutoEventWireup="true" CodeFile="SearchByNric.aspx.cs" Culture="en-SG" Inherits="Common_SearchByNric"
+﻿<%@ Page AutoEventWireup="true" CodeFile="SearchByNric.aspx.cs" Culture="en-SG" Inherits="Common.SearchByNric"
     Language="C#" MasterPageFile="~/Site.master" Title="Search By NRIC" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
@@ -7,7 +7,7 @@
     <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <h2>
-                Search for user via NRIC
+                Search for User via NRIC
             </h2>
             <p>
                 Use the form below to search for a user using their NRIC.
@@ -32,7 +32,9 @@
                         </asp:RegularExpressionValidator>
                         <asp:CustomValidator ControlToValidate="Nric" CssClass="failureNotification" Display="Dynamic"
                             ErrorMessage="NRIC not found." OnServerValidate="NricExists" runat="server" ToolTip="NRIC not found."
-                            ValidationGroup="ValidationGroup"> <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" /> NRIC not found.
+                            ValidationGroup="ValidationGroup">
+                            <asp:Image ImageAlign="TextTop" ImageUrl="~/Images/icons/error.png" runat="server" />
+                            NRIC not found.
                         </asp:CustomValidator>
                         <asp:RequiredFieldValidator ControlToValidate="Nric" CssClass="failureNotification"
                             ErrorMessage="User's NRIC is required." runat="server" ToolTip="User's NRIC is required."
@@ -43,7 +45,7 @@
                     </div>
                     <div class="submitButton, topPadding">
                         <asp:Button CommandName="Search" CssClass="buttons" runat="server" Text="Search"
-                            ValidationGroup="ValidationGroup" OnClick="SearchButton_Click" />
+                            ValidationGroup="ValidationGroup" OnClick="SearchButtonClick" />
                     </div>
                 </fieldset>
             </div>

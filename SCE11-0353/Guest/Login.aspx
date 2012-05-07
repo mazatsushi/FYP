@@ -1,4 +1,4 @@
-<%@ Page AutoEventWireup="true" CodeFile="Login.aspx.cs" Culture="en-SG" Inherits="Guest.Login"
+﻿<%@ Page AutoEventWireup="true" CodeFile="Login.aspx.cs" Culture="en-SG" Inherits="Guest.Login"
     Language="C#" MasterPageFile="~/Site.master" Title="Login" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="server">
@@ -49,7 +49,7 @@
                         <asp:Label AssociatedControlID="RememberMe" CssClass="inline" ID="RememberMeLabel"
                             runat="server">Keep me logged in</asp:Label>
                     </div>
-                    <div class="submitButton, topPadding" runat="server">
+                    <div class="submitButton, topPadding">
                         <asp:Button CommandName="Login" CssClass="buttons" runat="server" Text="Log In" ValidationGroup="ValidationGroup" />
                     </div>
                 </fieldset>

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using System.Web;
+using DB_Handlers;
 
 namespace Guest
 {
@@ -9,6 +11,9 @@ namespace Guest
 
     public partial class ResetPassword2 : System.Web.UI.Page
     {
+        private const string MailTemplateUri = "~/MailTemplates/PasswordReset.txt";
+        private const string SuccessRedirect = "~/Guest/ResetPasswordSuccess.aspx";
+
         /// <summary>
         /// Page load event
         /// </summary>
@@ -25,10 +30,12 @@ namespace Guest
 
             var username = Request.QueryString["Username"];
 
+            // We must have a username to work with here
             if (String.IsNullOrWhiteSpace(username))
-                Server.Transfer("~/Guest/ResetPassword.aspx");
+                Server.Transfer(ResolveUrl("~/Guest/ResetPassword.aspx"));
 
-            Question.Text = HttpUtility.HtmlDecode("Security Question: " + DatabaseHandler.GetQuestion(username));
+            var text = new CultureInfo("en-SG").TextInfo;
+            Question.Text = text.ToTitleCase(HttpUtility.HtmlDecode("Security Question: " + MembershipHandler.GetQuestion(username)));
         }
 
         /// <summary>
@@ -38,22 +45,23 @@ namespace Guest
         /// <param name="e">Event parameters</param>
         protected void ResetButtonClick(object sender, EventArgs e)
         {
+            Validate();
             if (!IsValid)
                 return;
 
             var username = Request.QueryString["Username"];
-            var answer = HttpUtility.HtmlEncode(Answer.Text);
+            var answer = HttpUtility.HtmlEncode(Answer.Text.Trim());
             var newPassword = string.Empty;
 
             // Attempt to reset the password
-            if (!DatabaseHandler.ResetPassword(username, answer, out newPassword))
+            if (!MembershipHandler.ResetPassword(username, answer, out newPassword))
             {
                 ErrorMessage.Text = newPassword;
                 return;
             }
 
             // Get the user email address
-            var userEmail = DatabaseHandler.GetUserEmail(username);
+            var userEmail = MembershipHandler.GetUserEmail(username);
             if (string.IsNullOrWhiteSpace(userEmail))
             {
                 ErrorMessage.Text = "Unable to find your email address in the system.";
@@ -61,9 +69,9 @@ namespace Guest
             }
 
             // Send an email containing the new password to user's inbox
-            MailHandler.SendNewPassword(userEmail, newPassword);
+            MailHandler.NewPassword(username, userEmail, newPassword, Server.MapPath(MailTemplateUri));
 
-            Response.Redirect("~/Guest/ResetPasswordSuccess.aspx");
+            Response.Redirect(ResolveUrl(SuccessRedirect));
         }
 
         /// <summary>
@@ -72,19 +80,19 @@ namespace Guest
         /// <param name="username">The user name</param>
         private void TransferToHome(string username)
         {
-            switch (DatabaseHandler.FindMostPrivilegedRole(username))
+            switch (MembershipHandler.FindMostPrivilegedRole(username))
             {
                 case 0:
-                    Response.Redirect("~/Admin/Default.aspx");
+                    Response.Redirect(ResolveUrl("~/Admin/Default.aspx"));
                     break;
                 case 1:
-                    Response.Redirect("~/Patient/Default.aspx");
+                    Response.Redirect(ResolveUrl("~/Patient/Default.aspx"));
                     break;
                 case 2:
-                    Response.Redirect("~/Physician/Default.aspx");
+                    Response.Redirect(ResolveUrl("~/Physician/Default.aspx"));
                     break;
                 case 3:
-                    Response.Redirect("~/Radiologist/Default.aspx");
+                    Response.Redirect(ResolveUrl("~/Radiologist/Default.aspx"));
                     break;
             }
         }

@@ -1,90 +1,85 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
+using DB_Handlers;
+using EvilDicom.Image;
+using ImageResizer;
 
 /// <summary>
-/// This class handles file conversion from the DICOM to PNG formats.
-/// It is necessary as DICOM cannot be natively displayed in a web browser unless using a DICOM plugin for Silverlight.
+/// This class handles DICOM files uploaded to the server.
+/// Its workflow is documented as follows:
 /// 
-/// The class offloads the actual conversion to a command line program called "dicom2".
-/// However dicom2 only accepts valid DICOM files. As such, invalid DICOM files cannot be converted.
+/// 1) Convert the DICOM to JPEG using a combination of Evil Dicom & ImageResizer
+/// 2) Save DICOM file into database filestreaming table (DicomImages)
+/// 3) Delete DICOM file
+/// 4) Create a new folder with the Series ID in Uploads folder, and move JPEG file there
+/// 5) Save the local file link into the database JpegImages table
+/// 
+/// At any point in the above process, should an exception be thrown, it means that we should abort.
 /// </summary>
+
 public class DicomHandler
 {
-    /// <summary>
-    /// A private string that contains the absolute path for the dicom2 program.
-    /// This is the main program that RIS uses for file conversion.
-    /// </summary>
-    private const string Dicom2Path = @"E:\Temp\Projects\FYP\SCE11-0353\Converter\dicom2.exe";
+    private const string ConvertSettings = "maxwidth=600&maxheight=600";
+    private const string JpegExt = ".jpg";
+    private const string DestDir = @"E:\Temp\Projects\FYP\Replacement\Uploads\";
 
     /// <summary>
-    /// A private string that contains the working directory for the dicom2 program.
-    /// This is the main program that RIS uses for file conversion.
+    /// The main entry point of this class.
     /// </summary>
-    private const string WorkDirectory = @"E:\Temp\Projects\FYP\SCE11-0353\Uploads";
-
-    private static readonly string[] DicomExtension = new string[] { ".dcm", ".DCM" };
-    
-    /// <summary>
-    /// The command string that we pass into dicom2 for file conversion.
-    /// Make sure to append the DICOM file name (with the .dcm extension) before invoking the program.
-    /// </summary>
-    private const string ProgramArguments = "-p ";
-
-    public static bool Convert(string dicomFileName, out string fileNameOnly)
+    /// <param name="filePath">Fully qualified path leading to the uploaded DICOM file on hard disk.</param>
+    /// <param name="seriesId">Series ID the DICOM file is associated with.</param>
+    /// <param name="staffUsername">Username of the staff member who uploaded the DICOM image.</param>
+    /// <returns></returns>
+    public static bool Convert(string filePath, int seriesId, string staffUsername)
     {
         var success = false;
-        fileNameOnly = null;
-        // Provide information about the execution context to dicom2
-        var startInfo = new ProcessStartInfo
-                          {
-                              Arguments = (ProgramArguments + dicomFileName),
-                              CreateNoWindow = true,
-                              FileName = Dicom2Path,
-                              UseShellExecute = false,
-                              WorkingDirectory = WorkDirectory
-                          };
 
-        // Get the filename without any file extensions
-        var fileName = dicomFileName.Split(DicomExtension, StringSplitOptions.RemoveEmptyEntries)[0];
-        var dirInfo = new DirectoryInfo(WorkDirectory);
+        // Create the directory where converted files will reside
+        var folder = new DirectoryInfo(DestDir + seriesId);
+        folder.Create();
 
         try
         {
-            // Invoke dicom2 to convert the file with the specified file name to PNG format
-            using (var process = Process.Start(startInfo))
-            {
-                process.WaitForExit();
-            }
-            var files = dirInfo.GetFiles("*.png");
-            if (files.Length >= 1 && files.Select(fileInfo => fileInfo.Name).All(name => name.Contains(fileName)))
-            {
-                fileNameOnly = fileName;
-                success = true;
-            }
-        }
-        catch (ObjectDisposedException) { }
-        catch (InvalidOperationException) { }
-        catch (ArgumentException) { }
-        catch (FileNotFoundException) { }
-        catch (Win32Exception) { }
-        return success;
-    }
+            // Open the DICOM file with Evil Dicom
+            var matrix = new ImageMatrix(filePath);
+            var list = new List<string>();
 
-    public static bool IsDicomFile(HttpPostedFile file)
-    {
-        var valid = false;
-        var fileExt = Path.GetExtension(file.FileName);
-        if (null != fileExt)
-        {
-            if (fileExt.Equals(".DCM") || fileExt.Equals(".dcm"))
+            // There might be more than one frame in a DICOM file; convert all of them
+            for (var i = 0; i <= matrix.Properties.NumberOfFrames; i++)
             {
-                valid = true;
+                var destination = folder + @"\" + Guid.NewGuid() + JpegExt;
+                ImageBuilder.Current.Build(matrix.GetImage(i), destination, new ResizeSettings(ConvertSettings));
+                list.Add(destination);
             }
+            /*
+             * At this point it is confirmed that the DICOM file is not giving us any problems.
+             * Next step is to save all converted JPEG file path(s) to SQL Server.
+             * There are no guarantees that the rendering is correct.
+             */
+            var imageId = ImageHandler.CreateImage(seriesId, staffUsername);
+            if (imageId == -1)
+                throw new Exception();
+            if (list.Any(fileUri => !JpegImageHandler.Save(imageId, fileUri)))
+                throw new Exception();
+
+            // Save the DICOM file to database filestream and everything is done
+            matrix = null;
+            if (!DicomImageHandler.Save(imageId, File.ReadAllBytes(filePath)))
+                throw new Exception();
+            success = true;
         }
-        return valid;
+        catch (Exception)
+        {
+            // Abort everything should there be any exception
+            folder.Delete(true);
+        }
+        finally
+        {
+            // DICOM file is now useless
+            File.Delete(filePath);
+        }
+        return success;
     }
 }

@@ -1,11 +1,10 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="ResetPassword.aspx.cs" Culture="en-SG"
-    Inherits="Guest.ResetPassword" Language="C#" MasterPageFile="~/Site.master"
-    Title="Reset Password" %>
+    Inherits="Guest.ResetPassword" Language="C#" MasterPageFile="~/Site.master" Title="Reset Password" %>
 
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
 <asp:Content ContentPlaceHolderID="MainContent" runat="Server">
-    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <h2>
                 Reset Password

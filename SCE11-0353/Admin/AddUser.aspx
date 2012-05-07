@@ -134,6 +134,7 @@
                         <asp:Label AssociatedControlID="Prefix" runat="server" Text="* Salutation: " />
                         <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" DropDownStyle="DropDownList" ID="Prefix"
                             runat="server">
+                            <asp:ListItem Text="" Value="" />
                             <asp:ListItem Text="Dr." Value="Dr." />
                             <asp:ListItem Text="Mdm." Value="Mdm." />
                             <asp:ListItem Text="Mr." Value="Mr." />
@@ -177,9 +178,9 @@
                         <asp:TextBox CssClass="textEntry" ID="DateOfBirth" runat="server" />
                         <asp:ImageButton ID="DOB_Cal" ImageUrl="~/Images/icons/calendar.png" runat="server" />
                         <ajaxToolkit:CalendarExtender ClearTime="True" DaysModeTitleFormat="dd/MM/yyyy" Enabled="True"
-                            FirstDayOfWeek="Monday" Format="dd/MM/yyyy" PopupButtonID="DOB_Cal" runat="server"
-                            StartDate="1/1/1940" TargetControlID="DateOfBirth" TodaysDateFormat="dd/MM/yyyy"
-                            PopupPosition="TopLeft" />
+                            FirstDayOfWeek="Monday" Format="dd/MM/yyyy" ID="CalendarExtender" PopupButtonID="DOB_Cal"
+                            PopupPosition="TopLeft" runat="server" StartDate="1/1/1900" TargetControlID="DateOfBirth"
+                            TodaysDateFormat="dd/MM/yyyy" />
                         <ajaxToolkit:MaskedEditExtender AutoComplete="False" ClearTextOnInvalid="False" ClipboardEnabled="False"
                             CultureName="en-SG" Enabled="True" ID="DOB_Input" Mask="99/99/9999" MaskType="Date"
                             runat="server" TargetControlID="DateOfBirth" />
@@ -241,7 +242,7 @@
                     <div class="topPadding">
                         <asp:Label AssociatedControlID="Country" runat="server" Text="* Country of Residence: " />
                         <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" CssClass="float" DropDownStyle="DropDownList"
-                            ID="Country" MaxLength="0" runat="server" />
+                            ID="Country" runat="server" />
                         <asp:RequiredFieldValidator ControlToValidate="Country" CssClass="failureNotification"
                             Display="Dynamic" ErrorMessage="Please specify your country of residence." runat="server"
                             ToolTip="Please specify your country of residence." ValidationGroup="ValidationGroup">
@@ -314,8 +315,8 @@
                             Please enter your e-mail address.
                         </asp:RequiredFieldValidator>
                         <%--Matches a valid email address including ip's which are rarely used. Allows for a-z0-9_.- in the username,
-                but not ending in a full stop i.e user.@domain.com is invalid and a-z0-9- as the optional sub domain(s)
-                with domain name and a 2-7 char (a-z) tld allowing for short tld's like ca and new ones like museum.--%>
+                        but not ending in a full stop i.e user.@domain.com is invalid and a-z0-9- as the optional sub domain(s)
+                        with domain name and a 2-7 char (a-z) tld allowing for short tld's like ca and new ones like museum.--%>
                         <asp:RegularExpressionValidator ControlToValidate="Email" CssClass="failureNotification"
                             Display="Dynamic" ErrorMessage="Please enter a valid e-mail address." runat="server"
                             ToolTip="Please enter a valid e-mail address." ValidationExpression="^[\w-]+(\.[\w-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\`d{1,3}\.){3}\d{1,3})(:\d{4})?$"

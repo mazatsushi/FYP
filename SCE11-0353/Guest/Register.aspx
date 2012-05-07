@@ -142,6 +142,7 @@
                         <asp:Label AssociatedControlID="Prefix" runat="server" Text="* Salutation: " />
                         <ajaxToolkit:ComboBox AutoCompleteMode="Suggest" DropDownStyle="DropDownList" ID="Prefix"
                             runat="server">
+                            <asp:ListItem Text="" Value="" />
                             <asp:ListItem Text="Dr." Value="Dr." />
                             <asp:ListItem Text="Mdm." Value="Mdm." />
                             <asp:ListItem Text="Mr." Value="Mr." />
@@ -185,9 +186,9 @@
                         <asp:TextBox CssClass="textEntry" ID="DateOfBirth" runat="server" />
                         <asp:ImageButton ID="DOB_Cal" ImageUrl="~/Images/icons/calendar.png" runat="server" />
                         <ajaxToolkit:CalendarExtender ClearTime="True" DaysModeTitleFormat="dd/MM/yyyy" Enabled="True"
-                            FirstDayOfWeek="Monday" Format="dd/MM/yyyy" PopupButtonID="DOB_Cal" runat="server"
-                            StartDate="1/1/1940" TargetControlID="DateOfBirth" TodaysDateFormat="dd/MM/yyyy"
-                            PopupPosition="TopLeft" />
+                            FirstDayOfWeek="Monday" Format="dd/MM/yyyy" ID="CalendarExtender" PopupButtonID="DOB_Cal"
+                            PopupPosition="TopLeft" runat="server" StartDate="1/1/1940" TargetControlID="DateOfBirth"
+                            TodaysDateFormat="dd/MM/yyyy" />
                         <ajaxToolkit:MaskedEditExtender AutoComplete="False" ClearTextOnInvalid="False" ClipboardEnabled="False"
                             CultureName="en-SG" Enabled="True" ID="DOB_Input" Mask="99/99/9999" MaskType="Date"
                             runat="server" TargetControlID="DateOfBirth" />
@@ -312,7 +313,7 @@
                     </div>
                     <%-- / Username --%>
                     <%-- Email --%>
-                    <div cssclass="topPadding" runat="server">
+                    <div class="topPadding" runat="server">
                         <asp:Label AssociatedControlID="Email" runat="server" Text="* E-mail:" />
                         <asp:TextBox CssClass="textEntry" ID="Email" runat="server" />
                         <asp:RequiredFieldValidator ControlToValidate="Email" CssClass="failureNotification"
@@ -340,7 +341,7 @@
                     </div>
                     <%-- / Email --%>
                     <%-- Password --%>
-                    <div cssclass="topPadding" runat="server">
+                    <div class="topPadding" runat="server">
                         <asp:Label AssociatedControlID="Password" runat="server" Text="* Password:" />
                         <asp:TextBox CssClass="passwordEntry" ID="Password" runat="server" TextMode="Password" />
                         <asp:RequiredFieldValidator ControlToValidate="Password" CssClass="failureNotification"
@@ -358,7 +359,7 @@
                     </div>
                     <%-- / Password --%>
                     <%-- Confirm Password --%>
-                    <div cssclass="topPadding" runat="server">
+                    <div class="topPadding" runat="server">
                         <asp:Label AssociatedControlID="ConfirmPassword" runat="server" Text="* Confirm Password:" />
                         <asp:TextBox CssClass="passwordEntry" ID="ConfirmPassword" runat="server" TextMode="Password" />
                         <asp:RequiredFieldValidator ControlToValidate="ConfirmPassword" CssClass="failureNotification"
@@ -376,7 +377,7 @@
                     </div>
                     <%-- / Confirm Password --%>
                     <%-- Security Question --%>
-                    <div cssclass="topPadding" runat="server">
+                    <div class="topPadding" runat="server">
                         <asp:Label AssociatedControlID="Question" runat="server" Text="* Security Question:" />
                         <asp:TextBox CssClass="textEntry" ID="Question" runat="server" />
                         <asp:RequiredFieldValidator ControlToValidate="Question" CssClass="failureNotification"
@@ -388,7 +389,7 @@
                     </div>
                     <%-- / Security Question --%>
                     <%-- Security Answer --%>
-                    <div cssclass="topPadding" runat="server">
+                    <div class="topPadding" runat="server">
                         <asp:Label AssociatedControlID="Answer" runat="server" Text="* Security Answer:" />
                         <asp:TextBox CssClass="textEntry" ID="Answer" runat="server" />
                         <asp:RequiredFieldValidator ControlToValidate="Answer" CssClass="failureNotification"

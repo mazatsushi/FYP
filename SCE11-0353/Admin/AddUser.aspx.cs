@@ -1,26 +1,22 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI.WebControls;
+using DB_Handlers;
 
 namespace Admin
 {
     /// <summary>
     /// Code behind for the ~/Admin/AddUser.aspx page
-    /// 
-    /// Note:
-    /// 1) All user input are first desensitized by calling the HttpUtility.HTMLEncode() method.
-    /// For more information, please refer to: http://msdn.microsoft.com/en-us/library/73z22y6h.aspx
-    /// 
-    /// 2) We let the compiler determine at run-time the data type of local variables.
-    /// Hence the use of the new C# keyword 'var'. For more information, please refer to:
-    /// http://msdn.microsoft.com/en-us/library/bb384061.aspx
     /// </summary>
 
     public partial class AddUser : System.Web.UI.Page
     {
-        private const bool IsApproved = true;
+        private const string MailTemplateUri = "~/MailTemplates/AccountCreated.txt";
+        private const bool PreapprovedAccounts = true;
+        private const string SuccessRedirect = "~/Admin/AddUserSuccess.aspx";
 
         /// <summary>
         /// Checks whether email address is already in use
@@ -29,7 +25,7 @@ namespace Admin
         /// <param name="args">Event parameters</param>
         protected void EmailNotInUse(object sender, ServerValidateEventArgs args)
         {
-            args.IsValid = !DatabaseHandler.EmailInUse(HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant()));
+            args.IsValid = !MembershipHandler.EmailInUse(HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant()));
         }
 
         /// <summary>
@@ -40,9 +36,9 @@ namespace Admin
         protected void IsFirstNameValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for numeric characters
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for numeric characters
+             */
             var firstName = (HttpUtility.HtmlEncode(FirstName.Text.Trim().ToCharArray()));
             args.IsValid = !firstName.Any(Char.IsDigit);
         }
@@ -55,9 +51,9 @@ namespace Admin
         protected void IsGenderValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for valid input range
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for valid input range
+             */
             char gender;
             var parse = Char.TryParse(HttpUtility.HtmlEncode(Gender.SelectedValue.Trim().ToLowerInvariant()), out gender);
             if (!parse)
@@ -67,11 +63,11 @@ namespace Admin
             }
 
             /*
-         * We utilize the implicit fall through feature of the switch statement as
-         * more than one value is valid.
-         * For more information, please refer to:
-         * http://msdn.microsoft.com/en-us/library/06tc147t.aspx
-         */
+             * We utilize the implicit fall through feature of the switch statement as
+             * more than one value is valid.
+             * For more information, please refer to:
+             * http://msdn.microsoft.com/en-us/library/06tc147t.aspx
+             */
             switch (gender)
             {
                 // True iff gender == 'm' || gender == 'f'
@@ -93,8 +89,8 @@ namespace Admin
         protected void IsLastNameValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for numeric characters
+             * Step 1: Desensitize the input
+             * Step 2: Check for numeric characters
          */
             var lastName = (HttpUtility.HtmlEncode(LastName.Text.Trim().ToCharArray()));
             args.IsValid = !lastName.Any(Char.IsDigit);
@@ -108,10 +104,10 @@ namespace Admin
         protected void IsMiddleNameValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for null or empty value
-         * Step 3: Check for numeric characters
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for null or empty value
+             * Step 3: Check for numeric characters
+             */
             var temp = HttpUtility.HtmlEncode(MiddleName.Text);
             if (string.IsNullOrEmpty(temp))
                 return;
@@ -128,9 +124,9 @@ namespace Admin
         protected void IsNationalityValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for numeric characters
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for numeric characters
+             */
             var lastName = (HttpUtility.HtmlEncode(LastName.Text.Trim().ToCharArray()));
             args.IsValid = !lastName.Any(Char.IsDigit);
         }
@@ -143,20 +139,13 @@ namespace Admin
         protected void IsPrefixValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for valid input range
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for valid input range
+             */
             var prefix = HttpUtility.HtmlEncode(Prefix.Text.Trim().ToLowerInvariant());
-
-            /*
-         * We utilize the implicit fall through feature of the switch statement as
-         * more than one value is valid.
-         * For more information, please refer to:
-         * http://msdn.microsoft.com/en-us/library/06tc147t.aspx
-         */
             switch (prefix)
             {
-                    // True iff prefix == "dr." || prefix == "mdm." || prefix == "mr." || prefix == "ms." || prefix == "prof."
+                // True iff prefix == "dr." || prefix == "mdm." || prefix == "mr." || prefix == "ms." || prefix == "prof."
                 case "dr.":
                 case "mdm.":
                 case "mr.":
@@ -178,10 +167,10 @@ namespace Admin
         protected void IsSuffixValid(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for null or empty input
-         * Step 3: Check for valid input range
-         */
+             * Step 1: Desensitize the input
+             * Step 2: Check for null or empty input
+             * Step 3: Check for valid input range
+             */
             var temp = HttpUtility.HtmlEncode(Suffix.SelectedValue);
             if (String.IsNullOrEmpty(temp))
                 return;
@@ -189,7 +178,7 @@ namespace Admin
             var suffix = (temp.Trim().ToLowerInvariant());
             switch (suffix)
             {
-                    // True iff suffix == "jr." || suffix == "sr."
+                // True iff suffix == "jr." || suffix == "sr."
                 case "jr.":
                 case "sr.":
                     args.IsValid = true;
@@ -208,10 +197,10 @@ namespace Admin
         protected void NricNotExists(object source, ServerValidateEventArgs args)
         {
             /*
-         * Step 1: Desensitize the input
-         * Step 2: Check for existing NRIC
-         */
-            args.IsValid = !DatabaseHandler.NricExists(HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant()));
+             * Step 1: Desensitize the input
+             * Step 2: Check for existing NRIC
+             */
+            args.IsValid = !UserParticularsHandler.NricExists(HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant()));
         }
 
         /// <summary>
@@ -224,16 +213,21 @@ namespace Admin
             if (IsPostBack)
                 return;
 
+            CalendarExtender.EndDate = DateTime.Today;
             DateRangeCheck.MinimumValue = "1/1/1900";
             DateRangeCheck.MaximumValue = DateTime.Today.ToShortDateString();
 
-            Country.DataSource = DatabaseHandler.GetAllCountries();
+            var countries = CountryHandler.GetAllCountries();
+            countries.Insert(0, "");
+            Country.DataSource = countries;
             Country.DataBind();
 
-            Role.DataSource = DatabaseHandler.GetAllRoles();
+            Role.DataSource = MembershipHandler.GetAllRoles();
             Role.DataBind();
 
-            Department.DataSource = DatabaseHandler.GetAllDepartments();
+            var depts = DepartmentHandler.GetAllDepartments();
+            depts.Insert(0, "");
+            Department.DataSource = depts;
             Department.DataBind();
         }
 
@@ -245,25 +239,49 @@ namespace Admin
         /// <param name="e">Event parameters</param>
         protected void RegisterButtonClick(object sender, EventArgs e)
         {
+            Validate();
+            if (!IsValid)
+                return;
+
+            if (String.IsNullOrWhiteSpace(Prefix.Text.Trim()))
+            {
+                ErrorMessage.Text = HttpUtility.HtmlDecode("Please specify the salutation of the user.");
+                return;
+            }
+
+            if (String.IsNullOrWhiteSpace(Country.Text.Trim()))
+            {
+                ErrorMessage.Text = HttpUtility.HtmlDecode("Please specify the country of residence of the user.");
+                return;
+            }
+
+            if (String.IsNullOrWhiteSpace(Department.Text.Trim()))
+            {
+                ErrorMessage.Text = HttpUtility.HtmlDecode("Please specify the department of the user.");
+                return;
+            }
+
             /*
              * At this point, all user entered information has been verified.
              * We shall now perform two critical actions:
              * 1) Programmatically add account information to the Membership provider
-             * 1.1) Note that since we manually checked whether the username and email are unique,
-             * it is 100% guaranteed that Membership information is valid as well.
              * 2) Programmatically insert personal particulars into the associated table.
              * 3) Programmatically add the newly created user to the selected role(s).
              */
+
+            // Reference to title case converter
+            var text = new CultureInfo("en-SG").TextInfo;
+            
             // Fetch information that is needed for creating a new account
             var username = HttpUtility.HtmlEncode(UserName.Text.Trim());
-            var password = HttpUtility.HtmlEncode(DatabaseHandler.GeneratePassword());
+            var password = HttpUtility.HtmlEncode(MembershipHandler.GeneratePassword());
             var email = HttpUtility.HtmlEncode(Email.Text.Trim().ToLowerInvariant());
-            var question = HttpUtility.HtmlEncode(Question.Text.Trim());
-            var answer = HttpUtility.HtmlEncode(Answer.Text.Trim().ToLowerInvariant());
+            var question = text.ToTitleCase(HttpUtility.HtmlEncode(Question.Text.Trim()));
+            var answer = HttpUtility.HtmlEncode(Answer.Text.Trim()).ToLowerInvariant();
 
             // Create new account in Membership
             MembershipCreateStatus status;
-            var user = DatabaseHandler.CreateUser(username, password, email, question, answer, IsApproved, out status);
+            var user = MembershipHandler.CreateUser(username, password, email, question, answer, PreapprovedAccounts, out status);
 
             // Return and show error message if account creation unsuccessful
             if (user == null)
@@ -312,28 +330,28 @@ namespace Admin
                 }
                 return;
             }
-
             // Fetch information that is needed for storing personal information
             var nric = HttpUtility.HtmlEncode(NRIC.Text.Trim().ToUpperInvariant());
-            var firstName = HttpUtility.HtmlEncode(FirstName.Text.Trim());
+            var firstName = text.ToTitleCase(HttpUtility.HtmlEncode(FirstName.Text.Trim()));
             string middleName = null;
             if (!String.IsNullOrEmpty(MiddleName.Text))
-                middleName = HttpUtility.HtmlEncode(MiddleName.Text.Trim());
-            var lastName = HttpUtility.HtmlEncode(LastName.Text.Trim());
-            var gender = HttpUtility.HtmlEncode(Gender.SelectedValue.Trim());
-            var namePrefix = HttpUtility.HtmlEncode(Prefix.Text.Trim());
+                text.ToTitleCase(middleName = HttpUtility.HtmlEncode(MiddleName.Text.Trim()));
+            var lastName = text.ToTitleCase(HttpUtility.HtmlEncode(LastName.Text.Trim()));
+            var gender = text.ToTitleCase(HttpUtility.HtmlEncode(Gender.SelectedValue.Trim()));
+            var namePrefix = text.ToTitleCase(HttpUtility.HtmlEncode(Prefix.Text.Trim()));
             string nameSuffix = null;
             if (!String.IsNullOrEmpty(Suffix.Text))
-                nameSuffix = HttpUtility.HtmlEncode(Suffix.Text.Trim());
+                nameSuffix = text.ToTitleCase(HttpUtility.HtmlEncode(Suffix.Text.Trim()));
             var dob = DateTime.Parse(HttpUtility.HtmlEncode(DateOfBirth.Text.Trim()));
-            var address = HttpUtility.HtmlEncode(Address.Text.Trim());
+            var address = text.ToTitleCase(HttpUtility.HtmlEncode(Address.Text.Trim()));
             var contact = HttpUtility.HtmlEncode(ContactNumber.Text.Trim());
             var postalCode = HttpUtility.HtmlEncode(PostalCode.Text.Trim());
-            var nationality = HttpUtility.HtmlEncode(Nationality.Text.Trim());
-            var countryId = DatabaseHandler.GetCountryId(HttpUtility.HtmlEncode(Country.Text.Trim()));
+            var nationality = text.ToTitleCase(HttpUtility.HtmlEncode(Nationality.Text.Trim()));
+            var countryId = CountryHandler.GetCountryId(HttpUtility.HtmlEncode(Country.Text.Trim()));
 
             // Add user personal information into the UserParticulars table
-            var addStatus = DatabaseHandler.AddUserParticulars(user.ProviderUserKey, nric, firstName, middleName, lastName, gender, namePrefix, nameSuffix, dob, address, contact, postalCode, countryId, nationality);
+            var guid = Guid.Parse(user.ProviderUserKey.ToString());
+            var addStatus = UserParticularsHandler.UpdateParticulars(guid, nric, firstName, middleName, lastName, gender, namePrefix, nameSuffix, dob, address, contact, postalCode, countryId, nationality);
 
             if (!addStatus)
             {
@@ -342,7 +360,7 @@ namespace Admin
             }
 
             // Loop through the roles selected, adding user to each selected role
-            if ((from ListItem r in Role.Items where r.Selected select r).Any(r => !DatabaseHandler.AddUserToRole(username, r.Text)))
+            if ((from ListItem r in Role.Items where r.Selected select r).Any(r => !MembershipHandler.AddUserToRole(username, r.Text)))
             {
                 ErrorMessage.Text = HttpUtility.HtmlDecode("An error occured while adding staff role(s). Please contact the system administrator.");
                 return;
@@ -351,15 +369,15 @@ namespace Admin
             var department = HttpUtility.HtmlEncode(Department.Text.Trim());
 
             // Add staff information into the Staff table
-            if (!DatabaseHandler.AddStaff(user.ProviderUserKey.ToString(), department))
+            if (!StaffHandler.AddStaff(guid, department))
             {
                 ErrorMessage.Text = HttpUtility.HtmlDecode("An error occured while adding staff information. Please contact the system administrator.");
                 return;
             }
 
             // Send an email containing the password to user's inbox
-            MailHandler.SendNewPassword(email, password);
-            Response.Redirect("~/Admin/AddUserSuccess.aspx");
+            MailHandler.AccountCreated(email, firstName, lastName, username, password, email, Server.MapPath(MailTemplateUri));
+            Response.Redirect(ResolveUrl(SuccessRedirect));
         }
 
         /// <summary>
@@ -369,7 +387,7 @@ namespace Admin
         /// <param name="args">Event parameters</param>
         protected void UserNameNotExists(object sender, ServerValidateEventArgs args)
         {
-            args.IsValid = !DatabaseHandler.UserNameExists(HttpUtility.HtmlEncode(UserName.Text.Trim()));
+            args.IsValid = !MembershipHandler.UserNameExists(HttpUtility.HtmlEncode(UserName.Text.Trim()));
         }
     }
 }

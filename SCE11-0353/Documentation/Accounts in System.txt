@@ -1,17 +1,17 @@
-﻿username: john
-password: M(r{7m
-reset: shepard
+﻿username: admin
+password: 11111!
+reset: admin
+role: Admin
+
+username: physician
+password: 11111!
+reset: physician
 role: Physician
 
-username: miranda
-password: 2O(i|O
-reset: lawson
-role: Radiologist
-
-username: porky
+username: radiologist
 password: 11111!
-reset: bun
-role: Patient
+reset: radiologist
+role: Radiologist
 
 username: oldmaid
 password: 11111!

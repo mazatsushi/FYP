@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using System.Web;
+using DB_Handlers;
 
 namespace Account
 {
@@ -8,6 +10,8 @@ namespace Account
     /// </summary>
     public partial class ChangeQuestion : System.Web.UI.Page
     {
+        private const string SuccessRedirect = "~/Account/ChangeQuestionSuccess.aspx";
+
         /// <summary>
         /// Event handler for when the Cancel button in this page is clicked
         /// </summary>
@@ -15,19 +19,19 @@ namespace Account
         /// <param name="e">Event parameters</param>
         protected void CancelButtonClick(object sender, EventArgs e)
         {
-            switch (DatabaseHandler.FindMostPrivilegedRole(User.Identity.Name))
+            switch (MembershipHandler.FindMostPrivilegedRole(User.Identity.Name))
             {
                 case 0:
-                    Response.Redirect("~/Admin/Default.aspx");
+                    Response.Redirect(ResolveUrl("~/Admin/Default.aspx"));
                     break;
                 case 1:
-                    Response.Redirect("~/Patient/Default.aspx");
+                    Response.Redirect(ResolveUrl("~/Patient/Default.aspx"));
                     break;
                 case 2:
-                    Response.Redirect("~/Physician/Default.aspx");
+                    Response.Redirect(ResolveUrl("~/Physician/Default.aspx"));
                     break;
                 case 3:
-                    Response.Redirect("~/Radiologist/Default.aspx");
+                    Response.Redirect(ResolveUrl("~/Radiologist/Default.aspx"));
                     break;
             }
         }
@@ -42,9 +46,9 @@ namespace Account
             if (IsPostBack)
                 return;
 
-            Question.Text = HttpUtility.HtmlDecode(DatabaseHandler.GetQuestion(User.Identity.Name));
+            Question.Text = new CultureInfo("en-SG").TextInfo.ToTitleCase(HttpUtility.HtmlDecode(MembershipHandler.GetQuestion(User.Identity.Name)));
         }
-    
+
         /// <summary>
         /// Event handler for when the update button in this page is clicked
         /// </summary>
@@ -52,14 +56,18 @@ namespace Account
         /// <param name="e">Event parameters</param>
         protected void UpdateButtonClick(object sender, EventArgs e)
         {
-            var password = HttpUtility.HtmlEncode(Password.Text.Trim());
-            var question = HttpUtility.HtmlEncode(Question.Text.Trim());
-            var answer = HttpUtility.HtmlEncode(Answer.Text.Trim().ToLowerInvariant());
-
-            if (!DatabaseHandler.ChangeQuestionAndAnswer(User.Identity.Name, password, question, answer))
+            Validate();
+            if (!IsValid)
                 return;
 
-            Response.Redirect("~/Account/ChangeQuestionSuccess.aspx");
+            var password = HttpUtility.HtmlEncode(Password.Text.Trim());
+            var question = new CultureInfo("en-SG").TextInfo.ToTitleCase(HttpUtility.HtmlEncode(Question.Text.Trim()));
+            var answer = HttpUtility.HtmlEncode(Answer.Text.Trim()).ToLowerInvariant();
+
+            if (!MembershipHandler.ChangeQuestionAndAnswer(User.Identity.Name, password, question, answer))
+                return;
+
+            Response.Redirect(ResolveUrl(SuccessRedirect));
         }
     }
 }
