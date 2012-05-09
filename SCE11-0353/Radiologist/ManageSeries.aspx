@@ -1,7 +1,5 @@
 ﻿<%@ Page AutoEventWireup="true" CodeFile="ManageSeries.aspx.cs" Culture="en-SG" Inherits="Radiologist.ManageSeries"
     Language="C#" MasterPageFile="~/Site.master" Title="Manage Series" %>
-
-<%@ Import Namespace="System.IO" %>
 <%@ Register Assembly="EO.Web" Namespace="EO.Web" TagPrefix="eo" %>
 <asp:Content ContentPlaceHolderID="HeadContent" runat="Server">
     <script type="text/javascript">

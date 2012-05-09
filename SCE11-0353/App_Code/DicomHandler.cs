@@ -23,23 +23,27 @@ public class DicomHandler
 {
     private const string ConvertSettings = "maxwidth=600&maxheight=600";
     private const string JpegExt = ".jpg";
-    private const string DestDir = @"E:\Temp\Projects\FYP\Replacement\Uploads\";
 
     /// <summary>
     /// The main entry point of this class.
     /// </summary>
     /// <param name="filePath">Fully qualified path leading to the uploaded DICOM file on hard disk.</param>
+    /// <param name="relativePath">Relative path leading to the folder that will hold the converted DICOM images.</param>
+    /// <param name="absolutePath">Absolute path leading to the folder that will hold the converted DICOM images.</param>
     /// <param name="seriesId">Series ID the DICOM file is associated with.</param>
     /// <param name="staffUsername">Username of the staff member who uploaded the DICOM image.</param>
     /// <returns></returns>
-    public static bool Convert(string filePath, int seriesId, string staffUsername)
+    public static bool Convert(string filePath, string relativePath, string absolutePath, int seriesId, string staffUsername)
     {
         var success = false;
 
         // Create the directory where converted files will reside
-        var folder = new DirectoryInfo(DestDir + seriesId);
+        var folder = new DirectoryInfo(absolutePath + seriesId);
         folder.Create();
 
+        // Local variable(s) to store various IDs for rollback purposes
+        var imageId = 0;
+        
         try
         {
             // Open the DICOM file with Evil Dicom
@@ -49,7 +53,7 @@ public class DicomHandler
             // There might be more than one frame in a DICOM file; convert all of them
             for (var i = 0; i <= matrix.Properties.NumberOfFrames; i++)
             {
-                var destination = folder + @"\" + Guid.NewGuid() + JpegExt;
+                var destination = relativePath + seriesId + @"\" + Guid.NewGuid() + JpegExt;
                 ImageBuilder.Current.Build(matrix.GetImage(i), destination, new ResizeSettings(ConvertSettings));
                 list.Add(destination);
             }
@@ -58,7 +62,7 @@ public class DicomHandler
              * Next step is to save all converted JPEG file path(s) to SQL Server.
              * There are no guarantees that the rendering is correct.
              */
-            var imageId = ImageHandler.CreateImage(seriesId, staffUsername);
+            imageId = ImageHandler.CreateImage(seriesId, staffUsername);
             if (imageId == -1)
                 throw new Exception();
             if (list.Any(fileUri => !JpegImageHandler.Save(imageId, fileUri)))
@@ -74,6 +78,11 @@ public class DicomHandler
         {
             // Abort everything should there be any exception
             folder.Delete(true);
+            if (imageId != 0)
+            {
+                DicomImageHandler.Delete(imageId);
+                JpegImageHandler.Delete(imageId);
+            }
         }
         finally
         {

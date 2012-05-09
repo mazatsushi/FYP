@@ -1,8 +1,0 @@
-﻿Hi ##Fullname##,
-
-Your account has been created with the following information - 
-
-Username: ##Username##
-Password: ##Password##
-
-Best Regards

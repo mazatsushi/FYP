@@ -381,7 +381,7 @@ namespace Guest
                     Response.Redirect("~/Admin/Default.aspx");
                     break;
                 case 1:
-                    Response.Redirect("~/Patient/Default.aspx");
+                    Response.Redirect("~/Patients/Default.aspx");
                     break;
                 case 2:
                     Response.Redirect("~/Physician/Default.aspx");

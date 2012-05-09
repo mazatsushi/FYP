@@ -104,8 +104,7 @@ namespace Radiologist
             }
 
             Session["StudyId"] = null;
-            Response.Redirect(ResolveUrl(SuccessRedirect + "?ReturnUrl=" + Request.Url + "&SeriesId=" + seriesId + "&Checksum=" +
-                CryptoHandler.GetHash(Request.Url.ToString(), seriesId.ToString(CultureInfo.InvariantCulture))));
+            Response.Redirect(ResolveUrl(SuccessRedirect + "?ReturnUrl=" + Request.Url + "&SeriesId=" + seriesId));
         }
 
         /// <summary>

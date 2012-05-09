@@ -3,17 +3,8 @@ using DB_Handlers;
 
 namespace Guest
 {
-    /// <summary>
-    /// Code behind for the ~/Guest/AccountCreated.aspx page
-    /// </summary>
-
-    public partial class AccountCreated : System.Web.UI.Page
+    public partial class ResetPasswordSuccess : System.Web.UI.Page
     {
-        /// <summary>
-        /// Page load event
-        /// </summary>
-        /// <param name="sender">The web element that triggered the event</param>
-        /// <param name="e">Event parameters</param>
         protected void Page_Load(object sender, EventArgs e)
         {
             // Reject if the user is already authenticated
@@ -22,7 +13,7 @@ namespace Guest
         }
 
         /// <summary>
-        /// Redirects the user to their role's home page
+        /// Method that redirects the user to their role's home page
         /// </summary>
         /// <param name="username">The user name</param>
         private void TransferToHome(string username)

@@ -86,7 +86,7 @@ namespace Guest
                     Response.Redirect(ResolveUrl("~/Admin/Default.aspx"));
                     break;
                 case 1:
-                    Response.Redirect(ResolveUrl("~/Patient/Default.aspx"));
+                    Response.Redirect(ResolveUrl("~/Patients/Default.aspx"));
                     break;
                 case 2:
                     Response.Redirect(ResolveUrl("~/Physician/Default.aspx"));

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -13,9 +14,10 @@ namespace Radiologist
     public partial class ManageSeries : System.Web.UI.Page
     {
         private const string Beginning = "~/Common/SearchByNric.aspx";
+        private const string DestDir = @"~\Uploads\";
         private const string DicomFileExt = ".dcm";
         private const string HashFailure = "~/Error/HashFailure.aspx";
-        private const string HoldingArea = @"E:/Temp/Projects/FYP/SCE11-0353/Holding/";
+        private const string HoldingArea = @"~\TempUploads";
         private const string Home = @"~/Radiologist/ManagePatient.aspx";
         private const string ResizeString = @"?maxwidth=200&maxheight=200";
         private const string SuccessRedirect = @"~/Radiologist/ImageAdded.aspx";
@@ -32,12 +34,12 @@ namespace Radiologist
             // Only 1 file can be uploaded at a time so don't worry
             foreach (var file in Uploader.PostedFiles)
             {
-                fileName = Path.Combine(HoldingArea, Guid.NewGuid() + DicomFileExt);
+                fileName = Path.Combine(Server.MapPath(HoldingArea), Guid.NewGuid() + DicomFileExt);
                 File.Move(file.TempFileName, fileName);
             }
 
             // Handover to specialized class for conversion and other necessary work
-            if (!DicomHandler.Convert(fileName, int.Parse(Request.QueryString["SeriesId"]), User.Identity.Name))
+            if (!DicomHandler.Convert(fileName, DestDir, Server.MapPath(DestDir), int.Parse(Request.QueryString["SeriesId"]), User.Identity.Name))
             {
                 ErrorMessage.Text = HttpUtility.HtmlDecode("The DICOM file uploaded is incompatible with the system. " +
                                                            "Please contact the administrator for assistance.");
@@ -53,6 +55,7 @@ namespace Radiologist
         private void Initialize(int seriesId)
         {
             NewButton.PostBackUrl = ResolveUrl(Beginning + "?ReturnUrl=" + Home + "&Checksum=" + CryptoHandler.GetHash(Home));
+            SeriesID.Text = seriesId.ToString(CultureInfo.InvariantCulture);
 
             // Hide/display the text label
             var hasImages = ImageHandler.HasImages(seriesId);
@@ -64,25 +67,16 @@ namespace Radiologist
 
             foreach (var link in ImageHandler.GetLinkedImageId(seriesId).SelectMany(JpegImageHandler.GetLinks).ToList())
             {
-                // Build a relative URL for the image (it will be referenced twice)
-                var relativeLink = ResolveUrl("~/" + new Uri(new DirectoryInfo(link).Parent.Parent.FullName).MakeRelativeUri(new Uri(link)));
-
-                // Build a panel to hold the image
-                var panel = new Panel();
-
                 // Build a hyperlink
                 var hyperlink = new HyperLink
                 {
                     CssClass = "Thumbnail",
-                    ImageUrl = ResolveUrl(relativeLink + ResizeString),
-                    NavigateUrl = ResolveUrl(relativeLink),
+                    ImageUrl = ResolveUrl(link + ResizeString),
+                    NavigateUrl = ResolveUrl(link),
                 };
 
-                // Add image to panel
-                panel.Controls.Add(hyperlink);
-                
                 // Add panel to container
-                Images.Controls.Add(panel);
+                Images.Controls.Add(hyperlink);
             }
         }
 

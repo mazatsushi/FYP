@@ -10,7 +10,7 @@
     <table class="table">
         <tr>
             <td>
-                <asp:ImageButton CausesValidation="False" ImageUrl="~/Images/Folder.png" PostBackUrl="~/Patients/ViewStudies.aspx"
+                <asp:ImageButton CausesValidation="False" ImageUrl="~/Images/Folder.png" PostBackUrl="~/Patients/ViewStudy.aspx"
                     runat="server" />
             </td>
         </tr>

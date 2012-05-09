@@ -14,7 +14,7 @@ namespace Patients
     public partial class ViewSeries : System.Web.UI.Page
     {
         private const string HashFailure = @"~/Error/HashFailure.aspx";
-        private const string PreviousRedirect = @"~/Physician/ManageImagingHistory.aspx";
+        private const string Home = @"~/Patients/Default.aspx";
         private const string ResizeString = @"?maxwidth=200&maxheight=200";
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Patients
             var temp = Request.QueryString["StudyId"];
             var checksum = Request.QueryString["Checksum"];
             if (String.IsNullOrEmpty(temp) || String.IsNullOrEmpty(checksum))
-                Server.Transfer(ResolveUrl(PreviousRedirect));
+                Server.Transfer(ResolveUrl(Home));
 
             // Make sure query string has not been ilegally modified
             var studyID = int.Parse(temp);
@@ -94,9 +94,6 @@ namespace Patients
                 // Build a relative URL for the image (it will be referenced twice)
                 var relativeLink = ResolveUrl("~/" + new Uri(new DirectoryInfo(link).Parent.Parent.FullName).MakeRelativeUri(new Uri(link)));
 
-                // Build a panel to hold the image
-                var panel = new Panel();
-
                 // Build a hyperlink
                 var hyperlink = new HyperLink
                 {
@@ -104,12 +101,6 @@ namespace Patients
                     ImageUrl = ResolveUrl(relativeLink + ResizeString),
                     NavigateUrl = ResolveUrl(relativeLink),
                 };
-
-                // Add image to panel
-                panel.Controls.Add(hyperlink);
-
-                // Add panel to container
-                ImagesDiv.Controls.Add(panel);
             }
         }
     }

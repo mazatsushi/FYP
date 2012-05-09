@@ -141,9 +141,6 @@ namespace Physician
                 // Build a relative URL for the image (it will be referenced twice)
                 var relativeLink = ResolveUrl("~/" + new Uri(new DirectoryInfo(link).Parent.Parent.FullName).MakeRelativeUri(new Uri(link)));
 
-                // Build a panel to hold the image
-                var panel = new Panel();
-
                 // Build a hyperlink
                 var hyperlink = new HyperLink
                 {
@@ -151,12 +148,6 @@ namespace Physician
                     ImageUrl = ResolveUrl(relativeLink + ResizeString),
                     NavigateUrl = ResolveUrl(relativeLink),
                 };
-
-                // Add image to panel
-                panel.Controls.Add(hyperlink);
-
-                // Add panel to container
-                ImagesDiv.Controls.Add(panel);
             }
         }
     }

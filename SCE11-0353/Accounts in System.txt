@@ -1,0 +1,19 @@
+﻿username: admin
+password: 11111!
+reset: admin
+role: Admin
+
+username: physician
+password: 11111!
+reset: physician
+role: Physician
+
+username: patient
+password: 11111!
+reset: patient
+role: Patient
+
+username: radiologist
+password: 11111!
+reset: radiologist
+role: radiologist

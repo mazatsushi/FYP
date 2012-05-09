@@ -1,4 +1,4 @@
-﻿Hi ##Fullname##,
+Hi ##Fullname##,
 
 Your account has been created with the following information - 
 

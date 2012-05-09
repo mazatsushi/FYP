@@ -19,16 +19,16 @@ namespace Account
             switch (MembershipHandler.FindMostPrivilegedRole(User.Identity.Name))
             {
                 case 0:
-                    Response.Redirect("~/Admin/Default.aspx");
+                    Response.Redirect(ResolveUrl("~/Admin/Default.aspx"));
                     break;
                 case 1:
-                    Response.Redirect("~/Patient/Default.aspx");
+                    Response.Redirect(ResolveUrl("~/Patients/Default.aspx"));
                     break;
                 case 2:
-                    Response.Redirect("~/Physician/Default.aspx");
+                    Response.Redirect(ResolveUrl("~/Physician/Default.aspx"));
                     break;
                 case 3:
-                    Response.Redirect("~/Radiologist/Default.aspx");
+                    Response.Redirect(ResolveUrl("~/Radiologist/Default.aspx"));
                     break;
             }
         }

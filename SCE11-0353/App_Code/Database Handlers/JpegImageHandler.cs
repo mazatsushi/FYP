@@ -10,9 +10,30 @@ namespace DB_Handlers
     public class JpegImageHandler
     {
         /// <summary>
+        /// Deletes all image with the Image ID.
+        /// </summary>
+        /// <param name="imageId">Image ID.</param>
+        public static void Delete(int imageId)
+        {
+            try
+            {
+                using (var db = new RIS_DB_Entities())
+                {
+                    db.JpegImages.DeleteAllOnSubmit(from j in db.JpegImages
+                                                    where j.ImageID == imageId
+                                                    orderby j.ImageID
+                                                    select j);
+                    db.SubmitChanges();
+                }
+            }
+            catch (ArgumentException) { }
+            catch (InvalidOperationException) { }
+        }
+
+        /// <summary>
         /// Gets all image URIs associated with the Image ID.
         /// </summary>
-        /// <param name="imageId">Series ID.</param>
+        /// <param name="imageId">Image ID.</param>
         /// <returns>A list containing the URIs of all images of Image ID if found.</returns>
         public static IList<string> GetLinks(int imageId)
         {
@@ -47,6 +68,7 @@ namespace DB_Handlers
                 {
                     db.JpegImages.InsertOnSubmit(new JpegImage
                     {
+                        ImageUID = Guid.NewGuid(),
                         ImageID = imageId,
                         Link = uri
                     });

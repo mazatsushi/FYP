@@ -71,7 +71,7 @@ namespace Common
                     Server.Transfer(ResolveUrl("~/Admin/Default.aspx"));
                     break;
                 case 1:
-                    Server.Transfer(ResolveUrl("~/Patient/Default.aspx"));
+                    Server.Transfer(ResolveUrl("~/Patients/Default.aspx"));
                     break;
                 case 2:
                     Server.Transfer(ResolveUrl("~/Physician/Default.aspx"));

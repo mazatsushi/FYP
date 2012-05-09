@@ -51,7 +51,7 @@
                                 <asp:TemplateField HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="60" ItemStyle-HorizontalAlign="Center"
                                     ItemStyle-Width="60">
                                     <ItemTemplate>
-                                        <asp:HyperLink NavigateUrl='<%# "~/Radiologist/ManageSeries.aspx?ReturnUrl=" + Request.Url + "&SeriesId=" + Eval("SeriesId") %>'
+                                        <asp:HyperLink NavigateUrl='<%# ResolveUrl("~/Radiologist/ManageSeries.aspx?ReturnUrl=" + Request.Url + "&SeriesId=" + Eval("SeriesId")) %>'
                                             runat="server">Manage</asp:HyperLink>
                                     </ItemTemplate>
                                 </asp:TemplateField>
