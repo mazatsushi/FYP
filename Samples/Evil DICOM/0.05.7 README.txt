@@ -1,8 +1,0 @@
-New in 0.05.7
-
-DicomObject has been appropriately renamed to DICOMElement
-DicomCollection has been appropriately renamed to DICOMObject
-
-All instances of lower case Dicom were replaced with the uppercase:
-
-DICOM
