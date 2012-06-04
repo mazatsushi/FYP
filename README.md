@@ -14,7 +14,7 @@ This is the final year project, or graduation thesis, of the author for his Comp
 
 #Project Information
 
-This is the final year project, or graduation thesis, of the author to get acquainted with Java Enterprise Edition.
+This is the final year project, or graduation thesis, of the author for his Computer Science degree.
 
 ***
 
@@ -26,13 +26,13 @@ For detailed information regarding the system design, and its various sub-compon
 
 ##Getting Started
 * Install all the software as specified in the section below
-    * Note: When installating [Microsoft SQL Server 2008 R2], remember to enable FileStream[[1]]
+    * Note: When installating [Microsoft SQL Server 2008 R2], remember to enable FileStream [[1]]
 
 * Download the repository
 
 * Attach the instance of SQL Server located in the *Project Root/App_Data* folder
 
-* Create a SQL Server FileStream file group in the attached instance[[2]]
+* Create a SQL Server FileStream file group in the attached instance [[2]]
 
 * Run the script *Create DicomImages.sql* located in the *Project Root/SQL Scripts* inside the SQL Server Management Studio environment
                                                                                   
@@ -62,6 +62,8 @@ For detailed information regarding the system design, and its various sub-compon
 [Microsoft SQL Server 2008 R2]: http://www.microsoft.com/sqlserver/en/us/default.aspx
 [Microsoft Visual Studio 2010]: http://www.microsoft.com/visualstudio/en-us/products/2010-editions/ultimate/overview
 [skmValidators]: http://www.4guysfromrolla.com/articles/092006-1.aspx
+
+***
 
 ##Support
 If there are any problems, or inquiries, please do not hesitate the author to contact via email with the heading **SCE11-0353**. 
